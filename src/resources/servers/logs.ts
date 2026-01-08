@@ -20,68 +20,12 @@ export class Logs extends APIResource {
 }
 
 export interface LogListResponse {
-  invocations: Array<LogListResponse.Invocation>;
+  invocations: Array<unknown>;
 
   /**
    * Total invocations matching query
    */
   total: number;
-}
-
-export namespace LogListResponse {
-  export interface Invocation {
-    id: string;
-
-    duration: Invocation.Duration;
-
-    exceptions: Array<Invocation.Exception>;
-
-    logs: Array<Invocation.Log>;
-
-    request: Invocation.Request;
-
-    response: Invocation.Response;
-
-    timestamp: string;
-  }
-
-  export namespace Invocation {
-    export interface Duration {
-      cpuMs: number;
-
-      wallMs: number;
-    }
-
-    export interface Exception {
-      message: string;
-
-      name: string;
-
-      timestamp: string;
-
-      stack?: string;
-    }
-
-    export interface Log {
-      level: string;
-
-      message: string;
-
-      timestamp: string;
-    }
-
-    export interface Request {
-      method: string;
-
-      url: string;
-    }
-
-    export interface Response {
-      outcome: string;
-
-      status: number;
-    }
-  }
 }
 
 export interface LogListParams {
