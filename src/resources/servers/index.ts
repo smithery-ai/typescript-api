@@ -2,24 +2,16 @@
 
 export {
   Deployments,
-  type DeploymentCreateResponse,
   type DeploymentRetrieveResponse,
-  type DeploymentUpdateResponse,
   type DeploymentListResponse,
   type DeploymentDeployResponse,
-  type DeploymentCreateParams,
+  type DeploymentResumeResponse,
   type DeploymentRetrieveParams,
-  type DeploymentUpdateParams,
   type DeploymentListParams,
   type DeploymentDeployParams,
-} from './deployments/index';
-export {
-  Logs,
-  type LogRetrieveResponse,
-  type LogListResponse,
-  type LogRetrieveParams,
-  type LogListParams,
-} from './logs';
+  type DeploymentResumeParams,
+} from './deployments';
+export { Logs, type LogListResponse, type LogListParams } from './logs';
 export {
   Servers,
   type ServerRetrieveResponse,

@@ -24,41 +24,27 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/servers/deployments/deployments.ts">DeploymentCreateResponse</a></code>
-- <code><a href="./src/resources/servers/deployments/deployments.ts">DeploymentRetrieveResponse</a></code>
-- <code><a href="./src/resources/servers/deployments/deployments.ts">DeploymentUpdateResponse</a></code>
-- <code><a href="./src/resources/servers/deployments/deployments.ts">DeploymentListResponse</a></code>
-- <code><a href="./src/resources/servers/deployments/deployments.ts">DeploymentDeployResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentRetrieveResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentListResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentResumeResponse</a></code>
 
 Methods:
 
-- <code title="put /servers//{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments/deployments.ts">create</a>(name, { ...params }) -> DeploymentCreateResponse</code>
-- <code title="get /servers/{namespace}/{name}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments/deployments.ts">retrieve</a>(id, { ...params }) -> DeploymentRetrieveResponse</code>
-- <code title="put /servers/{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments/deployments.ts">update</a>(name, { ...params }) -> DeploymentUpdateResponse</code>
-- <code title="get /servers/{namespace}/{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments/deployments.ts">list</a>(name, { ...params }) -> DeploymentListResponse</code>
-- <code title="put /servers/{namespace}/{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments/deployments.ts">deploy</a>(name, { ...params }) -> DeploymentDeployResponse</code>
-
-### Resume
-
-Types:
-
-- <code><a href="./src/resources/servers/deployments/resume.ts">ResumeCreateResponse</a></code>
-
-Methods:
-
-- <code title="post /servers//{name}/deployments/{id}/resume">client.servers.deployments.resume.<a href="./src/resources/servers/deployments/resume.ts">create</a>(id, { ...params }) -> ResumeCreateResponse</code>
+- <code title="get /servers/{namespace}/{name}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">retrieve</a>(id, { ...params }) -> DeploymentRetrieveResponse</code>
+- <code title="get /servers/{namespace}/{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(name, { ...params }) -> DeploymentListResponse</code>
+- <code title="put /servers/{namespace}/{name}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(name, { ...params }) -> DeploymentDeployResponse</code>
+- <code title="post /servers/{namespace}/{name}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
 
 ## Logs
 
 Types:
 
-- <code><a href="./src/resources/servers/logs.ts">LogRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/logs.ts">LogListResponse</a></code>
 
 Methods:
 
-- <code title="get /servers/{name}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">retrieve</a>(name, { ...params }) -> LogRetrieveResponse</code>
-- <code title="get /servers//{name}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(name, { ...params }) -> LogListResponse</code>
+- <code title="get /servers/{namespace}/{name}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(name, { ...params }) -> LogListResponse</code>
 
 # Uplink
 
