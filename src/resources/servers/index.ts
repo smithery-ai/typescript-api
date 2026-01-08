@@ -16,4 +16,5 @@ export {
   type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerListParams,
+  type ServerListResponsesSmitheryPage,
 } from './servers';

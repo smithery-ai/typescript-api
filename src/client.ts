@@ -23,6 +23,7 @@ import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
   ServerListResponse,
+  ServerListResponsesSmitheryPage,
   ServerRetrieveResponse,
   Servers,
 } from './resources/servers/servers';
@@ -763,6 +764,7 @@ export declare namespace Smithery {
     Servers as Servers,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
 
