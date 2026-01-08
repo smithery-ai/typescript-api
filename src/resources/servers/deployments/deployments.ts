@@ -33,15 +33,34 @@ export class Deployments extends APIResource {
     params: DeploymentRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<DeploymentRetrieveResponse> {
-    const { name } = params;
-    return this._client.get(path`/servers//${name}/deployments/${id}`, options);
+    const { namespace, name } = params;
+    return this._client.get(path`/servers/${namespace}/${name}/deployments/${id}`, options);
+  }
+
+  /**
+   * Upload and deploy an MCP server (hosted or external)
+   */
+  update(
+    name: string,
+    body: DeploymentUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentUpdateResponse> {
+    return this._client.put(
+      path`/servers/${name}/deployments`,
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 
   /**
    * List deployments for a server
    */
-  list(name: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
-    return this._client.get(path`/servers//${name}/deployments`, options);
+  list(
+    name: string,
+    params: DeploymentListParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentListResponse> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/${name}/deployments`, options);
   }
 
   /**
@@ -82,6 +101,16 @@ export interface DeploymentRetrieveResponse {
   logs?: Array<unknown>;
 
   mcpUrl?: string;
+}
+
+export interface DeploymentUpdateResponse {
+  deploymentId: string;
+
+  mcpUrl: string;
+
+  status: string;
+
+  warnings?: Array<string>;
 }
 
 export type DeploymentListResponse = Array<DeploymentListResponse.DeploymentListResponseItem>;
@@ -128,7 +157,30 @@ export interface DeploymentCreateParams {
 }
 
 export interface DeploymentRetrieveParams {
+  namespace: string;
+
   name: string;
+}
+
+export interface DeploymentUpdateParams {
+  /**
+   * JSON string of DeployPayload
+   */
+  payload: string;
+
+  /**
+   * JavaScript module content (for hosted deployments)
+   */
+  module?: string;
+
+  /**
+   * Source map content
+   */
+  sourcemap?: string;
+}
+
+export interface DeploymentListParams {
+  namespace: string;
 }
 
 export interface DeploymentDeployParams {
@@ -159,10 +211,13 @@ export declare namespace Deployments {
   export {
     type DeploymentCreateResponse as DeploymentCreateResponse,
     type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
+    type DeploymentUpdateResponse as DeploymentUpdateResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
     type DeploymentCreateParams as DeploymentCreateParams,
     type DeploymentRetrieveParams as DeploymentRetrieveParams,
+    type DeploymentUpdateParams as DeploymentUpdateParams,
+    type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
   };
 

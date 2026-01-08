@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from 'smithery';
+import Smithery from '@smithery/cli';
 
 const client = new Smithery({
   apiKey: 'My API Key',
@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource servers', () => {
   // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.servers.retrieve('name');
+  test.skip('retrieve: only required params', async () => {
+    const responsePromise = client.servers.retrieve('name', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,6 +18,11 @@ describe('resource servers', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('retrieve: required and optional params', async () => {
+    const response = await client.servers.retrieve('name', { namespace: 'namespace' });
   });
 
   // Prism tests are disabled
