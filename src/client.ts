@@ -13,6 +13,8 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, type SmitheryPageParams, SmitheryPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -21,6 +23,7 @@ import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
   ServerListResponse,
+  ServerListResponsesSmitheryPage,
   ServerRetrieveResponse,
   Servers,
 } from './resources/servers/servers';
@@ -489,6 +492,25 @@ export class Smithery {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: RequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: FinalRequestOptions,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as Smithery, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -733,12 +755,16 @@ Smithery.Uplink = Uplink;
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import SmitheryPage = Pagination.SmitheryPage;
+  export { type SmitheryPageParams as SmitheryPageParams, type SmitheryPageResponse as SmitheryPageResponse };
+
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
   export {
     Servers as Servers,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
 

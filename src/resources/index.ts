@@ -6,5 +6,6 @@ export {
   type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerListParams,
+  type ServerListResponsesSmitheryPage,
 } from './servers/servers';
 export { Uplink, type UplinkCreateTokenResponse } from './uplink';

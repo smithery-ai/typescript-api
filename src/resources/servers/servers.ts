@@ -15,6 +15,7 @@ import {
 import * as LogsAPI from './logs';
 import { LogListParams, LogListResponse, Logs } from './logs';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, SmitheryPage, type SmitheryPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -35,10 +36,12 @@ export class Servers extends APIResource {
   list(
     query: ServerListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ServerListResponse> {
-    return this._client.get('/servers', { query, ...options });
+  ): PagePromise<ServerListResponsesSmitheryPage, ServerListResponse> {
+    return this._client.getAPIList('/servers', SmitheryPage<ServerListResponse>, { query, ...options });
   }
 }
+
+export type ServerListResponsesSmitheryPage = SmitheryPage<ServerListResponse>;
 
 export interface ServerRetrieveResponse {
   connections: Array<ServerRetrieveResponse.StdioConnection | ServerRetrieveResponse.HTTPConnection>;
@@ -103,50 +106,28 @@ export namespace ServerRetrieveResponse {
 }
 
 export interface ServerListResponse {
-  pagination: ServerListResponse.Pagination;
+  createdAt: string;
 
-  servers: Array<ServerListResponse.Server>;
+  description: string | null;
+
+  displayName: string | null;
+
+  homepage: string;
+
+  iconUrl: string | null;
+
+  isDeployed: boolean;
+
+  qualifiedName: string;
+
+  remote: boolean | null;
+
+  useCount: number;
+
+  verified: boolean;
 }
 
-export namespace ServerListResponse {
-  export interface Pagination {
-    currentPage: number;
-
-    pageSize: number;
-
-    totalCount: number;
-
-    totalPages: number;
-  }
-
-  export interface Server {
-    createdAt: string;
-
-    description: string | null;
-
-    displayName: string | null;
-
-    homepage: string;
-
-    iconUrl: string | null;
-
-    isDeployed: boolean;
-
-    qualifiedName: string;
-
-    remote: boolean | null;
-
-    useCount: number;
-
-    verified: boolean;
-  }
-}
-
-export interface ServerListParams {
-  page?: number;
-
-  pageSize?: number;
-
+export interface ServerListParams extends SmitheryPageParams {
   q?: string;
 }
 
@@ -157,6 +138,7 @@ export declare namespace Servers {
   export {
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
 
