@@ -1,17 +1,17 @@
-# Petstore TypeScript API Library
+# Smithery TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/smithery.svg?label=npm%20(stable)>)](https://npmjs.org/package/smithery) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/smithery)
 
-This library provides convenient access to the Petstore REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Smithery REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [app.stainlessapi.com](https://app.stainlessapi.com/docs). The full API of this library can be found in [api.md](api.md).
+The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:smithery-ai/sdk.git
+npm install git+ssh://git@github.com:stainless-sdks/smithery-typescript.git
 ```
 
 > [!NOTE]
@@ -23,19 +23,15 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 
-const client = new Petstore({
-  apiKey: process.env['PETSTORE_API_KEY'], // This is the default and can be omitted
+const client = new Smithery({
+  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted
 });
 
-const order = await client.store.createOrder({
-  petId: 1,
-  quantity: 1,
-  status: 'placed',
-});
+const response = await client.health.check();
 
-console.log(order.id);
+console.log(response.status);
 ```
 
 ### Request & Response types
@@ -44,13 +40,13 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 
-const client = new Petstore({
-  apiKey: process.env['PETSTORE_API_KEY'], // This is the default and can be omitted
+const client = new Smithery({
+  apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted
 });
 
-const response: Petstore.StoreInventoryResponse = await client.store.inventory();
+const response: Smithery.HealthCheckResponse = await client.health.check();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -63,8 +59,8 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const response = await client.store.inventory().catch(async (err) => {
-  if (err instanceof Petstore.APIError) {
+const response = await client.health.check().catch(async (err) => {
+  if (err instanceof Smithery.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
     console.log(err.headers); // {server: 'nginx', ...}
@@ -98,12 +94,12 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new Petstore({
+const client = new Smithery({
   maxRetries: 0, // default is 2
 });
 
 // Or, configure per-request:
-await client.store.inventory({
+await client.health.check({
   maxRetries: 5,
 });
 ```
@@ -115,12 +111,12 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new Petstore({
+const client = new Smithery({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
 // Override per-request:
-await client.store.inventory({
+await client.health.check({
   timeout: 5 * 1000,
 });
 ```
@@ -141,15 +137,15 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new Petstore();
+const client = new Smithery();
 
-const response = await client.store.inventory().asResponse();
+const response = await client.health.check().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: response, response: raw } = await client.store.inventory().withResponse();
+const { data: response, response: raw } = await client.health.check().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response);
+console.log(response.status);
 ```
 
 ### Logging
@@ -162,13 +158,13 @@ console.log(response);
 
 The log level can be configured in two ways:
 
-1. Via the `PETSTORE_LOG` environment variable
+1. Via the `SMITHERY_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 
-const client = new Petstore({
+const client = new Smithery({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -194,13 +190,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new Petstore({
-  logger: logger.child({ name: 'Petstore' }),
+const client = new Smithery({
+  logger: logger.child({ name: 'Smithery' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -229,7 +225,7 @@ parameter. This library doesn't validate at runtime that the request matches the
 send will be sent as-is.
 
 ```ts
-client.store.createOrder({
+client.health.check({
   // ...
   // @ts-expect-error baz is not yet public
   baz: 'undocumented option',
@@ -263,10 +259,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 import fetch from 'my-fetch';
 
-const client = new Petstore({ fetch });
+const client = new Smithery({ fetch });
 ```
 
 ### Fetch options
@@ -274,9 +270,9 @@ const client = new Petstore({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 
-const client = new Petstore({
+const client = new Smithery({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -291,11 +287,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new Petstore({
+const client = new Smithery({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -305,9 +301,9 @@ const client = new Petstore({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import Petstore from 'smithery';
+import Smithery from 'smithery';
 
-const client = new Petstore({
+const client = new Smithery({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -317,10 +313,10 @@ const client = new Petstore({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import Petstore from 'npm:smithery';
+import Smithery from 'npm:smithery';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new Petstore({
+const client = new Smithery({
   fetchOptions: {
     client: httpClient,
   },
@@ -339,7 +335,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/smithery-ai/sdk/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/smithery-typescript/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

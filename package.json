@@ -1,12 +1,12 @@
 {
   "name": "smithery",
   "version": "0.0.1-alpha.0",
-  "description": "The official TypeScript library for the Petstore API",
-  "author": "Petstore <example@example.com>",
+  "description": "The official TypeScript library for the Smithery API",
+  "author": "Smithery <>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:smithery-ai/sdk",
+  "repository": "github:stainless-sdks/smithery-typescript",
   "license": "Apache-2.0",
   "packageManager": "pnpm@10.24.0",
   "files": [
