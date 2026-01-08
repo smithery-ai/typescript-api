@@ -107,7 +107,7 @@ export class PagePromise<
   }
 }
 
-export interface PageResponse<Item> {
+export interface SmitheryPageResponse<Item> {
   servers: Array<Item>;
 
   'pagination.currentPage': number;
@@ -117,13 +117,13 @@ export interface PageResponse<Item> {
   'pagination.totalCount': number;
 }
 
-export interface PageParams {
-  page_number?: number;
+export interface SmitheryPageParams {
+  page?: number;
 
-  page_size?: number;
+  pageSize?: number;
 }
 
-export class Page<Item> extends AbstractPage<Item> implements PageResponse<Item> {
+export class SmitheryPage<Item> extends AbstractPage<Item> implements SmitheryPageResponse<Item> {
   servers: Array<Item>;
 
   'pagination.currentPage': number;
@@ -132,7 +132,12 @@ export class Page<Item> extends AbstractPage<Item> implements PageResponse<Item>
 
   'pagination.totalCount': number;
 
-  constructor(client: Smithery, response: Response, body: PageResponse<Item>, options: FinalRequestOptions) {
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: SmitheryPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
     super(client, response, body, options);
 
     this.servers = body.servers || [];
@@ -146,14 +151,14 @@ export class Page<Item> extends AbstractPage<Item> implements PageResponse<Item>
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const query = this.options.query as PageParams;
-    const currentPage = query?.page_number ?? 1;
+    const query = this.options.query as SmitheryPageParams;
+    const currentPage = query?.page ?? 1;
 
     return {
       ...this.options,
       query: {
         ...maybeObj(this.options.query),
-        page_number: currentPage + 1,
+        page: currentPage + 1,
       },
     };
   }

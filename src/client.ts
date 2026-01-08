@@ -14,7 +14,7 @@ import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type PageParams, PageResponse } from './core/pagination';
+import { AbstractPage, type SmitheryPageParams, SmitheryPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
@@ -754,8 +754,8 @@ Smithery.Uplink = Uplink;
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
 
-  export import Page = Pagination.Page;
-  export { type PageParams as PageParams, type PageResponse as PageResponse };
+  export import SmitheryPage = Pagination.SmitheryPage;
+  export { type SmitheryPageParams as SmitheryPageParams, type SmitheryPageResponse as SmitheryPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
