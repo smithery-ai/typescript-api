@@ -110,11 +110,19 @@ export class PagePromise<
 export interface SmitheryPageResponse<Item> {
   servers: Array<Item>;
 
-  'pagination.currentPage': number;
+  pagination: SmitheryPageResponse.Pagination;
+}
 
-  'pagination.totalPages': number;
+export namespace SmitheryPageResponse {
+  export interface Pagination {
+    currentPage?: number;
 
-  'pagination.totalCount': number;
+    pageSize?: number;
+
+    totalCount?: number;
+
+    totalPages?: number;
+  }
 }
 
 export interface SmitheryPageParams {
@@ -126,11 +134,7 @@ export interface SmitheryPageParams {
 export class SmitheryPage<Item> extends AbstractPage<Item> implements SmitheryPageResponse<Item> {
   servers: Array<Item>;
 
-  'pagination.currentPage': number;
-
-  'pagination.totalPages': number;
-
-  'pagination.totalCount': number;
+  pagination: SmitheryPageResponse.Pagination;
 
   constructor(
     client: Smithery,
@@ -141,9 +145,7 @@ export class SmitheryPage<Item> extends AbstractPage<Item> implements SmitheryPa
     super(client, response, body, options);
 
     this.servers = body.servers || [];
-    this.pagination.currentPage = body.pagination.currentPage || 0;
-    this.pagination.totalPages = body.pagination.totalPages || 0;
-    this.pagination.totalCount = body.pagination.totalCount || 0;
+    this.pagination = body.pagination || {};
   }
 
   getPaginatedItems(): Item[] {
