@@ -7,22 +7,10 @@ const client = new Smithery({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource servers', () => {
-  // Prism tests are disabled
-  test.skip('retrieve', async () => {
-    const responsePromise = client.servers.retrieve('qualifiedName');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
+describe('resource logs', () => {
   // Prism tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.servers.list();
+    const responsePromise = client.servers.logs.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -36,11 +24,12 @@ describe('resource servers', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.servers.list(
+      client.servers.logs.list(
+        'qualifiedName',
         {
-          page: 1,
-          pageSize: 1,
-          q: 'q',
+          from: '2026-01-01T00:00:00Z',
+          limit: 50,
+          to: '2026-01-01T01:00:00Z',
         },
         { path: '/_stainless_unknown_path' },
       ),

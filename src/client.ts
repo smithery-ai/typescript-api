@@ -18,7 +18,12 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
-import { ServerListParams, ServerListResponse, Servers } from './resources/servers/servers';
+import {
+  ServerListParams,
+  ServerListResponse,
+  ServerRetrieveResponse,
+  Servers,
+} from './resources/servers/servers';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -732,6 +737,7 @@ export declare namespace Smithery {
 
   export {
     Servers as Servers,
+    type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
     type ServerListParams as ServerListParams,
   };
