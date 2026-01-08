@@ -8,8 +8,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "paths": {
-      "@smithery/cli/*": ["./src/*"],
-      "@smithery/cli": ["./src/index.ts"]
+      "@smithery/api/*": ["./src/*"],
+      "@smithery/api": ["./src/index.ts"]
     },
     "noEmit": true,
 

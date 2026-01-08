@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from '@smithery/cli';
+import Smithery from '@smithery/api';
 
 const client = new Smithery({
   apiKey: 'My API Key',

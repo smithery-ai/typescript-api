@@ -1,5 +1,5 @@
-import { multipartFormRequestOptions, createForm } from '@smithery/cli/internal/uploads';
-import { toFile } from '@smithery/cli/core/uploads';
+import { multipartFormRequestOptions, createForm } from '@smithery/api/internal/uploads';
+import { toFile } from '@smithery/api/core/uploads';
 
 describe('form data validation', () => {
   test('valid values do not error', async () => {
