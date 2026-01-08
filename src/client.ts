@@ -134,7 +134,7 @@ export class Smithery {
    * API Client for interfacing with the Smithery API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['SMITHERY_API_KEY'] ?? undefined]
-   * @param {string} [opts.baseURL=process.env['SMITHERY_BASE_URL'] ?? https://registry.smithery.ai] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['SMITHERY_BASE_URL'] ?? https://api.smithery.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -156,7 +156,7 @@ export class Smithery {
     const options: ClientOptions = {
       apiKey,
       ...opts,
-      baseURL: baseURL || `https://registry.smithery.ai`,
+      baseURL: baseURL || `https://api.smithery.ai`,
     };
 
     this.baseURL = options.baseURL!;
@@ -202,7 +202,7 @@ export class Smithery {
    * Check whether the base URL is set to its default.
    */
   #baseURLOverridden(): boolean {
-    return this.baseURL !== 'https://registry.smithery.ai';
+    return this.baseURL !== 'https://api.smithery.ai';
   }
 
   protected defaultQuery(): Record<string, string | undefined> | undefined {

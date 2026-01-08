@@ -41,7 +41,7 @@ export class Servers extends APIResource {
 }
 
 export interface ServerRetrieveResponse {
-  connections: Array<unknown>;
+  connections: Array<ServerRetrieveResponse.StdioConnection | ServerRetrieveResponse.HTTPConnection>;
 
   deploymentUrl: string | null;
 
@@ -55,15 +55,91 @@ export interface ServerRetrieveResponse {
 
   remote: boolean;
 
-  security: unknown;
+  security: ServerRetrieveResponse.Security | null;
 
-  tools: Array<unknown> | null;
+  tools: Array<ServerRetrieveResponse.Tool> | null;
+}
+
+export namespace ServerRetrieveResponse {
+  export interface StdioConnection {
+    configSchema: { [key: string]: unknown };
+
+    type: 'stdio';
+
+    bundleUrl?: string;
+
+    runtime?: string;
+
+    stdioFunction?: string;
+  }
+
+  export interface HTTPConnection {
+    configSchema: { [key: string]: unknown };
+
+    deploymentUrl: string;
+
+    type: 'http';
+  }
+
+  export interface Security {
+    scanPassed: boolean;
+  }
+
+  export interface Tool {
+    description: string | null;
+
+    inputSchema: Tool.InputSchema;
+
+    name: string;
+  }
+
+  export namespace Tool {
+    export interface InputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+    }
+  }
 }
 
 export interface ServerListResponse {
-  pagination: unknown;
+  pagination: ServerListResponse.Pagination;
 
-  servers: Array<unknown>;
+  servers: Array<ServerListResponse.Server>;
+}
+
+export namespace ServerListResponse {
+  export interface Pagination {
+    currentPage: number;
+
+    pageSize: number;
+
+    totalCount: number;
+
+    totalPages: number;
+  }
+
+  export interface Server {
+    createdAt: string;
+
+    description: string | null;
+
+    displayName: string | null;
+
+    homepage: string;
+
+    iconUrl: string | null;
+
+    isDeployed: boolean;
+
+    qualifiedName: string;
+
+    remote: boolean | null;
+
+    useCount: number;
+
+    verified: boolean;
+  }
 }
 
 export interface ServerListParams {
