@@ -62,7 +62,7 @@ export interface ServerRetrieveResponse {
 
 export namespace ServerRetrieveResponse {
   export interface StdioConnection {
-    configSchema: unknown;
+    configSchema: { [key: string]: unknown };
 
     type: 'stdio';
 
@@ -74,7 +74,7 @@ export namespace ServerRetrieveResponse {
   }
 
   export interface HTTPConnection {
-    configSchema: unknown;
+    configSchema: { [key: string]: unknown };
 
     deploymentUrl: string;
 
@@ -88,9 +88,17 @@ export namespace ServerRetrieveResponse {
   export interface Tool {
     description: string | null;
 
-    inputSchema: unknown;
+    inputSchema: Tool.InputSchema;
 
     name: string;
+  }
+
+  export namespace Tool {
+    export interface InputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+    }
   }
 }
 
