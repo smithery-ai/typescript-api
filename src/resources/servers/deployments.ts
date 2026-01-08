@@ -62,29 +62,9 @@ export interface DeploymentRetrieveResponse {
 
   updatedAt: string;
 
-  logs?: Array<DeploymentRetrieveResponse.Log>;
+  logs?: Array<unknown>;
 
   mcpUrl?: string;
-}
-
-export namespace DeploymentRetrieveResponse {
-  export interface Log {
-    level: string;
-
-    message: string;
-
-    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
-
-    timestamp: string;
-
-    error?: Log.Error;
-  }
-
-  export namespace Log {
-    export interface Error {
-      message?: string;
-    }
-  }
 }
 
 export type DeploymentListResponse = Array<DeploymentListResponse.DeploymentListResponseItem>;
