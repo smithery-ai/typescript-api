@@ -25,21 +25,114 @@ export class Servers extends APIResource {
   /**
    * Get a single server by its qualified name.
    */
-  retrieve(qualifiedName: string, options?: RequestOptions): APIPromise<unknown> {
+  retrieve(qualifiedName: string, options?: RequestOptions): APIPromise<ServerRetrieveResponse> {
     return this._client.get(path`/servers/${qualifiedName}`, options);
   }
 
   /**
    * Get a paginated list of all servers
    */
-  list(query: ServerListParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
+  list(
+    query: ServerListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ServerListResponse> {
     return this._client.get('/servers', { query, ...options });
   }
 }
 
-export type ServerRetrieveResponse = unknown;
+export interface ServerRetrieveResponse {
+  connections: Array<ServerRetrieveResponse.StdioConnection | ServerRetrieveResponse.HTTPConnection>;
 
-export type ServerListResponse = unknown;
+  deploymentUrl: string | null;
+
+  description: string;
+
+  displayName: string;
+
+  iconUrl: string | null;
+
+  qualifiedName: string;
+
+  remote: boolean;
+
+  security: ServerRetrieveResponse.Security | null;
+
+  tools: Array<ServerRetrieveResponse.Tool> | null;
+}
+
+export namespace ServerRetrieveResponse {
+  export interface StdioConnection {
+    configSchema: unknown;
+
+    type: 'stdio';
+
+    bundleUrl?: string;
+
+    runtime?: string;
+
+    stdioFunction?: string;
+  }
+
+  export interface HTTPConnection {
+    configSchema: unknown;
+
+    deploymentUrl: string;
+
+    type: 'http';
+  }
+
+  export interface Security {
+    scanPassed: boolean;
+  }
+
+  export interface Tool {
+    description: string | null;
+
+    inputSchema: unknown;
+
+    name: string;
+  }
+}
+
+export interface ServerListResponse {
+  pagination: ServerListResponse.Pagination;
+
+  servers: Array<ServerListResponse.Server>;
+}
+
+export namespace ServerListResponse {
+  export interface Pagination {
+    currentPage: number;
+
+    pageSize: number;
+
+    totalCount: number;
+
+    totalPages: number;
+  }
+
+  export interface Server {
+    createdAt: string;
+
+    description: string | null;
+
+    displayName: string | null;
+
+    homepage: string;
+
+    iconUrl: string | null;
+
+    isDeployed: boolean;
+
+    qualifiedName: string;
+
+    remote: boolean | null;
+
+    useCount: number;
+
+    verified: boolean;
+  }
+}
 
 export interface ServerListParams {
   page?: number;
