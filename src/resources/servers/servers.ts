@@ -2,38 +2,15 @@
 
 import { APIResource } from '../../core/resource';
 import * as DeploymentsAPI from './deployments';
-import {
-  DeploymentDeployParams,
-  DeploymentDeployResponse,
-  DeploymentListParams,
-  DeploymentListResponse,
-  DeploymentResumeParams,
-  DeploymentResumeResponse,
-  DeploymentRetrieveParams,
-  DeploymentRetrieveResponse,
-  Deployments,
-} from './deployments';
+import { Deployments } from './deployments';
 import * as LogsAPI from './logs';
-import { LogListParams, LogListResponse, Logs } from './logs';
+import { Logs } from './logs';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
-import { path } from '../../internal/utils/path';
 
 export class Servers extends APIResource {
   deployments: DeploymentsAPI.Deployments = new DeploymentsAPI.Deployments(this._client);
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
-
-  /**
-   * Get a single server by its qualified name.
-   */
-  retrieve(
-    name: string,
-    params: ServerRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<ServerRetrieveResponse> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/${name}`, options);
-  }
 
   /**
    * Get a paginated list of all servers
@@ -46,34 +23,10 @@ export class Servers extends APIResource {
   }
 }
 
-export interface ServerRetrieveResponse {
-  connections: Array<unknown>;
-
-  deploymentUrl: string | null;
-
-  description: string;
-
-  displayName: string;
-
-  iconUrl: string | null;
-
-  qualifiedName: string;
-
-  remote: boolean;
-
-  security: unknown;
-
-  tools: Array<unknown> | null;
-}
-
 export interface ServerListResponse {
   pagination: unknown;
 
   servers: Array<unknown>;
-}
-
-export interface ServerRetrieveParams {
-  namespace: string;
 }
 
 export interface ServerListParams {
@@ -88,24 +41,9 @@ Servers.Deployments = Deployments;
 Servers.Logs = Logs;
 
 export declare namespace Servers {
-  export {
-    type ServerRetrieveResponse as ServerRetrieveResponse,
-    type ServerListResponse as ServerListResponse,
-    type ServerRetrieveParams as ServerRetrieveParams,
-    type ServerListParams as ServerListParams,
-  };
+  export { type ServerListResponse as ServerListResponse, type ServerListParams as ServerListParams };
 
-  export {
-    Deployments as Deployments,
-    type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
-    type DeploymentListResponse as DeploymentListResponse,
-    type DeploymentDeployResponse as DeploymentDeployResponse,
-    type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentRetrieveParams as DeploymentRetrieveParams,
-    type DeploymentListParams as DeploymentListParams,
-    type DeploymentDeployParams as DeploymentDeployParams,
-    type DeploymentResumeParams as DeploymentResumeParams,
-  };
+  export { Deployments as Deployments };
 
-  export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
+  export { Logs as Logs };
 }
