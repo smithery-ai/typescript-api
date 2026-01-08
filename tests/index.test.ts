@@ -322,13 +322,13 @@ describe('instantiate client', () => {
     test('empty env variable', () => {
       process.env['SMITHERY_BASE_URL'] = ''; // empty
       const client = new Smithery({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://registry.smithery.ai');
+      expect(client.baseURL).toEqual('https://api.smithery.ai');
     });
 
     test('blank env variable', () => {
       process.env['SMITHERY_BASE_URL'] = '  '; // blank
       const client = new Smithery({ apiKey: 'My API Key' });
-      expect(client.baseURL).toEqual('https://registry.smithery.ai');
+      expect(client.baseURL).toEqual('https://api.smithery.ai');
     });
 
     test('in request options', () => {
