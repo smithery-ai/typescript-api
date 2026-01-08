@@ -53,7 +53,6 @@ describe('resource deployments', () => {
   test.skip('deploy: required and optional params', async () => {
     const response = await client.servers.deployments.deploy('qualifiedName', {
       payload: 'payload',
-      bundle: 'bundle',
       module: 'module',
       sourcemap: 'sourcemap',
     });
