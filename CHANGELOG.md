@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2026-01-08)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/smithery-ai/typescript-api/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Chores
+
+* update SDK settings ([e45da5e](https://github.com/smithery-ai/typescript-api/commit/e45da5e23be8eb74c1ea624305f7723d53047896))
+
 ## 0.1.0-alpha.3 (2026-01-08)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/smithery-ai/typescript-api/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
