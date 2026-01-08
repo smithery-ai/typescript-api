@@ -1,4 +1,4 @@
-import { createPathTagFunction, encodeURIPath } from '@smithery/cli/internal/utils/path';
+import { createPathTagFunction, encodeURIPath } from '@smithery/api/internal/utils/path';
 import { inspect } from 'node:util';
 import { runInNewContext } from 'node:vm';
 

@@ -55,12 +55,12 @@ $ cd typescript-api
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link @smithery/cli
+$ yarn link @smithery/api
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @smithery/cli
+$ pnpm link -—global @smithery/api
 ```
 
 ## Running tests
