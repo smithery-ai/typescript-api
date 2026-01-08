@@ -10,7 +10,11 @@ export class Deployments extends APIResource {
   /**
    * Get deployment status
    */
-  retrieve(id: string, params: DeploymentRetrieveParams, options?: RequestOptions): APIPromise<unknown> {
+  retrieve(
+    id: string,
+    params: DeploymentRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentRetrieveResponse> {
     const { qualifiedName } = params;
     return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
   }
@@ -18,14 +22,18 @@ export class Deployments extends APIResource {
   /**
    * List deployments for a server
    */
-  list(qualifiedName: string, options?: RequestOptions): APIPromise<unknown> {
+  list(qualifiedName: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
     return this._client.get(path`/servers/${qualifiedName}/deployments`, options);
   }
 
   /**
    * Upload and deploy an MCP server (hosted or external)
    */
-  deploy(qualifiedName: string, body: DeploymentDeployParams, options?: RequestOptions): APIPromise<unknown> {
+  deploy(
+    qualifiedName: string,
+    body: DeploymentDeployParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentDeployResponse> {
     return this._client.put(
       path`/servers/${qualifiedName}/deployments`,
       multipartFormRequestOptions({ body, ...options }, this._client),
@@ -35,19 +43,81 @@ export class Deployments extends APIResource {
   /**
    * Use id='latest' to resume the most recent deployment
    */
-  resume(id: string, params: DeploymentResumeParams, options?: RequestOptions): APIPromise<unknown> {
+  resume(
+    id: string,
+    params: DeploymentResumeParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentResumeResponse> {
     const { qualifiedName } = params;
     return this._client.post(path`/servers/${qualifiedName}/deployments/${id}/resume`, options);
   }
 }
 
-export type DeploymentRetrieveResponse = unknown;
+export interface DeploymentRetrieveResponse {
+  id: string;
 
-export type DeploymentListResponse = unknown;
+  createdAt: string;
 
-export type DeploymentDeployResponse = unknown;
+  status: string;
 
-export type DeploymentResumeResponse = unknown;
+  updatedAt: string;
+
+  logs?: Array<DeploymentRetrieveResponse.Log>;
+
+  mcpUrl?: string;
+}
+
+export namespace DeploymentRetrieveResponse {
+  export interface Log {
+    level: string;
+
+    message: string;
+
+    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
+
+    timestamp: string;
+
+    error?: Log.Error;
+  }
+
+  export namespace Log {
+    export interface Error {
+      message?: string;
+    }
+  }
+}
+
+export type DeploymentListResponse = Array<DeploymentListResponse.DeploymentListResponseItem>;
+
+export namespace DeploymentListResponse {
+  export interface DeploymentListResponseItem {
+    id: string;
+
+    createdAt: string;
+
+    status: string;
+
+    updatedAt: string;
+
+    mcpUrl?: string;
+  }
+}
+
+export interface DeploymentDeployResponse {
+  deploymentId: string;
+
+  mcpUrl: string;
+
+  status: string;
+
+  warnings?: Array<string>;
+}
+
+export interface DeploymentResumeResponse {
+  deploymentId: string;
+
+  status: string;
+}
 
 export interface DeploymentRetrieveParams {
   qualifiedName: string;
