@@ -25,46 +25,21 @@ export class Servers extends APIResource {
   /**
    * Get a single server by its qualified name.
    */
-  retrieve(qualifiedName: string, options?: RequestOptions): APIPromise<ServerRetrieveResponse> {
+  retrieve(qualifiedName: string, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get(path`/servers/${qualifiedName}`, options);
   }
 
   /**
    * Get a paginated list of all servers
    */
-  list(
-    query: ServerListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ServerListResponse> {
+  list(query: ServerListParams | null | undefined = {}, options?: RequestOptions): APIPromise<unknown> {
     return this._client.get('/servers', { query, ...options });
   }
 }
 
-export interface ServerRetrieveResponse {
-  connections: Array<unknown>;
+export type ServerRetrieveResponse = unknown;
 
-  deploymentUrl: string | null;
-
-  description: string;
-
-  displayName: string;
-
-  iconUrl: string | null;
-
-  qualifiedName: string;
-
-  remote: boolean;
-
-  security: unknown;
-
-  tools: Array<unknown> | null;
-}
-
-export interface ServerListResponse {
-  pagination: unknown;
-
-  servers: Array<unknown>;
-}
+export type ServerListResponse = unknown;
 
 export interface ServerListParams {
   page?: number;

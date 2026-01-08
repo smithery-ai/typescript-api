@@ -27,8 +27,6 @@ const client = new Smithery({
 });
 
 const response = await client.health.check();
-
-console.log(response.status);
 ```
 
 ### Request & Response types
@@ -43,7 +41,7 @@ const client = new Smithery({
   apiKey: process.env['SMITHERY_API_KEY'], // This is the default and can be omitted
 });
 
-const response: Smithery.HealthCheckResponse = await client.health.check();
+const response: unknown = await client.health.check();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -142,7 +140,7 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client.health.check().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(response.status);
+console.log(response);
 ```
 
 ### Logging
