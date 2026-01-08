@@ -5,8 +5,8 @@
   "compilerOptions": {
     "rootDir": "./dist/src",
     "paths": {
-      "@smithery/cli/*": ["./dist/src/*"],
-      "@smithery/cli": ["./dist/src/index.ts"]
+      "@smithery/api/*": ["./dist/src/*"],
+      "@smithery/api": ["./dist/src/index.ts"]
     },
     "noEmit": false,
     "declaration": true,

@@ -1,5 +1,5 @@
 import { inspect } from 'node:util';
-import { buildHeaders, type HeadersLike, type NullableHeaders } from '@smithery/cli/internal/headers';
+import { buildHeaders, type HeadersLike, type NullableHeaders } from '@smithery/api/internal/headers';
 
 function inspectNullableHeaders(headers: NullableHeaders) {
   return `NullableHeaders {${[

@@ -1,10 +1,10 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIPromise } from '@smithery/cli/core/api-promise';
+import { APIPromise } from '@smithery/api/core/api-promise';
 
 import util from 'node:util';
-import Smithery from '@smithery/cli';
-import { APIUserAbortError } from '@smithery/cli';
+import Smithery from '@smithery/api';
+import { APIUserAbortError } from '@smithery/api';
 const defaultFetch = fetch;
 
 describe('instantiate client', () => {
