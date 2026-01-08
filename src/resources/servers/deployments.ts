@@ -130,6 +130,11 @@ export interface DeploymentDeployParams {
   payload: string;
 
   /**
+   * Base64-encoded MCPB bundle file (for stdio deployments)
+   */
+  bundle?: string;
+
+  /**
    * JavaScript module content (for hosted deployments)
    */
   module?: string;
