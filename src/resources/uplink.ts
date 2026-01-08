@@ -8,16 +8,12 @@ export class Uplink extends APIResource {
   /**
    * Create or retrieve an authtoken for uplink connections
    */
-  createToken(options?: RequestOptions): APIPromise<UplinkCreateTokenResponse> {
+  createToken(options?: RequestOptions): APIPromise<unknown> {
     return this._client.post('/uplink/token', options);
   }
 }
 
-export interface UplinkCreateTokenResponse {
-  authtoken: string;
-
-  domain: string;
-}
+export type UplinkCreateTokenResponse = unknown;
 
 export declare namespace Uplink {
   export { type UplinkCreateTokenResponse as UplinkCreateTokenResponse };

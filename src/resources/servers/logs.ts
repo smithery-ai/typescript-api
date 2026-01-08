@@ -14,19 +14,12 @@ export class Logs extends APIResource {
     qualifiedName: string,
     query: LogListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<LogListResponse> {
+  ): APIPromise<unknown> {
     return this._client.get(path`/servers/${qualifiedName}/logs`, { query, ...options });
   }
 }
 
-export interface LogListResponse {
-  invocations: Array<unknown>;
-
-  /**
-   * Total invocations matching query
-   */
-  total: number;
-}
+export type LogListResponse = unknown;
 
 export interface LogListParams {
   /**
