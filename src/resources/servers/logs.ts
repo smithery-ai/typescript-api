@@ -10,34 +10,10 @@ export class Logs extends APIResource {
    * Fetch recent runtime logs for the server's deployed Worker, grouped by
    * invocation (requires ownership).
    */
-  retrieve(
-    name: string,
-    query: LogRetrieveParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<LogRetrieveResponse> {
-    return this._client.get(path`/servers/${name}/logs`, { query, ...options });
+  list(name: string, params: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
+    const { namespace, ...query } = params;
+    return this._client.get(path`/servers/${namespace}/${name}/logs`, { query, ...options });
   }
-
-  /**
-   * Fetch recent runtime logs for the server's deployed Worker, grouped by
-   * invocation (requires ownership).
-   */
-  list(
-    name: string,
-    query: LogListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<LogListResponse> {
-    return this._client.get(path`/servers//${name}/logs`, { query, ...options });
-  }
-}
-
-export interface LogRetrieveResponse {
-  invocations: Array<unknown>;
-
-  /**
-   * Total invocations matching query
-   */
-  total: number;
 }
 
 export interface LogListResponse {
@@ -49,45 +25,28 @@ export interface LogListResponse {
   total: number;
 }
 
-export interface LogRetrieveParams {
-  /**
-   * Start of time range (ISO 8601).
-   */
-  from?: string;
-
-  /**
-   * Max invocations to return. Defaults to 50.
-   */
-  limit?: number;
-
-  /**
-   * End of time range (ISO 8601).
-   */
-  to?: string;
-}
-
 export interface LogListParams {
   /**
-   * Start of time range (ISO 8601).
+   * Path param:
+   */
+  namespace: string;
+
+  /**
+   * Query param: Start of time range (ISO 8601).
    */
   from?: string;
 
   /**
-   * Max invocations to return. Defaults to 50.
+   * Query param: Max invocations to return. Defaults to 50.
    */
   limit?: number;
 
   /**
-   * End of time range (ISO 8601).
+   * Query param: End of time range (ISO 8601).
    */
   to?: string;
 }
 
 export declare namespace Logs {
-  export {
-    type LogRetrieveResponse as LogRetrieveResponse,
-    type LogListResponse as LogListResponse,
-    type LogRetrieveParams as LogRetrieveParams,
-    type LogListParams as LogListParams,
-  };
+  export { type LogListResponse as LogListResponse, type LogListParams as LogListParams };
 }

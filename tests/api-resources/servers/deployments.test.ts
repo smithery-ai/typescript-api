@@ -9,27 +9,6 @@ const client = new Smithery({
 
 describe('resource deployments', () => {
   // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.servers.deployments.create('name', { payload: 'payload' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.servers.deployments.create('name', {
-      payload: 'payload',
-      module: 'module',
-      sourcemap: 'sourcemap',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.servers.deployments.retrieve('id', {
       namespace: 'namespace',
@@ -49,27 +28,6 @@ describe('resource deployments', () => {
     const response = await client.servers.deployments.retrieve('id', {
       namespace: 'namespace',
       name: 'name',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('update: only required params', async () => {
-    const responsePromise = client.servers.deployments.update('name', { payload: 'payload' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('update: required and optional params', async () => {
-    const response = await client.servers.deployments.update('name', {
-      payload: 'payload',
-      module: 'module',
-      sourcemap: 'sourcemap',
     });
   });
 
@@ -113,5 +71,22 @@ describe('resource deployments', () => {
       module: 'module',
       sourcemap: 'sourcemap',
     });
+  });
+
+  // Prism tests are disabled
+  test.skip('resume: only required params', async () => {
+    const responsePromise = client.servers.deployments.resume('id', { namespace: 'namespace', name: 'name' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('resume: required and optional params', async () => {
+    const response = await client.servers.deployments.resume('id', { namespace: 'namespace', name: 'name' });
   });
 });
