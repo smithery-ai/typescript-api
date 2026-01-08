@@ -12,11 +12,10 @@ export class Logs extends APIResource {
    */
   retrieve(
     name: string,
-    params: LogRetrieveParams,
+    query: LogRetrieveParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<LogRetrieveResponse> {
-    const { namespace, ...query } = params;
-    return this._client.get(path`/servers/${namespace}/${name}/logs`, { query, ...options });
+    return this._client.get(path`/servers/${name}/logs`, { query, ...options });
   }
 
   /**
@@ -52,22 +51,17 @@ export interface LogListResponse {
 
 export interface LogRetrieveParams {
   /**
-   * Path param:
-   */
-  namespace: string;
-
-  /**
-   * Query param: Start of time range (ISO 8601).
+   * Start of time range (ISO 8601).
    */
   from?: string;
 
   /**
-   * Query param: Max invocations to return. Defaults to 50.
+   * Max invocations to return. Defaults to 50.
    */
   limit?: number;
 
   /**
-   * Query param: End of time range (ISO 8601).
+   * End of time range (ISO 8601).
    */
   to?: string;
 }

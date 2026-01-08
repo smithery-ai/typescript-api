@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from 'smithery';
+import Smithery from '@smithery/cli';
 
 const client = new Smithery({
   apiKey: 'My API Key',
@@ -31,7 +31,10 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.servers.deployments.retrieve('id', { name: 'name' });
+    const responsePromise = client.servers.deployments.retrieve('id', {
+      namespace: 'namespace',
+      name: 'name',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -43,12 +46,15 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
-    const response = await client.servers.deployments.retrieve('id', { name: 'name' });
+    const response = await client.servers.deployments.retrieve('id', {
+      namespace: 'namespace',
+      name: 'name',
+    });
   });
 
   // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.servers.deployments.list('name');
+  test.skip('update: only required params', async () => {
+    const responsePromise = client.servers.deployments.update('name', { payload: 'payload' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,6 +62,32 @@ describe('resource deployments', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('update: required and optional params', async () => {
+    const response = await client.servers.deployments.update('name', {
+      payload: 'payload',
+      module: 'module',
+      sourcemap: 'sourcemap',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.servers.deployments.list('name', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('list: required and optional params', async () => {
+    const response = await client.servers.deployments.list('name', { namespace: 'namespace' });
   });
 
   // Prism tests are disabled

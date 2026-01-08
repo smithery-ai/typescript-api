@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { Smithery } from 'smithery';
+import { Smithery } from '@smithery/cli';
 
 const { stringifyQuery } = Smithery.prototype as any;
 

@@ -25,7 +25,7 @@ export default tseslint.config(
         {
           patterns: [
             {
-              regex: '^smithery(/.*)?',
+              regex: '^@smithery/cli(/.*)?',
               message: 'Use a relative import, not a package import.',
             },
           ],

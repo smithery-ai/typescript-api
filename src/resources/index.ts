@@ -5,6 +5,7 @@ export {
   Servers,
   type ServerRetrieveResponse,
   type ServerListResponse,
+  type ServerRetrieveParams,
   type ServerListParams,
 } from './servers/servers';
 export { Uplink, type UplinkCreateTokenResponse } from './uplink';

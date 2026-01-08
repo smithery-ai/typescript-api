@@ -9,9 +9,12 @@ import {
   DeploymentCreateResponse,
   DeploymentDeployParams,
   DeploymentDeployResponse,
+  DeploymentListParams,
   DeploymentListResponse,
   DeploymentRetrieveParams,
   DeploymentRetrieveResponse,
+  DeploymentUpdateParams,
+  DeploymentUpdateResponse,
   Deployments,
 } from './deployments/deployments';
 import { APIPromise } from '../../core/api-promise';
@@ -25,8 +28,13 @@ export class Servers extends APIResource {
   /**
    * Get a single server by its qualified name.
    */
-  retrieve(name: string, options?: RequestOptions): APIPromise<ServerRetrieveResponse> {
-    return this._client.get(path`/servers//${name}`, options);
+  retrieve(
+    name: string,
+    params: ServerRetrieveParams,
+    options?: RequestOptions,
+  ): APIPromise<ServerRetrieveResponse> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/${name}`, options);
   }
 
   /**
@@ -66,6 +74,10 @@ export interface ServerListResponse {
   servers: Array<unknown>;
 }
 
+export interface ServerRetrieveParams {
+  namespace: string;
+}
+
 export interface ServerListParams {
   page?: number;
 
@@ -81,6 +93,7 @@ export declare namespace Servers {
   export {
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerRetrieveParams as ServerRetrieveParams,
     type ServerListParams as ServerListParams,
   };
 
@@ -88,10 +101,13 @@ export declare namespace Servers {
     Deployments as Deployments,
     type DeploymentCreateResponse as DeploymentCreateResponse,
     type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
+    type DeploymentUpdateResponse as DeploymentUpdateResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
     type DeploymentCreateParams as DeploymentCreateParams,
     type DeploymentRetrieveParams as DeploymentRetrieveParams,
+    type DeploymentUpdateParams as DeploymentUpdateParams,
+    type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
   };
 

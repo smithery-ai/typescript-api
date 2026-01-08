@@ -55,12 +55,12 @@ $ cd smithery-typescript
 # With yarn
 $ yarn link
 $ cd ../my-package
-$ yarn link smithery
+$ yarn link @smithery/cli
 
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global smithery
+$ pnpm link -—global @smithery/cli
 ```
 
 ## Running tests

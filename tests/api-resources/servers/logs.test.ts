@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from 'smithery';
+import Smithery from '@smithery/cli';
 
 const client = new Smithery({
   apiKey: 'My API Key',
@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource logs', () => {
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.servers.logs.retrieve('name', { namespace: 'namespace' });
+  test.skip('retrieve', async () => {
+    const responsePromise = client.servers.logs.retrieve('name');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,13 +21,19 @@ describe('resource logs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.servers.logs.retrieve('name', {
-      namespace: 'namespace',
-      from: '2026-01-01T00:00:00Z',
-      limit: 50,
-      to: '2026-01-01T01:00:00Z',
-    });
+  test.skip('retrieve: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.servers.logs.retrieve(
+        'name',
+        {
+          from: '2026-01-01T00:00:00Z',
+          limit: 50,
+          to: '2026-01-01T01:00:00Z',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 
   // Prism tests are disabled
