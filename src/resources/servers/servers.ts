@@ -133,7 +133,19 @@ export interface ServerListResponse {
 }
 
 export interface ServerListParams extends SmitheryPageParams {
+  isDeployed?: '0' | '1' | 'true' | 'false';
+
+  ownerId?: string;
+
   q?: string;
+
+  remote?: '0' | '1' | 'true' | 'false';
+
+  repoName?: string;
+
+  repoOwner?: string;
+
+  verified?: '0' | '1' | 'true' | 'false';
 }
 
 Servers.Deployments = Deployments;
