@@ -25,7 +25,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import { Search, SearchServersResponse } from './resources/search';
+import { Search } from './resources/search';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
@@ -780,7 +780,7 @@ export declare namespace Smithery {
     type ServerListParams as ServerListParams,
   };
 
-  export { Search as Search, type SearchServersResponse as SearchServersResponse };
+  export { Search as Search };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
 }
