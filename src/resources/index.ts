@@ -2,6 +2,13 @@
 
 export { Health, type HealthCheckResponse } from './health';
 export {
+  Namespaces,
+  type NamespaceCreateResponse,
+  type NamespaceListResponse,
+  type NamespaceCreateParams,
+} from './namespaces';
+export { Search, type SearchRetrieveServersResponse, type SearchRetrieveSkillsResponse } from './search';
+export {
   Servers,
   type ServerRetrieveResponse,
   type ServerListResponse,
