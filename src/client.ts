@@ -19,13 +19,6 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import {
-  NamespaceCreateParams,
-  NamespaceCreateResponse,
-  NamespaceListResponse,
-  Namespaces,
-} from './resources/namespaces';
-import { Search, SearchRetrieveServersResponse, SearchRetrieveSkillsResponse } from './resources/search';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
@@ -753,15 +746,11 @@ export class Smithery {
   health: API.Health = new API.Health(this);
   servers: API.Servers = new API.Servers(this);
   uplink: API.Uplink = new API.Uplink(this);
-  search: API.Search = new API.Search(this);
-  namespaces: API.Namespaces = new API.Namespaces(this);
 }
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
-Smithery.Search = Search;
-Smithery.Namespaces = Namespaces;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -780,17 +769,4 @@ export declare namespace Smithery {
   };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
-
-  export {
-    Search as Search,
-    type SearchRetrieveServersResponse as SearchRetrieveServersResponse,
-    type SearchRetrieveSkillsResponse as SearchRetrieveSkillsResponse,
-  };
-
-  export {
-    Namespaces as Namespaces,
-    type NamespaceCreateResponse as NamespaceCreateResponse,
-    type NamespaceListResponse as NamespaceListResponse,
-    type NamespaceCreateParams as NamespaceCreateParams,
-  };
 }
