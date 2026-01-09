@@ -60,3 +60,13 @@ Types:
 Methods:
 
 - <code title="post /uplink/token">client.uplink.<a href="./src/resources/uplink.ts">createToken</a>() -> UplinkCreateTokenResponse</code>
+
+# Skills
+
+Types:
+
+- <code><a href="./src/resources/skills.ts">SkillListResponse</a></code>
+
+Methods:
+
+- <code title="get /skills">client.skills.<a href="./src/resources/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>

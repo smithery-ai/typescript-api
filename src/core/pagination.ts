@@ -166,51 +166,53 @@ export class SmitheryPage<Item> extends AbstractPage<Item> implements SmitheryPa
   }
 }
 
-export interface SearchPageResponse<Item> {
-  data: Array<Item>;
+export interface SkillsPageResponse<Item> {
+  skills: Array<Item>;
 
-  pagination: SearchPageResponse.Pagination;
+  pagination: SkillsPageResponse.Pagination;
 }
 
-export namespace SearchPageResponse {
+export namespace SkillsPageResponse {
   export interface Pagination {
-    page?: number;
+    currentPage?: number;
 
     pageSize?: number;
 
-    total?: number;
+    totalCount?: number;
+
+    totalPages?: number;
   }
 }
 
-export interface SearchPageParams {
+export interface SkillsPageParams {
   page?: number;
 
   pageSize?: number;
 }
 
-export class SearchPage<Item> extends AbstractPage<Item> implements SearchPageResponse<Item> {
-  data: Array<Item>;
+export class SkillsPage<Item> extends AbstractPage<Item> implements SkillsPageResponse<Item> {
+  skills: Array<Item>;
 
-  pagination: SearchPageResponse.Pagination;
+  pagination: SkillsPageResponse.Pagination;
 
   constructor(
     client: Smithery,
     response: Response,
-    body: SearchPageResponse<Item>,
+    body: SkillsPageResponse<Item>,
     options: FinalRequestOptions,
   ) {
     super(client, response, body, options);
 
-    this.data = body.data || [];
+    this.skills = body.skills || [];
     this.pagination = body.pagination || {};
   }
 
   getPaginatedItems(): Item[] {
-    return this.data ?? [];
+    return this.skills ?? [];
   }
 
   nextPageRequestOptions(): PageRequestOptions | null {
-    const query = this.options.query as SearchPageParams;
+    const query = this.options.query as SkillsPageParams;
     const currentPage = query?.page ?? 1;
 
     return {
