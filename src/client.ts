@@ -14,11 +14,18 @@ import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
-import { AbstractPage, type SmitheryPageParams, SmitheryPageResponse } from './core/pagination';
+import {
+  AbstractPage,
+  type SearchPageParams,
+  SearchPageResponse,
+  type SmitheryPageParams,
+  SmitheryPageResponse,
+} from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
+import { Search, SearchServersResponse } from './resources/search';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
@@ -745,11 +752,13 @@ export class Smithery {
 
   health: API.Health = new API.Health(this);
   servers: API.Servers = new API.Servers(this);
+  search: API.Search = new API.Search(this);
   uplink: API.Uplink = new API.Uplink(this);
 }
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
+Smithery.Search = Search;
 Smithery.Uplink = Uplink;
 
 export declare namespace Smithery {
@@ -757,6 +766,9 @@ export declare namespace Smithery {
 
   export import SmitheryPage = Pagination.SmitheryPage;
   export { type SmitheryPageParams as SmitheryPageParams, type SmitheryPageResponse as SmitheryPageResponse };
+
+  export import SearchPage = Pagination.SearchPage;
+  export { type SearchPageParams as SearchPageParams, type SearchPageResponse as SearchPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -767,6 +779,8 @@ export declare namespace Smithery {
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
+
+  export { Search as Search, type SearchServersResponse as SearchServersResponse };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
 }

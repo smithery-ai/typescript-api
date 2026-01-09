@@ -51,6 +51,16 @@ Methods:
 
 - <code title="get /servers/{qualifiedName}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(qualifiedName, { ...params }) -> LogListResponse</code>
 
+# Search
+
+Types:
+
+- <code><a href="./src/resources/search.ts">SearchServersResponse</a></code>
+
+Methods:
+
+- <code title="get /search/servers">client.search.<a href="./src/resources/search.ts">servers</a>() -> SearchServersResponse</code>
+
 # Uplink
 
 Types:
