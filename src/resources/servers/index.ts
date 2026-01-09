@@ -17,14 +17,6 @@ export {
 } from './deployments';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
 export {
-  Secrets,
-  type SecretListResponse,
-  type SecretDeleteResponse,
-  type SecretSetResponse,
-  type SecretDeleteParams,
-  type SecretSetParams,
-} from './secrets';
-export {
   Servers,
   type ServerRetrieveResponse,
   type ServerListResponse,
