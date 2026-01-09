@@ -39,9 +39,7 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('deploy: only required params', async () => {
-    const responsePromise = client.servers.deployments.deploy('qualifiedName', {
-      payload: { stateful: true, type: 'hosted' },
-    });
+    const responsePromise = client.servers.deployments.deploy('qualifiedName', { payload: 'payload' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -54,110 +52,7 @@ describe('resource deployments', () => {
   // Prism tests are disabled
   test.skip('deploy: required and optional params', async () => {
     const response = await client.servers.deployments.deploy('qualifiedName', {
-      payload: {
-        stateful: true,
-        type: 'hosted',
-        configSchema: { foo: 'bar' },
-        serverCard: {
-          serverInfo: {
-            name: 'name',
-            version: 'version',
-            description: 'description',
-            icons: [
-              {
-                src: 'src',
-                mimeType: 'mimeType',
-                sizes: ['string'],
-                theme: 'light',
-              },
-            ],
-            title: 'title',
-            websiteUrl: 'websiteUrl',
-          },
-          authentication: { required: true, schemes: ['string'] },
-          prompts: [
-            {
-              name: 'name',
-              _meta: { foo: 'bar' },
-              arguments: [
-                {
-                  name: 'name',
-                  description: 'description',
-                  required: true,
-                },
-              ],
-              description: 'description',
-              icons: [
-                {
-                  src: 'src',
-                  mimeType: 'mimeType',
-                  sizes: ['string'],
-                  theme: 'light',
-                },
-              ],
-              title: 'title',
-            },
-          ],
-          resources: [
-            {
-              name: 'name',
-              uri: 'uri',
-              _meta: { foo: 'bar' },
-              annotations: {
-                audience: ['user'],
-                lastModified: '2019-12-27T18:11:19.117Z',
-                priority: 0,
-              },
-              description: 'description',
-              icons: [
-                {
-                  src: 'src',
-                  mimeType: 'mimeType',
-                  sizes: ['string'],
-                  theme: 'light',
-                },
-              ],
-              mimeType: 'mimeType',
-              title: 'title',
-            },
-          ],
-          tools: [
-            {
-              inputSchema: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string'],
-              },
-              name: 'name',
-              _meta: { foo: 'bar' },
-              annotations: {
-                destructiveHint: true,
-                idempotentHint: true,
-                openWorldHint: true,
-                readOnlyHint: true,
-                title: 'title',
-              },
-              description: 'description',
-              execution: { taskSupport: 'required' },
-              icons: [
-                {
-                  src: 'src',
-                  mimeType: 'mimeType',
-                  sizes: ['string'],
-                  theme: 'light',
-                },
-              ],
-              outputSchema: {
-                type: 'object',
-                properties: { foo: 'bar' },
-                required: ['string'],
-              },
-              title: 'title',
-            },
-          ],
-        },
-        source: { branch: 'branch', commit: 'commit' },
-      },
+      payload: 'payload',
       bundle: await toFile(Buffer.from('# my file contents'), 'README.md'),
       module: await toFile(Buffer.from('# my file contents'), 'README.md'),
       sourcemap: await toFile(Buffer.from('# my file contents'), 'README.md'),
