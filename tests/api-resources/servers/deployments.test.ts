@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from '@smithery/api';
+import Smithery, { toFile } from '@smithery/api';
 
 const client = new Smithery({
   apiKey: 'My API Key',
@@ -53,8 +53,9 @@ describe('resource deployments', () => {
   test.skip('deploy: required and optional params', async () => {
     const response = await client.servers.deployments.deploy('qualifiedName', {
       payload: 'payload',
-      module: 'module',
-      sourcemap: 'sourcemap',
+      bundle: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      module: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      sourcemap: await toFile(Buffer.from('# my file contents'), 'README.md'),
     });
   });
 
