@@ -36,7 +36,7 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Get a paginated list of all servers
+   * Get a paginated list of all servers. Use the `q` parameter to search.
    */
   list(
     query: ServerListParams | null | undefined = {},
@@ -132,7 +132,9 @@ export interface ServerListResponse {
   verified: boolean;
 }
 
-export interface ServerListParams extends SmitheryPageParams {}
+export interface ServerListParams extends SmitheryPageParams {
+  q?: string;
+}
 
 Servers.Deployments = Deployments;
 Servers.Logs = Logs;
