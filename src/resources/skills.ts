@@ -39,6 +39,8 @@ export interface SkillListResponse {
   gitUrl?: string;
 
   totalActivations?: number;
+
+  uniqueUsers?: number;
 }
 
 export interface SkillListParams extends SkillsPageParams {

@@ -111,11 +111,13 @@ export namespace ServerRetrieveResponse {
 }
 
 export interface ServerListResponse {
+  id: string;
+
   createdAt: string;
 
-  description: string | null;
+  description: string;
 
-  displayName: string | null;
+  displayName: string;
 
   homepage: string;
 
