@@ -24,6 +24,11 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/servers/deployments.ts">DeployPayload</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">ExternalDeployPayload</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">HostedDeployPayload</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">ServerCard</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">StdioDeployPayload</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentListResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployResponse</a></code>
