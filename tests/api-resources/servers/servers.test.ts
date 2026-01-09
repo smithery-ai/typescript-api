@@ -38,9 +38,15 @@ describe('resource servers', () => {
     await expect(
       client.servers.list(
         {
+          isDeployed: '0',
+          ownerId: 'ownerId',
           page: 1,
           pageSize: 1,
           q: 'q',
+          remote: '0',
+          repoName: 'repoName',
+          repoOwner: 'repoOwner',
+          verified: '0',
         },
         { path: '/_stainless_unknown_path' },
       ),
