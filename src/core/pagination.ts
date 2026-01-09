@@ -165,3 +165,60 @@ export class SmitheryPage<Item> extends AbstractPage<Item> implements SmitheryPa
     };
   }
 }
+
+export interface SearchPageResponse<Item> {
+  data: Array<Item>;
+
+  pagination: SearchPageResponse.Pagination;
+}
+
+export namespace SearchPageResponse {
+  export interface Pagination {
+    page?: number;
+
+    pageSize?: number;
+
+    total?: number;
+  }
+}
+
+export interface SearchPageParams {
+  page?: number;
+
+  pageSize?: number;
+}
+
+export class SearchPage<Item> extends AbstractPage<Item> implements SearchPageResponse<Item> {
+  data: Array<Item>;
+
+  pagination: SearchPageResponse.Pagination;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: SearchPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.data = body.data || [];
+    this.pagination = body.pagination || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.data ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const query = this.options.query as SearchPageParams;
+    const currentPage = query?.page ?? 1;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}
