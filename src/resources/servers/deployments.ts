@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { type Uploadable } from '../../core/uploads';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
@@ -130,14 +131,19 @@ export interface DeploymentDeployParams {
   payload: string;
 
   /**
-   * JavaScript module content (for hosted deployments)
+   * MCPB bundle file (for stdio deployments)
    */
-  module?: string;
+  bundle?: Uploadable;
 
   /**
-   * Source map content
+   * JavaScript module file (for hosted deployments)
    */
-  sourcemap?: string;
+  module?: Uploadable;
+
+  /**
+   * Source map file (for hosted deployments)
+   */
+  sourcemap?: Uploadable;
 }
 
 export interface DeploymentResumeParams {
