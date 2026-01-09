@@ -54,6 +54,242 @@ export class Deployments extends APIResource {
   }
 }
 
+export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | StdioDeployPayload;
+
+export interface ExternalDeployPayload {
+  type: 'external';
+
+  upstreamUrl: string;
+}
+
+export interface HostedDeployPayload {
+  stateful: boolean;
+
+  type: 'hosted';
+
+  configSchema?: { [key: string]: unknown };
+
+  serverCard?: ServerCard;
+
+  source?: HostedDeployPayload.Source;
+}
+
+export namespace HostedDeployPayload {
+  export interface Source {
+    branch?: string;
+
+    commit?: string;
+  }
+}
+
+export interface ServerCard {
+  serverInfo: ServerCard.ServerInfo;
+
+  authentication?: ServerCard.Authentication;
+
+  prompts?: Array<ServerCard.Prompt>;
+
+  resources?: Array<ServerCard.Resource>;
+
+  tools?: Array<ServerCard.Tool>;
+
+  [k: string]: unknown;
+}
+
+export namespace ServerCard {
+  export interface ServerInfo {
+    name: string;
+
+    version: string;
+
+    description?: string;
+
+    icons?: Array<ServerInfo.Icon>;
+
+    title?: string;
+
+    websiteUrl?: string;
+  }
+
+  export namespace ServerInfo {
+    export interface Icon {
+      src: string;
+
+      mimeType?: string;
+
+      sizes?: Array<string>;
+
+      theme?: 'light' | 'dark';
+    }
+  }
+
+  export interface Authentication {
+    required: boolean;
+
+    schemes: Array<string>;
+  }
+
+  export interface Prompt {
+    name: string;
+
+    _meta?: { [key: string]: unknown };
+
+    arguments?: Array<Prompt.Argument>;
+
+    description?: string;
+
+    icons?: Array<Prompt.Icon>;
+
+    title?: string;
+  }
+
+  export namespace Prompt {
+    export interface Argument {
+      name: string;
+
+      description?: string;
+
+      required?: boolean;
+    }
+
+    export interface Icon {
+      src: string;
+
+      mimeType?: string;
+
+      sizes?: Array<string>;
+
+      theme?: 'light' | 'dark';
+    }
+  }
+
+  export interface Resource {
+    name: string;
+
+    uri: string;
+
+    _meta?: { [key: string]: unknown };
+
+    annotations?: Resource.Annotations;
+
+    description?: string;
+
+    icons?: Array<Resource.Icon>;
+
+    mimeType?: string;
+
+    title?: string;
+  }
+
+  export namespace Resource {
+    export interface Annotations {
+      audience?: Array<'user' | 'assistant'>;
+
+      lastModified?: string;
+
+      priority?: number;
+    }
+
+    export interface Icon {
+      src: string;
+
+      mimeType?: string;
+
+      sizes?: Array<string>;
+
+      theme?: 'light' | 'dark';
+    }
+  }
+
+  export interface Tool {
+    inputSchema: Tool.InputSchema;
+
+    name: string;
+
+    _meta?: { [key: string]: unknown };
+
+    annotations?: Tool.Annotations;
+
+    description?: string;
+
+    execution?: Tool.Execution;
+
+    icons?: Array<Tool.Icon>;
+
+    outputSchema?: Tool.OutputSchema;
+
+    title?: string;
+  }
+
+  export namespace Tool {
+    export interface InputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+
+      required?: Array<string>;
+
+      [k: string]: unknown;
+    }
+
+    export interface Annotations {
+      destructiveHint?: boolean;
+
+      idempotentHint?: boolean;
+
+      openWorldHint?: boolean;
+
+      readOnlyHint?: boolean;
+
+      title?: string;
+    }
+
+    export interface Execution {
+      taskSupport?: 'required' | 'optional' | 'forbidden';
+    }
+
+    export interface Icon {
+      src: string;
+
+      mimeType?: string;
+
+      sizes?: Array<string>;
+
+      theme?: 'light' | 'dark';
+    }
+
+    export interface OutputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+
+      required?: Array<string>;
+
+      [k: string]: unknown;
+    }
+  }
+}
+
+export interface StdioDeployPayload {
+  runtime: 'node';
+
+  type: 'stdio';
+
+  configSchema?: { [key: string]: unknown };
+
+  serverCard?: ServerCard;
+
+  source?: StdioDeployPayload.Source;
+}
+
+export namespace StdioDeployPayload {
+  export interface Source {
+    branch?: string;
+
+    commit?: string;
+  }
+}
+
 export interface DeploymentRetrieveResponse {
   id: string;
 
@@ -152,6 +388,11 @@ export interface DeploymentResumeParams {
 
 export declare namespace Deployments {
   export {
+    type DeployPayload as DeployPayload,
+    type ExternalDeployPayload as ExternalDeployPayload,
+    type HostedDeployPayload as HostedDeployPayload,
+    type ServerCard as ServerCard,
+    type StdioDeployPayload as StdioDeployPayload,
     type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,

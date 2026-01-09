@@ -2,6 +2,11 @@
 
 export {
   Deployments,
+  type DeployPayload,
+  type ExternalDeployPayload,
+  type HostedDeployPayload,
+  type ServerCard,
+  type StdioDeployPayload,
   type DeploymentRetrieveResponse,
   type DeploymentListResponse,
   type DeploymentDeployResponse,
