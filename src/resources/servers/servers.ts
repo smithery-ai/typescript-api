@@ -3,6 +3,7 @@
 import { APIResource } from '../../core/resource';
 import * as DeploymentsAPI from './deployments';
 import {
+  DeployPayload,
   DeploymentDeployParams,
   DeploymentDeployResponse,
   DeploymentListResponse,
@@ -11,6 +12,10 @@ import {
   DeploymentRetrieveParams,
   DeploymentRetrieveResponse,
   Deployments,
+  ExternalDeployPayload,
+  HostedDeployPayload,
+  ServerCard,
+  StdioDeployPayload,
 } from './deployments';
 import * as LogsAPI from './logs';
 import { LogListParams, LogListResponse, Logs } from './logs';
@@ -144,6 +149,11 @@ export declare namespace Servers {
 
   export {
     Deployments as Deployments,
+    type DeployPayload as DeployPayload,
+    type ExternalDeployPayload as ExternalDeployPayload,
+    type HostedDeployPayload as HostedDeployPayload,
+    type ServerCard as ServerCard,
+    type StdioDeployPayload as StdioDeployPayload,
     type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
