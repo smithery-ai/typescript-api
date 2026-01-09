@@ -16,8 +16,8 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
-  type SearchPageParams,
-  SearchPageResponse,
+  type SkillsPageParams,
+  SkillsPageResponse,
   type SmitheryPageParams,
   SmitheryPageResponse,
 } from './core/pagination';
@@ -25,6 +25,7 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
+import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
@@ -752,11 +753,13 @@ export class Smithery {
   health: API.Health = new API.Health(this);
   servers: API.Servers = new API.Servers(this);
   uplink: API.Uplink = new API.Uplink(this);
+  skills: API.Skills = new API.Skills(this);
 }
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
+Smithery.Skills = Skills;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -764,8 +767,8 @@ export declare namespace Smithery {
   export import SmitheryPage = Pagination.SmitheryPage;
   export { type SmitheryPageParams as SmitheryPageParams, type SmitheryPageResponse as SmitheryPageResponse };
 
-  export import SearchPage = Pagination.SearchPage;
-  export { type SearchPageParams as SearchPageParams, type SearchPageResponse as SearchPageResponse };
+  export import SkillsPage = Pagination.SkillsPage;
+  export { type SkillsPageParams as SkillsPageParams, type SkillsPageResponse as SkillsPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -778,4 +781,11 @@ export declare namespace Smithery {
   };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
+
+  export {
+    Skills as Skills,
+    type SkillListResponse as SkillListResponse,
+    type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
+    type SkillListParams as SkillListParams,
+  };
 }
