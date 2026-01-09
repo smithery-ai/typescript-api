@@ -25,7 +25,6 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import { Search } from './resources/search';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   ServerListParams,
@@ -752,13 +751,11 @@ export class Smithery {
 
   health: API.Health = new API.Health(this);
   servers: API.Servers = new API.Servers(this);
-  search: API.Search = new API.Search(this);
   uplink: API.Uplink = new API.Uplink(this);
 }
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
-Smithery.Search = Search;
 Smithery.Uplink = Uplink;
 
 export declare namespace Smithery {
@@ -779,8 +776,6 @@ export declare namespace Smithery {
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
-
-  export { Search as Search };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
 }

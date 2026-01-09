@@ -51,8 +51,6 @@ Methods:
 
 - <code title="get /servers/{qualifiedName}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(qualifiedName, { ...params }) -> LogListResponse</code>
 
-# Search
-
 # Uplink
 
 Types:
