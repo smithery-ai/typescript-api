@@ -54,7 +54,17 @@ export class Deployments extends APIResource {
   }
 }
 
-export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | StdioDeployPayload;
+export type DeployPayload =
+  | HostedDeployPayload
+  | ExternalDeployPayload
+  | StdioDeployPayload
+  | DeployPayload.RepoDeployPayload;
+
+export namespace DeployPayload {
+  export interface RepoDeployPayload {
+    type: 'repo';
+  }
+}
 
 export interface ExternalDeployPayload {
   type: 'external';
