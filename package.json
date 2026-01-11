@@ -1,6 +1,6 @@
 {
   "name": "@smithery/api",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "The official TypeScript library for the Smithery API",
   "author": "Smithery <contact@smithery.ai>",
   "types": "dist/index.d.ts",
