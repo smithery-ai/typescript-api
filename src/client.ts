@@ -25,6 +25,12 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
+import {
+  NamespaceCreateParams,
+  NamespaceCreateResponse,
+  NamespaceListResponse,
+  Namespaces,
+} from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
@@ -754,12 +760,14 @@ export class Smithery {
   servers: API.Servers = new API.Servers(this);
   uplink: API.Uplink = new API.Uplink(this);
   skills: API.Skills = new API.Skills(this);
+  namespaces: API.Namespaces = new API.Namespaces(this);
 }
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
+Smithery.Namespaces = Namespaces;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -787,5 +795,12 @@ export declare namespace Smithery {
     type SkillListResponse as SkillListResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillListParams as SkillListParams,
+  };
+
+  export {
+    Namespaces as Namespaces,
+    type NamespaceCreateResponse as NamespaceCreateResponse,
+    type NamespaceListResponse as NamespaceListResponse,
+    type NamespaceCreateParams as NamespaceCreateParams,
   };
 }
