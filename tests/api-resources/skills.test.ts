@@ -30,6 +30,7 @@ describe('resource skills', () => {
           page: 1,
           pageSize: 1,
           q: 'q',
+          topK: 10,
         },
         { path: '/_stainless_unknown_path' },
       ),

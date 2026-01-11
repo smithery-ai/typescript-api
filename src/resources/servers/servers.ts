@@ -147,6 +147,8 @@ export interface ServerListParams extends SmitheryPageParams {
 
   repoOwner?: string;
 
+  topK?: number;
+
   verified?: '0' | '1' | 'true' | 'false';
 }
 
