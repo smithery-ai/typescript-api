@@ -47,6 +47,8 @@ export interface SkillListParams extends SkillsPageParams {
   category?: string;
 
   q?: string;
+
+  topK?: number;
 }
 
 export declare namespace Skills {

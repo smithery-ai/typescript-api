@@ -46,6 +46,7 @@ describe('resource servers', () => {
           remote: '0',
           repoName: 'repoName',
           repoOwner: 'repoOwner',
+          topK: 10,
           verified: '0',
         },
         { path: '/_stainless_unknown_path' },
