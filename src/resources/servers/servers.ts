@@ -19,14 +19,25 @@ import {
 } from './deployments';
 import * as LogsAPI from './logs';
 import { LogListParams, LogListResponse, Logs } from './logs';
+import * as SecretsAPI from './secrets';
+import {
+  SecretDeleteParams,
+  SecretDeleteResponse,
+  SecretListResponse,
+  SecretSetParams,
+  SecretSetResponse,
+  Secrets,
+} from './secrets';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SmitheryPage, type SmitheryPageParams } from '../../core/pagination';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Servers extends APIResource {
   deployments: DeploymentsAPI.Deployments = new DeploymentsAPI.Deployments(this._client);
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
+  secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
 
   /**
    * Get a single server by its qualified name.
@@ -43,6 +54,17 @@ export class Servers extends APIResource {
     options?: RequestOptions,
   ): PagePromise<ServerListResponsesSmitheryPage, ServerListResponse> {
     return this._client.getAPIList('/servers', SmitheryPage<ServerListResponse>, { query, ...options });
+  }
+
+  /**
+   * Download the MCPB bundle for the latest successful stdio deployment
+   */
+  download(qualifiedName: string, options?: RequestOptions): APIPromise<Response> {
+    return this._client.get(path`/servers/${qualifiedName}/download`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
+      __binaryResponse: true,
+    });
   }
 }
 
@@ -154,6 +176,7 @@ export interface ServerListParams extends SmitheryPageParams {
 
 Servers.Deployments = Deployments;
 Servers.Logs = Logs;
+Servers.Secrets = Secrets;
 
 export declare namespace Servers {
   export {
@@ -180,4 +203,13 @@ export declare namespace Servers {
   };
 
   export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
+
+  export {
+    Secrets as Secrets,
+    type SecretListResponse as SecretListResponse,
+    type SecretDeleteResponse as SecretDeleteResponse,
+    type SecretSetResponse as SecretSetResponse,
+    type SecretDeleteParams as SecretDeleteParams,
+    type SecretSetParams as SecretSetParams,
+  };
 }
