@@ -9,6 +9,9 @@ export {
 } from './namespaces';
 export {
   Servers,
+  type BuildConfig,
+  type DeploymentTarget,
+  type ProjectConfig,
   type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerListParams,
