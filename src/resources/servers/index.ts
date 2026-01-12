@@ -31,6 +31,7 @@ export {
   type ProjectConfig,
   type ServerRetrieveResponse,
   type ServerListResponse,
+  type ServerDeleteResponse,
   type ServerListParams,
   type ServerListResponsesSmitheryPage,
 } from './servers';

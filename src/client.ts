@@ -38,6 +38,7 @@ import {
   BuildConfig,
   DeploymentTarget,
   ProjectConfig,
+  ServerDeleteResponse,
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
@@ -775,6 +776,7 @@ export declare namespace Smithery {
     type ProjectConfig as ProjectConfig,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerDeleteResponse as ServerDeleteResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
