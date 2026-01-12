@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.9.0 (2026-01-12)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/smithery-ai/typescript-api/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* **api:** api update ([3fb30ae](https://github.com/smithery-ai/typescript-api/commit/3fb30ae29c29660622db8b8b407bdbda6335e29d))
+
 ## 0.8.0 (2026-01-12)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/smithery-ai/typescript-api/compare/v0.7.0...v0.8.0)
