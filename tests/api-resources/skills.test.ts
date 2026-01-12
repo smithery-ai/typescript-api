@@ -27,9 +27,11 @@ describe('resource skills', () => {
       client.skills.list(
         {
           category: 'category',
+          namespace: 'namespace',
           page: 1,
           pageSize: 1,
           q: 'q',
+          slug: 'slug',
           topK: 10,
         },
         { path: '/_stainless_unknown_path' },
