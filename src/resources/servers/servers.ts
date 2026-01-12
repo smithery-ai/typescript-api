@@ -57,8 +57,7 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Delete a server by qualified name. Requires ownership. Also cleans up the
-   * associated Cloudflare worker and R2 bundles.
+   * Delete a server by qualified name.
    */
   delete(qualifiedName: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {
     return this._client.delete(path`/servers/${qualifiedName}`, options);
