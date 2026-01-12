@@ -46,7 +46,11 @@ export interface SkillListResponse {
 export interface SkillListParams extends SkillsPageParams {
   category?: string;
 
+  namespace?: string;
+
   q?: string;
+
+  slug?: string;
 
   topK?: number;
 }
