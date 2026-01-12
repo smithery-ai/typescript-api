@@ -57,6 +57,14 @@ export class Servers extends APIResource {
   }
 
   /**
+   * Delete a server by qualified name. Requires ownership. Also cleans up the
+   * associated Cloudflare worker.
+   */
+  delete(qualifiedName: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {
+    return this._client.delete(path`/servers/${qualifiedName}`, options);
+  }
+
+  /**
    * Download the MCPB bundle for the latest successful stdio deployment
    */
   download(qualifiedName: string, options?: RequestOptions): APIPromise<Response> {
@@ -69,6 +77,68 @@ export class Servers extends APIResource {
 }
 
 export type ServerListResponsesSmitheryPage = SmitheryPage<ServerListResponse>;
+
+/**
+ * Custom build configuration for cloud builds
+ */
+export interface BuildConfig {
+  /**
+   * Custom build command. Defaults to 'npm run build'
+   */
+  buildCommand?: string;
+
+  /**
+   * Custom install command. Defaults to 'npm install'
+   */
+  installCommand?: string;
+
+  /**
+   * Directory containing the build output, relative to base directory. Defaults to
+   * '.smithery'
+   */
+  outputDirectory?: string;
+}
+
+export type DeploymentTarget = 'local' | 'remote';
+
+export interface ProjectConfig {
+  /**
+   * Custom build configuration for cloud builds
+   */
+  build?: ProjectConfig.Build;
+
+  /**
+   * The environment to inject when spawning the process.
+   */
+  env?: { [key: string]: string };
+
+  target?: 'local' | 'remote';
+
+  [k: string]: unknown;
+}
+
+export namespace ProjectConfig {
+  /**
+   * Custom build configuration for cloud builds
+   */
+  export interface Build {
+    /**
+     * Custom build command. Defaults to 'npm run build'
+     */
+    buildCommand?: string;
+
+    /**
+     * Custom install command. Defaults to 'npm install'
+     */
+    installCommand?: string;
+
+    /**
+     * Directory containing the build output, relative to base directory. Defaults to
+     * '.smithery'
+     */
+    outputDirectory?: string;
+  }
+}
 
 export interface ServerRetrieveResponse {
   connections: Array<ServerRetrieveResponse.StdioConnection | ServerRetrieveResponse.HTTPConnection>;
@@ -156,6 +226,12 @@ export interface ServerListResponse {
   verified: boolean;
 }
 
+export interface ServerDeleteResponse {
+  qualifiedName: string;
+
+  success: boolean;
+}
+
 export interface ServerListParams extends SmitheryPageParams {
   ids?: Array<string>;
 
@@ -182,8 +258,12 @@ Servers.Secrets = Secrets;
 
 export declare namespace Servers {
   export {
+    type BuildConfig as BuildConfig,
+    type DeploymentTarget as DeploymentTarget,
+    type ProjectConfig as ProjectConfig,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerDeleteResponse as ServerDeleteResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };

@@ -35,6 +35,10 @@ import {
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
+  BuildConfig,
+  DeploymentTarget,
+  ProjectConfig,
+  ServerDeleteResponse,
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
@@ -767,8 +771,12 @@ export declare namespace Smithery {
 
   export {
     Servers as Servers,
+    type BuildConfig as BuildConfig,
+    type DeploymentTarget as DeploymentTarget,
+    type ProjectConfig as ProjectConfig,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerDeleteResponse as ServerDeleteResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
