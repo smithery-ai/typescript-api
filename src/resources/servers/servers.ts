@@ -217,6 +217,8 @@ export interface ServerListResponse {
 
   isDeployed: boolean;
 
+  owner: string | null;
+
   qualifiedName: string;
 
   remote: boolean | null;
@@ -240,6 +242,8 @@ export interface ServerListParams extends SmitheryPageParams {
   ownerId?: string;
 
   q?: string;
+
+  qualifiedName?: string;
 
   remote?: '0' | '1' | 'true' | 'false';
 

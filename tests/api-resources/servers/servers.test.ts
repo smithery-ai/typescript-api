@@ -44,6 +44,7 @@ describe('resource servers', () => {
           page: 1,
           pageSize: 1,
           q: 'q',
+          qualifiedName: 'qualifiedName',
           remote: '0',
           repoName: 'repoName',
           repoOwner: 'repoOwner',
