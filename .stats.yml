@@ -1,4 +1,4 @@
 configured_endpoints: 16
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/smithery%2Fsmithery-a12ddaa38de945140c82060945e93ff2b7d2465e84e6ecc5cf17f16c75a46f28.yml
-openapi_spec_hash: 920c45d74799dafbf8f5f145abed64a4
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/smithery%2Fsmithery-bb69250e778ad670deabdb1ea88b53f2d35e2f5f05af5a443f444dcdf560348a.yml
+openapi_spec_hash: 40268556f7fcd46bffffcad9d0ccd116
 config_hash: 307cd727c003eeee9101527f341a720f
