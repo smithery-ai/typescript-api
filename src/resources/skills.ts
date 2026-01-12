@@ -22,11 +22,17 @@ export type SkillListResponsesSkillsPage = SkillsPage<SkillListResponse>;
 export interface SkillListResponse {
   id: string;
 
+  createdAt: string;
+
   description: string;
 
   displayName: string;
 
+  listed: boolean;
+
   namespace: string;
+
+  prompt: string | null;
 
   qualityScore: number;
 
@@ -34,9 +40,13 @@ export interface SkillListResponse {
 
   categories?: Array<string>;
 
+  externalForks?: number;
+
   externalStars?: number;
 
   gitUrl?: string;
+
+  servers?: Array<string>;
 
   totalActivations?: number;
 

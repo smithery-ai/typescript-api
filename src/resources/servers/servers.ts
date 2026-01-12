@@ -157,6 +157,8 @@ export interface ServerListResponse {
 }
 
 export interface ServerListParams extends SmitheryPageParams {
+  ids?: Array<string>;
+
   isDeployed?: '0' | '1' | 'true' | 'false';
 
   ownerId?: string;
