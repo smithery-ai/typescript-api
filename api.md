@@ -17,11 +17,13 @@ Types:
 - <code><a href="./src/resources/servers/servers.ts">ProjectConfig</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerDeleteResponse</a></code>
 
 Methods:
 
 - <code title="get /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">retrieve</a>(qualifiedName) -> ServerRetrieveResponse</code>
 - <code title="get /servers">client.servers.<a href="./src/resources/servers/servers.ts">list</a>({ ...params }) -> ServerListResponsesSmitheryPage</code>
+- <code title="delete /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(qualifiedName) -> ServerDeleteResponse</code>
 - <code title="get /servers/{qualifiedName}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(qualifiedName) -> Response</code>
 
 ## Deployments

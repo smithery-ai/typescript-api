@@ -57,6 +57,14 @@ export class Servers extends APIResource {
   }
 
   /**
+   * Delete a server by qualified name. Requires ownership. Also cleans up the
+   * associated Cloudflare worker.
+   */
+  delete(qualifiedName: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {
+    return this._client.delete(path`/servers/${qualifiedName}`, options);
+  }
+
+  /**
    * Download the MCPB bundle for the latest successful stdio deployment
    */
   download(qualifiedName: string, options?: RequestOptions): APIPromise<Response> {
@@ -218,6 +226,12 @@ export interface ServerListResponse {
   verified: boolean;
 }
 
+export interface ServerDeleteResponse {
+  qualifiedName: string;
+
+  success: boolean;
+}
+
 export interface ServerListParams extends SmitheryPageParams {
   ids?: Array<string>;
 
@@ -249,6 +263,7 @@ export declare namespace Servers {
     type ProjectConfig as ProjectConfig,
     type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
+    type ServerDeleteResponse as ServerDeleteResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
