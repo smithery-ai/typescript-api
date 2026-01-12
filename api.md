@@ -12,6 +12,9 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/servers/servers.ts">BuildConfig</a></code>
+- <code><a href="./src/resources/servers/servers.ts">DeploymentTarget</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ProjectConfig</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
 
