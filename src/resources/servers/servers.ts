@@ -57,8 +57,7 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Delete a server by qualified name. Requires ownership. Also cleans up the
-   * associated Cloudflare worker.
+   * Delete a server by qualified name.
    */
   delete(qualifiedName: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {
     return this._client.delete(path`/servers/${qualifiedName}`, options);
@@ -106,11 +105,6 @@ export interface ProjectConfig {
    * Custom build configuration for cloud builds
    */
   build?: ProjectConfig.Build;
-
-  /**
-   * The environment to inject when spawning the process.
-   */
-  env?: { [key: string]: string };
 
   target?: 'local' | 'remote';
 
