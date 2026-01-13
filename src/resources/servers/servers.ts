@@ -106,11 +106,6 @@ export interface ProjectConfig {
    */
   build?: ProjectConfig.Build;
 
-  /**
-   * The environment to inject when spawning the process.
-   */
-  env?: { [key: string]: string };
-
   target?: 'local' | 'remote';
 
   [k: string]: unknown;
