@@ -102,3 +102,15 @@ Methods:
 
 - <code title="put /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">create</a>({ ...params }) -> NamespaceCreateResponse</code>
 - <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">list</a>() -> NamespaceListResponse</code>
+
+# Beta
+
+## Tools
+
+Types:
+
+- <code><a href="./src/resources/beta/tools.ts">ToolListResponse</a></code>
+
+Methods:
+
+- <code title="get /tools">client.beta.tools.<a href="./src/resources/beta/tools.ts">list</a>({ ...params }) -> ToolListResponsesToolsPage</code>

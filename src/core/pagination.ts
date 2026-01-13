@@ -224,3 +224,62 @@ export class SkillsPage<Item> extends AbstractPage<Item> implements SkillsPageRe
     };
   }
 }
+
+export interface ToolsPageResponse<Item> {
+  tools: Array<Item>;
+
+  pagination: ToolsPageResponse.Pagination;
+}
+
+export namespace ToolsPageResponse {
+  export interface Pagination {
+    currentPage?: number;
+
+    pageSize?: number;
+
+    totalCount?: number;
+
+    totalPages?: number;
+  }
+}
+
+export interface ToolsPageParams {
+  page?: number;
+
+  pageSize?: number;
+}
+
+export class ToolsPage<Item> extends AbstractPage<Item> implements ToolsPageResponse<Item> {
+  tools: Array<Item>;
+
+  pagination: ToolsPageResponse.Pagination;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: ToolsPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.tools = body.tools || [];
+    this.pagination = body.pagination || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.tools ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const query = this.options.query as ToolsPageParams;
+    const currentPage = query?.page ?? 1;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}
