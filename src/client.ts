@@ -21,6 +21,8 @@ import {
   SkillsPageResponse,
   type SmitheryPageParams,
   SmitheryPageResponse,
+  type ToolsPageParams,
+  ToolsPageResponse,
 } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
@@ -34,6 +36,7 @@ import {
 } from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
+import { Beta } from './resources/beta/beta';
 import {
   BuildConfig,
   DeploymentTarget,
@@ -750,6 +753,7 @@ export class Smithery {
   uplink: API.Uplink = new API.Uplink(this);
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
+  beta: API.Beta = new API.Beta(this);
 }
 
 Smithery.Health = Health;
@@ -757,6 +761,7 @@ Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
+Smithery.Beta = Beta;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -766,6 +771,9 @@ export declare namespace Smithery {
 
   export import SkillsPage = Pagination.SkillsPage;
   export { type SkillsPageParams as SkillsPageParams, type SkillsPageResponse as SkillsPageResponse };
+
+  export import ToolsPage = Pagination.ToolsPage;
+  export { type ToolsPageParams as ToolsPageParams, type ToolsPageResponse as ToolsPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -796,4 +804,6 @@ export declare namespace Smithery {
     type NamespaceListResponse as NamespaceListResponse,
     type NamespaceCreateParams as NamespaceCreateParams,
   };
+
+  export { Beta as Beta };
 }
