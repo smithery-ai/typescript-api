@@ -1,0 +1,4 @@
+openapi:
+  # Set this to the docs provider format you want.
+  # Supported examples: 'readme' | 'redocly' | 'mintlify' | 'bump.sh' | 'gitbook' | 'x-codeSamples' | 'stainless'
+  code_samples: 'mintlify'
