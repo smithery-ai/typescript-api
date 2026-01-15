@@ -70,6 +70,8 @@ export interface ExternalDeployPayload {
   type: 'external';
 
   upstreamUrl: string;
+
+  configSchema?: { [key: string]: unknown };
 }
 
 export interface HostedDeployPayload {
