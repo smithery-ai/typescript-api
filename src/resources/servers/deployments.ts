@@ -72,8 +72,6 @@ export interface ExternalDeployPayload {
   upstreamUrl: string;
 
   configSchema?: { [key: string]: unknown };
-
-  requiresOAuth?: boolean;
 }
 
 export interface HostedDeployPayload {
