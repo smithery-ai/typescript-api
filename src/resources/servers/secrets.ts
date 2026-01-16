@@ -7,15 +7,14 @@ import { path } from '../../internal/utils/path';
 
 export class Secrets extends APIResource {
   /**
-   * Fetch secret names for the server's deployed Worker (requires ownership). Values
-   * are not returned.
+   * Fetch secret names for the server. Values are not returned.
    */
   list(qualifiedName: string, options?: RequestOptions): APIPromise<SecretListResponse> {
     return this._client.get(path`/servers/${qualifiedName}/secrets`, options);
   }
 
   /**
-   * Delete a secret by name from the server's deployed Worker (requires ownership).
+   * Delete a secret by name from the server.
    */
   delete(
     secretName: string,
@@ -27,7 +26,7 @@ export class Secrets extends APIResource {
   }
 
   /**
-   * Set a secret value for the server's deployed Worker (requires ownership).
+   * Set a secret value for the server.
    */
   set(qualifiedName: string, body: SecretSetParams, options?: RequestOptions): APIPromise<SecretSetResponse> {
     return this._client.put(path`/servers/${qualifiedName}/secrets`, { body, ...options });
