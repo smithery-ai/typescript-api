@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.15.0 (2026-01-18)
+
+Full Changelog: [v0.14.0...v0.15.0](https://github.com/smithery-ai/typescript-api/compare/v0.14.0...v0.15.0)
+
+### Features
+
+* **api:** api update ([caa83a7](https://github.com/smithery-ai/typescript-api/commit/caa83a7e7271da0f59c80eaaed22ebbcf5601de6))
+* **api:** api update ([3bdd85b](https://github.com/smithery-ai/typescript-api/commit/3bdd85bed89b22cfdf64490a50914ede36f4eb8e))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([b1116a8](https://github.com/smithery-ai/typescript-api/commit/b1116a88d2e0f9f3c63e2fec1d8f7966907760b2))
+* **internal:** update lock file ([a426eca](https://github.com/smithery-ai/typescript-api/commit/a426ecaeea33b8de6aa880dd9199c0f3ec9a1b1d))
+* **internal:** upgrade brace-expansion and @babel/helpers ([b9f2dd7](https://github.com/smithery-ai/typescript-api/commit/b9f2dd7a4b83b35e019a348cd52fc4a0987e5f24))
+
 ## 0.14.0 (2026-01-15)
 
 Full Changelog: [v0.13.0...v0.14.0](https://github.com/smithery-ai/typescript-api/compare/v0.13.0...v0.14.0)
