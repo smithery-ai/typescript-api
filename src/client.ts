@@ -35,6 +35,7 @@ import {
   Namespaces,
 } from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
+import { CreateTokenRequest, CreateTokenResponse, TokenCreateParams, Tokens } from './resources/tokens';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Beta } from './resources/beta/beta';
 import {
@@ -753,6 +754,7 @@ export class Smithery {
   uplink: API.Uplink = new API.Uplink(this);
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
+  tokens: API.Tokens = new API.Tokens(this);
   beta: API.Beta = new API.Beta(this);
 }
 
@@ -761,6 +763,7 @@ Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
+Smithery.Tokens = Tokens;
 Smithery.Beta = Beta;
 
 export declare namespace Smithery {
@@ -803,6 +806,13 @@ export declare namespace Smithery {
     type NamespaceCreateResponse as NamespaceCreateResponse,
     type NamespaceListResponse as NamespaceListResponse,
     type NamespaceCreateParams as NamespaceCreateParams,
+  };
+
+  export {
+    Tokens as Tokens,
+    type CreateTokenRequest as CreateTokenRequest,
+    type CreateTokenResponse as CreateTokenResponse,
+    type TokenCreateParams as TokenCreateParams,
   };
 
   export { Beta as Beta };
