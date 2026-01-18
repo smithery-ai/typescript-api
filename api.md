@@ -103,6 +103,17 @@ Methods:
 - <code title="put /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">create</a>({ ...params }) -> NamespaceCreateResponse</code>
 - <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">list</a>() -> NamespaceListResponse</code>
 
+# Tokens
+
+Types:
+
+- <code><a href="./src/resources/tokens.ts">CreateTokenRequest</a></code>
+- <code><a href="./src/resources/tokens.ts">CreateTokenResponse</a></code>
+
+Methods:
+
+- <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
+
 # Beta
 
 ## Tools
