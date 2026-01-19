@@ -84,8 +84,8 @@ describe('resource connections', () => {
   });
 
   // Prism tests are disabled
-  test.skip('createOrUpdate: only required params', async () => {
-    const responsePromise = client.beta.connect.connections.createOrUpdate('connectionId', {
+  test.skip('set: only required params', async () => {
+    const responsePromise = client.beta.connect.connections.set('connectionId', {
       namespace: 'namespace',
       mcpUrl: 'https://mcp.example.com/sse',
     });
@@ -99,8 +99,8 @@ describe('resource connections', () => {
   });
 
   // Prism tests are disabled
-  test.skip('createOrUpdate: required and optional params', async () => {
-    const response = await client.beta.connect.connections.createOrUpdate('connectionId', {
+  test.skip('set: required and optional params', async () => {
+    const response = await client.beta.connect.connections.set('connectionId', {
       namespace: 'namespace',
       mcpUrl: 'https://mcp.example.com/sse',
       metadata: { userId: 'bar', team: 'bar' },
