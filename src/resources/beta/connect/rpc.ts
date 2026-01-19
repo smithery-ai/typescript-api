@@ -15,7 +15,7 @@ export class Rpc extends APIResource {
    * const jsonRpcResponse = await client.beta.connect.rpc.call(
    *   'connectionId',
    *   {
-   *     namespaceId: 'namespaceId',
+   *     namespace: 'namespace',
    *     jsonrpc: '2.0',
    *     method: 'tools/list',
    *   },
@@ -23,11 +23,8 @@ export class Rpc extends APIResource {
    * ```
    */
   call(connectionID: string, params: RpcCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
-    const { namespaceId, ...body } = params;
-    return this._client.post(path`/connect/namespaces/${namespaceId}/connections/${connectionID}/rpc`, {
-      body,
-      ...options,
-    });
+    const { namespace, ...body } = params;
+    return this._client.post(path`/connect/connect/${namespace}/${connectionID}/rpc`, { body, ...options });
   }
 }
 
@@ -59,7 +56,7 @@ export interface RpcCallParams {
   /**
    * Path param
    */
-  namespaceId: string;
+  namespace: string;
 
   /**
    * Body param

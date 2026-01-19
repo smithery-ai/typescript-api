@@ -11,7 +11,7 @@ describe('resource rpc', () => {
   // Prism tests are disabled
   test.skip('call: only required params', async () => {
     const responsePromise = client.beta.connect.rpc.call('connectionId', {
-      namespaceId: 'namespaceId',
+      namespace: 'namespace',
       jsonrpc: '2.0',
       method: 'tools/list',
     });
@@ -27,7 +27,7 @@ describe('resource rpc', () => {
   // Prism tests are disabled
   test.skip('call: required and optional params', async () => {
     const response = await client.beta.connect.rpc.call('connectionId', {
-      namespaceId: 'namespaceId',
+      namespace: 'namespace',
       jsonrpc: '2.0',
       method: 'tools/list',
       id: 'string',
