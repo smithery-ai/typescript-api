@@ -6,10 +6,5 @@ export {
   type Connection,
   type ConnectionsListResponse,
   type CreateConnectionRequest,
-  type ConnectionDeleteResponse,
-  type ConnectionCreateParams,
-  type ConnectionRetrieveParams,
-  type ConnectionDeleteParams,
-  type ConnectionCreateOrUpdateParams,
 } from './connections';
-export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';
+export { Rpc, type JsonRpcRequest, type JsonRpcResponse } from './rpc';
