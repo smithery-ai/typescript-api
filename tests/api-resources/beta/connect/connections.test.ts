@@ -10,10 +10,8 @@ const client = new Smithery({
 describe('resource connections', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.beta.connect.connections.create('connectionId', {
-      namespaceId: 'namespaceId',
+    const responsePromise = client.beta.connect.connections.create('namespace', {
       mcpUrl: 'https://mcp.example.com/sse',
-      name: 'My MCP Server',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -26,18 +24,17 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.beta.connect.connections.create('connectionId', {
-      namespaceId: 'namespaceId',
+    const response = await client.beta.connect.connections.create('namespace', {
       mcpUrl: 'https://mcp.example.com/sse',
-      name: 'My MCP Server',
       metadata: { userId: 'bar', team: 'bar' },
+      name: 'My MCP Server',
     });
   });
 
   // Prism tests are disabled
   test.skip('retrieve: only required params', async () => {
     const responsePromise = client.beta.connect.connections.retrieve('connectionId', {
-      namespaceId: 'namespaceId',
+      namespace: 'namespace',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -51,13 +48,13 @@ describe('resource connections', () => {
   // Prism tests are disabled
   test.skip('retrieve: required and optional params', async () => {
     const response = await client.beta.connect.connections.retrieve('connectionId', {
-      namespaceId: 'namespaceId',
+      namespace: 'namespace',
     });
   });
 
   // Prism tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.beta.connect.connections.list('namespaceId');
+    const responsePromise = client.beta.connect.connections.list('namespace');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -70,7 +67,7 @@ describe('resource connections', () => {
   // Prism tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.beta.connect.connections.delete('connectionId', {
-      namespaceId: 'namespaceId',
+      namespace: 'namespace',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -83,8 +80,31 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.beta.connect.connections.delete('connectionId', {
-      namespaceId: 'namespaceId',
+    const response = await client.beta.connect.connections.delete('connectionId', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
+  test.skip('createOrUpdate: only required params', async () => {
+    const responsePromise = client.beta.connect.connections.createOrUpdate('connectionId', {
+      namespace: 'namespace',
+      mcpUrl: 'https://mcp.example.com/sse',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('createOrUpdate: required and optional params', async () => {
+    const response = await client.beta.connect.connections.createOrUpdate('connectionId', {
+      namespace: 'namespace',
+      mcpUrl: 'https://mcp.example.com/sse',
+      metadata: { userId: 'bar', team: 'bar' },
+      name: 'My MCP Server',
     });
   });
 });
