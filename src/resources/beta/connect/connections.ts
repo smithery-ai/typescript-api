@@ -118,6 +118,35 @@ export interface Connection {
   createdAt?: string;
 
   iconUrl?: string | null;
+
+  /**
+   * Connection status after initialization (only returned on create)
+   */
+  status?: Connection.State | Connection.UnionMember1 | Connection.UnionMember2;
+}
+
+export namespace Connection {
+  export interface State {
+    state: 'connected';
+  }
+
+  export interface UnionMember1 {
+    state: 'auth_required';
+
+    /**
+     * URL to redirect user for OAuth authorization
+     */
+    authorizationUrl?: string;
+  }
+
+  export interface UnionMember2 {
+    /**
+     * Error message
+     */
+    message: string;
+
+    state: 'error';
+  }
 }
 
 export interface ConnectionsListResponse {
