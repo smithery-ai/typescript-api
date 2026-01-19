@@ -4,11 +4,11 @@ import { APIResource } from '../../../core/resource';
 import * as ConnectionsAPI from './connections';
 import {
   Connection,
-  ConnectionCreateOrUpdateParams,
   ConnectionCreateParams,
   ConnectionDeleteParams,
   ConnectionDeleteResponse,
   ConnectionRetrieveParams,
+  ConnectionSetParams,
   Connections,
   ConnectionsListResponse,
   CreateConnectionRequest,
@@ -34,7 +34,7 @@ export declare namespace Connect {
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionDeleteParams as ConnectionDeleteParams,
-    type ConnectionCreateOrUpdateParams as ConnectionCreateOrUpdateParams,
+    type ConnectionSetParams as ConnectionSetParams,
   };
 
   export {

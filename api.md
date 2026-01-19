@@ -143,7 +143,7 @@ Methods:
 - <code title="get /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">retrieve</a>(connectionID, { ...params }) -> Connection</code>
 - <code title="get /connect/{namespace}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">list</a>(namespace) -> ConnectionsListResponse</code>
 - <code title="delete /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
-- <code title="put /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">createOrUpdate</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="put /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
 ### Rpc
 
