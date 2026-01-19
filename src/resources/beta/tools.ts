@@ -8,16 +8,6 @@ export class Tools extends APIResource {
   /**
    * Get a paginated list of all MCP tools across servers. Use the `q` parameter for
    * semantic search.
-   *
-   * @example
-   * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const toolListResponse of client.beta.tools.list(
-   *   { q: 'x' },
-   * )) {
-   *   // ...
-   * }
-   * ```
    */
   list(
     query: ToolListParams,
