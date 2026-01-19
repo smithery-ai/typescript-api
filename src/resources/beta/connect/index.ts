@@ -10,6 +10,6 @@ export {
   type ConnectionCreateParams,
   type ConnectionRetrieveParams,
   type ConnectionDeleteParams,
-  type ConnectionCreateOrUpdateParams,
+  type ConnectionSetParams,
 } from './connections';
 export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';

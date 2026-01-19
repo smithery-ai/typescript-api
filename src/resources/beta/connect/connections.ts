@@ -88,7 +88,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connection =
-   *   await client.beta.connect.connections.createOrUpdate(
+   *   await client.beta.connect.connections.set(
    *     'connectionId',
    *     {
    *       namespace: 'namespace',
@@ -97,11 +97,7 @@ export class Connections extends APIResource {
    *   );
    * ```
    */
-  createOrUpdate(
-    connectionID: string,
-    params: ConnectionCreateOrUpdateParams,
-    options?: RequestOptions,
-  ): APIPromise<Connection> {
+  set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
     const { namespace, ...body } = params;
     return this._client.put(path`/connect/${namespace}/${connectionID}`, { body, ...options });
   }
@@ -135,15 +131,18 @@ export interface Connection {
   /**
    * Connection status after initialization (only returned on create)
    */
-  status?: Connection.State | Connection.UnionMember1 | Connection.UnionMember2;
+  status?:
+    | Connection.ConnectConnectionStatusConnected
+    | Connection.ConnectConnectionStatusAuthRequired
+    | Connection.ConnectConnectionStatusError;
 }
 
 export namespace Connection {
-  export interface State {
+  export interface ConnectConnectionStatusConnected {
     state: 'connected';
   }
 
-  export interface UnionMember1 {
+  export interface ConnectConnectionStatusAuthRequired {
     state: 'auth_required';
 
     /**
@@ -152,7 +151,7 @@ export namespace Connection {
     authorizationUrl?: string;
   }
 
-  export interface UnionMember2 {
+  export interface ConnectConnectionStatusError {
     /**
      * Error message
      */
@@ -217,7 +216,7 @@ export interface ConnectionDeleteParams {
   namespace: string;
 }
 
-export interface ConnectionCreateOrUpdateParams {
+export interface ConnectionSetParams {
   /**
    * Path param
    */
@@ -248,6 +247,6 @@ export declare namespace Connections {
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionDeleteParams as ConnectionDeleteParams,
-    type ConnectionCreateOrUpdateParams as ConnectionCreateOrUpdateParams,
+    type ConnectionSetParams as ConnectionSetParams,
   };
 }
