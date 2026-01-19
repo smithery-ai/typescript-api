@@ -133,6 +133,15 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/beta/connect/namespaces.ts">Namespace</a></code>
+- <code><a href="./src/resources/beta/connect/namespaces.ts">NamespaceListResponse</a></code>
+- <code><a href="./src/resources/beta/connect/namespaces.ts">NamespaceDeleteResponse</a></code>
+
+Methods:
+
+- <code title="put /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">create</a>(name) -> Namespace</code>
+- <code title="get /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">retrieve</a>(name) -> Namespace</code>
+- <code title="get /connect/namespaces">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">list</a>() -> NamespaceListResponse</code>
+- <code title="delete /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">delete</a>(name) -> NamespaceDeleteResponse</code>
 
 ### Connections
 
