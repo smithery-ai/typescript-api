@@ -13,13 +13,7 @@ import {
   CreateConnectionRequest,
 } from './connections';
 import * as NamespacesAPI from './namespaces';
-import {
-  CreateNamespaceRequest,
-  Namespace,
-  NamespaceCreateParams,
-  NamespaceDeleteResponse,
-  Namespaces,
-} from './namespaces';
+import { Namespace, Namespaces } from './namespaces';
 import * as RpcAPI from './rpc';
 import { JsonRpcRequest, JsonRpcResponse, Rpc, RpcCallParams } from './rpc';
 
@@ -34,13 +28,7 @@ Connect.Connections = Connections;
 Connect.Rpc = Rpc;
 
 export declare namespace Connect {
-  export {
-    Namespaces as Namespaces,
-    type CreateNamespaceRequest as CreateNamespaceRequest,
-    type Namespace as Namespace,
-    type NamespaceDeleteResponse as NamespaceDeleteResponse,
-    type NamespaceCreateParams as NamespaceCreateParams,
-  };
+  export { Namespaces as Namespaces, type Namespace as Namespace };
 
   export {
     Connections as Connections,

@@ -34,7 +34,7 @@ describe('resource tokens', () => {
         'connections.rpc': { can: ['write'] },
       },
       ttlSeconds: 3600,
-      constraints: { namespaceIds: ['ns_abc123'], serverQualifiedNames: ['@smithery/memory'] },
+      constraints: { namespaceIds: ['my-namespace'], serverQualifiedNames: ['@smithery/memory'] },
       profileSlug: 'my-profile',
     });
   });
