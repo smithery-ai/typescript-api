@@ -2,19 +2,9 @@
 
 import { APIResource } from '../../../core/resource';
 import * as ConnectionsAPI from './connections';
-import {
-  Connection,
-  ConnectionCreateOrUpdateParams,
-  ConnectionCreateParams,
-  ConnectionDeleteParams,
-  ConnectionDeleteResponse,
-  ConnectionRetrieveParams,
-  Connections,
-  ConnectionsListResponse,
-  CreateConnectionRequest,
-} from './connections';
+import { Connection, Connections, ConnectionsListResponse, CreateConnectionRequest } from './connections';
 import * as RpcAPI from './rpc';
-import { JsonRpcRequest, JsonRpcResponse, Rpc, RpcCallParams } from './rpc';
+import { JsonRpcRequest, JsonRpcResponse, Rpc } from './rpc';
 
 export class Connect extends APIResource {
   connections: ConnectionsAPI.Connections = new ConnectionsAPI.Connections(this._client);
@@ -30,17 +20,7 @@ export declare namespace Connect {
     type Connection as Connection,
     type ConnectionsListResponse as ConnectionsListResponse,
     type CreateConnectionRequest as CreateConnectionRequest,
-    type ConnectionDeleteResponse as ConnectionDeleteResponse,
-    type ConnectionCreateParams as ConnectionCreateParams,
-    type ConnectionRetrieveParams as ConnectionRetrieveParams,
-    type ConnectionDeleteParams as ConnectionDeleteParams,
-    type ConnectionCreateOrUpdateParams as ConnectionCreateOrUpdateParams,
   };
 
-  export {
-    Rpc as Rpc,
-    type JsonRpcRequest as JsonRpcRequest,
-    type JsonRpcResponse as JsonRpcResponse,
-    type RpcCallParams as RpcCallParams,
-  };
+  export { Rpc as Rpc, type JsonRpcRequest as JsonRpcRequest, type JsonRpcResponse as JsonRpcResponse };
 }
