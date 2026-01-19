@@ -7,32 +7,20 @@ import { path } from '../../../internal/utils/path';
 
 export class Connections extends APIResource {
   /**
-   * Create a new MCP connection with the given ID. Requires API key and namespace
-   * ownership.
+   * Create a new MCP connection with an auto-generated ID. Requires API key and
+   * namespace ownership.
    *
    * @example
    * ```ts
    * const connection =
    *   await client.beta.connect.connections.create(
-   *     'connectionId',
-   *     {
-   *       namespaceId: 'namespaceId',
-   *       mcpUrl: 'https://mcp.example.com/sse',
-   *       name: 'My MCP Server',
-   *     },
+   *     'namespace',
+   *     { mcpUrl: 'https://mcp.example.com/sse' },
    *   );
    * ```
    */
-  create(
-    connectionID: string,
-    params: ConnectionCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<Connection> {
-    const { namespaceId, ...body } = params;
-    return this._client.put(path`/connect/namespaces/${namespaceId}/connections/${connectionID}`, {
-      body,
-      ...options,
-    });
+  create(namespace: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<Connection> {
+    return this._client.post(path`/connect/connect/${namespace}`, { body, ...options });
   }
 
   /**
@@ -44,7 +32,7 @@ export class Connections extends APIResource {
    * const connection =
    *   await client.beta.connect.connections.retrieve(
    *     'connectionId',
-   *     { namespaceId: 'namespaceId' },
+   *     { namespace: 'namespace' },
    *   );
    * ```
    */
@@ -53,8 +41,8 @@ export class Connections extends APIResource {
     params: ConnectionRetrieveParams,
     options?: RequestOptions,
   ): APIPromise<Connection> {
-    const { namespaceId } = params;
-    return this._client.get(path`/connect/namespaces/${namespaceId}/connections/${connectionID}`, options);
+    const { namespace } = params;
+    return this._client.get(path`/connect/connect/${namespace}/${connectionID}`, options);
   }
 
   /**
@@ -64,11 +52,11 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connectionsListResponse =
-   *   await client.beta.connect.connections.list('namespaceId');
+   *   await client.beta.connect.connections.list('namespace');
    * ```
    */
-  list(namespaceID: string, options?: RequestOptions): APIPromise<ConnectionsListResponse> {
-    return this._client.get(path`/connect/namespaces/${namespaceID}/connections`, options);
+  list(namespace: string, options?: RequestOptions): APIPromise<ConnectionsListResponse> {
+    return this._client.get(path`/connect/connect/${namespace}`, options);
   }
 
   /**
@@ -80,7 +68,7 @@ export class Connections extends APIResource {
    * const connection =
    *   await client.beta.connect.connections.delete(
    *     'connectionId',
-   *     { namespaceId: 'namespaceId' },
+   *     { namespace: 'namespace' },
    *   );
    * ```
    */
@@ -89,14 +77,39 @@ export class Connections extends APIResource {
     params: ConnectionDeleteParams,
     options?: RequestOptions,
   ): APIPromise<ConnectionDeleteResponse> {
-    const { namespaceId } = params;
-    return this._client.delete(path`/connect/namespaces/${namespaceId}/connections/${connectionID}`, options);
+    const { namespace } = params;
+    return this._client.delete(path`/connect/connect/${namespace}/${connectionID}`, options);
+  }
+
+  /**
+   * Create a new MCP connection with the given ID. Requires API key and namespace
+   * ownership.
+   *
+   * @example
+   * ```ts
+   * const connection =
+   *   await client.beta.connect.connections.createOrUpdate(
+   *     'connectionId',
+   *     {
+   *       namespace: 'namespace',
+   *       mcpUrl: 'https://mcp.example.com/sse',
+   *     },
+   *   );
+   * ```
+   */
+  createOrUpdate(
+    connectionID: string,
+    params: ConnectionCreateOrUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<Connection> {
+    const { namespace, ...body } = params;
+    return this._client.put(path`/connect/connect/${namespace}/${connectionID}`, { body, ...options });
   }
 }
 
 export interface Connection {
   /**
-   * Developer-defined connection ID
+   * Connection ID (auto-generated or developer-defined)
    */
   connectionId: string;
 
@@ -165,14 +178,14 @@ export interface CreateConnectionRequest {
   mcpUrl: string;
 
   /**
-   * Human-readable name
-   */
-  name: string;
-
-  /**
    * Custom metadata for filtering connections
    */
   metadata?: { [key: string]: unknown };
+
+  /**
+   * Human-readable name (optional, defaults to connection ID)
+   */
+  name?: string;
 }
 
 export interface ConnectionDeleteResponse {
@@ -181,9 +194,34 @@ export interface ConnectionDeleteResponse {
 
 export interface ConnectionCreateParams {
   /**
+   * URL of the MCP server
+   */
+  mcpUrl: string;
+
+  /**
+   * Custom metadata for filtering connections
+   */
+  metadata?: { [key: string]: unknown };
+
+  /**
+   * Human-readable name (optional, defaults to connection ID)
+   */
+  name?: string;
+}
+
+export interface ConnectionRetrieveParams {
+  namespace: string;
+}
+
+export interface ConnectionDeleteParams {
+  namespace: string;
+}
+
+export interface ConnectionCreateOrUpdateParams {
+  /**
    * Path param
    */
-  namespaceId: string;
+  namespace: string;
 
   /**
    * Body param: URL of the MCP server
@@ -191,22 +229,14 @@ export interface ConnectionCreateParams {
   mcpUrl: string;
 
   /**
-   * Body param: Human-readable name
-   */
-  name: string;
-
-  /**
    * Body param: Custom metadata for filtering connections
    */
   metadata?: { [key: string]: unknown };
-}
 
-export interface ConnectionRetrieveParams {
-  namespaceId: string;
-}
-
-export interface ConnectionDeleteParams {
-  namespaceId: string;
+  /**
+   * Body param: Human-readable name (optional, defaults to connection ID)
+   */
+  name?: string;
 }
 
 export declare namespace Connections {
@@ -218,5 +248,6 @@ export declare namespace Connections {
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionCreateOrUpdateParams as ConnectionCreateOrUpdateParams,
   };
 }

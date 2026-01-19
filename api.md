@@ -128,21 +128,6 @@ Methods:
 
 ## Connect
 
-### Namespaces
-
-Types:
-
-- <code><a href="./src/resources/beta/connect/namespaces.ts">Namespace</a></code>
-- <code><a href="./src/resources/beta/connect/namespaces.ts">NamespaceListResponse</a></code>
-- <code><a href="./src/resources/beta/connect/namespaces.ts">NamespaceDeleteResponse</a></code>
-
-Methods:
-
-- <code title="put /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">create</a>(name) -> Namespace</code>
-- <code title="get /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">retrieve</a>(name) -> Namespace</code>
-- <code title="get /connect/namespaces">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">list</a>() -> NamespaceListResponse</code>
-- <code title="delete /connect/namespaces/{name}">client.beta.connect.namespaces.<a href="./src/resources/beta/connect/namespaces.ts">delete</a>(name) -> NamespaceDeleteResponse</code>
-
 ### Connections
 
 Types:
@@ -154,10 +139,11 @@ Types:
 
 Methods:
 
-- <code title="put /connect/namespaces/{namespaceId}/connections/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">create</a>(connectionID, { ...params }) -> Connection</code>
-- <code title="get /connect/namespaces/{namespaceId}/connections/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">retrieve</a>(connectionID, { ...params }) -> Connection</code>
-- <code title="get /connect/namespaces/{namespaceId}/connections">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">list</a>(namespaceID) -> ConnectionsListResponse</code>
-- <code title="delete /connect/namespaces/{namespaceId}/connections/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="post /connect/connect/{namespace}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
+- <code title="get /connect/connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">retrieve</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="get /connect/connect/{namespace}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">list</a>(namespace) -> ConnectionsListResponse</code>
+- <code title="delete /connect/connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="put /connect/connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">createOrUpdate</a>(connectionID, { ...params }) -> Connection</code>
 
 ### Rpc
 
@@ -168,4 +154,4 @@ Types:
 
 Methods:
 
-- <code title="post /connect/namespaces/{namespaceId}/connections/{connectionId}/rpc">client.beta.connect.rpc.<a href="./src/resources/beta/connect/rpc.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
+- <code title="post /connect/connect/{namespace}/{connectionId}/rpc">client.beta.connect.rpc.<a href="./src/resources/beta/connect/rpc.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
