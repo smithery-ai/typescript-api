@@ -11,11 +11,5 @@ export {
   type ConnectionRetrieveParams,
   type ConnectionDeleteParams,
 } from './connections';
-export {
-  Namespaces,
-  type CreateNamespaceRequest,
-  type Namespace,
-  type NamespaceDeleteResponse,
-  type NamespaceCreateParams,
-} from './namespaces';
+export { Namespaces, type Namespace } from './namespaces';
 export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';
