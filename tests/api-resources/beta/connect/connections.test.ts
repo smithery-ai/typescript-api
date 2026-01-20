@@ -26,6 +26,7 @@ describe('resource connections', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.beta.connect.connections.create('namespace', {
       mcpUrl: 'https://mcp.example.com/sse',
+      headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
       name: 'My MCP Server',
     });
@@ -103,6 +104,7 @@ describe('resource connections', () => {
     const response = await client.beta.connect.connections.set('connectionId', {
       namespace: 'namespace',
       mcpUrl: 'https://mcp.example.com/sse',
+      headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
       name: 'My MCP Server',
     });
