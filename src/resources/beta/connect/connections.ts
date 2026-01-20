@@ -177,6 +177,12 @@ export interface CreateConnectionRequest {
   mcpUrl: string;
 
   /**
+   * Custom headers to send with MCP requests (stored securely, not returned in
+   * responses)
+   */
+  headers?: { [key: string]: string };
+
+  /**
    * Custom metadata for filtering connections
    */
   metadata?: { [key: string]: unknown };
@@ -196,6 +202,12 @@ export interface ConnectionCreateParams {
    * URL of the MCP server
    */
   mcpUrl: string;
+
+  /**
+   * Custom headers to send with MCP requests (stored securely, not returned in
+   * responses)
+   */
+  headers?: { [key: string]: string };
 
   /**
    * Custom metadata for filtering connections
@@ -226,6 +238,12 @@ export interface ConnectionSetParams {
    * Body param: URL of the MCP server
    */
   mcpUrl: string;
+
+  /**
+   * Body param: Custom headers to send with MCP requests (stored securely, not
+   * returned in responses)
+   */
+  headers?: { [key: string]: string };
 
   /**
    * Body param: Custom metadata for filtering connections
