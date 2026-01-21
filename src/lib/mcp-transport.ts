@@ -4,7 +4,7 @@
  * This allows you to use the official MCP SDK's Client class with Smithery Connect as the transport layer.
  *
  * **Important:** Smithery Connect handles MCP initialization server-side when a connection is created.
- * This transport intercepts `initialize` requests and returns a synthetic response to satisfy the
+ * This transport fetches the connection's server info on start() and uses it to satisfy the
  * MCP SDK's initialization flow without re-initializing the already-established connection.
  *
  * @example
@@ -16,7 +16,7 @@
  * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
  * const transport = new SmitheryConnectTransport({
  *   client: smithery,
- *   namespaceId: 'my-namespace',
+ *   namespace: 'my-namespace',
  *   connectionId: 'my-connection',
  * });
  *
@@ -32,9 +32,10 @@
 import type { Transport, TransportSendOptions } from '@modelcontextprotocol/sdk/shared/transport.js';
 import type { JSONRPCMessage, JSONRPCResponse } from '@modelcontextprotocol/sdk/types.js';
 import type { Smithery } from '../client';
+import type { Connection } from '../resources/beta/connect/connections';
 
 /**
- * MCP server capabilities. Used to provide server info for the synthetic initialize response.
+ * MCP server capabilities. Used to provide server info for the initialize response.
  */
 export interface ServerCapabilities {
   tools?: Record<string, unknown>;
@@ -44,14 +45,6 @@ export interface ServerCapabilities {
   experimental?: Record<string, unknown>;
 }
 
-/**
- * MCP server information.
- */
-export interface ServerInfo {
-  name: string;
-  version: string;
-}
-
 export interface SmitheryConnectTransportOptions {
   /**
    * The Smithery client instance to use for making RPC calls.
@@ -59,9 +52,9 @@ export interface SmitheryConnectTransportOptions {
   client: Smithery;
 
   /**
-   * The namespace ID for the Smithery Connect connection.
+   * The namespace for the Smithery Connect connection.
    */
-  namespaceId: string;
+  namespace: string;
 
   /**
    * The connection ID for the Smithery Connect connection.
@@ -69,13 +62,7 @@ export interface SmitheryConnectTransportOptions {
   connectionId: string;
 
   /**
-   * Optional server information for the synthetic initialize response.
-   * If not provided, defaults to { name: 'smithery-connect', version: '1.0.0' }.
-   */
-  serverInfo?: ServerInfo;
-
-  /**
-   * Optional server capabilities for the synthetic initialize response.
+   * Optional server capabilities for the initialize response.
    * If not provided, defaults to advertising tools, resources, and prompts support.
    */
   capabilities?: ServerCapabilities;
@@ -86,12 +73,12 @@ const LATEST_PROTOCOL_VERSION = '2024-11-05';
 
 export class SmitheryConnectTransport implements Transport {
   private _client: Smithery;
-  private _namespaceId: string;
+  private _namespace: string;
   private _connectionId: string;
   private _started = false;
   private _closed = false;
-  private _serverInfo: ServerInfo;
   private _capabilities: ServerCapabilities;
+  private _connection: Connection | null = null;
 
   onmessage?: (message: JSONRPCMessage) => void;
   onerror?: (error: Error) => void;
@@ -101,9 +88,8 @@ export class SmitheryConnectTransport implements Transport {
 
   constructor(options: SmitheryConnectTransportOptions) {
     this._client = options.client;
-    this._namespaceId = options.namespaceId;
+    this._namespace = options.namespace;
     this._connectionId = options.connectionId;
-    this._serverInfo = options.serverInfo ?? { name: 'smithery-connect', version: '1.0.0' };
     this._capabilities = options.capabilities ?? {
       // Default to advertising common capabilities
       // The actual MCP server behind Smithery Connect will handle the real capabilities
@@ -117,6 +103,12 @@ export class SmitheryConnectTransport implements Transport {
     if (this._closed) {
       throw new Error('Transport has been closed');
     }
+
+    // Fetch connection details to get serverInfo
+    this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
+      namespace: this._namespace,
+    });
+
     this._started = true;
   }
 
@@ -134,15 +126,23 @@ export class SmitheryConnectTransport implements Transport {
     }
 
     // Intercept 'initialize' request - Smithery Connect handles initialization server-side
-    // so we return a synthetic response to satisfy the MCP SDK's initialization flow
+    // Return the real serverInfo from the connection
     if (message.method === 'initialize' && 'id' in message && message.id !== undefined) {
       if (this.onmessage) {
+        const serverInfo = this._connection?.serverInfo ?? {
+          name: 'smithery-connect',
+          version: '1.0.0',
+        };
+
         const initializeResponse: JSONRPCResponse = {
           jsonrpc: '2.0',
           id: message.id,
           result: {
             protocolVersion: LATEST_PROTOCOL_VERSION,
-            serverInfo: this._serverInfo,
+            serverInfo: {
+              name: serverInfo.name,
+              version: serverInfo.version,
+            },
             capabilities: this._capabilities,
           } as Record<string, unknown>,
         };
@@ -160,7 +160,7 @@ export class SmitheryConnectTransport implements Transport {
     try {
       // Build the RPC call params, only including id if it's defined
       const rpcParams: Parameters<typeof this._client.beta.connect.rpc.call>[1] = {
-        namespaceId: this._namespaceId,
+        namespace: this._namespace,
         jsonrpc: '2.0',
         method: message.method,
       };
