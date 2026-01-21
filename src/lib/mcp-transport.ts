@@ -4,8 +4,8 @@
  * This allows you to use the official MCP SDK's Client class with Smithery Connect as the transport layer.
  *
  * **Important:** Smithery Connect handles MCP initialization server-side when a connection is created.
- * This transport fetches the connection's server info on start() and uses it to satisfy the
- * MCP SDK's initialization flow without re-initializing the already-established connection.
+ * This transport lazily fetches/creates the connection on first message and uses its server info
+ * to satisfy the MCP SDK's initialization flow without re-initializing the already-established connection.
  *
  * @example
  * ```typescript
@@ -94,8 +94,8 @@ export class SmitheryConnectTransport implements Transport {
   sessionId?: string;
 
   /**
-   * Returns the connection ID. This is available after start() completes.
-   * If no connectionId was provided in options, this returns the auto-generated ID.
+   * Returns the connection ID. If no connectionId was provided in options,
+   * this returns the auto-generated ID after the first message is sent.
    */
   get connectionId(): string | undefined {
     return this._connectionId;
@@ -122,8 +122,25 @@ export class SmitheryConnectTransport implements Transport {
   }
 
   async start(): Promise<void> {
+    if (this._started) {
+      throw new Error(
+        'SmitheryConnectTransport already started! If using Client class, note that connect() calls start() automatically.',
+      );
+    }
     if (this._closed) {
       throw new Error('Transport has been closed');
+    }
+
+    this._started = true;
+  }
+
+  /**
+   * Lazily ensures the Smithery Connect connection exists.
+   * Called on first message to defer network IO until actually needed.
+   */
+  private async _ensureConnection(): Promise<void> {
+    if (this._connection) {
+      return;
     }
 
     if (this._connectionId) {
@@ -152,8 +169,6 @@ export class SmitheryConnectTransport implements Transport {
       // Store the generated connection ID for subsequent RPC calls
       this._connectionId = this._connection.connectionId;
     }
-
-    this._started = true;
   }
 
   async send(message: JSONRPCMessage, _options?: TransportSendOptions): Promise<void> {
@@ -168,6 +183,9 @@ export class SmitheryConnectTransport implements Transport {
     if (!('method' in message)) {
       return;
     }
+
+    // Lazily ensure connection exists before processing any message
+    await this._ensureConnection();
 
     // Intercept 'initialize' request - Smithery Connect handles initialization server-side
     // Return the real serverInfo from the connection
