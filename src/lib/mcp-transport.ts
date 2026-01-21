@@ -39,20 +39,9 @@
  */
 
 import type { Transport, TransportSendOptions } from '@modelcontextprotocol/sdk/shared/transport.js';
-import type { JSONRPCMessage, JSONRPCResponse } from '@modelcontextprotocol/sdk/types.js';
+import type { JSONRPCMessage, JSONRPCResponse, ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
 import type { Smithery } from '../client';
 import type { Connection } from '../resources/beta/connect/connections';
-
-/**
- * MCP server capabilities. Used to provide server info for the initialize response.
- */
-export interface ServerCapabilities {
-  tools?: Record<string, unknown>;
-  resources?: Record<string, unknown>;
-  prompts?: Record<string, unknown>;
-  logging?: Record<string, unknown>;
-  experimental?: Record<string, unknown>;
-}
 
 export interface SmitheryConnectTransportOptions {
   /**
