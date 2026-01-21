@@ -3,13 +3,15 @@
 export { Connect } from './connect';
 export {
   Connections,
-  type Connection,
-  type ConnectionsListResponse,
-  type CreateConnectionRequest,
+  type ConnectionCreateResponse,
+  type ConnectionRetrieveResponse,
+  type ConnectionListResponse,
   type ConnectionDeleteResponse,
+  type ConnectionSetResponse,
   type ConnectionCreateParams,
   type ConnectionRetrieveParams,
+  type ConnectionListParams,
   type ConnectionDeleteParams,
   type ConnectionSetParams,
 } from './connections';
-export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';
+export { Rpc, type RpcCallResponse, type RpcCallParams } from './rpc';
