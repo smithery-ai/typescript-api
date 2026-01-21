@@ -75,6 +75,25 @@ async function postprocess() {
       };
     }
   }
+
+  // Add custom MCP transport export for @smithery/api/mcp
+  // Must include types for both CJS and ESM to pass @arethetypeswrong checks
+  newExports['./mcp'] = {
+    require: {
+      types: './lib/mcp-transport.d.ts',
+      default: './lib/mcp-transport.js',
+    },
+    types: './lib/mcp-transport.d.mts',
+    default: './lib/mcp-transport.mjs',
+  };
+
+  // typesVersions for Node 10 resolution mode (doesn't support exports field)
+  const typesVersions = {
+    '*': {
+      mcp: ['./lib/mcp-transport.d.ts'],
+    },
+  };
+
   await fs.promises.writeFile(
     'dist/package.json',
     JSON.stringify(
@@ -84,6 +103,7 @@ async function postprocess() {
         ),
         {
           exports: newExports,
+          typesVersions,
         },
       ),
       null,
