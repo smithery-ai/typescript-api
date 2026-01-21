@@ -12,7 +12,7 @@ export class Rpc extends APIResource {
    *
    * @example
    * ```ts
-   * const jsonRpcResponse = await client.beta.connect.rpc.call(
+   * const response = await client.beta.connect.rpc.call(
    *   'connectionId',
    *   {
    *     namespace: 'namespace',
@@ -22,29 +22,13 @@ export class Rpc extends APIResource {
    * );
    * ```
    */
-  call(connectionID: string, params: RpcCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
+  call(connectionID: string, params: RpcCallParams, options?: RequestOptions): APIPromise<RpcCallResponse> {
     const { namespace, ...body } = params;
     return this._client.post(path`/connect/${namespace}/${connectionID}/rpc`, { body, ...options });
   }
 }
 
-export interface JsonRpcRequest {
-  jsonrpc: '2.0';
-
-  /**
-   * MCP method to call
-   */
-  method: string;
-
-  id?: string | number;
-
-  /**
-   * Method parameters
-   */
-  params?: unknown;
-}
-
-export interface JsonRpcResponse {
+export interface RpcCallResponse {
   id: string | number | null;
 
   jsonrpc: '2.0';
@@ -80,9 +64,5 @@ export interface RpcCallParams {
 }
 
 export declare namespace Rpc {
-  export {
-    type JsonRpcRequest as JsonRpcRequest,
-    type JsonRpcResponse as JsonRpcResponse,
-    type RpcCallParams as RpcCallParams,
-  };
+  export { type RpcCallResponse as RpcCallResponse, type RpcCallParams as RpcCallParams };
 }
