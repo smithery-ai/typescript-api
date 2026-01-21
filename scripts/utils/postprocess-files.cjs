@@ -75,6 +75,13 @@ async function postprocess() {
       };
     }
   }
+
+  // Add custom MCP transport export for @smithery/api/mcp
+  newExports['./mcp'] = {
+    import: './lib/mcp-transport.mjs',
+    require: './lib/mcp-transport.js',
+  };
+
   await fs.promises.writeFile(
     'dist/package.json',
     JSON.stringify(
