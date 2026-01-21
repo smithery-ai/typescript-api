@@ -14,11 +14,19 @@
  * import { SmitheryConnectTransport } from '@smithery/api/mcp';
  *
  * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
+ * // Option 1: Let Smithery generate a connection ID
  * const transport = new SmitheryConnectTransport({
  *   client: smithery,
  *   namespace: 'my-namespace',
+ *   mcpUrl: 'https://mcp.example.com/sse',
+ * });
+ *
+ * // Option 2: Use a specific connection ID (retrieves existing or creates new)
+ * const transport2 = new SmitheryConnectTransport({
+ *   client: smithery,
+ *   namespace: 'my-namespace',
  *   connectionId: 'my-connection',
- *   mcpUrl: 'https://mcp.example.com/sse', // Creates connection if it doesn't exist
+ *   mcpUrl: 'https://mcp.example.com/sse',
  * });
  *
  * const mcpClient = new Client({ name: 'my-app', version: '1.0.0' }, { capabilities: {} });
@@ -59,12 +67,14 @@ export interface SmitheryConnectTransportOptions {
 
   /**
    * The connection ID for the Smithery Connect connection.
+   * If not provided, a new connection will be created with an auto-generated ID.
    */
-  connectionId: string;
+  connectionId?: string;
 
   /**
-   * The MCP server URL. Required if the connection doesn't exist yet.
-   * If provided and the connection doesn't exist, it will be created on start().
+   * The MCP server URL. Required when creating a new connection.
+   * If connectionId is provided, this is used to create the connection if it doesn't exist.
+   * If connectionId is not provided, this is required and a new connection will be created.
    */
   mcpUrl?: string;
 
@@ -81,7 +91,7 @@ const LATEST_PROTOCOL_VERSION = '2024-11-05';
 export class SmitheryConnectTransport implements Transport {
   private _client: Smithery;
   private _namespace: string;
-  private _connectionId: string;
+  private _connectionId: string | undefined;
   private _mcpUrl: string | undefined;
   private _started = false;
   private _closed = false;
@@ -94,11 +104,25 @@ export class SmitheryConnectTransport implements Transport {
 
   sessionId?: string;
 
+  /**
+   * Returns the connection ID. This is available after start() completes.
+   * If no connectionId was provided in options, this returns the auto-generated ID.
+   */
+  get connectionId(): string | undefined {
+    return this._connectionId;
+  }
+
   constructor(options: SmitheryConnectTransportOptions) {
     this._client = options.client;
     this._namespace = options.namespace;
     this._connectionId = options.connectionId;
     this._mcpUrl = options.mcpUrl;
+
+    // Validate: mcpUrl is required if connectionId is not provided
+    if (!this._connectionId && !this._mcpUrl) {
+      throw new Error('mcpUrl is required when connectionId is not provided');
+    }
+
     this._capabilities = options.capabilities ?? {
       // Default to advertising common capabilities
       // The actual MCP server behind Smithery Connect will handle the real capabilities
@@ -113,21 +137,31 @@ export class SmitheryConnectTransport implements Transport {
       throw new Error('Transport has been closed');
     }
 
-    // Try to retrieve existing connection, or create if mcpUrl is provided
-    try {
-      this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
-        namespace: this._namespace,
-      });
-    } catch (error) {
-      // If connection doesn't exist and we have mcpUrl, create it
-      if (this._mcpUrl) {
-        this._connection = await this._client.beta.connect.connections.set(this._connectionId, {
+    if (this._connectionId) {
+      // Connection ID provided: try to retrieve, or create if mcpUrl is provided
+      try {
+        this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
           namespace: this._namespace,
-          mcpUrl: this._mcpUrl,
         });
-      } else {
-        throw error;
+      } catch (error) {
+        // If connection doesn't exist and we have mcpUrl, create it with the specified ID
+        if (this._mcpUrl) {
+          this._connection = await this._client.beta.connect.connections.set(this._connectionId, {
+            namespace: this._namespace,
+            mcpUrl: this._mcpUrl,
+          });
+        } else {
+          throw error;
+        }
       }
+    } else {
+      // No connection ID: create a new connection with auto-generated ID
+      // mcpUrl is guaranteed to be present (validated in constructor)
+      this._connection = await this._client.beta.connect.connections.create(this._namespace, {
+        mcpUrl: this._mcpUrl!,
+      });
+      // Store the generated connection ID for subsequent RPC calls
+      this._connectionId = this._connection.connectionId;
     }
 
     this._started = true;
@@ -196,7 +230,7 @@ export class SmitheryConnectTransport implements Transport {
         rpcParams.params = message.params as Record<string, unknown>;
       }
 
-      const response = await this._client.beta.connect.rpc.call(this._connectionId, rpcParams);
+      const response = await this._client.beta.connect.rpc.call(this._connectionId!, rpcParams);
 
       // Route the response back via onmessage callback for requests (messages with an id)
       if ('id' in message && message.id !== undefined && this.onmessage) {
