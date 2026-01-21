@@ -18,6 +18,7 @@
  *   client: smithery,
  *   namespace: 'my-namespace',
  *   connectionId: 'my-connection',
+ *   mcpUrl: 'https://mcp.example.com/sse', // Creates connection if it doesn't exist
  * });
  *
  * const mcpClient = new Client({ name: 'my-app', version: '1.0.0' }, { capabilities: {} });
@@ -62,6 +63,12 @@ export interface SmitheryConnectTransportOptions {
   connectionId: string;
 
   /**
+   * The MCP server URL. Required if the connection doesn't exist yet.
+   * If provided and the connection doesn't exist, it will be created on start().
+   */
+  mcpUrl?: string;
+
+  /**
    * Optional server capabilities for the initialize response.
    * If not provided, defaults to advertising tools, resources, and prompts support.
    */
@@ -75,6 +82,7 @@ export class SmitheryConnectTransport implements Transport {
   private _client: Smithery;
   private _namespace: string;
   private _connectionId: string;
+  private _mcpUrl: string | undefined;
   private _started = false;
   private _closed = false;
   private _capabilities: ServerCapabilities;
@@ -90,6 +98,7 @@ export class SmitheryConnectTransport implements Transport {
     this._client = options.client;
     this._namespace = options.namespace;
     this._connectionId = options.connectionId;
+    this._mcpUrl = options.mcpUrl;
     this._capabilities = options.capabilities ?? {
       // Default to advertising common capabilities
       // The actual MCP server behind Smithery Connect will handle the real capabilities
@@ -104,10 +113,22 @@ export class SmitheryConnectTransport implements Transport {
       throw new Error('Transport has been closed');
     }
 
-    // Fetch connection details to get serverInfo
-    this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
-      namespace: this._namespace,
-    });
+    // Try to retrieve existing connection, or create if mcpUrl is provided
+    try {
+      this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
+        namespace: this._namespace,
+      });
+    } catch (error) {
+      // If connection doesn't exist and we have mcpUrl, create it
+      if (this._mcpUrl) {
+        this._connection = await this._client.beta.connect.connections.set(this._connectionId, {
+          namespace: this._namespace,
+          mcpUrl: this._mcpUrl,
+        });
+      } else {
+        throw error;
+      }
+    }
 
     this._started = true;
   }
