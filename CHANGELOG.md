@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.24.0 (2026-01-21)
+
+Full Changelog: [v0.23.0...v0.24.0](https://github.com/smithery-ai/typescript-api/compare/v0.23.0...v0.24.0)
+
+### Features
+
+* add SmitheryConnectTransport for MCP SDK integration [SMI-1270] ([#39](https://github.com/smithery-ai/typescript-api/issues/39)) ([e607f59](https://github.com/smithery-ai/typescript-api/commit/e607f596a85ab4f25920781ae74a8e6c8e2237f5))
+
 ## 0.23.0 (2026-01-21)
 
 Full Changelog: [v0.22.0...v0.23.0](https://github.com/smithery-ai/typescript-api/compare/v0.22.0...v0.23.0)
