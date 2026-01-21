@@ -129,6 +129,11 @@ export interface Connection {
   iconUrl?: string | null;
 
   /**
+   * Server information from MCP initialization (name, version)
+   */
+  serverInfo?: Connection.ServerInfo;
+
+  /**
    * Connection status after initialization (only returned on create)
    */
   status?:
@@ -138,6 +143,35 @@ export interface Connection {
 }
 
 export namespace Connection {
+  /**
+   * Server information from MCP initialization (name, version)
+   */
+  export interface ServerInfo {
+    name: string;
+
+    version: string;
+
+    description?: string;
+
+    icons?: Array<ServerInfo.Icon>;
+
+    title?: string;
+
+    websiteUrl?: string;
+  }
+
+  export namespace ServerInfo {
+    export interface Icon {
+      src: string;
+
+      mimeType?: string;
+
+      sizes?: Array<string>;
+
+      theme?: 'light' | 'dark';
+    }
+  }
+
   export interface ConnectConnectionStatusConnected {
     state: 'connected';
   }
