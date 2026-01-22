@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.25.0 (2026-01-22)
+
+Full Changelog: [v0.24.0...v0.25.0](https://github.com/smithery-ai/typescript-api/compare/v0.24.0...v0.25.0)
+
+### Features
+
+* **api:** api update ([0006ad9](https://github.com/smithery-ai/typescript-api/commit/0006ad9a3dc3b2bb36ba3b07f95c991f9acb8213))
+* **api:** api update ([bb153cc](https://github.com/smithery-ai/typescript-api/commit/bb153cc75f1422c22ed2e6e6c4816c04a6796890))
+* **api:** api update ([4a27a36](https://github.com/smithery-ai/typescript-api/commit/4a27a369a4f637fb505a9fe65393fe059a4d759a))
+* **api:** api update ([d4b47cc](https://github.com/smithery-ai/typescript-api/commit/d4b47cc096e38e3e425afe797e8a9a5f73d7b165))
+* **api:** api update ([1246071](https://github.com/smithery-ai/typescript-api/commit/124607148bb5399de4576ca50726b0be0a1dd397))
+* make namespace optional and rename to SmitheryTransport ([#42](https://github.com/smithery-ai/typescript-api/issues/42)) ([34fecfe](https://github.com/smithery-ai/typescript-api/commit/34fecfee6399cde14c157fee32fce0811dbf3a5a))
+
 ## 0.24.0 (2026-01-21)
 
 Full Changelog: [v0.23.0...v0.24.0](https://github.com/smithery-ai/typescript-api/compare/v0.23.0...v0.24.0)
