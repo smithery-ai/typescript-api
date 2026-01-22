@@ -2,12 +2,7 @@
 
 export { Beta } from './beta/beta';
 export { Health, type HealthCheckResponse } from './health';
-export {
-  Namespaces,
-  type NamespaceCreateResponse,
-  type NamespaceListResponse,
-  type NamespaceCreateParams,
-} from './namespaces';
+export { Namespaces, type NamespaceListResponse } from './namespaces';
 export {
   Servers,
   type BuildConfig,
