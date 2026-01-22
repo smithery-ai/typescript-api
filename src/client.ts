@@ -35,7 +35,17 @@ import {
   Namespaces,
 } from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
-import { CreateTokenRequest, CreateTokenResponse, TokenCreateParams, Tokens } from './resources/tokens';
+import {
+  Action,
+  Allow,
+  ConnectionScope,
+  CreateTokenRequest,
+  CreateTokenResponse,
+  ResourceScope,
+  RpcScope,
+  TokenCreateParams,
+  Tokens,
+} from './resources/tokens';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Beta } from './resources/beta/beta';
 import {
@@ -810,8 +820,13 @@ export declare namespace Smithery {
 
   export {
     Tokens as Tokens,
+    type Action as Action,
+    type Allow as Allow,
+    type ConnectionScope as ConnectionScope,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
+    type ResourceScope as ResourceScope,
+    type RpcScope as RpcScope,
     type TokenCreateParams as TokenCreateParams,
   };
 

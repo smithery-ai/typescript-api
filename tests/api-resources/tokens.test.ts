@@ -11,10 +11,7 @@ describe('resource tokens', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.tokens.create({
-      permissions: {
-        connections: { can: ['read', 'write'] },
-        'connections.rpc': { can: ['write'] },
-      },
+      allow: {},
       ttlSeconds: 3600,
     });
     const rawResponse = await responsePromise.asResponse();
@@ -29,12 +26,23 @@ describe('resource tokens', () => {
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.tokens.create({
-      permissions: {
-        connections: { can: ['read', 'write'] },
-        'connections.rpc': { can: ['write'] },
+      allow: {
+        connections: {
+          actions: ['read', 'write'],
+          namespaces: ['my-app'],
+          metadata: { userId: 'user-123' },
+        },
+        deployments: { actions: ['read', 'write'], namespaces: ['my-app'] },
+        namespaces: { actions: ['read', 'write'], namespaces: ['my-app'] },
+        rpc: {
+          actions: ['write'],
+          namespaces: ['my-app'],
+          metadata: { userId: 'user-123' },
+        },
+        servers: { actions: ['read', 'write'], namespaces: ['my-app'] },
+        tokens: { actions: ['read', 'write'], namespaces: ['my-app'] },
       },
       ttlSeconds: 3600,
-      constraints: { namespaceIds: ['my-namespace'], serverQualifiedNames: ['@smithery/memory'] },
       profileSlug: 'my-profile',
     });
   });
