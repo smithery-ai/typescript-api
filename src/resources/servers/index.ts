@@ -7,12 +7,12 @@ export {
   type HostedDeployPayload,
   type ServerCard,
   type StdioDeployPayload,
-  type DeploymentRetrieveResponse,
   type DeploymentListResponse,
   type DeploymentDeployResponse,
+  type DeploymentGetResponse,
   type DeploymentResumeResponse,
-  type DeploymentRetrieveParams,
   type DeploymentDeployParams,
+  type DeploymentGetParams,
   type DeploymentResumeParams,
 } from './deployments';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
@@ -29,9 +29,9 @@ export {
   type BuildConfig,
   type DeploymentTarget,
   type ProjectConfig,
-  type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerDeleteResponse,
+  type ServerGetResponse,
   type ServerListParams,
   type ServerListResponsesSmitheryPage,
 } from './servers';

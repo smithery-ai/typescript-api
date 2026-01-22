@@ -9,18 +9,6 @@ import { path } from '../../internal/utils/path';
 
 export class Deployments extends APIResource {
   /**
-   * Get deployment status
-   */
-  retrieve(
-    id: string,
-    params: DeploymentRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentRetrieveResponse> {
-    const { qualifiedName } = params;
-    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
-  }
-
-  /**
    * List deployments for a server
    */
   list(qualifiedName: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
@@ -39,6 +27,14 @@ export class Deployments extends APIResource {
       path`/servers/${qualifiedName}/deployments`,
       multipartFormRequestOptions({ body, ...options }, this._client),
     );
+  }
+
+  /**
+   * Get deployment status
+   */
+  get(id: string, params: DeploymentGetParams, options?: RequestOptions): APIPromise<DeploymentGetResponse> {
+    const { qualifiedName } = params;
+    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
   }
 
   /**
@@ -304,40 +300,6 @@ export namespace StdioDeployPayload {
   }
 }
 
-export interface DeploymentRetrieveResponse {
-  id: string;
-
-  createdAt: string;
-
-  status: string;
-
-  updatedAt: string;
-
-  logs?: Array<DeploymentRetrieveResponse.Log>;
-
-  mcpUrl?: string;
-}
-
-export namespace DeploymentRetrieveResponse {
-  export interface Log {
-    level: string;
-
-    message: string;
-
-    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
-
-    timestamp: string;
-
-    error?: Log.Error;
-  }
-
-  export namespace Log {
-    export interface Error {
-      message?: string;
-    }
-  }
-}
-
 export type DeploymentListResponse = Array<DeploymentListResponse.DeploymentListResponseItem>;
 
 export namespace DeploymentListResponse {
@@ -364,14 +326,44 @@ export interface DeploymentDeployResponse {
   warnings?: Array<string>;
 }
 
+export interface DeploymentGetResponse {
+  id: string;
+
+  createdAt: string;
+
+  status: string;
+
+  updatedAt: string;
+
+  logs?: Array<DeploymentGetResponse.Log>;
+
+  mcpUrl?: string;
+}
+
+export namespace DeploymentGetResponse {
+  export interface Log {
+    level: string;
+
+    message: string;
+
+    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
+
+    timestamp: string;
+
+    error?: Log.Error;
+  }
+
+  export namespace Log {
+    export interface Error {
+      message?: string;
+    }
+  }
+}
+
 export interface DeploymentResumeResponse {
   deploymentId: string;
 
   status: string;
-}
-
-export interface DeploymentRetrieveParams {
-  qualifiedName: string;
 }
 
 export interface DeploymentDeployParams {
@@ -396,6 +388,10 @@ export interface DeploymentDeployParams {
   sourcemap?: Uploadable;
 }
 
+export interface DeploymentGetParams {
+  qualifiedName: string;
+}
+
 export interface DeploymentResumeParams {
   qualifiedName: string;
 }
@@ -407,12 +403,12 @@ export declare namespace Deployments {
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
     type StdioDeployPayload as StdioDeployPayload,
-    type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
+    type DeploymentGetResponse as DeploymentGetResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentRetrieveParams as DeploymentRetrieveParams,
     type DeploymentDeployParams as DeploymentDeployParams,
+    type DeploymentGetParams as DeploymentGetParams,
     type DeploymentResumeParams as DeploymentResumeParams,
   };
 }

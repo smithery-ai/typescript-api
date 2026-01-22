@@ -33,27 +33,6 @@ describe('resource connections', () => {
   });
 
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.beta.connect.connections.retrieve('connectionId', {
-      namespace: 'namespace',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.beta.connect.connections.retrieve('connectionId', {
-      namespace: 'namespace',
-    });
-  });
-
-  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.beta.connect.connections.list('namespace');
     const rawResponse = await responsePromise.asResponse();
@@ -98,6 +77,23 @@ describe('resource connections', () => {
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.beta.connect.connections.delete('connectionId', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.beta.connect.connections.get('connectionId', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.beta.connect.connections.get('connectionId', { namespace: 'namespace' });
   });
 
   // Prism tests are disabled

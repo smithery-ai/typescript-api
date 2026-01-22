@@ -7,8 +7,8 @@ import {
   ConnectionCreateParams,
   ConnectionDeleteParams,
   ConnectionDeleteResponse,
+  ConnectionGetParams,
   ConnectionListParams,
-  ConnectionRetrieveParams,
   ConnectionSetParams,
   Connections,
   ConnectionsListResponse,
@@ -33,9 +33,9 @@ export declare namespace Connect {
     type CreateConnectionRequest as CreateConnectionRequest,
     type ConnectionDeleteResponse as ConnectionDeleteResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
-    type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionListParams as ConnectionListParams,
     type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionGetParams as ConnectionGetParams,
     type ConnectionSetParams as ConnectionSetParams,
   };
 

@@ -15,16 +15,16 @@ Types:
 - <code><a href="./src/resources/servers/servers.ts">BuildConfig</a></code>
 - <code><a href="./src/resources/servers/servers.ts">DeploymentTarget</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ProjectConfig</a></code>
-- <code><a href="./src/resources/servers/servers.ts">ServerRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerGetResponse</a></code>
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">retrieve</a>(qualifiedName) -> ServerRetrieveResponse</code>
 - <code title="get /servers">client.servers.<a href="./src/resources/servers/servers.ts">list</a>({ ...params }) -> ServerListResponsesSmitheryPage</code>
 - <code title="delete /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(qualifiedName) -> ServerDeleteResponse</code>
 - <code title="get /servers/{qualifiedName}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(qualifiedName) -> Response</code>
+- <code title="get /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(qualifiedName) -> ServerGetResponse</code>
 
 ## Deployments
 
@@ -35,16 +35,16 @@ Types:
 - <code><a href="./src/resources/servers/deployments.ts">HostedDeployPayload</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">ServerCard</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">StdioDeployPayload</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentRetrieveResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentListResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentGetResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentResumeResponse</a></code>
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">retrieve</a>(id, { ...params }) -> DeploymentRetrieveResponse</code>
 - <code title="get /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(qualifiedName) -> DeploymentListResponse</code>
 - <code title="put /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(qualifiedName, { ...params }) -> DeploymentDeployResponse</code>
+- <code title="get /servers/{qualifiedName}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">get</a>(id, { ...params }) -> DeploymentGetResponse</code>
 - <code title="post /servers/{qualifiedName}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
 
 ## Logs
@@ -95,11 +95,15 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/namespaces.ts">NamespaceCreateResponse</a></code>
 - <code><a href="./src/resources/namespaces.ts">NamespaceListResponse</a></code>
+- <code><a href="./src/resources/namespaces.ts">NamespaceSetResponse</a></code>
 
 Methods:
 
+- <code title="post /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">create</a>() -> NamespaceCreateResponse</code>
 - <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">list</a>() -> NamespaceListResponse</code>
+- <code title="put /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces.ts">set</a>(name) -> NamespaceSetResponse</code>
 
 # Tokens
 
@@ -143,9 +147,9 @@ Types:
 Methods:
 
 - <code title="post /connect/{namespace}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
-- <code title="get /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">retrieve</a>(connectionID, { ...params }) -> Connection</code>
 - <code title="get /connect/{namespace}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
 - <code title="delete /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="get /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
 - <code title="put /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
 ### Rpc
