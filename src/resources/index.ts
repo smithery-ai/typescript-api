@@ -2,15 +2,20 @@
 
 export { Beta } from './beta/beta';
 export { Health, type HealthCheckResponse } from './health';
-export { Namespaces, type NamespaceListResponse } from './namespaces';
+export {
+  Namespaces,
+  type NamespaceCreateResponse,
+  type NamespaceListResponse,
+  type NamespaceSetResponse,
+} from './namespaces';
 export {
   Servers,
   type BuildConfig,
   type DeploymentTarget,
   type ProjectConfig,
-  type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerDeleteResponse,
+  type ServerGetResponse,
   type ServerListParams,
   type ServerListResponsesSmitheryPage,
 } from './servers/servers';

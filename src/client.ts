@@ -28,7 +28,12 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import { NamespaceListResponse, Namespaces } from './resources/namespaces';
+import {
+  NamespaceCreateResponse,
+  NamespaceListResponse,
+  NamespaceSetResponse,
+  Namespaces,
+} from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import {
   Action,
@@ -48,10 +53,10 @@ import {
   DeploymentTarget,
   ProjectConfig,
   ServerDeleteResponse,
+  ServerGetResponse,
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
-  ServerRetrieveResponse,
   Servers,
 } from './resources/servers/servers';
 import { type Fetch } from './internal/builtin-types';
@@ -790,9 +795,9 @@ export declare namespace Smithery {
     type BuildConfig as BuildConfig,
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
-    type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
+    type ServerGetResponse as ServerGetResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
@@ -806,7 +811,12 @@ export declare namespace Smithery {
     type SkillListParams as SkillListParams,
   };
 
-  export { Namespaces as Namespaces, type NamespaceListResponse as NamespaceListResponse };
+  export {
+    Namespaces as Namespaces,
+    type NamespaceCreateResponse as NamespaceCreateResponse,
+    type NamespaceListResponse as NamespaceListResponse,
+    type NamespaceSetResponse as NamespaceSetResponse,
+  };
 
   export {
     Tokens as Tokens,
