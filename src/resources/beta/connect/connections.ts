@@ -19,11 +19,7 @@ export class Connections extends APIResource {
    *   );
    * ```
    */
-  create(
-    namespace: string,
-    body: ConnectionCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<ConnectionCreateResponse> {
+  create(namespace: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<Connection> {
     return this._client.post(path`/connect/${namespace}`, { body, ...options });
   }
 
@@ -44,7 +40,7 @@ export class Connections extends APIResource {
     connectionID: string,
     params: ConnectionRetrieveParams,
     options?: RequestOptions,
-  ): APIPromise<ConnectionRetrieveResponse> {
+  ): APIPromise<Connection> {
     const { namespace } = params;
     return this._client.get(path`/connect/${namespace}/${connectionID}`, options);
   }
@@ -55,7 +51,7 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connections =
+   * const connectionsListResponse =
    *   await client.beta.connect.connections.list('namespace');
    * ```
    */
@@ -63,7 +59,7 @@ export class Connections extends APIResource {
     namespace: string,
     query: ConnectionListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ConnectionListResponse> {
+  ): APIPromise<ConnectionsListResponse> {
     return this._client.get(path`/connect/${namespace}`, { query, ...options });
   }
 
@@ -95,26 +91,23 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.beta.connect.connections.set(
-   *   'connectionId',
-   *   {
-   *     namespace: 'namespace',
-   *     mcpUrl: 'https://mcp.example.com/sse',
-   *   },
-   * );
+   * const connection =
+   *   await client.beta.connect.connections.set(
+   *     'connectionId',
+   *     {
+   *       namespace: 'namespace',
+   *       mcpUrl: 'https://mcp.example.com/sse',
+   *     },
+   *   );
    * ```
    */
-  set(
-    connectionID: string,
-    params: ConnectionSetParams,
-    options?: RequestOptions,
-  ): APIPromise<ConnectionSetResponse> {
+  set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
     const { namespace, ...body } = params;
     return this._client.put(path`/connect/${namespace}/${connectionID}`, { body, ...options });
   }
 }
 
-export interface ConnectionCreateResponse {
+export interface Connection {
   /**
    * Connection ID (auto-generated or developer-defined)
    */
@@ -142,18 +135,18 @@ export interface ConnectionCreateResponse {
   /**
    * Server information from MCP initialization (name, version)
    */
-  serverInfo?: ConnectionCreateResponse.ServerInfo;
+  serverInfo?: Connection.ServerInfo;
 
   /**
    * Connection status after initialization (only returned on create)
    */
   status?:
-    | ConnectionCreateResponse.ConnectionStatusConnected
-    | ConnectionCreateResponse.ConnectionStatusAuthRequired
-    | ConnectionCreateResponse.ConnectionStatusError;
+    | Connection.ConnectionStatusConnected
+    | Connection.ConnectionStatusAuthRequired
+    | Connection.ConnectionStatusError;
 }
 
-export namespace ConnectionCreateResponse {
+export namespace Connection {
   /**
    * Server information from MCP initialization (name, version)
    */
@@ -206,100 +199,8 @@ export namespace ConnectionCreateResponse {
   }
 }
 
-export interface ConnectionRetrieveResponse {
-  /**
-   * Connection ID (auto-generated or developer-defined)
-   */
-  connectionId: string;
-
-  /**
-   * MCP server URL
-   */
-  mcpUrl: string;
-
-  metadata: { [key: string]: unknown } | null;
-
-  /**
-   * Human-readable name
-   */
-  name: string;
-
-  /**
-   * ISO 8601 timestamp
-   */
-  createdAt?: string;
-
-  iconUrl?: string | null;
-
-  /**
-   * Server information from MCP initialization (name, version)
-   */
-  serverInfo?: ConnectionRetrieveResponse.ServerInfo;
-
-  /**
-   * Connection status after initialization (only returned on create)
-   */
-  status?:
-    | ConnectionRetrieveResponse.ConnectionStatusConnected
-    | ConnectionRetrieveResponse.ConnectionStatusAuthRequired
-    | ConnectionRetrieveResponse.ConnectionStatusError;
-}
-
-export namespace ConnectionRetrieveResponse {
-  /**
-   * Server information from MCP initialization (name, version)
-   */
-  export interface ServerInfo {
-    name: string;
-
-    version: string;
-
-    description?: string;
-
-    icons?: Array<ServerInfo.Icon>;
-
-    title?: string;
-
-    websiteUrl?: string;
-  }
-
-  export namespace ServerInfo {
-    export interface Icon {
-      src: string;
-
-      mimeType?: string;
-
-      sizes?: Array<string>;
-
-      theme?: 'light' | 'dark';
-    }
-  }
-
-  export interface ConnectionStatusConnected {
-    state: 'connected';
-  }
-
-  export interface ConnectionStatusAuthRequired {
-    state: 'auth_required';
-
-    /**
-     * URL to redirect user for OAuth authorization
-     */
-    authorizationUrl?: string;
-  }
-
-  export interface ConnectionStatusError {
-    /**
-     * Error message
-     */
-    message: string;
-
-    state: 'error';
-  }
-}
-
-export interface ConnectionListResponse {
-  connections: Array<ConnectionListResponse.Connection>;
+export interface ConnectionsListResponse {
+  connections: Array<Connection>;
 
   /**
    * Cursor for next page, null if no more results
@@ -307,194 +208,31 @@ export interface ConnectionListResponse {
   nextCursor: string | null;
 }
 
-export namespace ConnectionListResponse {
-  export interface Connection {
-    /**
-     * Connection ID (auto-generated or developer-defined)
-     */
-    connectionId: string;
+export interface CreateConnectionRequest {
+  /**
+   * URL of the MCP server
+   */
+  mcpUrl: string;
 
-    /**
-     * MCP server URL
-     */
-    mcpUrl: string;
+  /**
+   * Custom headers to send with MCP requests (stored securely, not returned in
+   * responses)
+   */
+  headers?: { [key: string]: string };
 
-    metadata: { [key: string]: unknown } | null;
+  /**
+   * Custom metadata for filtering connections
+   */
+  metadata?: { [key: string]: unknown };
 
-    /**
-     * Human-readable name
-     */
-    name: string;
-
-    /**
-     * ISO 8601 timestamp
-     */
-    createdAt?: string;
-
-    iconUrl?: string | null;
-
-    /**
-     * Server information from MCP initialization (name, version)
-     */
-    serverInfo?: Connection.ServerInfo;
-
-    /**
-     * Connection status after initialization (only returned on create)
-     */
-    status?:
-      | Connection.ConnectionStatusConnected
-      | Connection.ConnectionStatusAuthRequired
-      | Connection.ConnectionStatusError;
-  }
-
-  export namespace Connection {
-    /**
-     * Server information from MCP initialization (name, version)
-     */
-    export interface ServerInfo {
-      name: string;
-
-      version: string;
-
-      description?: string;
-
-      icons?: Array<ServerInfo.Icon>;
-
-      title?: string;
-
-      websiteUrl?: string;
-    }
-
-    export namespace ServerInfo {
-      export interface Icon {
-        src: string;
-
-        mimeType?: string;
-
-        sizes?: Array<string>;
-
-        theme?: 'light' | 'dark';
-      }
-    }
-
-    export interface ConnectionStatusConnected {
-      state: 'connected';
-    }
-
-    export interface ConnectionStatusAuthRequired {
-      state: 'auth_required';
-
-      /**
-       * URL to redirect user for OAuth authorization
-       */
-      authorizationUrl?: string;
-    }
-
-    export interface ConnectionStatusError {
-      /**
-       * Error message
-       */
-      message: string;
-
-      state: 'error';
-    }
-  }
+  /**
+   * Human-readable name (optional, defaults to connection ID)
+   */
+  name?: string;
 }
 
 export interface ConnectionDeleteResponse {
   success: true;
-}
-
-export interface ConnectionSetResponse {
-  /**
-   * Connection ID (auto-generated or developer-defined)
-   */
-  connectionId: string;
-
-  /**
-   * MCP server URL
-   */
-  mcpUrl: string;
-
-  metadata: { [key: string]: unknown } | null;
-
-  /**
-   * Human-readable name
-   */
-  name: string;
-
-  /**
-   * ISO 8601 timestamp
-   */
-  createdAt?: string;
-
-  iconUrl?: string | null;
-
-  /**
-   * Server information from MCP initialization (name, version)
-   */
-  serverInfo?: ConnectionSetResponse.ServerInfo;
-
-  /**
-   * Connection status after initialization (only returned on create)
-   */
-  status?:
-    | ConnectionSetResponse.ConnectionStatusConnected
-    | ConnectionSetResponse.ConnectionStatusAuthRequired
-    | ConnectionSetResponse.ConnectionStatusError;
-}
-
-export namespace ConnectionSetResponse {
-  /**
-   * Server information from MCP initialization (name, version)
-   */
-  export interface ServerInfo {
-    name: string;
-
-    version: string;
-
-    description?: string;
-
-    icons?: Array<ServerInfo.Icon>;
-
-    title?: string;
-
-    websiteUrl?: string;
-  }
-
-  export namespace ServerInfo {
-    export interface Icon {
-      src: string;
-
-      mimeType?: string;
-
-      sizes?: Array<string>;
-
-      theme?: 'light' | 'dark';
-    }
-  }
-
-  export interface ConnectionStatusConnected {
-    state: 'connected';
-  }
-
-  export interface ConnectionStatusAuthRequired {
-    state: 'auth_required';
-
-    /**
-     * URL to redirect user for OAuth authorization
-     */
-    authorizationUrl?: string;
-  }
-
-  export interface ConnectionStatusError {
-    /**
-     * Error message
-     */
-    message: string;
-
-    state: 'error';
-  }
 }
 
 export interface ConnectionCreateParams {
@@ -575,11 +313,10 @@ export interface ConnectionSetParams {
 
 export declare namespace Connections {
   export {
-    type ConnectionCreateResponse as ConnectionCreateResponse,
-    type ConnectionRetrieveResponse as ConnectionRetrieveResponse,
-    type ConnectionListResponse as ConnectionListResponse,
+    type Connection as Connection,
+    type ConnectionsListResponse as ConnectionsListResponse,
+    type CreateConnectionRequest as CreateConnectionRequest,
     type ConnectionDeleteResponse as ConnectionDeleteResponse,
-    type ConnectionSetResponse as ConnectionSetResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionRetrieveParams as ConnectionRetrieveParams,
     type ConnectionListParams as ConnectionListParams,
