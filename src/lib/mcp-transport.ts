@@ -1,5 +1,5 @@
 /**
- * SmitheryConnectTransport - An MCP Transport that routes JSON-RPC messages through Smithery Connect.
+ * SmitheryTransport - An MCP Transport that routes JSON-RPC messages through Smithery Connect.
  *
  * This allows you to use the official MCP SDK's Client class with Smithery Connect as the transport layer.
  *
@@ -11,18 +11,17 @@
  * ```typescript
  * import { Client } from '@modelcontextprotocol/sdk/client/index.js';
  * import Smithery from '@smithery/api';
- * import { SmitheryConnectTransport } from '@smithery/api/mcp';
+ * import { SmitheryTransport } from '@smithery/api/mcp';
  *
  * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
- * // Option 1: Let Smithery generate a connection ID
- * const transport = new SmitheryConnectTransport({
+ * // Option 1: Let Smithery generate a connection ID and use default namespace
+ * const transport = new SmitheryTransport({
  *   client: smithery,
- *   namespace: 'my-namespace',
  *   mcpUrl: 'https://mcp.example.com/sse',
  * });
  *
- * // Option 2: Use a specific connection ID (retrieves existing or creates new)
- * const transport2 = new SmitheryConnectTransport({
+ * // Option 2: Use a specific namespace and connection ID
+ * const transport2 = new SmitheryTransport({
  *   client: smithery,
  *   namespace: 'my-namespace',
  *   connectionId: 'my-connection',
@@ -43,7 +42,7 @@ import type { JSONRPCMessage, JSONRPCResponse, ServerCapabilities } from '@model
 import type { Smithery } from '../client';
 import type { Connection } from '../resources/beta/connect/connections';
 
-export interface SmitheryConnectTransportOptions {
+export interface SmitheryTransportOptions {
   /**
    * The Smithery client instance to use for making RPC calls.
    */
@@ -51,8 +50,9 @@ export interface SmitheryConnectTransportOptions {
 
   /**
    * The namespace for the Smithery Connect connection.
+   * If not provided, uses the first existing namespace or creates a new one.
    */
-  namespace: string;
+  namespace?: string;
 
   /**
    * The connection ID for the Smithery Connect connection.
@@ -77,9 +77,9 @@ export interface SmitheryConnectTransportOptions {
 // MCP protocol version
 const LATEST_PROTOCOL_VERSION = '2024-11-05';
 
-export class SmitheryConnectTransport implements Transport {
+export class SmitheryTransport implements Transport {
   private _client: Smithery;
-  private _namespace: string;
+  private _namespace: string | undefined;
   private _connectionId: string | undefined;
   private _mcpUrl: string | undefined;
   private _started = false;
@@ -101,7 +101,7 @@ export class SmitheryConnectTransport implements Transport {
     return this._connectionId;
   }
 
-  constructor(options: SmitheryConnectTransportOptions) {
+  constructor(options: SmitheryTransportOptions) {
     this._client = options.client;
     this._namespace = options.namespace;
     this._connectionId = options.connectionId;
@@ -124,7 +124,7 @@ export class SmitheryConnectTransport implements Transport {
   async start(): Promise<void> {
     if (this._started) {
       throw new Error(
-        'SmitheryConnectTransport already started! If using Client class, note that connect() calls start() automatically.',
+        'SmitheryTransport already started! If using Client class, note that connect() calls start() automatically.',
       );
     }
     if (this._closed) {
@@ -132,6 +132,26 @@ export class SmitheryConnectTransport implements Transport {
     }
 
     this._started = true;
+  }
+
+  /**
+   * Lazily ensures a namespace is available.
+   * If no namespace was provided, uses the first existing namespace or creates a new one.
+   */
+  private async _ensureNamespace(): Promise<string> {
+    if (this._namespace) {
+      return this._namespace;
+    }
+
+    const { namespaces } = await this._client.namespaces.list();
+    if (namespaces.length > 0) {
+      this._namespace = namespaces[0]!.name;
+    } else {
+      // Create a new namespace with server-generated name
+      const { name } = await this._client.namespaces.create();
+      this._namespace = name;
+    }
+    return this._namespace;
   }
 
   /**
@@ -143,17 +163,19 @@ export class SmitheryConnectTransport implements Transport {
       return;
     }
 
+    const namespace = await this._ensureNamespace();
+
     if (this._connectionId) {
-      // Connection ID provided: try to retrieve, or create if mcpUrl is provided
+      // Connection ID provided: try to get, or create if mcpUrl is provided
       try {
-        this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
-          namespace: this._namespace,
+        this._connection = await this._client.beta.connect.connections.get(this._connectionId, {
+          namespace,
         });
       } catch (error) {
         // If connection doesn't exist and we have mcpUrl, create it with the specified ID
         if (this._mcpUrl) {
           this._connection = await this._client.beta.connect.connections.set(this._connectionId, {
-            namespace: this._namespace,
+            namespace,
             mcpUrl: this._mcpUrl,
           });
         } else {
@@ -163,7 +185,7 @@ export class SmitheryConnectTransport implements Transport {
     } else {
       // No connection ID: create a new connection with auto-generated ID
       // mcpUrl is guaranteed to be present (validated in constructor)
-      this._connection = await this._client.beta.connect.connections.create(this._namespace, {
+      this._connection = await this._client.beta.connect.connections.create(namespace, {
         mcpUrl: this._mcpUrl!,
       });
       // Store the generated connection ID for subsequent RPC calls
@@ -221,8 +243,9 @@ export class SmitheryConnectTransport implements Transport {
 
     try {
       // Build the RPC call params, only including id if it's defined
+      // _namespace is guaranteed to be set after _ensureConnection
       const rpcParams: Parameters<typeof this._client.beta.connect.rpc.call>[1] = {
-        namespace: this._namespace,
+        namespace: this._namespace!,
         jsonrpc: '2.0',
         method: message.method,
       };

@@ -29,13 +29,23 @@ import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
 import {
-  NamespaceCreateParams,
   NamespaceCreateResponse,
   NamespaceListResponse,
+  NamespaceSetResponse,
   Namespaces,
 } from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
-import { CreateTokenRequest, CreateTokenResponse, TokenCreateParams, Tokens } from './resources/tokens';
+import {
+  Action,
+  Allow,
+  ConnectionScope,
+  CreateTokenRequest,
+  CreateTokenResponse,
+  ResourceScope,
+  RpcScope,
+  TokenCreateParams,
+  Tokens,
+} from './resources/tokens';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Beta } from './resources/beta/beta';
 import {
@@ -43,10 +53,10 @@ import {
   DeploymentTarget,
   ProjectConfig,
   ServerDeleteResponse,
+  ServerGetResponse,
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
-  ServerRetrieveResponse,
   Servers,
 } from './resources/servers/servers';
 import { type Fetch } from './internal/builtin-types';
@@ -785,9 +795,9 @@ export declare namespace Smithery {
     type BuildConfig as BuildConfig,
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
-    type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
+    type ServerGetResponse as ServerGetResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
@@ -805,13 +815,18 @@ export declare namespace Smithery {
     Namespaces as Namespaces,
     type NamespaceCreateResponse as NamespaceCreateResponse,
     type NamespaceListResponse as NamespaceListResponse,
-    type NamespaceCreateParams as NamespaceCreateParams,
+    type NamespaceSetResponse as NamespaceSetResponse,
   };
 
   export {
     Tokens as Tokens,
+    type Action as Action,
+    type Allow as Allow,
+    type ConnectionScope as ConnectionScope,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
+    type ResourceScope as ResourceScope,
+    type RpcScope as RpcScope,
     type TokenCreateParams as TokenCreateParams,
   };
 

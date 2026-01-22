@@ -9,23 +9,6 @@ const client = new Smithery({
 
 describe('resource deployments', () => {
   // Prism tests are disabled
-  test.skip('retrieve: only required params', async () => {
-    const responsePromise = client.servers.deployments.retrieve('id', { qualifiedName: 'qualifiedName' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('retrieve: required and optional params', async () => {
-    const response = await client.servers.deployments.retrieve('id', { qualifiedName: 'qualifiedName' });
-  });
-
-  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.deployments.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -57,6 +40,23 @@ describe('resource deployments', () => {
       module: await toFile(Buffer.from('# my file contents'), 'README.md'),
       sourcemap: await toFile(Buffer.from('# my file contents'), 'README.md'),
     });
+  });
+
+  // Prism tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.servers.deployments.get('id', { qualifiedName: 'qualifiedName' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.servers.deployments.get('id', { qualifiedName: 'qualifiedName' });
   });
 
   // Prism tests are disabled

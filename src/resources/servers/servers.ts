@@ -6,11 +6,11 @@ import {
   DeployPayload,
   DeploymentDeployParams,
   DeploymentDeployResponse,
+  DeploymentGetParams,
+  DeploymentGetResponse,
   DeploymentListResponse,
   DeploymentResumeParams,
   DeploymentResumeResponse,
-  DeploymentRetrieveParams,
-  DeploymentRetrieveResponse,
   Deployments,
   ExternalDeployPayload,
   HostedDeployPayload,
@@ -40,13 +40,6 @@ export class Servers extends APIResource {
   secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
 
   /**
-   * Get a single server by its qualified name.
-   */
-  retrieve(qualifiedName: string, options?: RequestOptions): APIPromise<ServerRetrieveResponse> {
-    return this._client.get(path`/servers/${qualifiedName}`, options);
-  }
-
-  /**
    * Get a paginated list of all servers. Use the `q` parameter to search.
    */
   list(
@@ -72,6 +65,13 @@ export class Servers extends APIResource {
       headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
       __binaryResponse: true,
     });
+  }
+
+  /**
+   * Get a single server by its qualified name.
+   */
+  get(qualifiedName: string, options?: RequestOptions): APIPromise<ServerGetResponse> {
+    return this._client.get(path`/servers/${qualifiedName}`, options);
   }
 }
 
@@ -134,8 +134,40 @@ export namespace ProjectConfig {
   }
 }
 
-export interface ServerRetrieveResponse {
-  connections: Array<ServerRetrieveResponse.StdioConnection | ServerRetrieveResponse.HTTPConnection>;
+export interface ServerListResponse {
+  id: string;
+
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  homepage: string;
+
+  iconUrl: string | null;
+
+  isDeployed: boolean;
+
+  owner: string | null;
+
+  qualifiedName: string;
+
+  remote: boolean | null;
+
+  useCount: number;
+
+  verified: boolean;
+}
+
+export interface ServerDeleteResponse {
+  qualifiedName: string;
+
+  success: boolean;
+}
+
+export interface ServerGetResponse {
+  connections: Array<ServerGetResponse.StdioConnection | ServerGetResponse.HTTPConnection>;
 
   deploymentUrl: string | null;
 
@@ -149,12 +181,12 @@ export interface ServerRetrieveResponse {
 
   remote: boolean;
 
-  security: ServerRetrieveResponse.Security | null;
+  security: ServerGetResponse.Security | null;
 
-  tools: Array<ServerRetrieveResponse.Tool> | null;
+  tools: Array<ServerGetResponse.Tool> | null;
 }
 
-export namespace ServerRetrieveResponse {
+export namespace ServerGetResponse {
   export interface StdioConnection {
     configSchema: { [key: string]: unknown };
 
@@ -196,38 +228,6 @@ export namespace ServerRetrieveResponse {
   }
 }
 
-export interface ServerListResponse {
-  id: string;
-
-  createdAt: string;
-
-  description: string;
-
-  displayName: string;
-
-  homepage: string;
-
-  iconUrl: string | null;
-
-  isDeployed: boolean;
-
-  owner: string | null;
-
-  qualifiedName: string;
-
-  remote: boolean | null;
-
-  useCount: number;
-
-  verified: boolean;
-}
-
-export interface ServerDeleteResponse {
-  qualifiedName: string;
-
-  success: boolean;
-}
-
 export interface ServerListParams extends SmitheryPageParams {
   ids?: Array<string>;
 
@@ -259,9 +259,9 @@ export declare namespace Servers {
     type BuildConfig as BuildConfig,
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
-    type ServerRetrieveResponse as ServerRetrieveResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
+    type ServerGetResponse as ServerGetResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
   };
@@ -273,12 +273,12 @@ export declare namespace Servers {
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
     type StdioDeployPayload as StdioDeployPayload,
-    type DeploymentRetrieveResponse as DeploymentRetrieveResponse,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
+    type DeploymentGetResponse as DeploymentGetResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentRetrieveParams as DeploymentRetrieveParams,
     type DeploymentDeployParams as DeploymentDeployParams,
+    type DeploymentGetParams as DeploymentGetParams,
     type DeploymentResumeParams as DeploymentResumeParams,
   };
 

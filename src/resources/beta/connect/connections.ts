@@ -24,30 +24,8 @@ export class Connections extends APIResource {
   }
 
   /**
-   * Get details for a specific connection. Requires service token with
-   * connections:read scope.
-   *
-   * @example
-   * ```ts
-   * const connection =
-   *   await client.beta.connect.connections.retrieve(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
-   * ```
-   */
-  retrieve(
-    connectionID: string,
-    params: ConnectionRetrieveParams,
-    options?: RequestOptions,
-  ): APIPromise<Connection> {
-    const { namespace } = params;
-    return this._client.get(path`/connect/${namespace}/${connectionID}`, options);
-  }
-
-  /**
-   * List all connections in a namespace. Requires service token with
-   * connections:read scope.
+   * List all connections in a namespace. Supports filtering by metadata using
+   * `metadata.{key}={value}` query params (e.g., `metadata.userId=alice`).
    *
    * @example
    * ```ts
@@ -55,8 +33,12 @@ export class Connections extends APIResource {
    *   await client.beta.connect.connections.list('namespace');
    * ```
    */
-  list(namespace: string, options?: RequestOptions): APIPromise<ConnectionsListResponse> {
-    return this._client.get(path`/connect/${namespace}`, options);
+  list(
+    namespace: string,
+    query: ConnectionListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ConnectionsListResponse> {
+    return this._client.get(path`/connect/${namespace}`, { query, ...options });
   }
 
   /**
@@ -79,6 +61,24 @@ export class Connections extends APIResource {
   ): APIPromise<ConnectionDeleteResponse> {
     const { namespace } = params;
     return this._client.delete(path`/connect/${namespace}/${connectionID}`, options);
+  }
+
+  /**
+   * Get details for a specific connection. Requires service token with
+   * connections:read scope.
+   *
+   * @example
+   * ```ts
+   * const connection =
+   *   await client.beta.connect.connections.get(
+   *     'connectionId',
+   *     { namespace: 'namespace' },
+   *   );
+   * ```
+   */
+  get(connectionID: string, params: ConnectionGetParams, options?: RequestOptions): APIPromise<Connection> {
+    const { namespace } = params;
+    return this._client.get(path`/connect/${namespace}/${connectionID}`, options);
   }
 
   /**
@@ -137,9 +137,9 @@ export interface Connection {
    * Connection status after initialization (only returned on create)
    */
   status?:
-    | Connection.ConnectConnectionStatusConnected
-    | Connection.ConnectConnectionStatusAuthRequired
-    | Connection.ConnectConnectionStatusError;
+    | Connection.ConnectionStatusConnected
+    | Connection.ConnectionStatusAuthRequired
+    | Connection.ConnectionStatusError;
 }
 
 export namespace Connection {
@@ -172,11 +172,11 @@ export namespace Connection {
     }
   }
 
-  export interface ConnectConnectionStatusConnected {
+  export interface ConnectionStatusConnected {
     state: 'connected';
   }
 
-  export interface ConnectConnectionStatusAuthRequired {
+  export interface ConnectionStatusAuthRequired {
     state: 'auth_required';
 
     /**
@@ -185,7 +185,7 @@ export namespace Connection {
     authorizationUrl?: string;
   }
 
-  export interface ConnectConnectionStatusError {
+  export interface ConnectionStatusError {
     /**
      * Error message
      */
@@ -254,11 +254,28 @@ export interface ConnectionCreateParams {
   name?: string;
 }
 
-export interface ConnectionRetrieveParams {
-  namespace: string;
+export interface ConnectionListParams {
+  /**
+   * Pagination cursor from previous response's nextCursor
+   */
+  cursor?: string;
+
+  /**
+   * Maximum number of items to return (default 100, max 100)
+   */
+  limit?: number;
+
+  /**
+   * Filter by exact connection name
+   */
+  name?: string;
 }
 
 export interface ConnectionDeleteParams {
+  namespace: string;
+}
+
+export interface ConnectionGetParams {
   namespace: string;
 }
 
@@ -297,8 +314,9 @@ export declare namespace Connections {
     type CreateConnectionRequest as CreateConnectionRequest,
     type ConnectionDeleteResponse as ConnectionDeleteResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
-    type ConnectionRetrieveParams as ConnectionRetrieveParams,
+    type ConnectionListParams as ConnectionListParams,
     type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionGetParams as ConnectionGetParams,
     type ConnectionSetParams as ConnectionSetParams,
   };
 }

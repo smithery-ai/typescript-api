@@ -8,8 +8,9 @@ export {
   type CreateConnectionRequest,
   type ConnectionDeleteResponse,
   type ConnectionCreateParams,
-  type ConnectionRetrieveParams,
+  type ConnectionListParams,
   type ConnectionDeleteParams,
+  type ConnectionGetParams,
   type ConnectionSetParams,
 } from './connections';
 export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';

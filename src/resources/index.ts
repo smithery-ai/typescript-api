@@ -6,16 +6,16 @@ export {
   Namespaces,
   type NamespaceCreateResponse,
   type NamespaceListResponse,
-  type NamespaceCreateParams,
+  type NamespaceSetResponse,
 } from './namespaces';
 export {
   Servers,
   type BuildConfig,
   type DeploymentTarget,
   type ProjectConfig,
-  type ServerRetrieveResponse,
   type ServerListResponse,
   type ServerDeleteResponse,
+  type ServerGetResponse,
   type ServerListParams,
   type ServerListResponsesSmitheryPage,
 } from './servers/servers';
@@ -25,5 +25,15 @@ export {
   type SkillListParams,
   type SkillListResponsesSkillsPage,
 } from './skills';
-export { Tokens, type CreateTokenRequest, type CreateTokenResponse, type TokenCreateParams } from './tokens';
+export {
+  Tokens,
+  type Action,
+  type Allow,
+  type ConnectionScope,
+  type CreateTokenRequest,
+  type CreateTokenResponse,
+  type ResourceScope,
+  type RpcScope,
+  type TokenCreateParams,
+} from './tokens';
 export { Uplink, type UplinkCreateTokenResponse } from './uplink';
