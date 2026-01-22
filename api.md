@@ -95,12 +95,10 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/namespaces.ts">NamespaceCreateResponse</a></code>
 - <code><a href="./src/resources/namespaces.ts">NamespaceListResponse</a></code>
 
 Methods:
 
-- <code title="put /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">create</a>({ ...params }) -> NamespaceCreateResponse</code>
 - <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">list</a>() -> NamespaceListResponse</code>
 
 # Tokens
