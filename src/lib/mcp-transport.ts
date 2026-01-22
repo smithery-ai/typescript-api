@@ -77,15 +77,6 @@ export interface SmitheryTransportOptions {
 // MCP protocol version
 const LATEST_PROTOCOL_VERSION = '2024-11-05';
 
-function generateRandomId(length = 8): string {
-  const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
-
 export class SmitheryTransport implements Transport {
   private _client: Smithery;
   private _namespace: string | undefined;
@@ -156,8 +147,8 @@ export class SmitheryTransport implements Transport {
     if (namespaces.length > 0) {
       this._namespace = namespaces[0]!.name;
     } else {
-      const name = `default-${generateRandomId()}`;
-      await this._client.namespaces.create({ name });
+      // Create a new namespace with server-generated name
+      const { name } = await this._client.namespaces.create();
       this._namespace = name;
     }
     return this._namespace;
@@ -175,9 +166,9 @@ export class SmitheryTransport implements Transport {
     const namespace = await this._ensureNamespace();
 
     if (this._connectionId) {
-      // Connection ID provided: try to retrieve, or create if mcpUrl is provided
+      // Connection ID provided: try to get, or create if mcpUrl is provided
       try {
-        this._connection = await this._client.beta.connect.connections.retrieve(this._connectionId, {
+        this._connection = await this._client.beta.connect.connections.get(this._connectionId, {
           namespace,
         });
       } catch (error) {
