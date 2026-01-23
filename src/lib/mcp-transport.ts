@@ -13,14 +13,13 @@
  * import Smithery from '@smithery/api';
  * import { SmitheryTransport } from '@smithery/api/mcp';
  *
- * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
- * // Option 1: Let Smithery generate a connection ID and use default namespace
+ * // Simple usage - client auto-created using SMITHERY_API_KEY env var
  * const transport = new SmitheryTransport({
- *   client: smithery,
  *   mcpUrl: 'https://mcp.example.com/sse',
  * });
  *
- * // Option 2: Use a specific namespace and connection ID
+ * // Or with explicit client
+ * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
  * const transport2 = new SmitheryTransport({
  *   client: smithery,
  *   namespace: 'my-namespace',
@@ -39,14 +38,15 @@
 
 import type { Transport, TransportSendOptions } from '@modelcontextprotocol/sdk/shared/transport.js';
 import type { JSONRPCMessage, JSONRPCResponse, ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
-import type { Smithery } from '../client';
+import { Smithery } from '../client';
 import type { Connection } from '../resources/beta/connect/connections';
 
 export interface SmitheryTransportOptions {
   /**
    * The Smithery client instance to use for making RPC calls.
+   * If not provided, a new client will be created using the SMITHERY_API_KEY environment variable.
    */
-  client: Smithery;
+  client?: Smithery;
 
   /**
    * The namespace for the Smithery Connect connection.
@@ -102,7 +102,7 @@ export class SmitheryTransport implements Transport {
   }
 
   constructor(options: SmitheryTransportOptions) {
-    this._client = options.client;
+    this._client = options.client ?? new Smithery();
     this._namespace = options.namespace;
     this._connectionId = options.connectionId;
     this._mcpUrl = options.mcpUrl;
