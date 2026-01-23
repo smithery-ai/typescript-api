@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.26.0 (2026-01-23)
+
+Full Changelog: [v0.25.0...v0.26.0](https://github.com/smithery-ai/typescript-api/compare/v0.25.0...v0.26.0)
+
+### Features
+
+* **api:** api update ([f355be6](https://github.com/smithery-ai/typescript-api/commit/f355be6ee5e031426d44b3db736076879db9341a))
+* make client optional in SmitheryTransport ([#43](https://github.com/smithery-ai/typescript-api/issues/43)) ([8b9b9e7](https://github.com/smithery-ai/typescript-api/commit/8b9b9e7bb333e84319fc848dd699b51666e150ef))
+
 ## 0.25.0 (2026-01-22)
 
 Full Changelog: [v0.24.0...v0.25.0](https://github.com/smithery-ai/typescript-api/compare/v0.24.0...v0.25.0)
