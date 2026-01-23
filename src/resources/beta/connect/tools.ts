@@ -7,21 +7,20 @@ import { path } from '../../../internal/utils/path';
 
 export class Tools extends APIResource {
   /**
-   * Search indexed tools across all connections in a namespace. Filter by
-   * connectionId or server URL. Metadata constraints from service tokens are applied
-   * automatically.
+   * Search or list indexed tools across all connections in a namespace. If 'q' query
+   * parameter is omitted, returns all tools. Filter by connectionId or server URL.
+   * Metadata constraints from service tokens are applied automatically.
    *
    * @example
    * ```ts
    * const response = await client.beta.connect.tools.search(
    *   'namespace',
-   *   { q: 'x' },
    * );
    * ```
    */
   search(
     namespace: string,
-    query: ToolSearchParams,
+    query: ToolSearchParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ToolSearchResponse> {
     return this._client.get(path`/connect/tools/${namespace}`, { query, ...options });
@@ -57,13 +56,13 @@ export namespace ToolSearchResponse {
 }
 
 export interface ToolSearchParams {
-  q: string;
-
   connectionId?: string;
 
   cursor?: string;
 
   limit?: number;
+
+  q?: string;
 
   server?: string;
 }
