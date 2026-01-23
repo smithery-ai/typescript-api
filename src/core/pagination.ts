@@ -283,3 +283,50 @@ export class ToolsPage<Item> extends AbstractPage<Item> implements ToolsPageResp
     };
   }
 }
+
+export interface ConnectToolsCursorResponse<Item> {
+  tools: Array<Item>;
+
+  next_cursor: string | null;
+}
+
+export interface ConnectToolsCursorParams {
+  cursor?: string;
+}
+
+export class ConnectToolsCursor<Item> extends AbstractPage<Item> implements ConnectToolsCursorResponse<Item> {
+  tools: Array<Item>;
+
+  next_cursor: string | null;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: ConnectToolsCursorResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.tools = body.tools || [];
+    this.next_cursor = body.next_cursor || null;
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.tools ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const cursor = this.next_cursor;
+    if (!cursor) {
+      return null;
+    }
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        cursor,
+      },
+    };
+  }
+}
