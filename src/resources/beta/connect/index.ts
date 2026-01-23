@@ -14,3 +14,4 @@ export {
   type ConnectionSetParams,
 } from './connections';
 export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';
+export { Tools, type ToolSearchResponse, type ToolSearchParams } from './tools';

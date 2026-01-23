@@ -135,6 +135,16 @@ Methods:
 
 ## Connect
 
+### Tools
+
+Types:
+
+- <code><a href="./src/resources/beta/connect/tools.ts">ToolSearchResponse</a></code>
+
+Methods:
+
+- <code title="get /connect/tools/{namespace}">client.beta.connect.tools.<a href="./src/resources/beta/connect/tools.ts">search</a>(namespace, { ...params }) -> ToolSearchResponse</code>
+
 ### Connections
 
 Types:
