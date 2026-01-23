@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource tools', () => {
   // Prism tests are disabled
-  test.skip('search: only required params', async () => {
-    const responsePromise = client.beta.connect.tools.search('namespace', { q: 'x' });
+  test.skip('search', async () => {
+    const responsePromise = client.beta.connect.tools.search('namespace');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,13 +21,20 @@ describe('resource tools', () => {
   });
 
   // Prism tests are disabled
-  test.skip('search: required and optional params', async () => {
-    const response = await client.beta.connect.tools.search('namespace', {
-      q: 'x',
-      connectionId: 'connectionId',
-      cursor: 'cursor',
-      limit: 1,
-      server: 'server',
-    });
+  test.skip('search: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.beta.connect.tools.search(
+        'namespace',
+        {
+          connectionId: 'connectionId',
+          cursor: 'cursor',
+          limit: 1,
+          q: 'x',
+          server: 'server',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 });
