@@ -17,6 +17,8 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
+  type ConnectToolsCursorParams,
+  ConnectToolsCursorResponse,
   type SkillsPageParams,
   SkillsPageResponse,
   type SmitheryPageParams,
@@ -787,6 +789,12 @@ export declare namespace Smithery {
 
   export import ToolsPage = Pagination.ToolsPage;
   export { type ToolsPageParams as ToolsPageParams, type ToolsPageResponse as ToolsPageResponse };
+
+  export import ConnectToolsCursor = Pagination.ConnectToolsCursor;
+  export {
+    type ConnectToolsCursorParams as ConnectToolsCursorParams,
+    type ConnectToolsCursorResponse as ConnectToolsCursorResponse,
+  };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
