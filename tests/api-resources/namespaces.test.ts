@@ -34,7 +34,7 @@ describe('resource namespaces', () => {
 
   // Prism tests are disabled
   test.skip('set', async () => {
-    const responsePromise = client.namespaces.set('name');
+    const responsePromise = client.namespaces.set('xxx');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
