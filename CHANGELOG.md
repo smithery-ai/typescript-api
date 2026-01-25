@@ -1,19 +1,5 @@
 # Changelog
 
-## 0.28.0 (2026-01-25)
-
-Full Changelog: [v0.27.0...v0.28.0](https://github.com/smithery-ai/typescript-api/compare/v0.27.0...v0.28.0)
-
-### Features
-
-* **api:** api update ([c0e98fc](https://github.com/smithery-ai/typescript-api/commit/c0e98fc6667b0a98232defffbe2ff0d4898b02cd))
-* **api:** api update ([cf583c0](https://github.com/smithery-ai/typescript-api/commit/cf583c0cdf9e058d346671d1b552d9dbb9ab55e8))
-
-
-### Chores
-
-* **ci:** upgrade `actions/github-script` ([ab0b9ab](https://github.com/smithery-ai/typescript-api/commit/ab0b9ab791540cd93825b07dccff3409f574042d))
-
 ## 0.27.0 (2026-01-23)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/smithery-ai/typescript-api/compare/v0.26.0...v0.27.0)
