@@ -7,7 +7,7 @@ export {
   type NamespaceCreateResponse,
   type NamespaceListResponse,
   type NamespaceSetResponse,
-} from './namespaces';
+} from './namespaces/namespaces';
 export {
   Servers,
   type BuildConfig,
@@ -17,6 +17,9 @@ export {
   type ServerDeleteResponse,
   type ServerGetResponse,
   type ServerListParams,
+  type ServerDeleteParams,
+  type ServerDownloadParams,
+  type ServerGetParams,
   type ServerListResponsesSmitheryPage,
 } from './servers/servers';
 export {

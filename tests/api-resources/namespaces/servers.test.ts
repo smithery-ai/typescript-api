@@ -7,10 +7,10 @@ const client = new Smithery({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource logs', () => {
+describe('resource servers', () => {
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.servers.logs.list('server', { namespace: 'namespace' });
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.namespaces.servers.create('xxx', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,12 +21,11 @@ describe('resource logs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.servers.logs.list('server', {
+  test.skip('create: required and optional params', async () => {
+    const response = await client.namespaces.servers.create('xxx', {
       namespace: 'namespace',
-      from: '2026-01-01T00:00:00Z',
-      limit: 50,
-      to: '2026-01-01T01:00:00Z',
+      description: 'A simple server',
+      displayName: 'My Server',
     });
   });
 });
