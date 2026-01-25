@@ -49,8 +49,6 @@ export namespace ToolSearchResponse {
       name: string;
 
       description?: string;
-
-      inputSchema?: { [key: string]: unknown };
     }
   }
 }

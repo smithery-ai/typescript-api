@@ -22,8 +22,9 @@ export class Namespaces extends APIResource {
   }
 
   /**
-   * Create a new namespace with a user-specified name, owned by the authenticated
-   * user
+   * Create a new namespace owned by the authenticated user. This endpoint is
+   * idempotent - if the namespace already exists and is owned by the user, returns
+   * success.
    */
   set(name: string, options?: RequestOptions): APIPromise<NamespaceSetResponse> {
     return this._client.put(path`/namespaces/${name}`, options);
