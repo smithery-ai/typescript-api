@@ -1,0 +1,71 @@
+// File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
+
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
+
+export class Servers extends APIResource {
+  /**
+   * Create a new server under the specified namespace. This endpoint is idempotent.
+   *
+   * @example
+   * ```ts
+   * const createServerResponse =
+   *   await client.namespaces.servers.create('xxx', {
+   *     namespace: 'namespace',
+   *   });
+   * ```
+   */
+  create(
+    server: string,
+    params: ServerCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<CreateServerResponse> {
+    const { namespace, ...body } = params;
+    return this._client.put(path`/namespaces/${namespace}/servers/${server}`, { body, ...options });
+  }
+}
+
+export interface CreateServerRequest {
+  description?: string;
+
+  displayName?: string;
+}
+
+export interface CreateServerResponse {
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  namespace: string;
+
+  server: string;
+}
+
+export interface ServerCreateParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param
+   */
+  description?: string;
+
+  /**
+   * Body param
+   */
+  displayName?: string;
+}
+
+export declare namespace Servers {
+  export {
+    type CreateServerRequest as CreateServerRequest,
+    type CreateServerResponse as CreateServerResponse,
+    type ServerCreateParams as ServerCreateParams,
+  };
+}

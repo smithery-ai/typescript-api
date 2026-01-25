@@ -11,16 +11,27 @@ export {
   type DeploymentDeployResponse,
   type DeploymentGetResponse,
   type DeploymentResumeResponse,
+  type DeploymentListParams,
   type DeploymentDeployParams,
   type DeploymentGetParams,
   type DeploymentResumeParams,
 } from './deployments';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
 export {
+  Repo,
+  type RepoDeleteResponse,
+  type RepoGetResponse,
+  type RepoSetResponse,
+  type RepoDeleteParams,
+  type RepoGetParams,
+  type RepoSetParams,
+} from './repo';
+export {
   Secrets,
   type SecretListResponse,
   type SecretDeleteResponse,
   type SecretSetResponse,
+  type SecretListParams,
   type SecretDeleteParams,
   type SecretSetParams,
 } from './secrets';
@@ -33,5 +44,8 @@ export {
   type ServerDeleteResponse,
   type ServerGetResponse,
   type ServerListParams,
+  type ServerDeleteParams,
+  type ServerDownloadParams,
+  type ServerGetParams,
   type ServerListResponsesSmitheryPage,
 } from './servers';

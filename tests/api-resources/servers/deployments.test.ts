@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource deployments', () => {
   // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.servers.deployments.list('qualifiedName');
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.servers.deployments.list('server', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,16 @@ describe('resource deployments', () => {
   });
 
   // Prism tests are disabled
+  test.skip('list: required and optional params', async () => {
+    const response = await client.servers.deployments.list('server', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
   test.skip('deploy: only required params', async () => {
-    const responsePromise = client.servers.deployments.deploy('qualifiedName', { payload: 'payload' });
+    const responsePromise = client.servers.deployments.deploy('server', {
+      namespace: 'namespace',
+      payload: 'payload',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -34,7 +42,8 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('deploy: required and optional params', async () => {
-    const response = await client.servers.deployments.deploy('qualifiedName', {
+    const response = await client.servers.deployments.deploy('server', {
+      namespace: 'namespace',
       payload: 'payload',
       bundle: await toFile(Buffer.from('# my file contents'), 'README.md'),
       module: await toFile(Buffer.from('# my file contents'), 'README.md'),
@@ -44,7 +53,10 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('get: only required params', async () => {
-    const responsePromise = client.servers.deployments.get('id', { qualifiedName: 'qualifiedName' });
+    const responsePromise = client.servers.deployments.get('id', {
+      namespace: 'namespace',
+      server: 'server',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -56,12 +68,15 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('get: required and optional params', async () => {
-    const response = await client.servers.deployments.get('id', { qualifiedName: 'qualifiedName' });
+    const response = await client.servers.deployments.get('id', { namespace: 'namespace', server: 'server' });
   });
 
   // Prism tests are disabled
   test.skip('resume: only required params', async () => {
-    const responsePromise = client.servers.deployments.resume('id', { qualifiedName: 'qualifiedName' });
+    const responsePromise = client.servers.deployments.resume('id', {
+      namespace: 'namespace',
+      server: 'server',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -73,6 +88,9 @@ describe('resource deployments', () => {
 
   // Prism tests are disabled
   test.skip('resume: required and optional params', async () => {
-    const response = await client.servers.deployments.resume('id', { qualifiedName: 'qualifiedName' });
+    const response = await client.servers.deployments.resume('id', {
+      namespace: 'namespace',
+      server: 'server',
+    });
   });
 });

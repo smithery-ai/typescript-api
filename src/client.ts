@@ -30,12 +30,6 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import {
-  NamespaceCreateResponse,
-  NamespaceListResponse,
-  NamespaceSetResponse,
-  Namespaces,
-} from './resources/namespaces';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import {
   Action,
@@ -51,10 +45,19 @@ import {
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Beta } from './resources/beta/beta';
 import {
+  NamespaceCreateResponse,
+  NamespaceListResponse,
+  NamespaceSetResponse,
+  Namespaces,
+} from './resources/namespaces/namespaces';
+import {
   BuildConfig,
   DeploymentTarget,
   ProjectConfig,
+  ServerDeleteParams,
   ServerDeleteResponse,
+  ServerDownloadParams,
+  ServerGetParams,
   ServerGetResponse,
   ServerListParams,
   ServerListResponse,
@@ -808,6 +811,9 @@ export declare namespace Smithery {
     type ServerGetResponse as ServerGetResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
+    type ServerDeleteParams as ServerDeleteParams,
+    type ServerDownloadParams as ServerDownloadParams,
+    type ServerGetParams as ServerGetParams,
   };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };

@@ -9,13 +9,17 @@ export class Logs extends APIResource {
   /**
    * Fetch recent runtime logs for the server's deployed Worker, grouped by
    * invocation (requires ownership).
+   *
+   * @example
+   * ```ts
+   * const logs = await client.servers.logs.list('server', {
+   *   namespace: 'namespace',
+   * });
+   * ```
    */
-  list(
-    qualifiedName: string,
-    query: LogListParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<LogListResponse> {
-    return this._client.get(path`/servers/${qualifiedName}/logs`, { query, ...options });
+  list(server: string, params: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
+    const { namespace, ...query } = params;
+    return this._client.get(path`/servers/${namespace}/${server}/logs`, { query, ...options });
   }
 }
 
@@ -86,17 +90,22 @@ export namespace LogListResponse {
 
 export interface LogListParams {
   /**
-   * Start of time range (ISO 8601).
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Query param: Start of time range (ISO 8601).
    */
   from?: string;
 
   /**
-   * Max invocations to return. Defaults to 50.
+   * Query param: Max invocations to return. Defaults to 50.
    */
   limit?: number;
 
   /**
-   * End of time range (ISO 8601).
+   * Query param: End of time range (ISO 8601).
    */
   to?: string;
 }
