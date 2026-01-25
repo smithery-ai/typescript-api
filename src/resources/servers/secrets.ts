@@ -8,28 +8,58 @@ import { path } from '../../internal/utils/path';
 export class Secrets extends APIResource {
   /**
    * Fetch secret names for the server. Values are not returned.
+   *
+   * @example
+   * ```ts
+   * const secrets = await client.servers.secrets.list(
+   *   'server',
+   *   { namespace: 'namespace' },
+   * );
+   * ```
    */
-  list(qualifiedName: string, options?: RequestOptions): APIPromise<SecretListResponse> {
-    return this._client.get(path`/servers/${qualifiedName}/secrets`, options);
+  list(server: string, params: SecretListParams, options?: RequestOptions): APIPromise<SecretListResponse> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/${server}/secrets`, options);
   }
 
   /**
    * Delete a secret by name from the server.
+   *
+   * @example
+   * ```ts
+   * const secret = await client.servers.secrets.delete(
+   *   'secretName',
+   *   { namespace: 'namespace', server: 'server' },
+   * );
+   * ```
    */
   delete(
     secretName: string,
     params: SecretDeleteParams,
     options?: RequestOptions,
   ): APIPromise<SecretDeleteResponse> {
-    const { qualifiedName } = params;
-    return this._client.delete(path`/servers/${qualifiedName}/secrets/${secretName}`, options);
+    const { namespace, server } = params;
+    return this._client.delete(path`/servers/${namespace}/${server}/secrets/${secretName}`, options);
   }
 
   /**
    * Set a secret value for the server.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.secrets.set(
+   *   'server',
+   *   {
+   *     namespace: 'namespace',
+   *     name: 'x',
+   *     value: 'x',
+   *   },
+   * );
+   * ```
    */
-  set(qualifiedName: string, body: SecretSetParams, options?: RequestOptions): APIPromise<SecretSetResponse> {
-    return this._client.put(path`/servers/${qualifiedName}/secrets`, { body, ...options });
+  set(server: string, params: SecretSetParams, options?: RequestOptions): APIPromise<SecretSetResponse> {
+    const { namespace, ...body } = params;
+    return this._client.put(path`/servers/${namespace}/${server}/secrets`, { body, ...options });
   }
 }
 
@@ -51,13 +81,30 @@ export interface SecretSetResponse {
   success: boolean;
 }
 
+export interface SecretListParams {
+  namespace: string;
+}
+
 export interface SecretDeleteParams {
-  qualifiedName: string;
+  namespace: string;
+
+  server: string;
 }
 
 export interface SecretSetParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param
+   */
   name: string;
 
+  /**
+   * Body param
+   */
   value: string;
 }
 
@@ -66,6 +113,7 @@ export declare namespace Secrets {
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
     type SecretSetResponse as SecretSetResponse,
+    type SecretListParams as SecretListParams,
     type SecretDeleteParams as SecretDeleteParams,
     type SecretSetParams as SecretSetParams,
   };

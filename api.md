@@ -22,9 +22,9 @@ Types:
 Methods:
 
 - <code title="get /servers">client.servers.<a href="./src/resources/servers/servers.ts">list</a>({ ...params }) -> ServerListResponsesSmitheryPage</code>
-- <code title="delete /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(qualifiedName) -> ServerDeleteResponse</code>
-- <code title="get /servers/{qualifiedName}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(qualifiedName) -> Response</code>
-- <code title="get /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(qualifiedName) -> ServerGetResponse</code>
+- <code title="delete /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(server, { ...params }) -> ServerDeleteResponse</code>
+- <code title="get /servers/{namespace}/{server}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(server, { ...params }) -> Response</code>
+- <code title="get /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(server, { ...params }) -> ServerGetResponse</code>
 
 ## Deployments
 
@@ -42,10 +42,10 @@ Types:
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(qualifiedName) -> DeploymentListResponse</code>
-- <code title="put /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(qualifiedName, { ...params }) -> DeploymentDeployResponse</code>
-- <code title="get /servers/{qualifiedName}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">get</a>(id, { ...params }) -> DeploymentGetResponse</code>
-- <code title="post /servers/{qualifiedName}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
+- <code title="get /servers/{namespace}/{server}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(server, { ...params }) -> DeploymentListResponse</code>
+- <code title="put /servers/{namespace}/{server}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(server, { ...params }) -> DeploymentDeployResponse</code>
+- <code title="get /servers/{namespace}/{server}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">get</a>(id, { ...params }) -> DeploymentGetResponse</code>
+- <code title="post /servers/{namespace}/{server}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
 
 ## Logs
 
@@ -55,7 +55,7 @@ Types:
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(qualifiedName, { ...params }) -> LogListResponse</code>
+- <code title="get /servers/{namespace}/{server}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(server, { ...params }) -> LogListResponse</code>
 
 ## Secrets
 
@@ -67,9 +67,23 @@ Types:
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">list</a>(qualifiedName) -> SecretListResponse</code>
-- <code title="delete /servers/{qualifiedName}/secrets/{secretName}">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">delete</a>(secretName, { ...params }) -> SecretDeleteResponse</code>
-- <code title="put /servers/{qualifiedName}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">set</a>(qualifiedName, { ...params }) -> SecretSetResponse</code>
+- <code title="get /servers/{namespace}/{server}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">list</a>(server, { ...params }) -> SecretListResponse</code>
+- <code title="delete /servers/{namespace}/{server}/secrets/{secretName}">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">delete</a>(secretName, { ...params }) -> SecretDeleteResponse</code>
+- <code title="put /servers/{namespace}/{server}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">set</a>(server, { ...params }) -> SecretSetResponse</code>
+
+## Repo
+
+Types:
+
+- <code><a href="./src/resources/servers/repo.ts">RepoDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/repo.ts">RepoGetResponse</a></code>
+- <code><a href="./src/resources/servers/repo.ts">RepoSetResponse</a></code>
+
+Methods:
+
+- <code title="delete /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">delete</a>(server, { ...params }) -> RepoDeleteResponse</code>
+- <code title="get /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">get</a>(server, { ...params }) -> RepoGetResponse</code>
+- <code title="put /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">set</a>(server, { ...params }) -> RepoSetResponse</code>
 
 # Uplink
 
@@ -95,15 +109,26 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/namespaces.ts">NamespaceCreateResponse</a></code>
-- <code><a href="./src/resources/namespaces.ts">NamespaceListResponse</a></code>
-- <code><a href="./src/resources/namespaces.ts">NamespaceSetResponse</a></code>
+- <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceCreateResponse</a></code>
+- <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceListResponse</a></code>
+- <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceSetResponse</a></code>
 
 Methods:
 
-- <code title="post /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">create</a>() -> NamespaceCreateResponse</code>
-- <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces.ts">list</a>() -> NamespaceListResponse</code>
-- <code title="put /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces.ts">set</a>(name) -> NamespaceSetResponse</code>
+- <code title="post /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">create</a>() -> NamespaceCreateResponse</code>
+- <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">list</a>() -> NamespaceListResponse</code>
+- <code title="put /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">set</a>(name) -> NamespaceSetResponse</code>
+
+## Servers
+
+Types:
+
+- <code><a href="./src/resources/namespaces/servers.ts">CreateServerRequest</a></code>
+- <code><a href="./src/resources/namespaces/servers.ts">CreateServerResponse</a></code>
+
+Methods:
+
+- <code title="put /namespaces/{namespace}/servers/{server}">client.namespaces.servers.<a href="./src/resources/namespaces/servers.ts">create</a>(server, { ...params }) -> CreateServerResponse</code>
 
 # Tokens
 

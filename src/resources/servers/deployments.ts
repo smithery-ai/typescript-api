@@ -10,43 +10,81 @@ import { path } from '../../internal/utils/path';
 export class Deployments extends APIResource {
   /**
    * List deployments for a server
+   *
+   * @example
+   * ```ts
+   * const deployments = await client.servers.deployments.list(
+   *   'server',
+   *   { namespace: 'namespace' },
+   * );
+   * ```
    */
-  list(qualifiedName: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
-    return this._client.get(path`/servers/${qualifiedName}/deployments`, options);
+  list(
+    server: string,
+    params: DeploymentListParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentListResponse> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/${server}/deployments`, options);
   }
 
   /**
    * Upload and deploy an MCP server (hosted or external)
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.deployments.deploy(
+   *   'server',
+   *   { namespace: 'namespace', payload: 'payload' },
+   * );
+   * ```
    */
   deploy(
-    qualifiedName: string,
-    body: DeploymentDeployParams,
+    server: string,
+    params: DeploymentDeployParams,
     options?: RequestOptions,
   ): APIPromise<DeploymentDeployResponse> {
+    const { namespace, ...body } = params;
     return this._client.put(
-      path`/servers/${qualifiedName}/deployments`,
+      path`/servers/${namespace}/${server}/deployments`,
       multipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
 
   /**
    * Get deployment status
+   *
+   * @example
+   * ```ts
+   * const deployment = await client.servers.deployments.get(
+   *   'id',
+   *   { namespace: 'namespace', server: 'server' },
+   * );
+   * ```
    */
   get(id: string, params: DeploymentGetParams, options?: RequestOptions): APIPromise<DeploymentGetResponse> {
-    const { qualifiedName } = params;
-    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
+    const { namespace, server } = params;
+    return this._client.get(path`/servers/${namespace}/${server}/deployments/${id}`, options);
   }
 
   /**
    * Use id='latest' to resume the most recent deployment
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.deployments.resume(
+   *   'id',
+   *   { namespace: 'namespace', server: 'server' },
+   * );
+   * ```
    */
   resume(
     id: string,
     params: DeploymentResumeParams,
     options?: RequestOptions,
   ): APIPromise<DeploymentResumeResponse> {
-    const { qualifiedName } = params;
-    return this._client.post(path`/servers/${qualifiedName}/deployments/${id}/resume`, options);
+    const { namespace, server } = params;
+    return this._client.post(path`/servers/${namespace}/${server}/deployments/${id}/resume`, options);
   }
 }
 
@@ -374,34 +412,48 @@ export interface DeploymentResumeResponse {
   status: string;
 }
 
+export interface DeploymentListParams {
+  namespace: string;
+}
+
 export interface DeploymentDeployParams {
   /**
-   * JSON-encoded deployment payload. See DeployPayload schema for structure.
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param: JSON-encoded deployment payload. See DeployPayload schema for
+   * structure.
    */
   payload: string;
 
   /**
-   * MCPB bundle file (for stdio deployments)
+   * Body param: MCPB bundle file (for stdio deployments)
    */
   bundle?: Uploadable;
 
   /**
-   * JavaScript module file (for hosted deployments)
+   * Body param: JavaScript module file (for hosted deployments)
    */
   module?: Uploadable;
 
   /**
-   * Source map file (for hosted deployments)
+   * Body param: Source map file (for hosted deployments)
    */
   sourcemap?: Uploadable;
 }
 
 export interface DeploymentGetParams {
-  qualifiedName: string;
+  namespace: string;
+
+  server: string;
 }
 
 export interface DeploymentResumeParams {
-  qualifiedName: string;
+  namespace: string;
+
+  server: string;
 }
 
 export declare namespace Deployments {
@@ -415,6 +467,7 @@ export declare namespace Deployments {
     type DeploymentDeployResponse as DeploymentDeployResponse,
     type DeploymentGetResponse as DeploymentGetResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
+    type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
     type DeploymentGetParams as DeploymentGetParams,
     type DeploymentResumeParams as DeploymentResumeParams,
