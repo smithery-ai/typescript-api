@@ -53,6 +53,7 @@ describe('resource connections', () => {
         {
           cursor: 'cursor',
           limit: 50,
+          mcpUrl: 'mcpUrl',
           name: 'name',
         },
         { path: '/_stainless_unknown_path' },
