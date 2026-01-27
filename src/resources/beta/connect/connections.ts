@@ -134,7 +134,7 @@ export interface Connection {
   serverInfo?: Connection.ServerInfo;
 
   /**
-   * Connection status after initialization (only returned on create)
+   * Last known connection status
    */
   status?:
     | Connection.ConnectionStatusConnected
@@ -264,6 +264,11 @@ export interface ConnectionListParams {
    * Maximum number of items to return (default 100, max 100)
    */
   limit?: number;
+
+  /**
+   * Filter by exact MCP server URL
+   */
+  mcpUrl?: string;
 
   /**
    * Filter by exact connection name
