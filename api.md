@@ -139,8 +139,8 @@ Types:
 - <code><a href="./src/resources/tokens.ts">ConnectionScope</a></code>
 - <code><a href="./src/resources/tokens.ts">CreateTokenRequest</a></code>
 - <code><a href="./src/resources/tokens.ts">CreateTokenResponse</a></code>
+- <code><a href="./src/resources/tokens.ts">McpScope</a></code>
 - <code><a href="./src/resources/tokens.ts">ResourceScope</a></code>
-- <code><a href="./src/resources/tokens.ts">RpcScope</a></code>
 
 Methods:
 
@@ -187,13 +187,13 @@ Methods:
 - <code title="get /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
 - <code title="put /connect/{namespace}/{connectionId}">client.beta.connect.connections.<a href="./src/resources/beta/connect/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
-### Rpc
+### Mcp
 
 Types:
 
-- <code><a href="./src/resources/beta/connect/rpc.ts">JsonRpcRequest</a></code>
-- <code><a href="./src/resources/beta/connect/rpc.ts">JsonRpcResponse</a></code>
+- <code><a href="./src/resources/beta/connect/mcp.ts">JsonRpcRequest</a></code>
+- <code><a href="./src/resources/beta/connect/mcp.ts">JsonRpcResponse</a></code>
 
 Methods:
 
-- <code title="post /connect/{namespace}/{connectionId}/rpc">client.beta.connect.rpc.<a href="./src/resources/beta/connect/rpc.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
+- <code title="post /connect/{namespace}/{connectionId}/mcp">client.beta.connect.mcp.<a href="./src/resources/beta/connect/mcp.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>

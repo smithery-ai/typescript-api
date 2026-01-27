@@ -13,5 +13,5 @@ export {
   type ConnectionGetParams,
   type ConnectionSetParams,
 } from './connections';
-export { Rpc, type JsonRpcRequest, type JsonRpcResponse, type RpcCallParams } from './rpc';
+export { Mcp, type JsonRpcRequest, type JsonRpcResponse, type McpCallParams } from './mcp';
 export { Tools, type ToolSearchResponse, type ToolSearchParams } from './tools';

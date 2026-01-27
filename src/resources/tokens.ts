@@ -44,14 +44,14 @@ export interface Allow {
   deployments?: ResourceScope;
 
   /**
+   * Scope for MCP protocol operations on connections.
+   */
+  mcp?: McpScope;
+
+  /**
    * Scope for namespace management.
    */
   namespaces?: ResourceScope;
-
-  /**
-   * Scope for making RPC calls on connections.
-   */
-  rpc?: RpcScope;
 
   /**
    * Scope for server metadata and configuration.
@@ -116,26 +116,11 @@ export interface CreateTokenResponse {
 }
 
 /**
- * Scope for resource operations.
+ * Scope for MCP operations on connections.
  */
-export interface ResourceScope {
+export interface McpScope {
   /**
-   * Actions allowed on this resource.
-   */
-  actions: Array<Action>;
-
-  /**
-   * Namespaces this scope applies to. Use '\*' for all namespaces.
-   */
-  namespaces: Array<string>;
-}
-
-/**
- * Scope for RPC operations on connections.
- */
-export interface RpcScope {
-  /**
-   * Actions allowed for RPC calls.
+   * Actions allowed for MCP calls.
    */
   actions: Array<Action>;
 
@@ -149,6 +134,21 @@ export interface RpcScope {
    * semantics).
    */
   metadata?: { [key: string]: string };
+}
+
+/**
+ * Scope for resource operations.
+ */
+export interface ResourceScope {
+  /**
+   * Actions allowed on this resource.
+   */
+  actions: Array<Action>;
+
+  /**
+   * Namespaces this scope applies to. Use '\*' for all namespaces.
+   */
+  namespaces: Array<string>;
 }
 
 export interface TokenCreateParams {
@@ -176,8 +176,8 @@ export declare namespace Tokens {
     type ConnectionScope as ConnectionScope,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
+    type McpScope as McpScope,
     type ResourceScope as ResourceScope,
-    type RpcScope as RpcScope,
     type TokenCreateParams as TokenCreateParams,
   };
 }

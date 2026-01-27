@@ -35,8 +35,8 @@ export {
   type ConnectionScope,
   type CreateTokenRequest,
   type CreateTokenResponse,
+  type McpScope,
   type ResourceScope,
-  type RpcScope,
   type TokenCreateParams,
 } from './tokens';
 export { Uplink, type UplinkCreateTokenResponse } from './uplink';
