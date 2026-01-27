@@ -1,49 +1,43 @@
 /**
- * SmitheryTransport - An MCP Transport that routes JSON-RPC messages through Smithery Connect.
+ * Smithery Connect — Create an MCP connection that routes through Smithery Connect.
  *
- * This allows you to use the official MCP SDK's Client class with Smithery Connect as the transport layer.
- *
- * **Important:** Smithery Connect handles MCP initialization server-side when a connection is created.
- * This transport lazily fetches/creates the connection on first message and uses its server info
- * to satisfy the MCP SDK's initialization flow without re-initializing the already-established connection.
+ * Smithery Connect acts as a connection manager and credential vault, handling OAuth
+ * orchestration with upstream MCP servers. This module provides a factory function
+ * that creates a connection and returns a standard MCP SDK transport.
  *
  * @example
  * ```typescript
  * import { Client } from '@modelcontextprotocol/sdk/client/index.js';
- * import Smithery from '@smithery/api';
- * import { SmitheryTransport } from '@smithery/api/mcp';
+ * import { createConnection, SmitheryAuthorizationError } from '@smithery/api/mcp';
  *
- * // Simple usage - client auto-created using SMITHERY_API_KEY env var
- * const transport = new SmitheryTransport({
- *   mcpUrl: 'https://mcp.example.com/sse',
- * });
+ * try {
+ *   const { transport } = await createConnection({
+ *     mcpUrl: 'https://server.smithery.ai/exa/mcp',
+ *   });
  *
- * // Or with explicit client
- * const smithery = new Smithery({ apiKey: process.env.SMITHERY_API_KEY });
- * const transport2 = new SmitheryTransport({
- *   client: smithery,
- *   namespace: 'my-namespace',
- *   connectionId: 'my-connection',
- *   mcpUrl: 'https://mcp.example.com/sse',
- * });
+ *   const client = new Client({ name: 'my-app', version: '1.0.0' }, { capabilities: {} });
+ *   await client.connect(transport);
  *
- * const mcpClient = new Client({ name: 'my-app', version: '1.0.0' }, { capabilities: {} });
- * await mcpClient.connect(transport);
- *
- * // Now use the MCP SDK's ergonomic API
- * const { tools } = await mcpClient.listTools();
- * const result = await mcpClient.callTool({ name: 'my-tool', arguments: {} });
+ *   const { tools } = await client.listTools();
+ *   const result = await client.callTool({ name: 'my-tool', arguments: {} });
+ * } catch (e) {
+ *   if (e instanceof SmitheryAuthorizationError) {
+ *     // The upstream MCP server requires OAuth — redirect the user
+ *     console.log(`Please authorize: ${e.authorizationUrl}`);
+ *     // After auth completes, retry with the same connectionId:
+ *     // await createConnection({ connectionId: e.connectionId });
+ *   }
+ * }
  * ```
  */
 
-import type { Transport, TransportSendOptions } from '@modelcontextprotocol/sdk/shared/transport.js';
-import type { JSONRPCMessage, JSONRPCResponse, ServerCapabilities } from '@modelcontextprotocol/sdk/types.js';
+import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { Smithery } from '../client';
 import type { Connection } from '../resources/beta/connect/connections';
 
-export interface SmitheryTransportOptions {
+export interface CreateConnectionOptions {
   /**
-   * The Smithery client instance to use for making RPC calls.
+   * The Smithery client instance to use.
    * If not provided, a new client will be created using the SMITHERY_API_KEY environment variable.
    */
   client?: Smithery;
@@ -61,240 +55,141 @@ export interface SmitheryTransportOptions {
   connectionId?: string;
 
   /**
-   * The MCP server URL. Required when creating a new connection.
+   * The upstream MCP server URL. Required when creating a new connection.
    * If connectionId is provided, this is used to create the connection if it doesn't exist.
-   * If connectionId is not provided, this is required and a new connection will be created.
+   * If connectionId is not provided, this is required.
    */
   mcpUrl?: string;
-
-  /**
-   * Optional server capabilities for the initialize response.
-   * If not provided, defaults to advertising tools, resources, and prompts support.
-   */
-  capabilities?: ServerCapabilities;
 }
 
-// MCP protocol version
-const LATEST_PROTOCOL_VERSION = '2024-11-05';
+export interface SmitheryConnection {
+  /** A ready-to-use MCP transport with auth headers configured. */
+  transport: StreamableHTTPClientTransport;
 
-export class SmitheryTransport implements Transport {
-  private _client: Smithery;
-  private _namespace: string | undefined;
-  private _connectionId: string | undefined;
-  private _mcpUrl: string | undefined;
-  private _started = false;
-  private _closed = false;
-  private _capabilities: ServerCapabilities;
-  private _connection: Connection | null = null;
+  /** The connection ID (for reuse across sessions). */
+  connectionId: string;
 
-  onmessage?: (message: JSONRPCMessage) => void;
-  onerror?: (error: Error) => void;
-  onclose?: () => void;
+  /** The raw MCP endpoint URL (for non-MCP-SDK use cases). */
+  url: string;
+}
 
-  sessionId?: string;
+/**
+ * Thrown when the upstream MCP server requires OAuth authorization.
+ * Contains the authorization URL to redirect the user to, and the connection ID
+ * to reuse when retrying after authorization completes.
+ */
+export class SmitheryAuthorizationError extends Error {
+  override name = 'SmitheryAuthorizationError';
 
-  /**
-   * Returns the connection ID. If no connectionId was provided in options,
-   * this returns the auto-generated ID after the first message is sent.
-   */
-  get connectionId(): string | undefined {
-    return this._connectionId;
+  constructor(
+    message: string,
+    public readonly authorizationUrl: string,
+    public readonly connectionId: string,
+  ) {
+    super(message);
+  }
+}
+
+/**
+ * Creates a Smithery Connect connection and returns an MCP transport.
+ *
+ * This function handles connection creation/retrieval and returns a standard
+ * `StreamableHTTPClientTransport` that can be used with any MCP SDK client.
+ * Smithery Connect manages the upstream MCP server connection, including
+ * OAuth credential storage and refresh.
+ *
+ * @throws {SmitheryAuthorizationError} If the upstream MCP server requires OAuth.
+ *   The error contains `authorizationUrl` (where to redirect the user) and
+ *   `connectionId` (to reuse when retrying after auth completes).
+ */
+export async function createConnection(options: CreateConnectionOptions): Promise<SmitheryConnection> {
+  const client = options.client ?? new Smithery();
+
+  // Validate: mcpUrl is required if connectionId is not provided
+  if (!options.connectionId && !options.mcpUrl) {
+    throw new Error('mcpUrl is required when connectionId is not provided');
   }
 
-  constructor(options: SmitheryTransportOptions) {
-    this._client = options.client ?? new Smithery();
-    this._namespace = options.namespace;
-    this._connectionId = options.connectionId;
-    this._mcpUrl = options.mcpUrl;
+  // Resolve namespace
+  const namespace = await resolveNamespace(client, options.namespace);
 
-    // Validate: mcpUrl is required if connectionId is not provided
-    if (!this._connectionId && !this._mcpUrl) {
-      throw new Error('mcpUrl is required when connectionId is not provided');
-    }
+  // Create or fetch connection
+  const connection = await resolveConnection(client, namespace, options.connectionId, options.mcpUrl);
+  const connectionId = connection.connectionId;
 
-    this._capabilities = options.capabilities ?? {
-      // Default to advertising common capabilities
-      // The actual MCP server behind Smithery Connect will handle the real capabilities
-      tools: {},
-      resources: {},
-      prompts: {},
-    };
-  }
-
-  async start(): Promise<void> {
-    if (this._started) {
-      throw new Error(
-        'SmitheryTransport already started! If using Client class, note that connect() calls start() automatically.',
-      );
-    }
-    if (this._closed) {
-      throw new Error('Transport has been closed');
-    }
-
-    this._started = true;
-  }
-
-  /**
-   * Lazily ensures a namespace is available.
-   * If no namespace was provided, uses the first existing namespace or creates a new one.
-   */
-  private async _ensureNamespace(): Promise<string> {
-    if (this._namespace) {
-      return this._namespace;
-    }
-
-    const { namespaces } = await this._client.namespaces.list();
-    if (namespaces.length > 0) {
-      this._namespace = namespaces[0]!.name;
-    } else {
-      // Create a new namespace with server-generated name
-      const { name } = await this._client.namespaces.create();
-      this._namespace = name;
-    }
-    return this._namespace;
-  }
-
-  /**
-   * Lazily ensures the Smithery Connect connection exists.
-   * Called on first message to defer network IO until actually needed.
-   */
-  private async _ensureConnection(): Promise<void> {
-    if (this._connection) {
-      return;
-    }
-
-    const namespace = await this._ensureNamespace();
-
-    if (this._connectionId) {
-      // Connection ID provided: try to get, or create if mcpUrl is provided
-      try {
-        this._connection = await this._client.beta.connect.connections.get(this._connectionId, {
-          namespace,
-        });
-      } catch (error) {
-        // If connection doesn't exist and we have mcpUrl, create it with the specified ID
-        if (this._mcpUrl) {
-          this._connection = await this._client.beta.connect.connections.set(this._connectionId, {
-            namespace,
-            mcpUrl: this._mcpUrl,
-          });
-        } else {
-          throw error;
-        }
+  // Check connection status (present on create/set responses)
+  if (connection.status) {
+    if (connection.status.state === 'auth_required') {
+      const { authorizationUrl } = connection.status;
+      if (authorizationUrl) {
+        throw new SmitheryAuthorizationError(
+          `MCP server requires authorization. Please visit: ${authorizationUrl}`,
+          authorizationUrl,
+          connectionId,
+        );
       }
-    } else {
-      // No connection ID: create a new connection with auto-generated ID
-      // mcpUrl is guaranteed to be present (validated in constructor)
-      this._connection = await this._client.beta.connect.connections.create(namespace, {
-        mcpUrl: this._mcpUrl!,
-      });
-      // Store the generated connection ID for subsequent RPC calls
-      this._connectionId = this._connection.connectionId;
+      throw new Error('MCP server requires authorization.');
     }
+    if (connection.status.state === 'error') {
+      throw new Error(`MCP connection failed: ${connection.status.message}`);
+    }
+  } else if (!connection.serverInfo) {
+    // No status field (e.g., fetched via get()) and no serverInfo means the
+    // connection never initialized successfully — likely requires authorization.
+    // Surface this early rather than returning a broken transport.
+    throw new Error(
+      'Connection is not initialized. The upstream MCP server may require authorization. ' +
+        'Try creating a new connection with mcpUrl to get authorization details.',
+    );
   }
 
-  async send(message: JSONRPCMessage, _options?: TransportSendOptions): Promise<void> {
-    if (!this._started) {
-      throw new Error('Transport not started');
-    }
-    if (this._closed) {
-      throw new Error('Transport has been closed');
-    }
+  // Build the MCP endpoint URL
+  const url = new URL(`/connect/${namespace}/${connectionId}/mcp`, client.baseURL).href;
 
-    // Only handle outgoing requests and notifications (messages with a method)
-    if (!('method' in message)) {
-      return;
-    }
+  // Create transport with auth headers
+  const transport = new StreamableHTTPClientTransport(new URL(url), {
+    requestInit: {
+      headers: {
+        Authorization: `Bearer ${client.apiKey}`,
+      },
+    },
+  });
 
-    // Lazily ensure connection exists before processing any message
-    await this._ensureConnection();
+  return { transport, connectionId, url };
+}
 
-    // Intercept 'initialize' request - Smithery Connect handles initialization server-side
-    // Return the real serverInfo from the connection
-    if (message.method === 'initialize' && 'id' in message && message.id !== undefined) {
-      if (this.onmessage) {
-        const serverInfo = this._connection?.serverInfo ?? {
-          name: 'smithery-connect',
-          version: '1.0.0',
-        };
+async function resolveNamespace(client: Smithery, namespace?: string): Promise<string> {
+  if (namespace) {
+    return namespace;
+  }
 
-        const initializeResponse: JSONRPCResponse = {
-          jsonrpc: '2.0',
-          id: message.id,
-          result: {
-            protocolVersion: LATEST_PROTOCOL_VERSION,
-            serverInfo: {
-              name: serverInfo.name,
-              version: serverInfo.version,
-            },
-            capabilities: this._capabilities,
-          } as Record<string, unknown>,
-        };
-        // Use setTimeout to make this async and match real transport behavior
-        setTimeout(() => this.onmessage!(initializeResponse), 0);
-      }
-      return;
-    }
+  const { namespaces } = await client.namespaces.list();
+  if (namespaces.length > 0) {
+    return namespaces[0]!.name;
+  }
 
-    // Intercept 'notifications/initialized' - no response needed, just acknowledge
-    if (message.method === 'notifications/initialized') {
-      return;
-    }
+  const { name } = await client.namespaces.create();
+  return name;
+}
 
+async function resolveConnection(
+  client: Smithery,
+  namespace: string,
+  connectionId?: string,
+  mcpUrl?: string,
+): Promise<Connection> {
+  if (connectionId) {
+    // Connection ID provided: try to get, or create if mcpUrl is provided
     try {
-      // Build the RPC call params, only including id if it's defined
-      // _namespace is guaranteed to be set after _ensureConnection
-      const rpcParams: Parameters<typeof this._client.beta.connect.rpc.call>[1] = {
-        namespace: this._namespace!,
-        jsonrpc: '2.0',
-        method: message.method,
-      };
-
-      // Only add id if present (for requests, not notifications)
-      if ('id' in message && message.id !== undefined) {
-        rpcParams.id = message.id;
-      }
-
-      // Only add params if present
-      if ('params' in message && message.params !== undefined) {
-        rpcParams.params = message.params as Record<string, unknown>;
-      }
-
-      const response = await this._client.beta.connect.rpc.call(this._connectionId!, rpcParams);
-
-      // Route the response back via onmessage callback for requests (messages with an id)
-      if ('id' in message && message.id !== undefined && this.onmessage) {
-        const jsonRpcResponse: JSONRPCResponse = {
-          jsonrpc: '2.0',
-          id: response.id!,
-          result: response.result as Record<string, unknown>,
-        };
-        this.onmessage(jsonRpcResponse);
-      }
+      return await client.beta.connect.connections.get(connectionId, { namespace });
     } catch (error) {
-      const normalizedError = error instanceof Error ? error : new Error(String(error));
-
-      // For requests, send an error response via onmessage
-      if ('id' in message && message.id !== undefined && this.onmessage) {
-        const errorResponse: JSONRPCResponse = {
-          jsonrpc: '2.0',
-          id: message.id,
-          error: {
-            code: -32603, // Internal error
-            message: normalizedError.message,
-          },
-        };
-        this.onmessage(errorResponse);
+      if (mcpUrl) {
+        return await client.beta.connect.connections.set(connectionId, { namespace, mcpUrl });
       }
-
-      // Also report via onerror callback
-      this.onerror?.(normalizedError);
+      throw error;
     }
   }
 
-  async close(): Promise<void> {
-    this._closed = true;
-    this._started = false;
-    this.onclose?.();
-  }
+  // No connection ID: create a new connection with auto-generated ID
+  return await client.beta.connect.connections.create(namespace, { mcpUrl: mcpUrl! });
 }
