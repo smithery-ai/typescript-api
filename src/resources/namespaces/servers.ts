@@ -11,29 +11,23 @@ export class Servers extends APIResource {
    *
    * @example
    * ```ts
-   * const createServerResponse =
-   *   await client.namespaces.servers.create('xxx', {
-   *     namespace: 'namespace',
-   *   });
+   * const server = await client.namespaces.servers.create(
+   *   'xxx',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   create(
     server: string,
     params: ServerCreateParams,
     options?: RequestOptions,
-  ): APIPromise<CreateServerResponse> {
+  ): APIPromise<ServerCreateResponse> {
     const { namespace, ...body } = params;
     return this._client.put(path`/namespaces/${namespace}/servers/${server}`, { body, ...options });
   }
 }
 
-export interface CreateServerRequest {
-  description?: string;
-
-  displayName?: string;
-}
-
-export interface CreateServerResponse {
+export interface ServerCreateResponse {
   createdAt: string;
 
   description: string;
@@ -63,9 +57,5 @@ export interface ServerCreateParams {
 }
 
 export declare namespace Servers {
-  export {
-    type CreateServerRequest as CreateServerRequest,
-    type CreateServerResponse as CreateServerResponse,
-    type ServerCreateParams as ServerCreateParams,
-  };
+  export { type ServerCreateResponse as ServerCreateResponse, type ServerCreateParams as ServerCreateParams };
 }

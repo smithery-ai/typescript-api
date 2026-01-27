@@ -14,4 +14,3 @@ export {
   type ConnectionSetParams,
 } from './connections';
 export { Mcp, type JsonRpcRequest, type JsonRpcResponse, type McpCallParams } from './mcp';
-export { Tools, type ToolSearchResponse, type ToolSearchParams } from './tools';

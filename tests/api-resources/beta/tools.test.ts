@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource tools', () => {
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.beta.tools.list({ q: 'x' });
+  test.skip('search', async () => {
+    const responsePromise = client.beta.tools.search('namespace');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,19 +21,22 @@ describe('resource tools', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.beta.tools.list({
-      q: 'x',
-      destructiveHint: '0',
-      idempotentHint: '0',
-      page: 1,
-      pageSize: 1,
-      readOnlyHint: '0',
-      serverId: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      serverIsDeployed: '0',
-      serverQualifiedName: 'serverQualifiedName',
-      serverVerified: '0',
-      topK: 10,
-    });
+  test.skip('search: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.beta.tools.search(
+        'namespace',
+        {
+          connectionId: 'connectionId',
+          cursor: 'cursor',
+          excludeConnectionId: 'excludeConnectionId',
+          excludeServer: 'excludeServer',
+          limit: 1,
+          q: 'x',
+          server: 'server',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 });

@@ -6,9 +6,4 @@ export {
   type NamespaceListResponse,
   type NamespaceSetResponse,
 } from './namespaces';
-export {
-  Servers,
-  type CreateServerRequest,
-  type CreateServerResponse,
-  type ServerCreateParams,
-} from './servers';
+export { Servers, type ServerCreateResponse, type ServerCreateParams } from './servers';
