@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.29.0 (2026-01-27)
+
+Full Changelog: [v0.27.0...v0.29.0](https://github.com/smithery-ai/typescript-api/compare/v0.27.0...v0.29.0)
+
+### Features
+
+* **api:** api update ([3039c8f](https://github.com/smithery-ai/typescript-api/commit/3039c8f1e243e685466faeaeea54a3b35fd3617a))
+* **api:** api update ([1ed908c](https://github.com/smithery-ai/typescript-api/commit/1ed908cd0f228139fe48912cbcb2e611e462b441))
+* **api:** api update ([06c328f](https://github.com/smithery-ai/typescript-api/commit/06c328fe55ba5a3023f84dc2d958bf5fb9ab4678))
+
+
+### Chores
+
+* bump version to 0.28.0 ([#48](https://github.com/smithery-ai/typescript-api/issues/48)) ([0147192](https://github.com/smithery-ai/typescript-api/commit/014719276450200969d9f46251cf495f0e73c9da))
+
+
+### Refactors
+
+* redesign MCP SDK ergonomics with createConnection() [SMI-1288] ([#50](https://github.com/smithery-ai/typescript-api/issues/50)) ([4122044](https://github.com/smithery-ai/typescript-api/commit/41220447758e6e69798fbb6e8819b26fa9d5d59c))
+
 ## 0.27.0 (2026-01-23)
 
 Full Changelog: [v0.26.0...v0.27.0](https://github.com/smithery-ai/typescript-api/compare/v0.26.0...v0.27.0)

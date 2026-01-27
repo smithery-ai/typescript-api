@@ -201,11 +201,15 @@ export interface ServerListResponse {
 
   isDeployed: boolean;
 
+  namespace: string | null;
+
   owner: string | null;
 
   qualifiedName: string;
 
   remote: boolean | null;
+
+  slug: string | null;
 
   useCount: number;
 

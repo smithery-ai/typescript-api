@@ -5,14 +5,14 @@ import { APIPromise } from '../../../core/api-promise';
 import { RequestOptions } from '../../../internal/request-options';
 import { path } from '../../../internal/utils/path';
 
-export class Rpc extends APIResource {
+export class Mcp extends APIResource {
   /**
-   * Execute a JSON-RPC call on an MCP connection. Requires service token with rpc
-   * scope.
+   * Streamable HTTP MCP endpoint. Accepts JSON-RPC requests and notifications.
+   * Requires service token with mcp scope.
    *
    * @example
    * ```ts
-   * const jsonRpcResponse = await client.beta.connect.rpc.call(
+   * const jsonRpcResponse = await client.beta.connect.mcp.call(
    *   'connectionId',
    *   {
    *     namespace: 'namespace',
@@ -22,9 +22,9 @@ export class Rpc extends APIResource {
    * );
    * ```
    */
-  call(connectionID: string, params: RpcCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
+  call(connectionID: string, params: McpCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
     const { namespace, ...body } = params;
-    return this._client.post(path`/connect/${namespace}/${connectionID}/rpc`, { body, ...options });
+    return this._client.post(path`/connect/${namespace}/${connectionID}/mcp`, { body, ...options });
   }
 }
 
@@ -52,7 +52,7 @@ export interface JsonRpcResponse {
   result?: unknown;
 }
 
-export interface RpcCallParams {
+export interface McpCallParams {
   /**
    * Path param
    */
@@ -79,10 +79,10 @@ export interface RpcCallParams {
   params?: unknown;
 }
 
-export declare namespace Rpc {
+export declare namespace Mcp {
   export {
     type JsonRpcRequest as JsonRpcRequest,
     type JsonRpcResponse as JsonRpcResponse,
-    type RpcCallParams as RpcCallParams,
+    type McpCallParams as McpCallParams,
   };
 }
