@@ -117,7 +117,7 @@ export async function createConnection(options: CreateConnectionOptions): Promis
   const connection = await resolveConnection(client, namespace, options.connectionId, options.mcpUrl);
   const connectionId = connection.connectionId;
 
-  // Check connection status
+  // Check connection status (present on create/set responses)
   if (connection.status) {
     if (connection.status.state === 'auth_required') {
       const { authorizationUrl } = connection.status;
@@ -133,10 +133,18 @@ export async function createConnection(options: CreateConnectionOptions): Promis
     if (connection.status.state === 'error') {
       throw new Error(`MCP connection failed: ${connection.status.message}`);
     }
+  } else if (!connection.serverInfo) {
+    // No status field (e.g., fetched via get()) and no serverInfo means the
+    // connection never initialized successfully — likely requires authorization.
+    // Surface this early rather than returning a broken transport.
+    throw new Error(
+      'Connection is not initialized. The upstream MCP server may require authorization. ' +
+        'Try creating a new connection with mcpUrl to get authorization details.',
+    );
   }
 
   // Build the MCP endpoint URL
-  const url = `${client.baseURL}/connect/${namespace}/${connectionId}/mcp`;
+  const url = new URL(`/connect/${namespace}/${connectionId}/mcp`, client.baseURL).href;
 
   // Create transport with auth headers
   const transport = new StreamableHTTPClientTransport(new URL(url), {
