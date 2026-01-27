@@ -37,8 +37,8 @@ import {
   ConnectionScope,
   CreateTokenRequest,
   CreateTokenResponse,
+  McpScope,
   ResourceScope,
-  RpcScope,
   TokenCreateParams,
   Tokens,
 } from './resources/tokens';
@@ -839,8 +839,8 @@ export declare namespace Smithery {
     type ConnectionScope as ConnectionScope,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
+    type McpScope as McpScope,
     type ResourceScope as ResourceScope,
-    type RpcScope as RpcScope,
     type TokenCreateParams as TokenCreateParams,
   };
 

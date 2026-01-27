@@ -14,20 +14,20 @@ import {
   ConnectionsListResponse,
   CreateConnectionRequest,
 } from './connections';
-import * as RpcAPI from './rpc';
-import { JsonRpcRequest, JsonRpcResponse, Rpc, RpcCallParams } from './rpc';
+import * as McpAPI from './mcp';
+import { JsonRpcRequest, JsonRpcResponse, Mcp, McpCallParams } from './mcp';
 import * as ToolsAPI from './tools';
 import { ToolSearchParams, ToolSearchResponse, Tools } from './tools';
 
 export class Connect extends APIResource {
   tools: ToolsAPI.Tools = new ToolsAPI.Tools(this._client);
   connections: ConnectionsAPI.Connections = new ConnectionsAPI.Connections(this._client);
-  rpc: RpcAPI.Rpc = new RpcAPI.Rpc(this._client);
+  mcp: McpAPI.Mcp = new McpAPI.Mcp(this._client);
 }
 
 Connect.Tools = Tools;
 Connect.Connections = Connections;
-Connect.Rpc = Rpc;
+Connect.Mcp = Mcp;
 
 export declare namespace Connect {
   export {
@@ -50,9 +50,9 @@ export declare namespace Connect {
   };
 
   export {
-    Rpc as Rpc,
+    Mcp as Mcp,
     type JsonRpcRequest as JsonRpcRequest,
     type JsonRpcResponse as JsonRpcResponse,
-    type RpcCallParams as RpcCallParams,
+    type McpCallParams as McpCallParams,
   };
 }

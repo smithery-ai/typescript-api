@@ -7,10 +7,10 @@ const client = new Smithery({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource rpc', () => {
+describe('resource mcp', () => {
   // Prism tests are disabled
   test.skip('call: only required params', async () => {
-    const responsePromise = client.beta.connect.rpc.call('connectionId', {
+    const responsePromise = client.beta.connect.mcp.call('connectionId', {
       namespace: 'namespace',
       jsonrpc: '2.0',
       method: 'tools/list',
@@ -26,7 +26,7 @@ describe('resource rpc', () => {
 
   // Prism tests are disabled
   test.skip('call: required and optional params', async () => {
-    const response = await client.beta.connect.rpc.call('connectionId', {
+    const response = await client.beta.connect.mcp.call('connectionId', {
       namespace: 'namespace',
       jsonrpc: '2.0',
       method: 'tools/list',

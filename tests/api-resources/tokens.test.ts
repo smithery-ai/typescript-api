@@ -33,12 +33,12 @@ describe('resource tokens', () => {
           metadata: { userId: 'user-123' },
         },
         deployments: { actions: ['read', 'write'], namespaces: ['my-app'] },
-        namespaces: { actions: ['read', 'write'], namespaces: ['my-app'] },
-        rpc: {
+        mcp: {
           actions: ['write'],
           namespaces: ['my-app'],
           metadata: { userId: 'user-123' },
         },
+        namespaces: { actions: ['read', 'write'], namespaces: ['my-app'] },
         servers: { actions: ['read', 'write'], namespaces: ['my-app'] },
         tokens: { actions: ['read', 'write'], namespaces: ['my-app'] },
       },
