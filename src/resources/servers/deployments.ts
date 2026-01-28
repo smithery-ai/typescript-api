@@ -96,15 +96,15 @@ export type DeployPayload =
 
 export namespace DeployPayload {
   export interface RepoDeployPayload {
-    baseDirectory: string;
-
-    repoName: string;
-
-    repoOwner: string;
-
     type: 'repo';
 
+    baseDirectory?: string;
+
     branch?: string;
+
+    repoName?: string;
+
+    repoOwner?: string;
   }
 }
 
