@@ -2,4 +2,4 @@
 
 export { Beta } from './beta';
 export { Connect } from './connect/index';
-export { Tools, type ToolListResponse, type ToolListParams, type ToolListResponsesToolsPage } from './tools';
+export { Tools, type ToolSearchResponse, type ToolSearchParams } from './tools';

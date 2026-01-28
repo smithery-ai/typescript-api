@@ -1,150 +1,89 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import { PagePromise, ToolsPage, type ToolsPageParams } from '../../core/pagination';
+import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Tools extends APIResource {
   /**
-   * Get a paginated list of all MCP tools across servers. Use the `q` parameter for
-   * semantic search.
+   * Search or list indexed tools across all connections in a namespace. If 'q' query
+   * parameter is omitted, returns all tools. Filter by connectionId or server URL.
+   * Metadata constraints from service tokens are applied automatically.
    *
    * @example
    * ```ts
-   * // Automatically fetches more pages as needed.
-   * for await (const toolListResponse of client.beta.tools.list(
-   *   { q: 'x' },
-   * )) {
-   *   // ...
-   * }
+   * const response = await client.beta.tools.search(
+   *   'namespace',
+   * );
    * ```
    */
-  list(
-    query: ToolListParams,
+  search(
+    namespace: string,
+    query: ToolSearchParams | null | undefined = {},
     options?: RequestOptions,
-  ): PagePromise<ToolListResponsesToolsPage, ToolListResponse> {
-    return this._client.getAPIList('/tools', ToolsPage<ToolListResponse>, { query, ...options });
+  ): APIPromise<ToolSearchResponse> {
+    return this._client.get(path`/connect/tools/${namespace}`, { query, ...options });
   }
 }
 
-export type ToolListResponsesToolsPage = ToolsPage<ToolListResponse>;
+export interface ToolSearchResponse {
+  nextCursor: string | null;
 
-export interface ToolListResponse {
-  id: string;
-
-  server: ToolListResponse.Server;
-
-  tool: ToolListResponse.Tool;
+  tools: Array<ToolSearchResponse.Tool>;
 }
 
-export namespace ToolListResponse {
-  export interface Server {
-    id: string;
-
-    displayName: string;
-
-    iconUrl: string | null;
-
-    isDeployed: boolean;
-
-    qualifiedName: string;
-
-    verified: boolean;
-  }
-
+export namespace ToolSearchResponse {
   export interface Tool {
-    inputSchema: Tool.InputSchema;
+    connectionId: string;
 
-    name: string;
+    serverUrl: string;
 
-    _meta?: { [key: string]: unknown };
+    tool: Tool.Tool;
 
-    annotations?: Tool.Annotations;
-
-    description?: string;
-
-    execution?: Tool.Execution;
-
-    icons?: Array<Tool.Icon>;
-
-    outputSchema?: Tool.OutputSchema;
-
-    title?: string;
+    score?: number;
   }
 
   export namespace Tool {
-    export interface InputSchema {
-      type: 'object';
+    export interface Tool {
+      name: string;
 
-      properties?: { [key: string]: unknown };
-
-      required?: Array<string>;
-
-      [k: string]: unknown;
-    }
-
-    export interface Annotations {
-      destructiveHint?: boolean;
-
-      idempotentHint?: boolean;
-
-      openWorldHint?: boolean;
-
-      readOnlyHint?: boolean;
-
-      title?: string;
-    }
-
-    export interface Execution {
-      taskSupport?: 'required' | 'optional' | 'forbidden';
-    }
-
-    export interface Icon {
-      src: string;
-
-      mimeType?: string;
-
-      sizes?: Array<string>;
-
-      theme?: 'light' | 'dark';
-    }
-
-    export interface OutputSchema {
-      type: 'object';
-
-      properties?: { [key: string]: unknown };
-
-      required?: Array<string>;
-
-      [k: string]: unknown;
+      description?: string;
     }
   }
 }
 
-export interface ToolListParams extends ToolsPageParams {
-  q: string;
+export interface ToolSearchParams {
+  /**
+   * Filter by connection ID
+   */
+  connectionId?: string;
 
-  destructiveHint?: '0' | '1' | 'true' | 'false';
+  cursor?: string;
 
-  idempotentHint?: '0' | '1' | 'true' | 'false';
+  /**
+   * Exclude tools from this connection
+   */
+  excludeConnectionId?: string;
 
-  readOnlyHint?: '0' | '1' | 'true' | 'false';
+  /**
+   * Exclude tools from this server URL
+   */
+  excludeServer?: string;
 
-  serverId?: string;
+  limit?: number;
 
-  serverIsDeployed?: '0' | '1' | 'true' | 'false';
+  /**
+   * Search query (optional - omit to list all tools)
+   */
+  q?: string;
 
-  serverQualifiedName?: string;
-
-  serverVerified?: '0' | '1' | 'true' | 'false';
-
-  topK?: number;
+  /**
+   * Filter by server URL
+   */
+  server?: string;
 }
 
 export declare namespace Tools {
-  export {
-    type ToolListResponse as ToolListResponse,
-    type ToolListResponsesToolsPage as ToolListResponsesToolsPage,
-    type ToolListParams as ToolListParams,
-  };
+  export { type ToolSearchResponse as ToolSearchResponse, type ToolSearchParams as ToolSearchParams };
 }

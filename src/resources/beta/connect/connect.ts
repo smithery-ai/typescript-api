@@ -16,26 +16,16 @@ import {
 } from './connections';
 import * as McpAPI from './mcp';
 import { JsonRpcRequest, JsonRpcResponse, Mcp, McpCallParams } from './mcp';
-import * as ToolsAPI from './tools';
-import { ToolSearchParams, ToolSearchResponse, Tools } from './tools';
 
 export class Connect extends APIResource {
-  tools: ToolsAPI.Tools = new ToolsAPI.Tools(this._client);
   connections: ConnectionsAPI.Connections = new ConnectionsAPI.Connections(this._client);
   mcp: McpAPI.Mcp = new McpAPI.Mcp(this._client);
 }
 
-Connect.Tools = Tools;
 Connect.Connections = Connections;
 Connect.Mcp = Mcp;
 
 export declare namespace Connect {
-  export {
-    Tools as Tools,
-    type ToolSearchResponse as ToolSearchResponse,
-    type ToolSearchParams as ToolSearchParams,
-  };
-
   export {
     Connections as Connections,
     type Connection as Connection,

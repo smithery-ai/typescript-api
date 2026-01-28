@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as ToolsAPI from './tools';
-import { ToolListParams, ToolListResponse, ToolListResponsesToolsPage, Tools } from './tools';
+import { ToolSearchParams, ToolSearchResponse, Tools } from './tools';
 import * as ConnectAPI from './connect/connect';
 import { Connect } from './connect/connect';
 
@@ -17,9 +17,8 @@ Beta.Connect = Connect;
 export declare namespace Beta {
   export {
     Tools as Tools,
-    type ToolListResponse as ToolListResponse,
-    type ToolListResponsesToolsPage as ToolListResponsesToolsPage,
-    type ToolListParams as ToolListParams,
+    type ToolSearchResponse as ToolSearchResponse,
+    type ToolSearchParams as ToolSearchParams,
   };
 
   export { Connect as Connect };

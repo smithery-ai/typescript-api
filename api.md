@@ -123,12 +123,11 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/namespaces/servers.ts">CreateServerRequest</a></code>
-- <code><a href="./src/resources/namespaces/servers.ts">CreateServerResponse</a></code>
+- <code><a href="./src/resources/namespaces/servers.ts">ServerCreateResponse</a></code>
 
 Methods:
 
-- <code title="put /namespaces/{namespace}/servers/{server}">client.namespaces.servers.<a href="./src/resources/namespaces/servers.ts">create</a>(server, { ...params }) -> CreateServerResponse</code>
+- <code title="put /namespaces/{namespace}/servers/{server}">client.namespaces.servers.<a href="./src/resources/namespaces/servers.ts">create</a>(server, { ...params }) -> ServerCreateResponse</code>
 
 # Tokens
 
@@ -152,23 +151,13 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/beta/tools.ts">ToolListResponse</a></code>
+- <code><a href="./src/resources/beta/tools.ts">ToolSearchResponse</a></code>
 
 Methods:
 
-- <code title="get /tools">client.beta.tools.<a href="./src/resources/beta/tools.ts">list</a>({ ...params }) -> ToolListResponsesToolsPage</code>
+- <code title="get /connect/tools/{namespace}">client.beta.tools.<a href="./src/resources/beta/tools.ts">search</a>(namespace, { ...params }) -> ToolSearchResponse</code>
 
 ## Connect
-
-### Tools
-
-Types:
-
-- <code><a href="./src/resources/beta/connect/tools.ts">ToolSearchResponse</a></code>
-
-Methods:
-
-- <code title="get /connect/tools/{namespace}">client.beta.connect.tools.<a href="./src/resources/beta/connect/tools.ts">search</a>(namespace, { ...params }) -> ToolSearchResponse</code>
 
 ### Connections
 

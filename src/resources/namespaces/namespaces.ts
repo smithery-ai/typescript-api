@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as ServersAPI from './servers';
-import { CreateServerRequest, CreateServerResponse, ServerCreateParams, Servers } from './servers';
+import { ServerCreateParams, ServerCreateResponse, Servers } from './servers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -85,8 +85,7 @@ export declare namespace Namespaces {
 
   export {
     Servers as Servers,
-    type CreateServerRequest as CreateServerRequest,
-    type CreateServerResponse as CreateServerResponse,
+    type ServerCreateResponse as ServerCreateResponse,
     type ServerCreateParams as ServerCreateParams,
   };
 }
