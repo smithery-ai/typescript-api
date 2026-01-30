@@ -147,16 +147,6 @@ Methods:
 
 # Beta
 
-## Tools
-
-Types:
-
-- <code><a href="./src/resources/beta/tools.ts">ToolSearchResponse</a></code>
-
-Methods:
-
-- <code title="get /connect/tools/{namespace}">client.beta.tools.<a href="./src/resources/beta/tools.ts">search</a>(namespace, { ...params }) -> ToolSearchResponse</code>
-
 ## Agents
 
 Types:
