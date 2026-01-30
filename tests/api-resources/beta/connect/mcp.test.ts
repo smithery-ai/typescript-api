@@ -10,11 +10,7 @@ const client = new Smithery({
 describe('resource mcp', () => {
   // Prism tests are disabled
   test.skip('call: only required params', async () => {
-    const responsePromise = client.beta.connect.mcp.call('connectionId', {
-      namespace: 'namespace',
-      jsonrpc: '2.0',
-      method: 'tools/list',
-    });
+    const responsePromise = client.beta.connect.mcp.call('connectionId', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -26,12 +22,6 @@ describe('resource mcp', () => {
 
   // Prism tests are disabled
   test.skip('call: required and optional params', async () => {
-    const response = await client.beta.connect.mcp.call('connectionId', {
-      namespace: 'namespace',
-      jsonrpc: '2.0',
-      method: 'tools/list',
-      id: 'string',
-      params: {},
-    });
+    const response = await client.beta.connect.mcp.call('connectionId', { namespace: 'namespace' });
   });
 });
