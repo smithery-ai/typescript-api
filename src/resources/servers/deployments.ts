@@ -356,9 +356,19 @@ export namespace DeploymentListResponse {
 
     status: string;
 
+    type: string;
+
     updatedAt: string;
 
+    branch?: string | null;
+
+    commit?: string | null;
+
+    commitMessage?: string | null;
+
     mcpUrl?: string;
+
+    upstreamUrl?: string | null;
   }
 }
 
@@ -379,11 +389,21 @@ export interface DeploymentGetResponse {
 
   status: string;
 
+  type: string;
+
   updatedAt: string;
+
+  branch?: string | null;
+
+  commit?: string | null;
+
+  commitMessage?: string | null;
 
   logs?: Array<DeploymentGetResponse.Log>;
 
   mcpUrl?: string;
+
+  upstreamUrl?: string | null;
 }
 
 export namespace DeploymentGetResponse {
