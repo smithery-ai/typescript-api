@@ -147,15 +147,15 @@ Methods:
 
 # Beta
 
-## Tools
+## Agents
 
 Types:
 
-- <code><a href="./src/resources/beta/tools.ts">ToolSearchResponse</a></code>
+- <code><a href="./src/resources/beta/agents/agents.ts">CreateResponseRequest</a></code>
+- <code><a href="./src/resources/beta/agents/agents.ts">ErrorResponse</a></code>
+- <code><a href="./src/resources/beta/agents/agents.ts">Response</a></code>
 
-Methods:
-
-- <code title="get /connect/tools/{namespace}">client.beta.tools.<a href="./src/resources/beta/tools.ts">search</a>(namespace, { ...params }) -> ToolSearchResponse</code>
+### Responses
 
 ## Connect
 

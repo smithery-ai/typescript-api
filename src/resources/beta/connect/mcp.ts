@@ -14,17 +14,13 @@ export class Mcp extends APIResource {
    * ```ts
    * const jsonRpcResponse = await client.beta.connect.mcp.call(
    *   'connectionId',
-   *   {
-   *     namespace: 'namespace',
-   *     jsonrpc: '2.0',
-   *     method: 'tools/list',
-   *   },
+   *   { namespace: 'namespace' },
    * );
    * ```
    */
   call(connectionID: string, params: McpCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
-    const { namespace, ...body } = params;
-    return this._client.post(path`/connect/${namespace}/${connectionID}/mcp`, { body, ...options });
+    const { namespace } = params;
+    return this._client.post(path`/connect/${namespace}/${connectionID}/mcp`, options);
   }
 }
 
@@ -53,30 +49,7 @@ export interface JsonRpcResponse {
 }
 
 export interface McpCallParams {
-  /**
-   * Path param
-   */
   namespace: string;
-
-  /**
-   * Body param
-   */
-  jsonrpc: '2.0';
-
-  /**
-   * Body param: MCP method to call
-   */
-  method: string;
-
-  /**
-   * Body param
-   */
-  id?: string | number;
-
-  /**
-   * Body param: Method parameters
-   */
-  params?: unknown;
 }
 
 export declare namespace Mcp {

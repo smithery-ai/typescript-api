@@ -17,14 +17,10 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
-  type ConnectToolsCursorParams,
-  ConnectToolsCursorResponse,
   type SkillsPageParams,
   SkillsPageResponse,
   type SmitheryPageParams,
   SmitheryPageResponse,
-  type ToolsPageParams,
-  ToolsPageResponse,
 } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
@@ -789,15 +785,6 @@ export declare namespace Smithery {
 
   export import SkillsPage = Pagination.SkillsPage;
   export { type SkillsPageParams as SkillsPageParams, type SkillsPageResponse as SkillsPageResponse };
-
-  export import ToolsPage = Pagination.ToolsPage;
-  export { type ToolsPageParams as ToolsPageParams, type ToolsPageResponse as ToolsPageResponse };
-
-  export import ConnectToolsCursor = Pagination.ConnectToolsCursor;
-  export {
-    type ConnectToolsCursorParams as ConnectToolsCursorParams,
-    type ConnectToolsCursorResponse as ConnectToolsCursorResponse,
-  };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
