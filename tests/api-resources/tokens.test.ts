@@ -9,11 +9,8 @@ const client = new Smithery({
 
 describe('resource tokens', () => {
   // Prism tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.tokens.create({
-      allow: {},
-      ttlSeconds: 3600,
-    });
+  test.skip('create', async () => {
+    const responsePromise = client.tokens.create();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,26 +21,24 @@ describe('resource tokens', () => {
   });
 
   // Prism tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.tokens.create({
-      allow: {
-        connections: {
-          actions: ['read', 'write'],
-          namespaces: ['my-app'],
-          metadata: { userId: 'user-123' },
+  test.skip('create: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.tokens.create(
+        {
+          policy: [
+            {
+              metadata: [{ userId: 'alice' }],
+              namespaces: ['my-app'],
+              operations: ['read'],
+              resources: ['connections'],
+              ttl: '1h',
+            },
+          ],
+          profileSlug: 'profileSlug',
         },
-        deployments: { actions: ['read', 'write'], namespaces: ['my-app'] },
-        mcp: {
-          actions: ['write'],
-          namespaces: ['my-app'],
-          metadata: { userId: 'user-123' },
-        },
-        namespaces: { actions: ['read', 'write'], namespaces: ['my-app'] },
-        servers: { actions: ['read', 'write'], namespaces: ['my-app'] },
-        tokens: { actions: ['read', 'write'], namespaces: ['my-app'] },
-      },
-      ttlSeconds: 3600,
-      profileSlug: 'my-profile',
-    });
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 });

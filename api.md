@@ -161,13 +161,9 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/tokens.ts">Action</a></code>
-- <code><a href="./src/resources/tokens.ts">Allow</a></code>
-- <code><a href="./src/resources/tokens.ts">ConnectionScope</a></code>
+- <code><a href="./src/resources/tokens.ts">Constraint</a></code>
 - <code><a href="./src/resources/tokens.ts">CreateTokenRequest</a></code>
 - <code><a href="./src/resources/tokens.ts">CreateTokenResponse</a></code>
-- <code><a href="./src/resources/tokens.ts">McpScope</a></code>
-- <code><a href="./src/resources/tokens.ts">ResourceScope</a></code>
 
 Methods:
 

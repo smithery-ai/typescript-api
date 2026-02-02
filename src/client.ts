@@ -28,13 +28,9 @@ import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
 import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import {
-  Action,
-  Allow,
-  ConnectionScope,
+  Constraint,
   CreateTokenRequest,
   CreateTokenResponse,
-  McpScope,
-  ResourceScope,
   TokenCreateParams,
   Tokens,
 } from './resources/tokens';
@@ -823,13 +819,9 @@ export declare namespace Smithery {
 
   export {
     Tokens as Tokens,
-    type Action as Action,
-    type Allow as Allow,
-    type ConnectionScope as ConnectionScope,
+    type Constraint as Constraint,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
-    type McpScope as McpScope,
-    type ResourceScope as ResourceScope,
     type TokenCreateParams as TokenCreateParams,
   };
 
