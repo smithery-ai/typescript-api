@@ -33,7 +33,7 @@
 
 import { StreamableHTTPClientTransport } from '@modelcontextprotocol/sdk/client/streamableHttp.js';
 import { Smithery } from '../client';
-import type { Connection } from '../resources/beta/connect/connections';
+import type { Connection } from '../resources/experimental/connect/connections';
 
 export interface CreateConnectionOptions {
   /**
@@ -181,15 +181,15 @@ async function resolveConnection(
   if (connectionId) {
     // Connection ID provided: try to get, or create if mcpUrl is provided
     try {
-      return await client.beta.connect.connections.get(connectionId, { namespace });
+      return await client.experimental.connect.connections.get(connectionId, { namespace });
     } catch (error) {
       if (mcpUrl) {
-        return await client.beta.connect.connections.set(connectionId, { namespace, mcpUrl });
+        return await client.experimental.connect.connections.set(connectionId, { namespace, mcpUrl });
       }
       throw error;
     }
   }
 
   // No connection ID: create a new connection with auto-generated ID
-  return await client.beta.connect.connections.create(namespace, { mcpUrl: mcpUrl! });
+  return await client.experimental.connect.connections.create(namespace, { mcpUrl: mcpUrl! });
 }
