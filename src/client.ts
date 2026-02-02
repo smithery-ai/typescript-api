@@ -39,7 +39,7 @@ import {
   Tokens,
 } from './resources/tokens';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
-import { Beta } from './resources/beta/beta';
+import { Experimental } from './resources/experimental/experimental';
 import {
   NamespaceCreateResponse,
   NamespaceListResponse,
@@ -767,7 +767,7 @@ export class Smithery {
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
   tokens: API.Tokens = new API.Tokens(this);
-  beta: API.Beta = new API.Beta(this);
+  experimental: API.Experimental = new API.Experimental(this);
 }
 
 Smithery.Health = Health;
@@ -776,7 +776,7 @@ Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
 Smithery.Tokens = Tokens;
-Smithery.Beta = Beta;
+Smithery.Experimental = Experimental;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -833,5 +833,5 @@ export declare namespace Smithery {
     type TokenCreateParams as TokenCreateParams,
   };
 
-  export { Beta as Beta };
+  export { Experimental as Experimental };
 }

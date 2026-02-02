@@ -12,10 +12,11 @@ export class Mcp extends APIResource {
    *
    * @example
    * ```ts
-   * const jsonRpcResponse = await client.beta.connect.mcp.call(
-   *   'connectionId',
-   *   { namespace: 'namespace' },
-   * );
+   * const jsonRpcResponse =
+   *   await client.experimental.connect.mcp.call(
+   *     'connectionId',
+   *     { namespace: 'namespace' },
+   *   );
    * ```
    */
   call(connectionID: string, params: McpCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
