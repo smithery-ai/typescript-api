@@ -6,106 +6,66 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Tokens extends APIResource {
   /**
-   * Create a service token for machine-to-machine authentication. Requires API key
-   * authentication.
-   *
-   * @example
-   * ```ts
-   * const createTokenResponse = await client.tokens.create({
-   *   allow: {},
-   *   ttlSeconds: 3600,
-   * });
-   * ```
+   * Create a service token for machine-to-machine authentication. Accepts API key or
+   * bearer token. Optionally apply restrictions.
    */
-  create(body: TokenCreateParams, options?: RequestOptions): APIPromise<CreateTokenResponse> {
+  create(
+    body: TokenCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<CreateTokenResponse> {
     return this._client.post('/tokens', { body, ...options });
   }
 }
 
-/**
- * Permission action. 'read' allows reading/listing. 'write' allows
- * create/modify/delete.
- */
-export type Action = 'read' | 'write';
-
-/**
- * Permission grants with per-resource scoping. Each resource defines its own
- * namespaces and constraints.
- */
-export interface Allow {
+export interface Constraint {
   /**
-   * Scope for managing MCP connections.
+   * Metadata filter facts. Each object is an OR condition; keys within are AND-ed.
    */
-  connections?: ConnectionScope;
+  metadata?: { [key: string]: string } | Array<{ [key: string]: string }>;
 
   /**
-   * Scope for deployment operations.
+   * Restrict token to specific namespaces.
    */
-  deployments?: ResourceScope;
+  namespaces?: string | Array<string>;
 
   /**
-   * Scope for MCP protocol operations on connections.
+   * Restrict token to specific operations.
    */
-  mcp?: McpScope;
+  operations?: 'read' | 'write' | 'execute' | Array<'read' | 'write' | 'execute'>;
 
   /**
-   * Scope for namespace management.
+   * Restrict token to specific resource types.
    */
-  namespaces?: ResourceScope;
+  resources?:
+    | 'connections'
+    | 'servers'
+    | 'namespaces'
+    | 'skills'
+    | Array<'connections' | 'servers' | 'namespaces' | 'skills'>;
 
   /**
-   * Scope for server metadata and configuration.
+   * TTL as seconds or duration string ("1h", "30m", "20s").
    */
-  servers?: ResourceScope;
-
-  /**
-   * Scope for token creation.
-   */
-  tokens?: ResourceScope;
-}
-
-/**
- * Scope for connection operations.
- */
-export interface ConnectionScope {
-  /**
-   * Actions allowed on connections.
-   */
-  actions: Array<Action>;
-
-  /**
-   * Namespaces this scope applies to. Use '\*' for all namespaces.
-   */
-  namespaces: Array<string>;
-
-  /**
-   * Filter access to connections with matching metadata. All keys must match (AND
-   * semantics).
-   */
-  metadata?: { [key: string]: string };
+  ttl?: string | number;
 }
 
 export interface CreateTokenRequest {
   /**
-   * Per-resource permission grants. Format: { [resource]: { actions: [...],
-   * namespaces: [...], metadata?: {...} } }
+   * Constraint objects to restrict the token. Cannot be combined with profileSlug.
+   * Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour.
+   * Maximum is 24 hours.
    */
-  allow: Allow;
+  policy?: Array<Constraint>;
 
   /**
-   * Token TTL in seconds. Required. Max 86400 (24 hours).
-   */
-  ttlSeconds: number;
-
-  /**
-   * Profile to scope the token to. If not provided, uses the default profile.
+   * Profile slug for legacy token minting. Cannot be combined with policy.
    */
   profileSlug?: string;
 }
 
 export interface CreateTokenResponse {
   /**
-   * The signed service token (PASETO v4).
+   * The signed service token.
    */
   token: string;
 
@@ -115,69 +75,25 @@ export interface CreateTokenResponse {
   expiresAt: string;
 }
 
-/**
- * Scope for MCP operations on connections.
- */
-export interface McpScope {
-  /**
-   * Actions allowed for MCP calls.
-   */
-  actions: Array<Action>;
-
-  /**
-   * Namespaces this scope applies to. Use '\*' for all namespaces.
-   */
-  namespaces: Array<string>;
-
-  /**
-   * Filter access to connections with matching metadata. All keys must match (AND
-   * semantics).
-   */
-  metadata?: { [key: string]: string };
-}
-
-/**
- * Scope for resource operations.
- */
-export interface ResourceScope {
-  /**
-   * Actions allowed on this resource.
-   */
-  actions: Array<Action>;
-
-  /**
-   * Namespaces this scope applies to. Use '\*' for all namespaces.
-   */
-  namespaces: Array<string>;
-}
-
 export interface TokenCreateParams {
   /**
-   * Per-resource permission grants. Format: { [resource]: { actions: [...],
-   * namespaces: [...], metadata?: {...} } }
+   * Constraint objects to restrict the token. Cannot be combined with profileSlug.
+   * Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour.
+   * Maximum is 24 hours.
    */
-  allow: Allow;
+  policy?: Array<Constraint>;
 
   /**
-   * Token TTL in seconds. Required. Max 86400 (24 hours).
-   */
-  ttlSeconds: number;
-
-  /**
-   * Profile to scope the token to. If not provided, uses the default profile.
+   * Profile slug for legacy token minting. Cannot be combined with policy.
    */
   profileSlug?: string;
 }
 
 export declare namespace Tokens {
   export {
-    type Action as Action,
-    type Allow as Allow,
-    type ConnectionScope as ConnectionScope,
+    type Constraint as Constraint,
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
-    type McpScope as McpScope,
-    type ResourceScope as ResourceScope,
     type TokenCreateParams as TokenCreateParams,
   };
 }

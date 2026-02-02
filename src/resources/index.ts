@@ -31,13 +31,9 @@ export {
 } from './skills';
 export {
   Tokens,
-  type Action,
-  type Allow,
-  type ConnectionScope,
+  type Constraint,
   type CreateTokenRequest,
   type CreateTokenResponse,
-  type McpScope,
-  type ResourceScope,
   type TokenCreateParams,
 } from './tokens';
 export { Uplink, type UplinkCreateTokenResponse } from './uplink';
