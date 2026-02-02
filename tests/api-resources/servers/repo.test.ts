@@ -26,6 +26,18 @@ describe('resource repo', () => {
   });
 
   // Prism tests are disabled
+  test.skip('deleteByNamespace', async () => {
+    const responsePromise = client.servers.repo.deleteByNamespace('namespace');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.servers.repo.get('server', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -40,6 +52,18 @@ describe('resource repo', () => {
   // Prism tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.servers.repo.get('server', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
+  test.skip('getByNamespace', async () => {
+    const responsePromise = client.servers.repo.getByNamespace('namespace');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
   });
 
   // Prism tests are disabled
@@ -62,6 +86,32 @@ describe('resource repo', () => {
   test.skip('set: required and optional params', async () => {
     const response = await client.servers.repo.set('server', {
       namespace: 'namespace',
+      repoName: 'x',
+      repoOwner: 'x',
+      autoDeploy: true,
+      baseDirectory: '.',
+      branch: 'main',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('setByNamespace: only required params', async () => {
+    const responsePromise = client.servers.repo.setByNamespace('namespace', {
+      repoName: 'x',
+      repoOwner: 'x',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('setByNamespace: required and optional params', async () => {
+    const response = await client.servers.repo.setByNamespace('namespace', {
       repoName: 'x',
       repoOwner: 'x',
       autoDeploy: true,
