@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.33.0 (2026-02-02)
+
+Full Changelog: [v0.32.0...v0.33.0](https://github.com/smithery-ai/typescript-api/compare/v0.32.0...v0.33.0)
+
+### Features
+
+* **api:** api update ([5289e80](https://github.com/smithery-ai/typescript-api/commit/5289e80c56fa7a1620c37dc2b382be0a588a579d))
+
+
+### Bug Fixes
+
+* update mcp-transport from beta to experimental ([#55](https://github.com/smithery-ai/typescript-api/issues/55)) ([75f6581](https://github.com/smithery-ai/typescript-api/commit/75f6581b1b0cf5f4f7e507dce338d7d508ddbc91))
+
 ## 0.32.0 (2026-02-02)
 
 Full Changelog: [v0.31.0...v0.32.0](https://github.com/smithery-ai/typescript-api/compare/v0.31.0...v0.32.0)

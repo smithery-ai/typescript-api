@@ -13,7 +13,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connection =
-   *   await client.beta.connect.connections.create(
+   *   await client.experimental.connect.connections.create(
    *     'namespace',
    *     { mcpUrl: 'https://mcp.example.com/sse' },
    *   );
@@ -30,7 +30,9 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connectionsListResponse =
-   *   await client.beta.connect.connections.list('namespace');
+   *   await client.experimental.connect.connections.list(
+   *     'namespace',
+   *   );
    * ```
    */
   list(
@@ -48,7 +50,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connection =
-   *   await client.beta.connect.connections.delete(
+   *   await client.experimental.connect.connections.delete(
    *     'connectionId',
    *     { namespace: 'namespace' },
    *   );
@@ -70,7 +72,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connection =
-   *   await client.beta.connect.connections.get(
+   *   await client.experimental.connect.connections.get(
    *     'connectionId',
    *     { namespace: 'namespace' },
    *   );
@@ -88,7 +90,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connection =
-   *   await client.beta.connect.connections.set(
+   *   await client.experimental.connect.connections.set(
    *     'connectionId',
    *     {
    *       namespace: 'namespace',
