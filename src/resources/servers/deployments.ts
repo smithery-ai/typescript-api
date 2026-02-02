@@ -2,7 +2,9 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { Stream } from '../../core/streaming';
 import { type Uploadable } from '../../core/uploads';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
@@ -52,6 +54,29 @@ export class Deployments extends APIResource {
   }
 
   /**
+   * Upload and deploy an MCP server (hosted or external)
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.deployments.deployByNamespace(
+   *     'namespace',
+   *     { payload: 'payload' },
+   *   );
+   * ```
+   */
+  deployByNamespace(
+    namespace: string,
+    body: DeploymentDeployByNamespaceParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentDeployByNamespaceResponse> {
+    return this._client.put(
+      path`/servers/${namespace}/deployments`,
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
+  }
+
+  /**
    * Get deployment status
    *
    * @example
@@ -65,6 +90,44 @@ export class Deployments extends APIResource {
   get(id: string, params: DeploymentGetParams, options?: RequestOptions): APIPromise<DeploymentGetResponse> {
     const { namespace, server } = params;
     return this._client.get(path`/servers/${namespace}/${server}/deployments/${id}`, options);
+  }
+
+  /**
+   * Get deployment status
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.deployments.getByNamespace('id', {
+   *     namespace: 'namespace',
+   *   });
+   * ```
+   */
+  getByNamespace(
+    id: string,
+    params: DeploymentGetByNamespaceParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentGetByNamespaceResponse> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/deployments/${id}`, options);
+  }
+
+  /**
+   * List deployments for a server
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.deployments.listByNamespace(
+   *     'namespace',
+   *   );
+   * ```
+   */
+  listByNamespace(
+    namespace: string,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentListByNamespaceResponse> {
+    return this._client.get(path`/servers/${namespace}/deployments`, options);
   }
 
   /**
@@ -85,6 +148,76 @@ export class Deployments extends APIResource {
   ): APIPromise<DeploymentResumeResponse> {
     const { namespace, server } = params;
     return this._client.post(path`/servers/${namespace}/${server}/deployments/${id}/resume`, options);
+  }
+
+  /**
+   * Use id='latest' to resume the most recent deployment
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.deployments.resumeByNamespace('id', {
+   *     namespace: 'namespace',
+   *   });
+   * ```
+   */
+  resumeByNamespace(
+    id: string,
+    params: DeploymentResumeByNamespaceParams,
+    options?: RequestOptions,
+  ): APIPromise<DeploymentResumeByNamespaceResponse> {
+    const { namespace } = params;
+    return this._client.post(path`/servers/${namespace}/deployments/${id}/resume`, options);
+  }
+
+  /**
+   * Returns a real-time SSE stream of deployment logs and status updates. Connect to
+   * this endpoint to receive live updates as the deployment progresses.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.deployments.stream(
+   *   'id',
+   *   { namespace: 'namespace', server: 'server' },
+   * );
+   * ```
+   */
+  stream(
+    id: string,
+    params: DeploymentStreamParams,
+    options?: RequestOptions,
+  ): APIPromise<Stream<DeploymentStreamResponse>> {
+    const { namespace, server } = params;
+    return this._client.get(path`/servers/${namespace}/${server}/deployments/${id}/stream`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
+      stream: true,
+    }) as APIPromise<Stream<DeploymentStreamResponse>>;
+  }
+
+  /**
+   * Returns a real-time SSE stream of deployment logs and status updates. Connect to
+   * this endpoint to receive live updates as the deployment progresses.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.deployments.streamByNamespace('id', {
+   *     namespace: 'namespace',
+   *   });
+   * ```
+   */
+  streamByNamespace(
+    id: string,
+    params: DeploymentStreamByNamespaceParams,
+    options?: RequestOptions,
+  ): APIPromise<Stream<DeploymentStreamByNamespaceResponse>> {
+    const { namespace } = params;
+    return this._client.get(path`/servers/${namespace}/deployments/${id}/stream`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
+      stream: true,
+    }) as APIPromise<Stream<DeploymentStreamByNamespaceResponse>>;
   }
 }
 
@@ -382,6 +515,16 @@ export interface DeploymentDeployResponse {
   warnings?: Array<string>;
 }
 
+export interface DeploymentDeployByNamespaceResponse {
+  deploymentId: string;
+
+  mcpUrl: string;
+
+  status: string;
+
+  warnings?: Array<string>;
+}
+
 export interface DeploymentGetResponse {
   id: string;
 
@@ -426,11 +569,98 @@ export namespace DeploymentGetResponse {
   }
 }
 
+export interface DeploymentGetByNamespaceResponse {
+  id: string;
+
+  createdAt: string;
+
+  status: string;
+
+  type: string;
+
+  updatedAt: string;
+
+  branch?: string | null;
+
+  commit?: string | null;
+
+  commitMessage?: string | null;
+
+  logs?: Array<DeploymentGetByNamespaceResponse.Log>;
+
+  mcpUrl?: string;
+
+  upstreamUrl?: string | null;
+}
+
+export namespace DeploymentGetByNamespaceResponse {
+  export interface Log {
+    level: string;
+
+    message: string;
+
+    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
+
+    timestamp: string;
+
+    error?: Log.Error;
+  }
+
+  export namespace Log {
+    export interface Error {
+      message?: string;
+    }
+  }
+}
+
+export type DeploymentListByNamespaceResponse =
+  Array<DeploymentListByNamespaceResponse.DeploymentListByNamespaceResponseItem>;
+
+export namespace DeploymentListByNamespaceResponse {
+  export interface DeploymentListByNamespaceResponseItem {
+    id: string;
+
+    createdAt: string;
+
+    status: string;
+
+    type: string;
+
+    updatedAt: string;
+
+    branch?: string | null;
+
+    commit?: string | null;
+
+    commitMessage?: string | null;
+
+    mcpUrl?: string;
+
+    upstreamUrl?: string | null;
+  }
+}
+
 export interface DeploymentResumeResponse {
   deploymentId: string;
 
   status: string;
 }
+
+export interface DeploymentResumeByNamespaceResponse {
+  deploymentId: string;
+
+  status: string;
+}
+
+/**
+ * SSE events: init (with buffered logs), log, status, complete
+ */
+export type DeploymentStreamResponse = string;
+
+/**
+ * SSE events: init (with buffered logs), log, status, complete
+ */
+export type DeploymentStreamByNamespaceResponse = string;
 
 export interface DeploymentListParams {
   namespace: string;
@@ -464,16 +694,56 @@ export interface DeploymentDeployParams {
   sourcemap?: Uploadable;
 }
 
+export interface DeploymentDeployByNamespaceParams {
+  /**
+   * JSON-encoded deployment payload. See DeployPayload schema for structure.
+   */
+  payload: string;
+
+  /**
+   * MCPB bundle file (for stdio deployments)
+   */
+  bundle?: Uploadable;
+
+  /**
+   * JavaScript module file (for hosted deployments)
+   */
+  module?: Uploadable;
+
+  /**
+   * Source map file (for hosted deployments)
+   */
+  sourcemap?: Uploadable;
+}
+
 export interface DeploymentGetParams {
   namespace: string;
 
   server: string;
 }
 
+export interface DeploymentGetByNamespaceParams {
+  namespace: string;
+}
+
 export interface DeploymentResumeParams {
   namespace: string;
 
   server: string;
+}
+
+export interface DeploymentResumeByNamespaceParams {
+  namespace: string;
+}
+
+export interface DeploymentStreamParams {
+  namespace: string;
+
+  server: string;
+}
+
+export interface DeploymentStreamByNamespaceParams {
+  namespace: string;
 }
 
 export declare namespace Deployments {
@@ -485,11 +755,22 @@ export declare namespace Deployments {
     type StdioDeployPayload as StdioDeployPayload,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
+    type DeploymentDeployByNamespaceResponse as DeploymentDeployByNamespaceResponse,
     type DeploymentGetResponse as DeploymentGetResponse,
+    type DeploymentGetByNamespaceResponse as DeploymentGetByNamespaceResponse,
+    type DeploymentListByNamespaceResponse as DeploymentListByNamespaceResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
+    type DeploymentResumeByNamespaceResponse as DeploymentResumeByNamespaceResponse,
+    type DeploymentStreamResponse as DeploymentStreamResponse,
+    type DeploymentStreamByNamespaceResponse as DeploymentStreamByNamespaceResponse,
     type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
+    type DeploymentDeployByNamespaceParams as DeploymentDeployByNamespaceParams,
     type DeploymentGetParams as DeploymentGetParams,
+    type DeploymentGetByNamespaceParams as DeploymentGetByNamespaceParams,
     type DeploymentResumeParams as DeploymentResumeParams,
+    type DeploymentResumeByNamespaceParams as DeploymentResumeByNamespaceParams,
+    type DeploymentStreamParams as DeploymentStreamParams,
+    type DeploymentStreamByNamespaceParams as DeploymentStreamByNamespaceParams,
   };
 }

@@ -16,6 +16,7 @@ export {
   type ServerListResponse,
   type ServerDeleteResponse,
   type ServerGetResponse,
+  type ServerGetByNamespaceResponse,
   type ServerListParams,
   type ServerDeleteParams,
   type ServerDownloadParams,

@@ -22,6 +22,19 @@ export class Repo extends APIResource {
   }
 
   /**
+   * Disconnect the GitHub repository connection from a server.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.servers.repo.deleteByNamespace('namespace');
+   * ```
+   */
+  deleteByNamespace(namespace: string, options?: RequestOptions): APIPromise<RepoDeleteByNamespaceResponse> {
+    return this._client.delete(path`/servers/${namespace}/repo`, options);
+  }
+
+  /**
    * Get the GitHub repository connection for a server, if one exists.
    *
    * @example
@@ -34,6 +47,20 @@ export class Repo extends APIResource {
   get(server: string, params: RepoGetParams, options?: RequestOptions): APIPromise<RepoGetResponse> {
     const { namespace } = params;
     return this._client.get(path`/servers/${namespace}/${server}/repo`, options);
+  }
+
+  /**
+   * Get the GitHub repository connection for a server, if one exists.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.repo.getByNamespace(
+   *   'namespace',
+   * );
+   * ```
+   */
+  getByNamespace(namespace: string, options?: RequestOptions): APIPromise<RepoGetByNamespaceResponse> {
+    return this._client.get(path`/servers/${namespace}/repo`, options);
   }
 
   /**
@@ -53,9 +80,33 @@ export class Repo extends APIResource {
     const { namespace, ...body } = params;
     return this._client.put(path`/servers/${namespace}/${server}/repo`, { body, ...options });
   }
+
+  /**
+   * Upsert a GitHub repository connection for a server. Creates a new connection if
+   * none exists, or updates the existing one.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.repo.setByNamespace(
+   *   'namespace',
+   *   { repoName: 'x', repoOwner: 'x' },
+   * );
+   * ```
+   */
+  setByNamespace(
+    namespace: string,
+    body: RepoSetByNamespaceParams,
+    options?: RequestOptions,
+  ): APIPromise<RepoSetByNamespaceResponse> {
+    return this._client.put(path`/servers/${namespace}/repo`, { body, ...options });
+  }
 }
 
 export interface RepoDeleteResponse {
+  success: boolean;
+}
+
+export interface RepoDeleteByNamespaceResponse {
   success: boolean;
 }
 
@@ -75,7 +126,39 @@ export interface RepoGetResponse {
   type: 'github';
 }
 
+export interface RepoGetByNamespaceResponse {
+  autoDeploy: boolean | null;
+
+  baseDirectory: string;
+
+  branch: string | null;
+
+  isPrivate: boolean;
+
+  repoName: string;
+
+  repoOwner: string;
+
+  type: 'github';
+}
+
 export interface RepoSetResponse {
+  autoDeploy: boolean | null;
+
+  baseDirectory: string;
+
+  branch: string | null;
+
+  isPrivate: boolean;
+
+  repoName: string;
+
+  repoOwner: string;
+
+  type: 'github';
+}
+
+export interface RepoSetByNamespaceResponse {
   autoDeploy: boolean | null;
 
   baseDirectory: string;
@@ -131,13 +214,29 @@ export interface RepoSetParams {
   branch?: string | null;
 }
 
+export interface RepoSetByNamespaceParams {
+  repoName: string;
+
+  repoOwner: string;
+
+  autoDeploy?: boolean;
+
+  baseDirectory?: string;
+
+  branch?: string | null;
+}
+
 export declare namespace Repo {
   export {
     type RepoDeleteResponse as RepoDeleteResponse,
+    type RepoDeleteByNamespaceResponse as RepoDeleteByNamespaceResponse,
     type RepoGetResponse as RepoGetResponse,
+    type RepoGetByNamespaceResponse as RepoGetByNamespaceResponse,
     type RepoSetResponse as RepoSetResponse,
+    type RepoSetByNamespaceResponse as RepoSetByNamespaceResponse,
     type RepoDeleteParams as RepoDeleteParams,
     type RepoGetParams as RepoGetParams,
     type RepoSetParams as RepoSetParams,
+    type RepoSetByNamespaceParams as RepoSetByNamespaceParams,
   };
 }

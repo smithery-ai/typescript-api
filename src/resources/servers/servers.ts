@@ -4,14 +4,25 @@ import { APIResource } from '../../core/resource';
 import * as DeploymentsAPI from './deployments';
 import {
   DeployPayload,
+  DeploymentDeployByNamespaceParams,
+  DeploymentDeployByNamespaceResponse,
   DeploymentDeployParams,
   DeploymentDeployResponse,
+  DeploymentGetByNamespaceParams,
+  DeploymentGetByNamespaceResponse,
   DeploymentGetParams,
   DeploymentGetResponse,
+  DeploymentListByNamespaceResponse,
   DeploymentListParams,
   DeploymentListResponse,
+  DeploymentResumeByNamespaceParams,
+  DeploymentResumeByNamespaceResponse,
   DeploymentResumeParams,
   DeploymentResumeResponse,
+  DeploymentStreamByNamespaceParams,
+  DeploymentStreamByNamespaceResponse,
+  DeploymentStreamParams,
+  DeploymentStreamResponse,
   Deployments,
   ExternalDeployPayload,
   HostedDeployPayload,
@@ -19,23 +30,38 @@ import {
   StdioDeployPayload,
 } from './deployments';
 import * as LogsAPI from './logs';
-import { LogListParams, LogListResponse, Logs } from './logs';
+import {
+  LogListByNamespaceParams,
+  LogListByNamespaceResponse,
+  LogListParams,
+  LogListResponse,
+  Logs,
+} from './logs';
 import * as RepoAPI from './repo';
 import {
   Repo,
+  RepoDeleteByNamespaceResponse,
   RepoDeleteParams,
   RepoDeleteResponse,
+  RepoGetByNamespaceResponse,
   RepoGetParams,
   RepoGetResponse,
+  RepoSetByNamespaceParams,
+  RepoSetByNamespaceResponse,
   RepoSetParams,
   RepoSetResponse,
 } from './repo';
 import * as SecretsAPI from './secrets';
 import {
+  SecretDeleteByNamespaceParams,
+  SecretDeleteByNamespaceResponse,
   SecretDeleteParams,
   SecretDeleteResponse,
+  SecretListByNamespaceResponse,
   SecretListParams,
   SecretListResponse,
+  SecretSetByNamespaceParams,
+  SecretSetByNamespaceResponse,
   SecretSetParams,
   SecretSetResponse,
   Secrets,
@@ -124,6 +150,22 @@ export class Servers extends APIResource {
   get(server: string, params: ServerGetParams, options?: RequestOptions): APIPromise<ServerGetResponse> {
     const { namespace } = params;
     return this._client.get(path`/servers/${namespace}/${server}`, options);
+  }
+
+  /**
+   * Get a server by namespace name. Used for namespace-only servers where the
+   * namespace name is also the server name. Also handles deprecated encoded
+   * patterns.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.getByNamespace(
+   *   'namespace',
+   * );
+   * ```
+   */
+  getByNamespace(namespace: string, options?: RequestOptions): APIPromise<ServerGetByNamespaceResponse> {
+    return this._client.get(path`/servers/${namespace}`, options);
   }
 }
 
@@ -284,6 +326,70 @@ export namespace ServerGetResponse {
   }
 }
 
+export interface ServerGetByNamespaceResponse {
+  connections: Array<
+    ServerGetByNamespaceResponse.StdioConnection | ServerGetByNamespaceResponse.HTTPConnection
+  >;
+
+  deploymentUrl: string | null;
+
+  description: string;
+
+  displayName: string;
+
+  iconUrl: string | null;
+
+  qualifiedName: string;
+
+  remote: boolean;
+
+  security: ServerGetByNamespaceResponse.Security | null;
+
+  tools: Array<ServerGetByNamespaceResponse.Tool> | null;
+}
+
+export namespace ServerGetByNamespaceResponse {
+  export interface StdioConnection {
+    configSchema: { [key: string]: unknown };
+
+    type: 'stdio';
+
+    bundleUrl?: string;
+
+    runtime?: string;
+
+    stdioFunction?: string;
+  }
+
+  export interface HTTPConnection {
+    configSchema: { [key: string]: unknown };
+
+    deploymentUrl: string;
+
+    type: 'http';
+  }
+
+  export interface Security {
+    scanPassed: boolean;
+  }
+
+  export interface Tool {
+    description: string | null;
+
+    inputSchema: Tool.InputSchema;
+
+    name: string;
+  }
+
+  export namespace Tool {
+    export interface InputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+    }
+  }
+}
+
 export interface ServerListParams extends SmitheryPageParams {
   ids?: Array<string>;
 
@@ -331,6 +437,7 @@ export declare namespace Servers {
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
     type ServerGetResponse as ServerGetResponse,
+    type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerListParams as ServerListParams,
     type ServerDeleteParams as ServerDeleteParams,
@@ -347,33 +454,59 @@ export declare namespace Servers {
     type StdioDeployPayload as StdioDeployPayload,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
+    type DeploymentDeployByNamespaceResponse as DeploymentDeployByNamespaceResponse,
     type DeploymentGetResponse as DeploymentGetResponse,
+    type DeploymentGetByNamespaceResponse as DeploymentGetByNamespaceResponse,
+    type DeploymentListByNamespaceResponse as DeploymentListByNamespaceResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
+    type DeploymentResumeByNamespaceResponse as DeploymentResumeByNamespaceResponse,
+    type DeploymentStreamResponse as DeploymentStreamResponse,
+    type DeploymentStreamByNamespaceResponse as DeploymentStreamByNamespaceResponse,
     type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
+    type DeploymentDeployByNamespaceParams as DeploymentDeployByNamespaceParams,
     type DeploymentGetParams as DeploymentGetParams,
+    type DeploymentGetByNamespaceParams as DeploymentGetByNamespaceParams,
     type DeploymentResumeParams as DeploymentResumeParams,
+    type DeploymentResumeByNamespaceParams as DeploymentResumeByNamespaceParams,
+    type DeploymentStreamParams as DeploymentStreamParams,
+    type DeploymentStreamByNamespaceParams as DeploymentStreamByNamespaceParams,
   };
 
-  export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
+  export {
+    Logs as Logs,
+    type LogListResponse as LogListResponse,
+    type LogListByNamespaceResponse as LogListByNamespaceResponse,
+    type LogListParams as LogListParams,
+    type LogListByNamespaceParams as LogListByNamespaceParams,
+  };
 
   export {
     Secrets as Secrets,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
+    type SecretDeleteByNamespaceResponse as SecretDeleteByNamespaceResponse,
+    type SecretListByNamespaceResponse as SecretListByNamespaceResponse,
     type SecretSetResponse as SecretSetResponse,
+    type SecretSetByNamespaceResponse as SecretSetByNamespaceResponse,
     type SecretListParams as SecretListParams,
     type SecretDeleteParams as SecretDeleteParams,
+    type SecretDeleteByNamespaceParams as SecretDeleteByNamespaceParams,
     type SecretSetParams as SecretSetParams,
+    type SecretSetByNamespaceParams as SecretSetByNamespaceParams,
   };
 
   export {
     Repo as Repo,
     type RepoDeleteResponse as RepoDeleteResponse,
+    type RepoDeleteByNamespaceResponse as RepoDeleteByNamespaceResponse,
     type RepoGetResponse as RepoGetResponse,
+    type RepoGetByNamespaceResponse as RepoGetByNamespaceResponse,
     type RepoSetResponse as RepoSetResponse,
+    type RepoSetByNamespaceResponse as RepoSetByNamespaceResponse,
     type RepoDeleteParams as RepoDeleteParams,
     type RepoGetParams as RepoGetParams,
     type RepoSetParams as RepoSetParams,
+    type RepoSetByNamespaceParams as RepoSetByNamespaceParams,
   };
 }

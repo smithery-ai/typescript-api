@@ -18,6 +18,7 @@ Types:
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerDeleteResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerGetResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerGetByNamespaceResponse</a></code>
 
 Methods:
 
@@ -25,6 +26,7 @@ Methods:
 - <code title="delete /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(server, { ...params }) -> ServerDeleteResponse</code>
 - <code title="get /servers/{namespace}/{server}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(server, { ...params }) -> Response</code>
 - <code title="get /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(server, { ...params }) -> ServerGetResponse</code>
+- <code title="get /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">getByNamespace</a>(namespace) -> ServerGetByNamespaceResponse</code>
 
 ## Deployments
 
@@ -37,25 +39,39 @@ Types:
 - <code><a href="./src/resources/servers/deployments.ts">StdioDeployPayload</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentListResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentGetResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentGetByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentListByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/deployments.ts">DeploymentResumeResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentResumeByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentStreamResponse</a></code>
+- <code><a href="./src/resources/servers/deployments.ts">DeploymentStreamByNamespaceResponse</a></code>
 
 Methods:
 
 - <code title="get /servers/{namespace}/{server}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(server, { ...params }) -> DeploymentListResponse</code>
 - <code title="put /servers/{namespace}/{server}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(server, { ...params }) -> DeploymentDeployResponse</code>
+- <code title="put /servers/{namespace}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deployByNamespace</a>(namespace, { ...params }) -> DeploymentDeployByNamespaceResponse</code>
 - <code title="get /servers/{namespace}/{server}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">get</a>(id, { ...params }) -> DeploymentGetResponse</code>
+- <code title="get /servers/{namespace}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">getByNamespace</a>(id, { ...params }) -> DeploymentGetByNamespaceResponse</code>
+- <code title="get /servers/{namespace}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">listByNamespace</a>(namespace) -> DeploymentListByNamespaceResponse</code>
 - <code title="post /servers/{namespace}/{server}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
+- <code title="post /servers/{namespace}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resumeByNamespace</a>(id, { ...params }) -> DeploymentResumeByNamespaceResponse</code>
+- <code title="get /servers/{namespace}/{server}/deployments/{id}/stream">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">stream</a>(id, { ...params }) -> string</code>
+- <code title="get /servers/{namespace}/deployments/{id}/stream">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">streamByNamespace</a>(id, { ...params }) -> string</code>
 
 ## Logs
 
 Types:
 
 - <code><a href="./src/resources/servers/logs.ts">LogListResponse</a></code>
+- <code><a href="./src/resources/servers/logs.ts">LogListByNamespaceResponse</a></code>
 
 Methods:
 
 - <code title="get /servers/{namespace}/{server}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">list</a>(server, { ...params }) -> LogListResponse</code>
+- <code title="get /servers/{namespace}/logs">client.servers.logs.<a href="./src/resources/servers/logs.ts">listByNamespace</a>(namespace, { ...params }) -> LogListByNamespaceResponse</code>
 
 ## Secrets
 
@@ -63,27 +79,39 @@ Types:
 
 - <code><a href="./src/resources/servers/secrets.ts">SecretListResponse</a></code>
 - <code><a href="./src/resources/servers/secrets.ts">SecretDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/secrets.ts">SecretDeleteByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/secrets.ts">SecretListByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/secrets.ts">SecretSetResponse</a></code>
+- <code><a href="./src/resources/servers/secrets.ts">SecretSetByNamespaceResponse</a></code>
 
 Methods:
 
 - <code title="get /servers/{namespace}/{server}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">list</a>(server, { ...params }) -> SecretListResponse</code>
 - <code title="delete /servers/{namespace}/{server}/secrets/{secretName}">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">delete</a>(secretName, { ...params }) -> SecretDeleteResponse</code>
+- <code title="delete /servers/{namespace}/secrets/{secretName}">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">deleteByNamespace</a>(secretName, { ...params }) -> SecretDeleteByNamespaceResponse</code>
+- <code title="get /servers/{namespace}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">listByNamespace</a>(namespace) -> SecretListByNamespaceResponse</code>
 - <code title="put /servers/{namespace}/{server}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">set</a>(server, { ...params }) -> SecretSetResponse</code>
+- <code title="put /servers/{namespace}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">setByNamespace</a>(namespace, { ...params }) -> SecretSetByNamespaceResponse</code>
 
 ## Repo
 
 Types:
 
 - <code><a href="./src/resources/servers/repo.ts">RepoDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/repo.ts">RepoDeleteByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/repo.ts">RepoGetResponse</a></code>
+- <code><a href="./src/resources/servers/repo.ts">RepoGetByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/repo.ts">RepoSetResponse</a></code>
+- <code><a href="./src/resources/servers/repo.ts">RepoSetByNamespaceResponse</a></code>
 
 Methods:
 
 - <code title="delete /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">delete</a>(server, { ...params }) -> RepoDeleteResponse</code>
+- <code title="delete /servers/{namespace}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">deleteByNamespace</a>(namespace) -> RepoDeleteByNamespaceResponse</code>
 - <code title="get /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">get</a>(server, { ...params }) -> RepoGetResponse</code>
+- <code title="get /servers/{namespace}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">getByNamespace</a>(namespace) -> RepoGetByNamespaceResponse</code>
 - <code title="put /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">set</a>(server, { ...params }) -> RepoSetResponse</code>
+- <code title="put /servers/{namespace}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">setByNamespace</a>(namespace, { ...params }) -> RepoSetByNamespaceResponse</code>
 
 # Uplink
 
@@ -146,16 +174,6 @@ Methods:
 - <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
 
 # Beta
-
-## Agents
-
-Types:
-
-- <code><a href="./src/resources/beta/agents/agents.ts">CreateResponseRequest</a></code>
-- <code><a href="./src/resources/beta/agents/agents.ts">ErrorResponse</a></code>
-- <code><a href="./src/resources/beta/agents/agents.ts">Response</a></code>
-
-### Responses
 
 ## Connect
 
