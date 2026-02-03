@@ -9,6 +9,27 @@ const client = new Smithery({
 
 describe('resource servers', () => {
   // Prism tests are disabled
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.servers.create('server', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('create: required and optional params', async () => {
+    const response = await client.servers.create('server', {
+      namespace: 'namespace',
+      description: 'A simple server',
+      displayName: 'My Server',
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.list();
     const rawResponse = await responsePromise.asResponse();
@@ -26,8 +47,10 @@ describe('resource servers', () => {
     await expect(
       client.servers.list(
         {
+          fields: 'fields',
           ids: ['182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e'],
           isDeployed: '0',
+          namespace: 'namespace',
           ownerId: 'ownerId',
           page: 1,
           pageSize: 1,
@@ -59,6 +82,30 @@ describe('resource servers', () => {
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.servers.delete('server', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
+  test.skip('createByNamespace', async () => {
+    const responsePromise = client.servers.createByNamespace('namespace');
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('createByNamespace: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.servers.createByNamespace(
+        'namespace',
+        { description: 'A simple server', displayName: 'My Server' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 
   test('download: required and optional params', async () => {

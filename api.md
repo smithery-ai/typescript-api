@@ -15,15 +15,19 @@ Types:
 - <code><a href="./src/resources/servers/servers.ts">BuildConfig</a></code>
 - <code><a href="./src/resources/servers/servers.ts">DeploymentTarget</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ProjectConfig</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerCreateResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerCreateByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerGetResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerGetByNamespaceResponse</a></code>
 
 Methods:
 
+- <code title="put /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">create</a>(server, { ...params }) -> ServerCreateResponse</code>
 - <code title="get /servers">client.servers.<a href="./src/resources/servers/servers.ts">list</a>({ ...params }) -> ServerListResponsesSmitheryPage</code>
 - <code title="delete /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(server, { ...params }) -> ServerDeleteResponse</code>
+- <code title="put /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">createByNamespace</a>(namespace, { ...params }) -> ServerCreateByNamespaceResponse</code>
 - <code title="get /servers/{namespace}/{server}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(server, { ...params }) -> Response</code>
 - <code title="get /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(server, { ...params }) -> ServerGetResponse</code>
 - <code title="get /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">getByNamespace</a>(namespace) -> ServerGetByNamespaceResponse</code>
@@ -127,11 +131,26 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/skills.ts">SkillListResponse</a></code>
+- <code><a href="./src/resources/skills/skills.ts">SkillListResponse</a></code>
+- <code><a href="./src/resources/skills/skills.ts">SkillGetResponse</a></code>
 
 Methods:
 
-- <code title="get /skills">client.skills.<a href="./src/resources/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>
+- <code title="get /skills">client.skills.<a href="./src/resources/skills/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>
+- <code title="get /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">get</a>(slug, { ...params }) -> SkillGetResponse</code>
+
+## Reviews
+
+Types:
+
+- <code><a href="./src/resources/skills/reviews.ts">ReviewCreateResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewListResponse</a></code>
+
+Methods:
+
+- <code title="post /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">create</a>(slug, { ...params }) -> ReviewCreateResponse</code>
+- <code title="get /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">list</a>(slug, { ...params }) -> ReviewListResponsesReviewsPage</code>
+- <code title="delete /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">delete</a>(slug, { ...params }) -> void</code>
 
 # Namespaces
 
@@ -144,7 +163,7 @@ Types:
 Methods:
 
 - <code title="post /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">create</a>() -> NamespaceCreateResponse</code>
-- <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">list</a>() -> NamespaceListResponse</code>
+- <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">list</a>({ ...params }) -> NamespaceListResponsesNamespacesPage</code>
 - <code title="put /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">set</a>(name) -> NamespaceSetResponse</code>
 
 ## Servers
