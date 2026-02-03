@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.34.1 (2026-02-03)
+
+Full Changelog: [v0.34.0...v0.34.1](https://github.com/smithery-ai/typescript-api/compare/v0.34.0...v0.34.1)
+
+### Bug Fixes
+
+* **client:** avoid memory leak with abort signals ([2d97450](https://github.com/smithery-ai/typescript-api/commit/2d97450faa8702c487469bb9c7217a37eee00468))
+
+
+### Chores
+
+* **client:** do not parse responses with empty content-length ([efc3ae5](https://github.com/smithery-ai/typescript-api/commit/efc3ae5f79e53f6d5ba4900d57bd842ce5aecd3c))
+
 ## 0.34.0 (2026-02-02)
 
 Full Changelog: [v0.33.0...v0.34.0](https://github.com/smithery-ai/typescript-api/compare/v0.33.0...v0.34.0)
