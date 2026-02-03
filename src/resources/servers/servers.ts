@@ -79,7 +79,9 @@ export class Servers extends APIResource {
   repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
 
   /**
-   * Get a paginated list of all servers. Use the `q` parameter to search.
+   * Search and browse public MCP servers in the Smithery registry. Supports
+   * full-text and semantic search via the `q` parameter, and filtering by deployment
+   * status, verification, ownership, and more.
    *
    * @example
    * ```ts
@@ -231,30 +233,61 @@ export namespace ProjectConfig {
 export interface ServerListResponse {
   id: string;
 
+  /**
+   * ISO 8601 timestamp of when the server was registered.
+   */
   createdAt: string;
 
   description: string;
 
   displayName: string;
 
+  /**
+   * URL to the server's page on smithery.ai.
+   */
   homepage: string;
 
   iconUrl: string | null;
 
+  /**
+   * Whether the server is currently hosted on Smithery infrastructure.
+   */
   isDeployed: boolean;
 
+  /**
+   * The namespace this server belongs to, or null if unassigned.
+   */
   namespace: string | null;
 
+  /**
+   * User ID of the server owner, or null for community servers.
+   */
   owner: string | null;
 
+  /**
+   * Unique identifier in namespace/slug format.
+   */
   qualifiedName: string;
 
+  /**
+   * Whether the server is accessed via URL (true) or runs locally via stdio (false).
+   * Null if unknown.
+   */
   remote: boolean | null;
 
+  /**
+   * URL-friendly short name within the namespace.
+   */
   slug: string | null;
 
+  /**
+   * Total number of times this server has been connected to.
+   */
   useCount: number;
 
+  /**
+   * Whether this server has been verified by Smithery.
+   */
   verified: boolean;
 }
 
@@ -391,24 +424,58 @@ export namespace ServerGetByNamespaceResponse {
 }
 
 export interface ServerListParams extends SmitheryPageParams {
+  /**
+   * Filter by specific server IDs.
+   */
   ids?: Array<string>;
 
+  /**
+   * Filter by deployment status. Deployed servers are hosted on Smithery
+   * infrastructure.
+   */
   isDeployed?: '0' | '1' | 'true' | 'false';
 
+  /**
+   * Filter by the server owner's user ID.
+   */
   ownerId?: string;
 
+  /**
+   * Search query for full-text and semantic search across server names and
+   * descriptions.
+   */
   q?: string;
 
+  /**
+   * Exact match on the server's qualified name (e.g. "smithery/hello-world").
+   */
   qualifiedName?: string;
 
+  /**
+   * Filter by remote status. Remote servers are accessed via URL; non-remote servers
+   * run locally via stdio.
+   */
   remote?: '0' | '1' | 'true' | 'false';
 
+  /**
+   * Filter by connected GitHub repository name.
+   */
   repoName?: string;
 
+  /**
+   * Filter by connected GitHub repository owner.
+   */
   repoOwner?: string;
 
+  /**
+   * Maximum number of candidate results to consider from the search index before
+   * pagination.
+   */
   topK?: number;
 
+  /**
+   * Filter to only verified servers.
+   */
   verified?: '0' | '1' | 'true' | 'false';
 }
 

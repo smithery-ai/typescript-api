@@ -11,7 +11,8 @@ import { path } from '../../internal/utils/path';
 
 export class Deployments extends APIResource {
   /**
-   * List deployments for a server
+   * List all deployments for a server, ordered by most recent first. Does not
+   * include deployment logs — fetch a specific deployment to see logs.
    *
    * @example
    * ```ts
@@ -31,7 +32,9 @@ export class Deployments extends APIResource {
   }
 
   /**
-   * Upload and deploy an MCP server (hosted or external)
+   * Deploy an MCP server via multipart form. Supports hosted deployments (upload a
+   * JS module), external deployments (register a URL), stdio deployments (upload an
+   * MCPB bundle), and repo deployments (build from a connected GitHub repository).
    *
    * @example
    * ```ts
@@ -54,7 +57,9 @@ export class Deployments extends APIResource {
   }
 
   /**
-   * Upload and deploy an MCP server (hosted or external)
+   * Deploy an MCP server via multipart form. Supports hosted deployments (upload a
+   * JS module), external deployments (register a URL), stdio deployments (upload an
+   * MCPB bundle), and repo deployments (build from a connected GitHub repository).
    *
    * @example
    * ```ts
@@ -77,7 +82,8 @@ export class Deployments extends APIResource {
   }
 
   /**
-   * Get deployment status
+   * Get full details for a specific deployment, including status, type, git
+   * metadata, pipeline logs, and MCP endpoint URL.
    *
    * @example
    * ```ts
@@ -93,7 +99,8 @@ export class Deployments extends APIResource {
   }
 
   /**
-   * Get deployment status
+   * Get full details for a specific deployment, including status, type, git
+   * metadata, pipeline logs, and MCP endpoint URL.
    *
    * @example
    * ```ts
@@ -113,7 +120,8 @@ export class Deployments extends APIResource {
   }
 
   /**
-   * List deployments for a server
+   * List all deployments for a server, ordered by most recent first. Does not
+   * include deployment logs — fetch a specific deployment to see logs.
    *
    * @example
    * ```ts
@@ -485,84 +493,191 @@ export namespace DeploymentListResponse {
   export interface DeploymentListResponseItem {
     id: string;
 
+    /**
+     * ISO 8601 timestamp of when the deployment was created.
+     */
     createdAt: string;
 
+    /**
+     * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
+     * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+     */
     status: string;
 
+    /**
+     * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
+     * or stdio (local binary).
+     */
     type: string;
 
+    /**
+     * ISO 8601 timestamp of the last status change.
+     */
     updatedAt: string;
 
+    /**
+     * Git branch this deployment was built from.
+     */
     branch?: string | null;
 
+    /**
+     * Git commit SHA that triggered this deployment. Present for repo and
+     * source-tracked deployments.
+     */
     commit?: string | null;
 
+    /**
+     * Git commit message associated with this deployment.
+     */
     commitMessage?: string | null;
 
+    /**
+     * The MCP endpoint URL for connecting to this server.
+     */
     mcpUrl?: string;
 
+    /**
+     * Upstream MCP server URL. Present only for external deployments.
+     */
     upstreamUrl?: string | null;
   }
 }
 
 export interface DeploymentDeployResponse {
+  /**
+   * Unique identifier for this deployment.
+   */
   deploymentId: string;
 
+  /**
+   * The MCP endpoint URL for connecting to this server once deployed.
+   */
   mcpUrl: string;
 
+  /**
+   * Initial deployment status. Will be WORKING while the deployment is in progress.
+   */
   status: string;
 
+  /**
+   * Non-fatal warnings encountered during deployment submission.
+   */
   warnings?: Array<string>;
 }
 
 export interface DeploymentDeployByNamespaceResponse {
+  /**
+   * Unique identifier for this deployment.
+   */
   deploymentId: string;
 
+  /**
+   * The MCP endpoint URL for connecting to this server once deployed.
+   */
   mcpUrl: string;
 
+  /**
+   * Initial deployment status. Will be WORKING while the deployment is in progress.
+   */
   status: string;
 
+  /**
+   * Non-fatal warnings encountered during deployment submission.
+   */
   warnings?: Array<string>;
 }
 
 export interface DeploymentGetResponse {
   id: string;
 
+  /**
+   * ISO 8601 timestamp of when the deployment was created.
+   */
   createdAt: string;
 
+  /**
+   * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
+   * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+   */
   status: string;
 
+  /**
+   * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
+   * or stdio (local binary).
+   */
   type: string;
 
+  /**
+   * ISO 8601 timestamp of the last status change.
+   */
   updatedAt: string;
 
+  /**
+   * Git branch this deployment was built from.
+   */
   branch?: string | null;
 
+  /**
+   * Git commit SHA that triggered this deployment. Present for repo and
+   * source-tracked deployments.
+   */
   commit?: string | null;
 
+  /**
+   * Git commit message associated with this deployment.
+   */
   commitMessage?: string | null;
 
+  /**
+   * Deployment pipeline log entries. Only included when fetching a single
+   * deployment.
+   */
   logs?: Array<DeploymentGetResponse.Log>;
 
+  /**
+   * The MCP endpoint URL for connecting to this server.
+   */
   mcpUrl?: string;
 
+  /**
+   * Upstream MCP server URL. Present only for external deployments.
+   */
   upstreamUrl?: string | null;
 }
 
 export namespace DeploymentGetResponse {
   export interface Log {
+    /**
+     * Log level: 'start', 'end', 'info', 'success', or 'failure'.
+     */
     level: string;
 
+    /**
+     * Human-readable log message.
+     */
     message: string;
 
+    /**
+     * Deployment pipeline stage: deploy (bundle upload), scan (security/OAuth check),
+     * metadata (tool discovery), publish (making the server live).
+     */
     stage: 'deploy' | 'scan' | 'metadata' | 'publish';
 
+    /**
+     * ISO 8601 timestamp of the log entry.
+     */
     timestamp: string;
 
+    /**
+     * Error details, present only when the stage failed.
+     */
     error?: Log.Error;
   }
 
   export namespace Log {
+    /**
+     * Error details, present only when the stage failed.
+     */
     export interface Error {
       message?: string;
     }
@@ -572,41 +687,94 @@ export namespace DeploymentGetResponse {
 export interface DeploymentGetByNamespaceResponse {
   id: string;
 
+  /**
+   * ISO 8601 timestamp of when the deployment was created.
+   */
   createdAt: string;
 
+  /**
+   * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
+   * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+   */
   status: string;
 
+  /**
+   * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
+   * or stdio (local binary).
+   */
   type: string;
 
+  /**
+   * ISO 8601 timestamp of the last status change.
+   */
   updatedAt: string;
 
+  /**
+   * Git branch this deployment was built from.
+   */
   branch?: string | null;
 
+  /**
+   * Git commit SHA that triggered this deployment. Present for repo and
+   * source-tracked deployments.
+   */
   commit?: string | null;
 
+  /**
+   * Git commit message associated with this deployment.
+   */
   commitMessage?: string | null;
 
+  /**
+   * Deployment pipeline log entries. Only included when fetching a single
+   * deployment.
+   */
   logs?: Array<DeploymentGetByNamespaceResponse.Log>;
 
+  /**
+   * The MCP endpoint URL for connecting to this server.
+   */
   mcpUrl?: string;
 
+  /**
+   * Upstream MCP server URL. Present only for external deployments.
+   */
   upstreamUrl?: string | null;
 }
 
 export namespace DeploymentGetByNamespaceResponse {
   export interface Log {
+    /**
+     * Log level: 'start', 'end', 'info', 'success', or 'failure'.
+     */
     level: string;
 
+    /**
+     * Human-readable log message.
+     */
     message: string;
 
+    /**
+     * Deployment pipeline stage: deploy (bundle upload), scan (security/OAuth check),
+     * metadata (tool discovery), publish (making the server live).
+     */
     stage: 'deploy' | 'scan' | 'metadata' | 'publish';
 
+    /**
+     * ISO 8601 timestamp of the log entry.
+     */
     timestamp: string;
 
+    /**
+     * Error details, present only when the stage failed.
+     */
     error?: Log.Error;
   }
 
   export namespace Log {
+    /**
+     * Error details, present only when the stage failed.
+     */
     export interface Error {
       message?: string;
     }
@@ -620,22 +788,52 @@ export namespace DeploymentListByNamespaceResponse {
   export interface DeploymentListByNamespaceResponseItem {
     id: string;
 
+    /**
+     * ISO 8601 timestamp of when the deployment was created.
+     */
     createdAt: string;
 
+    /**
+     * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
+     * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+     */
     status: string;
 
+    /**
+     * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
+     * or stdio (local binary).
+     */
     type: string;
 
+    /**
+     * ISO 8601 timestamp of the last status change.
+     */
     updatedAt: string;
 
+    /**
+     * Git branch this deployment was built from.
+     */
     branch?: string | null;
 
+    /**
+     * Git commit SHA that triggered this deployment. Present for repo and
+     * source-tracked deployments.
+     */
     commit?: string | null;
 
+    /**
+     * Git commit message associated with this deployment.
+     */
     commitMessage?: string | null;
 
+    /**
+     * The MCP endpoint URL for connecting to this server.
+     */
     mcpUrl?: string;
 
+    /**
+     * Upstream MCP server URL. Present only for external deployments.
+     */
     upstreamUrl?: string | null;
   }
 }

@@ -19,7 +19,11 @@ export class Tokens extends APIResource {
 
 export interface Constraint {
   /**
-   * Metadata filter facts. Each object is an OR condition; keys within are AND-ed.
+   * Metadata key-value pairs for fine-grained access control. When an array is
+   * provided, each object is evaluated as an OR condition (any must match). Within a
+   * single object, all key-value pairs must match (AND). For example, [{"userId":
+   * "alice"}, {"team": "backend"}] allows access if userId is alice OR team is
+   * backend.
    */
   metadata?: { [key: string]: string } | Array<{ [key: string]: string }>;
 

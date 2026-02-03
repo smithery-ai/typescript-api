@@ -6,8 +6,8 @@ import { RequestOptions } from '../internal/request-options';
 
 export class Skills extends APIResource {
   /**
-   * Get a paginated list of skills. When q parameter is provided, uses hybrid BM25 +
-   * vector search.
+   * Search and browse reusable prompt-based skills. Supports full-text and semantic
+   * search via the `q` parameter, and filtering by category, namespace, or slug.
    */
   list(
     query: SkillListParams | null | undefined = {},
@@ -22,46 +22,102 @@ export type SkillListResponsesSkillsPage = SkillsPage<SkillListResponse>;
 export interface SkillListResponse {
   id: string;
 
+  /**
+   * ISO 8601 timestamp of when the skill was created.
+   */
   createdAt: string;
 
   description: string;
 
   displayName: string;
 
+  /**
+   * Whether this skill is publicly listed in the registry.
+   */
   listed: boolean;
 
+  /**
+   * Namespace that owns this skill.
+   */
   namespace: string;
 
+  /**
+   * The prompt template for this skill, or null if not publicly visible.
+   */
   prompt: string | null;
 
+  /**
+   * Computed quality score from 0 to 1.
+   */
   qualityScore: number;
 
+  /**
+   * URL-friendly short name within the namespace.
+   */
   slug: string;
 
+  /**
+   * List of categories this skill belongs to.
+   */
   categories?: Array<string>;
 
+  /**
+   * GitHub fork count of the source repository, if applicable.
+   */
   externalForks?: number;
 
+  /**
+   * GitHub star count of the source repository, if applicable.
+   */
   externalStars?: number;
 
+  /**
+   * URL to the skill's source repository.
+   */
   gitUrl?: string;
 
+  /**
+   * Qualified names of MCP servers this skill depends on.
+   */
   servers?: Array<string>;
 
+  /**
+   * Total number of times this skill has been activated.
+   */
   totalActivations?: number;
 
+  /**
+   * Number of distinct users who have activated this skill.
+   */
   uniqueUsers?: number;
 }
 
 export interface SkillListParams extends SkillsPageParams {
+  /**
+   * Filter by skill category (e.g. 'code', 'data', 'web').
+   */
   category?: string;
 
+  /**
+   * Filter by the namespace that owns the skill.
+   */
   namespace?: string;
 
+  /**
+   * Search query for full-text and semantic search across skill names and
+   * descriptions.
+   */
   q?: string;
 
+  /**
+   * Filter by exact skill slug within a namespace.
+   */
   slug?: string;
 
+  /**
+   * Maximum number of candidate results to consider from the search index before
+   * pagination.
+   */
   topK?: number;
 }
 
