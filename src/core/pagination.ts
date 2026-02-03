@@ -224,3 +224,121 @@ export class SkillsPage<Item> extends AbstractPage<Item> implements SkillsPageRe
     };
   }
 }
+
+export interface NamespacesPageResponse<Item> {
+  namespaces: Array<Item>;
+
+  pagination: NamespacesPageResponse.Pagination;
+}
+
+export namespace NamespacesPageResponse {
+  export interface Pagination {
+    currentPage?: number;
+
+    pageSize?: number;
+
+    totalCount?: number;
+
+    totalPages?: number;
+  }
+}
+
+export interface NamespacesPageParams {
+  page?: number;
+
+  pageSize?: number;
+}
+
+export class NamespacesPage<Item> extends AbstractPage<Item> implements NamespacesPageResponse<Item> {
+  namespaces: Array<Item>;
+
+  pagination: NamespacesPageResponse.Pagination;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: NamespacesPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.namespaces = body.namespaces || [];
+    this.pagination = body.pagination || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.namespaces ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const query = this.options.query as NamespacesPageParams;
+    const currentPage = query?.page ?? 1;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}
+
+export interface ReviewsPageResponse<Item> {
+  reviews: Array<Item>;
+
+  pagination: ReviewsPageResponse.Pagination;
+}
+
+export namespace ReviewsPageResponse {
+  export interface Pagination {
+    currentPage?: number;
+
+    pageSize?: number;
+
+    totalCount?: number;
+
+    totalPages?: number;
+  }
+}
+
+export interface ReviewsPageParams {
+  page?: number;
+
+  limit?: number;
+}
+
+export class ReviewsPage<Item> extends AbstractPage<Item> implements ReviewsPageResponse<Item> {
+  reviews: Array<Item>;
+
+  pagination: ReviewsPageResponse.Pagination;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: ReviewsPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.reviews = body.reviews || [];
+    this.pagination = body.pagination || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.reviews ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const query = this.options.query as ReviewsPageParams;
+    const currentPage = query?.page ?? 1;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}

@@ -17,6 +17,10 @@ import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
 import {
   AbstractPage,
+  type NamespacesPageParams,
+  NamespacesPageResponse,
+  type ReviewsPageParams,
+  ReviewsPageResponse,
   type SkillsPageParams,
   SkillsPageResponse,
   type SmitheryPageParams,
@@ -26,7 +30,6 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
-import { SkillListParams, SkillListResponse, SkillListResponsesSkillsPage, Skills } from './resources/skills';
 import {
   Constraint,
   CreateTokenRequest,
@@ -38,7 +41,9 @@ import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Experimental } from './resources/experimental/experimental';
 import {
   NamespaceCreateResponse,
+  NamespaceListParams,
   NamespaceListResponse,
+  NamespaceListResponsesNamespacesPage,
   NamespaceSetResponse,
   Namespaces,
 } from './resources/namespaces/namespaces';
@@ -46,6 +51,10 @@ import {
   BuildConfig,
   DeploymentTarget,
   ProjectConfig,
+  ServerCreateByNamespaceParams,
+  ServerCreateByNamespaceResponse,
+  ServerCreateParams,
+  ServerCreateResponse,
   ServerDeleteParams,
   ServerDeleteResponse,
   ServerDownloadParams,
@@ -57,6 +66,14 @@ import {
   ServerListResponsesSmitheryPage,
   Servers,
 } from './resources/servers/servers';
+import {
+  SkillGetParams,
+  SkillGetResponse,
+  SkillListParams,
+  SkillListResponse,
+  SkillListResponsesSkillsPage,
+  Skills,
+} from './resources/skills/skills';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -784,6 +801,15 @@ export declare namespace Smithery {
   export import SkillsPage = Pagination.SkillsPage;
   export { type SkillsPageParams as SkillsPageParams, type SkillsPageResponse as SkillsPageResponse };
 
+  export import NamespacesPage = Pagination.NamespacesPage;
+  export {
+    type NamespacesPageParams as NamespacesPageParams,
+    type NamespacesPageResponse as NamespacesPageResponse,
+  };
+
+  export import ReviewsPage = Pagination.ReviewsPage;
+  export { type ReviewsPageParams as ReviewsPageParams, type ReviewsPageResponse as ReviewsPageResponse };
+
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
   export {
@@ -791,13 +817,17 @@ export declare namespace Smithery {
     type BuildConfig as BuildConfig,
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
+    type ServerCreateResponse as ServerCreateResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
+    type ServerCreateByNamespaceResponse as ServerCreateByNamespaceResponse,
     type ServerGetResponse as ServerGetResponse,
     type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
+    type ServerCreateParams as ServerCreateParams,
     type ServerListParams as ServerListParams,
     type ServerDeleteParams as ServerDeleteParams,
+    type ServerCreateByNamespaceParams as ServerCreateByNamespaceParams,
     type ServerDownloadParams as ServerDownloadParams,
     type ServerGetParams as ServerGetParams,
   };
@@ -807,8 +837,10 @@ export declare namespace Smithery {
   export {
     Skills as Skills,
     type SkillListResponse as SkillListResponse,
+    type SkillGetResponse as SkillGetResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillListParams as SkillListParams,
+    type SkillGetParams as SkillGetParams,
   };
 
   export {
@@ -816,6 +848,8 @@ export declare namespace Smithery {
     type NamespaceCreateResponse as NamespaceCreateResponse,
     type NamespaceListResponse as NamespaceListResponse,
     type NamespaceSetResponse as NamespaceSetResponse,
+    type NamespaceListResponsesNamespacesPage as NamespaceListResponsesNamespacesPage,
+    type NamespaceListParams as NamespaceListParams,
   };
 
   export {

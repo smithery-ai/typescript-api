@@ -27,7 +27,9 @@ describe('resource skills', () => {
       client.skills.list(
         {
           category: 'category',
+          fields: 'fields',
           namespace: 'namespace',
+          ownerId: 'ownerId',
           page: 1,
           pageSize: 1,
           q: 'q',
@@ -37,5 +39,22 @@ describe('resource skills', () => {
         { path: '/_stainless_unknown_path' },
       ),
     ).rejects.toThrow(Smithery.NotFoundError);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.skills.get('slug', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('get: required and optional params', async () => {
+    const response = await client.skills.get('slug', { namespace: 'namespace' });
   });
 });

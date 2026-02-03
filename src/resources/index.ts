@@ -7,18 +7,24 @@ export {
   type NamespaceCreateResponse,
   type NamespaceListResponse,
   type NamespaceSetResponse,
+  type NamespaceListParams,
+  type NamespaceListResponsesNamespacesPage,
 } from './namespaces/namespaces';
 export {
   Servers,
   type BuildConfig,
   type DeploymentTarget,
   type ProjectConfig,
+  type ServerCreateResponse,
   type ServerListResponse,
   type ServerDeleteResponse,
+  type ServerCreateByNamespaceResponse,
   type ServerGetResponse,
   type ServerGetByNamespaceResponse,
+  type ServerCreateParams,
   type ServerListParams,
   type ServerDeleteParams,
+  type ServerCreateByNamespaceParams,
   type ServerDownloadParams,
   type ServerGetParams,
   type ServerListResponsesSmitheryPage,
@@ -26,9 +32,11 @@ export {
 export {
   Skills,
   type SkillListResponse,
+  type SkillGetResponse,
   type SkillListParams,
+  type SkillGetParams,
   type SkillListResponsesSkillsPage,
-} from './skills';
+} from './skills/skills';
 export {
   Tokens,
   type Constraint,

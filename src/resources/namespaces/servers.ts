@@ -7,15 +7,10 @@ import { path } from '../../internal/utils/path';
 
 export class Servers extends APIResource {
   /**
-   * Create a new server under the specified namespace. This endpoint is idempotent.
+   * **Deprecated:** Use PUT /servers/{namespace}/{server} instead. Create a new
+   * server under the specified namespace. This endpoint is idempotent.
    *
-   * @example
-   * ```ts
-   * const server = await client.namespaces.servers.create(
-   *   'xxx',
-   *   { namespace: 'namespace' },
-   * );
-   * ```
+   * @deprecated
    */
   create(
     server: string,
