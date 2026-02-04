@@ -3,13 +3,15 @@
 import { APIResource } from '../../core/resource';
 import * as ReviewsAPI from './reviews';
 import {
+  CreateReviewRequest,
+  CreateReviewResponse,
   ReviewCreateParams,
-  ReviewCreateResponse,
   ReviewDeleteParams,
+  ReviewItem,
+  ReviewItemsReviewsPage,
   ReviewListParams,
-  ReviewListResponse,
-  ReviewListResponsesReviewsPage,
   Reviews,
+  ReviewsListResponse,
 } from './reviews';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkillsPage, type SkillsPageParams } from '../../core/pagination';
@@ -205,9 +207,11 @@ export declare namespace Skills {
 
   export {
     Reviews as Reviews,
-    type ReviewCreateResponse as ReviewCreateResponse,
-    type ReviewListResponse as ReviewListResponse,
-    type ReviewListResponsesReviewsPage as ReviewListResponsesReviewsPage,
+    type CreateReviewRequest as CreateReviewRequest,
+    type CreateReviewResponse as CreateReviewResponse,
+    type ReviewItem as ReviewItem,
+    type ReviewsListResponse as ReviewsListResponse,
+    type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,

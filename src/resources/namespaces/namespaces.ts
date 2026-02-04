@@ -71,7 +71,9 @@ export interface NamespaceCreateResponse {
   name: string;
 }
 
-export type NamespaceListResponse = unknown;
+export interface NamespaceListResponse {
+  name: string;
+}
 
 export interface NamespaceSetResponse {
   createdAt: string;

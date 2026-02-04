@@ -52,10 +52,7 @@ export interface ResponseCreateParams {
   /**
    * Input text or array of messages
    */
-  input?:
-    | string
-    | Array<ResponseCreateParams.AgentUserMessage | ResponseCreateParams.AgentSystemMessage>
-    | null;
+  input?: string | Array<AgentsAPI.InputItem> | null;
 
   /**
    * Additional system instructions
@@ -101,46 +98,6 @@ export interface ResponseCreateParams {
    * Top-p sampling
    */
   top_p?: number | null;
-}
-
-export namespace ResponseCreateParams {
-  export interface AgentUserMessage {
-    content: Array<AgentUserMessage.UnionMember0> | string;
-
-    role: 'user';
-
-    type: 'message';
-  }
-
-  export namespace AgentUserMessage {
-    export interface UnionMember0 {
-      /**
-       * The text content
-       */
-      text: string;
-
-      type: 'input_text';
-    }
-  }
-
-  export interface AgentSystemMessage {
-    content: Array<AgentSystemMessage.UnionMember0> | string;
-
-    role: 'system';
-
-    type: 'message';
-  }
-
-  export namespace AgentSystemMessage {
-    export interface UnionMember0 {
-      /**
-       * The text content
-       */
-      text: string;
-
-      type: 'input_text';
-    }
-  }
 }
 
 export declare namespace Responses {

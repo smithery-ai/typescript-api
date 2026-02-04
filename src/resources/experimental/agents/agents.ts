@@ -8,6 +8,21 @@ export class Agents extends APIResource {
   responses: ResponsesAPI.Responses = new ResponsesAPI.Responses(this._client);
 }
 
+export interface AssistantMessage {
+  /**
+   * Message ID
+   */
+  id: string;
+
+  content: Array<OutputTextContent>;
+
+  role: 'assistant';
+
+  status: 'in_progress' | 'completed' | 'incomplete';
+
+  type: 'message';
+}
+
 export interface CreateResponseRequest {
   /**
    * Smithery namespace for tool discovery
@@ -22,10 +37,7 @@ export interface CreateResponseRequest {
   /**
    * Input text or array of messages
    */
-  input?:
-    | string
-    | Array<CreateResponseRequest.AgentUserMessage | CreateResponseRequest.AgentSystemMessage>
-    | null;
+  input?: string | Array<InputItem> | null;
 
   /**
    * Additional system instructions
@@ -73,46 +85,6 @@ export interface CreateResponseRequest {
   top_p?: number | null;
 }
 
-export namespace CreateResponseRequest {
-  export interface AgentUserMessage {
-    content: Array<AgentUserMessage.UnionMember0> | string;
-
-    role: 'user';
-
-    type: 'message';
-  }
-
-  export namespace AgentUserMessage {
-    export interface UnionMember0 {
-      /**
-       * The text content
-       */
-      text: string;
-
-      type: 'input_text';
-    }
-  }
-
-  export interface AgentSystemMessage {
-    content: Array<AgentSystemMessage.UnionMember0> | string;
-
-    role: 'system';
-
-    type: 'message';
-  }
-
-  export namespace AgentSystemMessage {
-    export interface UnionMember0 {
-      /**
-       * The text content
-       */
-      text: string;
-
-      type: 'input_text';
-    }
-  }
-}
-
 export interface ErrorResponse {
   error: ErrorResponse.Error;
 }
@@ -134,6 +106,54 @@ export namespace ErrorResponse {
      */
     type?: string;
   }
+}
+
+export interface FunctionCall {
+  /**
+   * Function call ID
+   */
+  id: string;
+
+  /**
+   * JSON-encoded arguments
+   */
+  arguments: string;
+
+  /**
+   * Tool call ID
+   */
+  call_id: string;
+
+  /**
+   * Function name
+   */
+  name: string;
+
+  status: 'in_progress' | 'completed' | 'incomplete';
+
+  type: 'function_call';
+}
+
+export type InputItem = UserMessage | SystemMessage;
+
+export interface InputTextContent {
+  /**
+   * The text content
+   */
+  text: string;
+
+  type: 'input_text';
+}
+
+export type OutputItem = AssistantMessage | FunctionCall;
+
+export interface OutputTextContent {
+  /**
+   * The output text
+   */
+  text: string;
+
+  type: 'output_text';
 }
 
 export interface Response {
@@ -182,7 +202,7 @@ export interface Response {
   /**
    * Output items
    */
-  output: Array<Response.AgentAssistantMessage | Response.AgentFunctionCall>;
+  output: Array<OutputItem>;
 
   /**
    * Previous response ID
@@ -192,12 +212,12 @@ export interface Response {
   /**
    * Response status
    */
-  status: 'queued' | 'in_progress' | 'completed' | 'failed' | 'incomplete';
+  status: ResponseStatus;
 
   /**
    * Token usage
    */
-  usage: Response.Usage | null;
+  usage: Usage | null;
 }
 
 export namespace Response {
@@ -209,87 +229,72 @@ export namespace Response {
 
     message: string;
   }
+}
 
-  export interface AgentAssistantMessage {
-    /**
-     * Message ID
-     */
-    id: string;
+export type ResponseStatus = 'queued' | 'in_progress' | 'completed' | 'failed' | 'incomplete';
 
-    content: Array<AgentAssistantMessage.Content>;
+/**
+ * Simple text content
+ */
+export type StringContent = string;
 
-    role: 'assistant';
+export interface SystemMessage {
+  /**
+   * Simple text content
+   */
+  content: Array<InputTextContent> | StringContent;
 
-    status: 'in_progress' | 'completed' | 'incomplete';
+  role: 'system';
 
-    type: 'message';
-  }
+  type: 'message';
+}
 
-  export namespace AgentAssistantMessage {
-    export interface Content {
-      /**
-       * The output text
-       */
-      text: string;
-
-      type: 'output_text';
-    }
-  }
-
-  export interface AgentFunctionCall {
-    /**
-     * Function call ID
-     */
-    id: string;
-
-    /**
-     * JSON-encoded arguments
-     */
-    arguments: string;
-
-    /**
-     * Tool call ID
-     */
-    call_id: string;
-
-    /**
-     * Function name
-     */
-    name: string;
-
-    status: 'in_progress' | 'completed' | 'incomplete';
-
-    type: 'function_call';
-  }
+export interface Usage {
+  /**
+   * Input tokens used
+   */
+  input_tokens: number;
 
   /**
-   * Token usage
+   * Output tokens generated
    */
-  export interface Usage {
-    /**
-     * Input tokens used
-     */
-    input_tokens: number;
+  output_tokens: number;
 
-    /**
-     * Output tokens generated
-     */
-    output_tokens: number;
+  /**
+   * Total tokens
+   */
+  total_tokens: number;
+}
 
-    /**
-     * Total tokens
-     */
-    total_tokens: number;
-  }
+export interface UserMessage {
+  /**
+   * Simple text content
+   */
+  content: Array<InputTextContent> | StringContent;
+
+  role: 'user';
+
+  type: 'message';
 }
 
 Agents.Responses = Responses;
 
 export declare namespace Agents {
   export {
+    type AssistantMessage as AssistantMessage,
     type CreateResponseRequest as CreateResponseRequest,
     type ErrorResponse as ErrorResponse,
+    type FunctionCall as FunctionCall,
+    type InputItem as InputItem,
+    type InputTextContent as InputTextContent,
+    type OutputItem as OutputItem,
+    type OutputTextContent as OutputTextContent,
     type Response as Response,
+    type ResponseStatus as ResponseStatus,
+    type StringContent as StringContent,
+    type SystemMessage as SystemMessage,
+    type Usage as Usage,
+    type UserMessage as UserMessage,
   };
 
   export { Responses as Responses, type ResponseCreateParams as ResponseCreateParams };
