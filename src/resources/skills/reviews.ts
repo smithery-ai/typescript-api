@@ -45,6 +45,28 @@ export class Reviews extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Remove vote from a review
+   */
+  unvote(reviewID: string, params: ReviewUnvoteParams, options?: RequestOptions): APIPromise<void> {
+    const { namespace, slug } = params;
+    return this._client.delete(path`/skills/${namespace}/${slug}/reviews/${reviewID}/vote`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Upvote or downvote a review. Updates existing vote if one exists.
+   */
+  vote(reviewID: string, params: ReviewVoteParams, options?: RequestOptions): APIPromise<ReviewVoteResponse> {
+    const { namespace, slug, ...body } = params;
+    return this._client.post(path`/skills/${namespace}/${slug}/reviews/${reviewID}/vote`, {
+      body,
+      ...options,
+    });
+  }
 }
 
 export type ReviewItemsReviewsPage = ReviewsPage<ReviewItem>;
@@ -112,6 +134,12 @@ export namespace ReviewsListResponse {
   }
 }
 
+export interface ReviewVoteResponse {
+  createdAt: string;
+
+  isPositive: boolean;
+}
+
 export interface ReviewCreateParams {
   /**
    * Path param
@@ -140,15 +168,41 @@ export interface ReviewDeleteParams {
   namespace: string;
 }
 
+export interface ReviewUnvoteParams {
+  namespace: string;
+
+  slug: string;
+}
+
+export interface ReviewVoteParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Path param
+   */
+  slug: string;
+
+  /**
+   * Body param: true for thumbs up, false for thumbs down
+   */
+  isPositive: boolean;
+}
+
 export declare namespace Reviews {
   export {
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
     type ReviewsListResponse as ReviewsListResponse,
+    type ReviewVoteResponse as ReviewVoteResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,
+    type ReviewUnvoteParams as ReviewUnvoteParams,
+    type ReviewVoteParams as ReviewVoteParams,
   };
 }

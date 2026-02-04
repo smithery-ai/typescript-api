@@ -10,15 +10,28 @@ import {
   ReviewItem,
   ReviewItemsReviewsPage,
   ReviewListParams,
+  ReviewUnvoteParams,
+  ReviewVoteParams,
+  ReviewVoteResponse,
   Reviews,
   ReviewsListResponse,
 } from './reviews';
+import * as VotesAPI from './votes';
+import {
+  VoteCreateParams,
+  VoteCreateResponse,
+  VoteDeleteParams,
+  VoteGetParams,
+  VoteGetResponse,
+  Votes,
+} from './votes';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkillsPage, type SkillsPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Skills extends APIResource {
+  votes: VotesAPI.Votes = new VotesAPI.Votes(this._client);
   reviews: ReviewsAPI.Reviews = new ReviewsAPI.Reviews(this._client);
 
   /**
@@ -194,6 +207,7 @@ export interface SkillGetParams {
   namespace: string;
 }
 
+Skills.Votes = Votes;
 Skills.Reviews = Reviews;
 
 export declare namespace Skills {
@@ -206,14 +220,26 @@ export declare namespace Skills {
   };
 
   export {
+    Votes as Votes,
+    type VoteCreateResponse as VoteCreateResponse,
+    type VoteGetResponse as VoteGetResponse,
+    type VoteCreateParams as VoteCreateParams,
+    type VoteDeleteParams as VoteDeleteParams,
+    type VoteGetParams as VoteGetParams,
+  };
+
+  export {
     Reviews as Reviews,
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
     type ReviewsListResponse as ReviewsListResponse,
+    type ReviewVoteResponse as ReviewVoteResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,
+    type ReviewUnvoteParams as ReviewUnvoteParams,
+    type ReviewVoteParams as ReviewVoteParams,
   };
 }

@@ -139,6 +139,19 @@ Methods:
 - <code title="get /skills">client.skills.<a href="./src/resources/skills/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>
 - <code title="get /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">get</a>(slug, { ...params }) -> SkillGetResponse</code>
 
+## Votes
+
+Types:
+
+- <code><a href="./src/resources/skills/votes.ts">VoteCreateResponse</a></code>
+- <code><a href="./src/resources/skills/votes.ts">VoteGetResponse</a></code>
+
+Methods:
+
+- <code title="post /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">create</a>(slug, { ...params }) -> VoteCreateResponse</code>
+- <code title="delete /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">delete</a>(slug, { ...params }) -> void</code>
+- <code title="get /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">get</a>(slug, { ...params }) -> VoteGetResponse</code>
+
 ## Reviews
 
 Types:
@@ -147,12 +160,15 @@ Types:
 - <code><a href="./src/resources/skills/reviews.ts">CreateReviewResponse</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewItem</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewsListResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewVoteResponse</a></code>
 
 Methods:
 
 - <code title="post /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">create</a>(slug, { ...params }) -> CreateReviewResponse</code>
 - <code title="get /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">list</a>(slug, { ...params }) -> ReviewItemsReviewsPage</code>
 - <code title="delete /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">delete</a>(slug, { ...params }) -> void</code>
+- <code title="delete /skills/{namespace}/{slug}/reviews/{reviewId}/vote">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">unvote</a>(reviewID, { ...params }) -> void</code>
+- <code title="post /skills/{namespace}/{slug}/reviews/{reviewId}/vote">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">vote</a>(reviewID, { ...params }) -> ReviewVoteResponse</code>
 
 # Namespaces
 
