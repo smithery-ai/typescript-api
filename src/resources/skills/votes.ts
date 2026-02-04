@@ -10,7 +10,7 @@ export class Votes extends APIResource {
   /**
    * Upvote or downvote a skill. Updates existing vote if one exists.
    */
-  create(slug: string, params: VoteCreateParams, options?: RequestOptions): APIPromise<VoteCreateResponse> {
+  create(slug: string, params: VoteCreateParams, options?: RequestOptions): APIPromise<SkillVoteResponse> {
     const { namespace, ...body } = params;
     return this._client.post(path`/skills/${namespace}/${slug}/vote`, { body, ...options });
   }
@@ -29,19 +29,13 @@ export class Votes extends APIResource {
   /**
    * Get upvote/downvote counts and current user's vote (if authenticated)
    */
-  get(slug: string, params: VoteGetParams, options?: RequestOptions): APIPromise<VoteGetResponse> {
+  get(slug: string, params: VoteGetParams, options?: RequestOptions): APIPromise<SkillVoteCounts> {
     const { namespace } = params;
     return this._client.get(path`/skills/${namespace}/${slug}/vote`, options);
   }
 }
 
-export interface VoteCreateResponse {
-  createdAt: string;
-
-  isPositive: boolean;
-}
-
-export interface VoteGetResponse {
+export interface SkillVoteCounts {
   downvotes: number;
 
   upvotes: number;
@@ -50,6 +44,19 @@ export interface VoteGetResponse {
    * Current user's vote, null if not voted
    */
   userVote: boolean | null;
+}
+
+export interface SkillVoteRequest {
+  /**
+   * true for thumbs up, false for thumbs down
+   */
+  isPositive: boolean;
+}
+
+export interface SkillVoteResponse {
+  createdAt: string;
+
+  isPositive: boolean;
 }
 
 export interface VoteCreateParams {
@@ -74,8 +81,9 @@ export interface VoteGetParams {
 
 export declare namespace Votes {
   export {
-    type VoteCreateResponse as VoteCreateResponse,
-    type VoteGetResponse as VoteGetResponse,
+    type SkillVoteCounts as SkillVoteCounts,
+    type SkillVoteRequest as SkillVoteRequest,
+    type SkillVoteResponse as SkillVoteResponse,
     type VoteCreateParams as VoteCreateParams,
     type VoteDeleteParams as VoteDeleteParams,
     type VoteGetParams as VoteGetParams,

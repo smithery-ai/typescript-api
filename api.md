@@ -143,14 +143,15 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/skills/votes.ts">VoteCreateResponse</a></code>
-- <code><a href="./src/resources/skills/votes.ts">VoteGetResponse</a></code>
+- <code><a href="./src/resources/skills/votes.ts">SkillVoteCounts</a></code>
+- <code><a href="./src/resources/skills/votes.ts">SkillVoteRequest</a></code>
+- <code><a href="./src/resources/skills/votes.ts">SkillVoteResponse</a></code>
 
 Methods:
 
-- <code title="post /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">create</a>(slug, { ...params }) -> VoteCreateResponse</code>
+- <code title="post /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">create</a>(slug, { ...params }) -> SkillVoteResponse</code>
 - <code title="delete /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">delete</a>(slug, { ...params }) -> void</code>
-- <code title="get /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">get</a>(slug, { ...params }) -> VoteGetResponse</code>
+- <code title="get /skills/{namespace}/{slug}/vote">client.skills.votes.<a href="./src/resources/skills/votes.ts">get</a>(slug, { ...params }) -> SkillVoteCounts</code>
 
 ## Reviews
 
@@ -159,8 +160,9 @@ Types:
 - <code><a href="./src/resources/skills/reviews.ts">CreateReviewRequest</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">CreateReviewResponse</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewItem</a></code>
-- <code><a href="./src/resources/skills/reviews.ts">ReviewsListResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewVoteRequest</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewVoteResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewsListResponse</a></code>
 
 Methods:
 

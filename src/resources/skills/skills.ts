@@ -12,17 +12,19 @@ import {
   ReviewListParams,
   ReviewUnvoteParams,
   ReviewVoteParams,
+  ReviewVoteRequest,
   ReviewVoteResponse,
   Reviews,
   ReviewsListResponse,
 } from './reviews';
 import * as VotesAPI from './votes';
 import {
+  SkillVoteCounts,
+  SkillVoteRequest,
+  SkillVoteResponse,
   VoteCreateParams,
-  VoteCreateResponse,
   VoteDeleteParams,
   VoteGetParams,
-  VoteGetResponse,
   Votes,
 } from './votes';
 import { APIPromise } from '../../core/api-promise';
@@ -221,8 +223,9 @@ export declare namespace Skills {
 
   export {
     Votes as Votes,
-    type VoteCreateResponse as VoteCreateResponse,
-    type VoteGetResponse as VoteGetResponse,
+    type SkillVoteCounts as SkillVoteCounts,
+    type SkillVoteRequest as SkillVoteRequest,
+    type SkillVoteResponse as SkillVoteResponse,
     type VoteCreateParams as VoteCreateParams,
     type VoteDeleteParams as VoteDeleteParams,
     type VoteGetParams as VoteGetParams,
@@ -233,8 +236,9 @@ export declare namespace Skills {
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
-    type ReviewsListResponse as ReviewsListResponse,
+    type ReviewVoteRequest as ReviewVoteRequest,
     type ReviewVoteResponse as ReviewVoteResponse,
+    type ReviewsListResponse as ReviewsListResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
