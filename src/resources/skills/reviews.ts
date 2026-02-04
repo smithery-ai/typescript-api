@@ -9,8 +9,7 @@ import { path } from '../../internal/utils/path';
 
 export class Reviews extends APIResource {
   /**
-   * Submit a review for a skill after using it. Updates existing review if one
-   * already exists.
+   * Submit a review for a skill. Updates existing review if one already exists.
    */
   create(
     slug: string,
@@ -22,7 +21,7 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Get paginated list of reviews for a skill with summary statistics
+   * Get paginated list of reviews with vote counts
    */
   list(
     slug: string,
@@ -37,7 +36,7 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Delete your own review for a skill
+   * Delete your review
    */
   delete(slug: string, params: ReviewDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { namespace } = params;
@@ -52,19 +51,14 @@ export type ReviewItemsReviewsPage = ReviewsPage<ReviewItem>;
 
 export interface CreateReviewRequest {
   /**
-   * Rating from 1 to 5 stars
+   * Review text (required)
    */
-  rating: number;
+  review: string;
 
   /**
    * Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
-
-  /**
-   * Optional review comment
-   */
-  comment?: string;
 }
 
 export interface CreateReviewResponse {
@@ -73,14 +67,12 @@ export interface CreateReviewResponse {
    */
   id: string;
 
-  comment: string | null;
-
   /**
    * ISO 8601 timestamp
    */
   createdAt: string;
 
-  rating: number;
+  review: string;
 }
 
 export interface ReviewItem {
@@ -90,57 +82,33 @@ export interface ReviewItem {
 
   agentModel: string | null;
 
-  comment: string | null;
-
   /**
    * ISO 8601 timestamp
    */
   createdAt: string;
 
-  rating: number;
+  downvotes: number;
+
+  review: string;
+
+  upvotes: number;
 }
 
 export interface ReviewsListResponse {
   pagination: ReviewsListResponse.Pagination;
 
   reviews: Array<ReviewItem>;
-
-  summary: ReviewsListResponse.Summary;
 }
 
 export namespace ReviewsListResponse {
   export interface Pagination {
-    /**
-     * Current page number (1-indexed)
-     */
     currentPage: number;
 
-    /**
-     * Number of results per page
-     */
     pageSize: number;
 
-    /**
-     * Total number of matching reviews
-     */
     totalCount: number;
 
-    /**
-     * Total number of pages available
-     */
     totalPages: number;
-  }
-
-  export interface Summary {
-    /**
-     * Average rating across all reviews
-     */
-    averageRating: number;
-
-    /**
-     * Total number of reviews
-     */
-    totalReviews: number;
   }
 }
 
@@ -151,19 +119,14 @@ export interface ReviewCreateParams {
   namespace: string;
 
   /**
-   * Body param: Rating from 1 to 5 stars
+   * Body param: Review text (required)
    */
-  rating: number;
+  review: string;
 
   /**
    * Body param: Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
-
-  /**
-   * Body param: Optional review comment
-   */
-  comment?: string;
 }
 
 export interface ReviewListParams extends ReviewsPageParams {
