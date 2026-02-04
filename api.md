@@ -143,13 +143,15 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/skills/reviews.ts">ReviewCreateResponse</a></code>
-- <code><a href="./src/resources/skills/reviews.ts">ReviewListResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">CreateReviewRequest</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">CreateReviewResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewItem</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewsListResponse</a></code>
 
 Methods:
 
-- <code title="post /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">create</a>(slug, { ...params }) -> ReviewCreateResponse</code>
-- <code title="get /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">list</a>(slug, { ...params }) -> ReviewListResponsesReviewsPage</code>
+- <code title="post /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">create</a>(slug, { ...params }) -> CreateReviewResponse</code>
+- <code title="get /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">list</a>(slug, { ...params }) -> ReviewItemsReviewsPage</code>
 - <code title="delete /skills/{namespace}/{slug}/reviews">client.skills.reviews.<a href="./src/resources/skills/reviews.ts">delete</a>(slug, { ...params }) -> void</code>
 
 # Namespaces
@@ -194,9 +196,20 @@ Methods:
 
 Types:
 
+- <code><a href="./src/resources/experimental/agents/agents.ts">AssistantMessage</a></code>
 - <code><a href="./src/resources/experimental/agents/agents.ts">CreateResponseRequest</a></code>
 - <code><a href="./src/resources/experimental/agents/agents.ts">ErrorResponse</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">FunctionCall</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">InputItem</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">InputTextContent</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">OutputItem</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">OutputTextContent</a></code>
 - <code><a href="./src/resources/experimental/agents/agents.ts">Response</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">ResponseStatus</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">StringContent</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">SystemMessage</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">Usage</a></code>
+- <code><a href="./src/resources/experimental/agents/agents.ts">UserMessage</a></code>
 
 ### Responses
 

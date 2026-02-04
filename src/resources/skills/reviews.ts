@@ -16,7 +16,7 @@ export class Reviews extends APIResource {
     slug: string,
     params: ReviewCreateParams,
     options?: RequestOptions,
-  ): APIPromise<ReviewCreateResponse> {
+  ): APIPromise<CreateReviewResponse> {
     const { namespace, ...body } = params;
     return this._client.post(path`/skills/${namespace}/${slug}/reviews`, { body, ...options });
   }
@@ -28,13 +28,12 @@ export class Reviews extends APIResource {
     slug: string,
     params: ReviewListParams,
     options?: RequestOptions,
-  ): PagePromise<ReviewListResponsesReviewsPage, ReviewListResponse> {
+  ): PagePromise<ReviewItemsReviewsPage, ReviewItem> {
     const { namespace, ...query } = params;
-    return this._client.getAPIList(
-      path`/skills/${namespace}/${slug}/reviews`,
-      ReviewsPage<ReviewListResponse>,
-      { query, ...options },
-    );
+    return this._client.getAPIList(path`/skills/${namespace}/${slug}/reviews`, ReviewsPage<ReviewItem>, {
+      query,
+      ...options,
+    });
   }
 
   /**
@@ -49,9 +48,26 @@ export class Reviews extends APIResource {
   }
 }
 
-export type ReviewListResponsesReviewsPage = ReviewsPage<ReviewListResponse>;
+export type ReviewItemsReviewsPage = ReviewsPage<ReviewItem>;
 
-export interface ReviewCreateResponse {
+export interface CreateReviewRequest {
+  /**
+   * Rating from 1 to 5 stars
+   */
+  rating: number;
+
+  /**
+   * Optional agent model name (e.g., 'claude-3.5-sonnet')
+   */
+  agentModel?: string;
+
+  /**
+   * Optional review comment
+   */
+  comment?: string;
+}
+
+export interface CreateReviewResponse {
   /**
    * Review ID
    */
@@ -67,7 +83,66 @@ export interface ReviewCreateResponse {
   rating: number;
 }
 
-export type ReviewListResponse = unknown;
+export interface ReviewItem {
+  id: string;
+
+  agentClient: string | null;
+
+  agentModel: string | null;
+
+  comment: string | null;
+
+  /**
+   * ISO 8601 timestamp
+   */
+  createdAt: string;
+
+  rating: number;
+}
+
+export interface ReviewsListResponse {
+  pagination: ReviewsListResponse.Pagination;
+
+  reviews: Array<ReviewItem>;
+
+  summary: ReviewsListResponse.Summary;
+}
+
+export namespace ReviewsListResponse {
+  export interface Pagination {
+    /**
+     * Current page number (1-indexed)
+     */
+    currentPage: number;
+
+    /**
+     * Number of results per page
+     */
+    pageSize: number;
+
+    /**
+     * Total number of matching reviews
+     */
+    totalCount: number;
+
+    /**
+     * Total number of pages available
+     */
+    totalPages: number;
+  }
+
+  export interface Summary {
+    /**
+     * Average rating across all reviews
+     */
+    averageRating: number;
+
+    /**
+     * Total number of reviews
+     */
+    totalReviews: number;
+  }
+}
 
 export interface ReviewCreateParams {
   /**
@@ -104,9 +179,11 @@ export interface ReviewDeleteParams {
 
 export declare namespace Reviews {
   export {
-    type ReviewCreateResponse as ReviewCreateResponse,
-    type ReviewListResponse as ReviewListResponse,
-    type ReviewListResponsesReviewsPage as ReviewListResponsesReviewsPage,
+    type CreateReviewRequest as CreateReviewRequest,
+    type CreateReviewResponse as CreateReviewResponse,
+    type ReviewItem as ReviewItem,
+    type ReviewsListResponse as ReviewsListResponse,
+    type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,

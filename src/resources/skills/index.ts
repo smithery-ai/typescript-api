@@ -2,12 +2,14 @@
 
 export {
   Reviews,
-  type ReviewCreateResponse,
-  type ReviewListResponse,
+  type CreateReviewRequest,
+  type CreateReviewResponse,
+  type ReviewItem,
+  type ReviewsListResponse,
   type ReviewCreateParams,
   type ReviewListParams,
   type ReviewDeleteParams,
-  type ReviewListResponsesReviewsPage,
+  type ReviewItemsReviewsPage,
 } from './reviews';
 export {
   Skills,
