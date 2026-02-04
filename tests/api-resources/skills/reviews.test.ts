@@ -10,7 +10,7 @@ const client = new Smithery({
 describe('resource reviews', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', rating: 1 });
+    const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', review: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,9 +24,8 @@ describe('resource reviews', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.skills.reviews.create('slug', {
       namespace: 'namespace',
-      rating: 1,
+      review: 'x',
       agentModel: 'agentModel',
-      comment: 'comment',
     });
   });
 
