@@ -10,15 +10,30 @@ import {
   ReviewItem,
   ReviewItemsReviewsPage,
   ReviewListParams,
+  ReviewUnvoteParams,
+  ReviewVoteParams,
+  ReviewVoteRequest,
+  ReviewVoteResponse,
   Reviews,
   ReviewsListResponse,
 } from './reviews';
+import * as VotesAPI from './votes';
+import {
+  SkillVoteCounts,
+  SkillVoteRequest,
+  SkillVoteResponse,
+  VoteCreateParams,
+  VoteDeleteParams,
+  VoteGetParams,
+  Votes,
+} from './votes';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkillsPage, type SkillsPageParams } from '../../core/pagination';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Skills extends APIResource {
+  votes: VotesAPI.Votes = new VotesAPI.Votes(this._client);
   reviews: ReviewsAPI.Reviews = new ReviewsAPI.Reviews(this._client);
 
   /**
@@ -194,6 +209,7 @@ export interface SkillGetParams {
   namespace: string;
 }
 
+Skills.Votes = Votes;
 Skills.Reviews = Reviews;
 
 export declare namespace Skills {
@@ -206,14 +222,28 @@ export declare namespace Skills {
   };
 
   export {
+    Votes as Votes,
+    type SkillVoteCounts as SkillVoteCounts,
+    type SkillVoteRequest as SkillVoteRequest,
+    type SkillVoteResponse as SkillVoteResponse,
+    type VoteCreateParams as VoteCreateParams,
+    type VoteDeleteParams as VoteDeleteParams,
+    type VoteGetParams as VoteGetParams,
+  };
+
+  export {
     Reviews as Reviews,
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
+    type ReviewVoteRequest as ReviewVoteRequest,
+    type ReviewVoteResponse as ReviewVoteResponse,
     type ReviewsListResponse as ReviewsListResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,
+    type ReviewUnvoteParams as ReviewUnvoteParams,
+    type ReviewVoteParams as ReviewVoteParams,
   };
 }

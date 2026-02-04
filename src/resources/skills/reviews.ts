@@ -9,8 +9,7 @@ import { path } from '../../internal/utils/path';
 
 export class Reviews extends APIResource {
   /**
-   * Submit a review for a skill after using it. Updates existing review if one
-   * already exists.
+   * Submit a review for a skill. Updates existing review if one already exists.
    */
   create(
     slug: string,
@@ -22,7 +21,7 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Get paginated list of reviews for a skill with summary statistics
+   * Get paginated list of reviews with vote counts
    */
   list(
     slug: string,
@@ -37,7 +36,7 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Delete your own review for a skill
+   * Delete your review
    */
   delete(slug: string, params: ReviewDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { namespace } = params;
@@ -46,25 +45,42 @@ export class Reviews extends APIResource {
       headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
     });
   }
+
+  /**
+   * Remove vote from a review
+   */
+  unvote(reviewID: string, params: ReviewUnvoteParams, options?: RequestOptions): APIPromise<void> {
+    const { namespace, slug } = params;
+    return this._client.delete(path`/skills/${namespace}/${slug}/reviews/${reviewID}/vote`, {
+      ...options,
+      headers: buildHeaders([{ Accept: '*/*' }, options?.headers]),
+    });
+  }
+
+  /**
+   * Upvote or downvote a review. Updates existing vote if one exists.
+   */
+  vote(reviewID: string, params: ReviewVoteParams, options?: RequestOptions): APIPromise<ReviewVoteResponse> {
+    const { namespace, slug, ...body } = params;
+    return this._client.post(path`/skills/${namespace}/${slug}/reviews/${reviewID}/vote`, {
+      body,
+      ...options,
+    });
+  }
 }
 
 export type ReviewItemsReviewsPage = ReviewsPage<ReviewItem>;
 
 export interface CreateReviewRequest {
   /**
-   * Rating from 1 to 5 stars
+   * Review text (required)
    */
-  rating: number;
+  review: string;
 
   /**
    * Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
-
-  /**
-   * Optional review comment
-   */
-  comment?: string;
 }
 
 export interface CreateReviewResponse {
@@ -73,14 +89,12 @@ export interface CreateReviewResponse {
    */
   id: string;
 
-  comment: string | null;
-
   /**
    * ISO 8601 timestamp
    */
   createdAt: string;
 
-  rating: number;
+  review: string;
 }
 
 export interface ReviewItem {
@@ -90,57 +104,46 @@ export interface ReviewItem {
 
   agentModel: string | null;
 
-  comment: string | null;
-
   /**
    * ISO 8601 timestamp
    */
   createdAt: string;
 
-  rating: number;
+  downvotes: number;
+
+  review: string;
+
+  upvotes: number;
+}
+
+export interface ReviewVoteRequest {
+  /**
+   * true for thumbs up, false for thumbs down
+   */
+  isPositive: boolean;
+}
+
+export interface ReviewVoteResponse {
+  createdAt: string;
+
+  isPositive: boolean;
 }
 
 export interface ReviewsListResponse {
   pagination: ReviewsListResponse.Pagination;
 
   reviews: Array<ReviewItem>;
-
-  summary: ReviewsListResponse.Summary;
 }
 
 export namespace ReviewsListResponse {
   export interface Pagination {
-    /**
-     * Current page number (1-indexed)
-     */
     currentPage: number;
 
-    /**
-     * Number of results per page
-     */
     pageSize: number;
 
-    /**
-     * Total number of matching reviews
-     */
     totalCount: number;
 
-    /**
-     * Total number of pages available
-     */
     totalPages: number;
-  }
-
-  export interface Summary {
-    /**
-     * Average rating across all reviews
-     */
-    averageRating: number;
-
-    /**
-     * Total number of reviews
-     */
-    totalReviews: number;
   }
 }
 
@@ -151,19 +154,14 @@ export interface ReviewCreateParams {
   namespace: string;
 
   /**
-   * Body param: Rating from 1 to 5 stars
+   * Body param: Review text (required)
    */
-  rating: number;
+  review: string;
 
   /**
    * Body param: Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
-
-  /**
-   * Body param: Optional review comment
-   */
-  comment?: string;
 }
 
 export interface ReviewListParams extends ReviewsPageParams {
@@ -177,15 +175,42 @@ export interface ReviewDeleteParams {
   namespace: string;
 }
 
+export interface ReviewUnvoteParams {
+  namespace: string;
+
+  slug: string;
+}
+
+export interface ReviewVoteParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Path param
+   */
+  slug: string;
+
+  /**
+   * Body param: true for thumbs up, false for thumbs down
+   */
+  isPositive: boolean;
+}
+
 export declare namespace Reviews {
   export {
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
+    type ReviewVoteRequest as ReviewVoteRequest,
+    type ReviewVoteResponse as ReviewVoteResponse,
     type ReviewsListResponse as ReviewsListResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,
     type ReviewDeleteParams as ReviewDeleteParams,
+    type ReviewUnvoteParams as ReviewUnvoteParams,
+    type ReviewVoteParams as ReviewVoteParams,
   };
 }

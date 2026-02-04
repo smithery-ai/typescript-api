@@ -5,10 +5,14 @@ export {
   type CreateReviewRequest,
   type CreateReviewResponse,
   type ReviewItem,
+  type ReviewVoteRequest,
+  type ReviewVoteResponse,
   type ReviewsListResponse,
   type ReviewCreateParams,
   type ReviewListParams,
   type ReviewDeleteParams,
+  type ReviewUnvoteParams,
+  type ReviewVoteParams,
   type ReviewItemsReviewsPage,
 } from './reviews';
 export {
@@ -19,3 +23,12 @@ export {
   type SkillGetParams,
   type SkillListResponsesSkillsPage,
 } from './skills';
+export {
+  Votes,
+  type SkillVoteCounts,
+  type SkillVoteRequest,
+  type SkillVoteResponse,
+  type VoteCreateParams,
+  type VoteDeleteParams,
+  type VoteGetParams,
+} from './votes';

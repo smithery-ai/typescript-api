@@ -10,7 +10,7 @@ const client = new Smithery({
 describe('resource reviews', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', rating: 1 });
+    const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', review: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,9 +24,8 @@ describe('resource reviews', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.skills.reviews.create('slug', {
       namespace: 'namespace',
-      rating: 1,
+      review: 'x',
       agentModel: 'agentModel',
-      comment: 'comment',
     });
   });
 
@@ -66,5 +65,50 @@ describe('resource reviews', () => {
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.skills.reviews.delete('slug', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
+  test.skip('unvote: only required params', async () => {
+    const responsePromise = client.skills.reviews.unvote('reviewId', {
+      namespace: 'namespace',
+      slug: 'slug',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('unvote: required and optional params', async () => {
+    const response = await client.skills.reviews.unvote('reviewId', { namespace: 'namespace', slug: 'slug' });
+  });
+
+  // Prism tests are disabled
+  test.skip('vote: only required params', async () => {
+    const responsePromise = client.skills.reviews.vote('reviewId', {
+      namespace: 'namespace',
+      slug: 'slug',
+      isPositive: true,
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('vote: required and optional params', async () => {
+    const response = await client.skills.reviews.vote('reviewId', {
+      namespace: 'namespace',
+      slug: 'slug',
+      isPositive: true,
+    });
   });
 });
