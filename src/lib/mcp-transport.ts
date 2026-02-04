@@ -60,6 +60,19 @@ export interface CreateConnectionOptions {
    * If connectionId is not provided, this is required.
    */
   mcpUrl?: string;
+
+  /**
+   * Enable MCP init/initialized handshake to receive server version info.
+   *
+   * When `false` (default), skips the handshake for faster connection.
+   * Smithery Connect is stateless, so the handshake is not required.
+   *
+   * Set to `true` if you need `client.getServerVersion()` or protocol
+   * version negotiation.
+   *
+   * @default false
+   */
+  handshake?: boolean;
 }
 
 export interface SmitheryConnection {
@@ -147,13 +160,19 @@ export async function createConnection(options: CreateConnectionOptions): Promis
   const url = new URL(`/connect/${namespace}/${connectionId}/mcp`, client.baseURL).href;
 
   // Create transport with auth headers
-  const transport = new StreamableHTTPClientTransport(new URL(url), {
+  // Skip MCP init handshake by default (stateless server).
+  // Setting sessionId tricks the SDK into thinking we're reconnecting.
+  const transportOptions = {
     requestInit: {
       headers: {
         Authorization: `Bearer ${client.apiKey}`,
       },
     },
-  });
+  };
+  const transport = new StreamableHTTPClientTransport(
+    new URL(url),
+    options.handshake ? transportOptions : { ...transportOptions, sessionId: 'smithery-stateless' },
+  );
 
   return { transport, connectionId, url };
 }
