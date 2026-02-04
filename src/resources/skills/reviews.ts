@@ -116,6 +116,19 @@ export interface ReviewItem {
   upvotes: number;
 }
 
+export interface ReviewVoteRequest {
+  /**
+   * true for thumbs up, false for thumbs down
+   */
+  isPositive: boolean;
+}
+
+export interface ReviewVoteResponse {
+  createdAt: string;
+
+  isPositive: boolean;
+}
+
 export interface ReviewsListResponse {
   pagination: ReviewsListResponse.Pagination;
 
@@ -132,12 +145,6 @@ export namespace ReviewsListResponse {
 
     totalPages: number;
   }
-}
-
-export interface ReviewVoteResponse {
-  createdAt: string;
-
-  isPositive: boolean;
 }
 
 export interface ReviewCreateParams {
@@ -196,8 +203,9 @@ export declare namespace Reviews {
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
     type ReviewItem as ReviewItem,
-    type ReviewsListResponse as ReviewsListResponse,
+    type ReviewVoteRequest as ReviewVoteRequest,
     type ReviewVoteResponse as ReviewVoteResponse,
+    type ReviewsListResponse as ReviewsListResponse,
     type ReviewItemsReviewsPage as ReviewItemsReviewsPage,
     type ReviewCreateParams as ReviewCreateParams,
     type ReviewListParams as ReviewListParams,

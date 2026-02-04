@@ -5,8 +5,9 @@ export {
   type CreateReviewRequest,
   type CreateReviewResponse,
   type ReviewItem,
-  type ReviewsListResponse,
+  type ReviewVoteRequest,
   type ReviewVoteResponse,
+  type ReviewsListResponse,
   type ReviewCreateParams,
   type ReviewListParams,
   type ReviewDeleteParams,
@@ -24,8 +25,9 @@ export {
 } from './skills';
 export {
   Votes,
-  type VoteCreateResponse,
-  type VoteGetResponse,
+  type SkillVoteCounts,
+  type SkillVoteRequest,
+  type SkillVoteResponse,
   type VoteCreateParams,
   type VoteDeleteParams,
   type VoteGetParams,
