@@ -7,10 +7,10 @@ const client = new Smithery({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource namespaces', () => {
+describe('resource reviews', () => {
   // Prism tests are disabled
-  test.skip('create', async () => {
-    const responsePromise = client.namespaces.create();
+  test.skip('create: only required params', async () => {
+    const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', rating: 1 });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,8 +21,18 @@ describe('resource namespaces', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.namespaces.list();
+  test.skip('create: required and optional params', async () => {
+    const response = await client.skills.reviews.create('slug', {
+      namespace: 'namespace',
+      rating: 1,
+      agentModel: 'agentModel',
+      comment: 'comment',
+    });
+  });
+
+  // Prism tests are disabled
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.skills.reviews.list('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -33,27 +43,17 @@ describe('resource namespaces', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.namespaces.list(
-        {
-          fields: 'fields',
-          hasServers: '0',
-          hasSkills: '0',
-          ownerId: 'ownerId',
-          page: 1,
-          pageSize: 1,
-          q: 'q',
-        },
-        { path: '/_stainless_unknown_path' },
-      ),
-    ).rejects.toThrow(Smithery.NotFoundError);
+  test.skip('list: required and optional params', async () => {
+    const response = await client.skills.reviews.list('slug', {
+      namespace: 'namespace',
+      limit: 1,
+      page: 1,
+    });
   });
 
   // Prism tests are disabled
-  test.skip('set', async () => {
-    const responsePromise = client.namespaces.set('xxx');
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.skills.reviews.delete('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -61,5 +61,10 @@ describe('resource namespaces', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.skills.reviews.delete('slug', { namespace: 'namespace' });
   });
 });

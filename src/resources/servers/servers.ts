@@ -79,7 +79,29 @@ export class Servers extends APIResource {
   repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
 
   /**
-   * Get a paginated list of all servers. Use the `q` parameter to search.
+   * Create a new server under the specified namespace. This endpoint is idempotent -
+   * if the server already exists and is owned by the user, returns success.
+   *
+   * @example
+   * ```ts
+   * const server = await client.servers.create('server', {
+   *   namespace: 'namespace',
+   * });
+   * ```
+   */
+  create(
+    server: string,
+    params: ServerCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<ServerCreateResponse> {
+    const { namespace, ...body } = params;
+    return this._client.put(path`/servers/${namespace}/${server}`, { body, ...options });
+  }
+
+  /**
+   * Search and browse public MCP servers in the Smithery registry. Supports
+   * full-text and semantic search via the `q` parameter, and filtering by deployment
+   * status, verification, ownership, and more.
    *
    * @example
    * ```ts
@@ -113,6 +135,26 @@ export class Servers extends APIResource {
   ): APIPromise<ServerDeleteResponse> {
     const { namespace } = params;
     return this._client.delete(path`/servers/${namespace}/${server}`, options);
+  }
+
+  /**
+   * Create a namespace-only server where the namespace is also the server
+   * identifier. This endpoint is idempotent - if the server already exists and is
+   * owned by the user, returns success.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.createByNamespace(
+   *   'namespace',
+   * );
+   * ```
+   */
+  createByNamespace(
+    namespace: string,
+    body: ServerCreateByNamespaceParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ServerCreateByNamespaceResponse> {
+    return this._client.put(path`/servers/${namespace}`, { body, ...options });
   }
 
   /**
@@ -228,33 +270,76 @@ export namespace ProjectConfig {
   }
 }
 
-export interface ServerListResponse {
-  id: string;
-
+export interface ServerCreateResponse {
   createdAt: string;
 
   description: string;
 
   displayName: string;
 
+  namespace: string;
+
+  server: string;
+}
+
+export interface ServerListResponse {
+  id: string;
+
+  /**
+   * ISO 8601 timestamp of when the server was registered.
+   */
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  /**
+   * URL to the server's page on smithery.ai.
+   */
   homepage: string;
 
   iconUrl: string | null;
 
+  /**
+   * Whether the server is currently hosted on Smithery infrastructure.
+   */
   isDeployed: boolean;
 
+  /**
+   * The namespace this server belongs to, or null if unassigned.
+   */
   namespace: string | null;
 
+  /**
+   * User ID of the server owner, or null for community servers.
+   */
   owner: string | null;
 
+  /**
+   * Unique identifier in namespace/slug format.
+   */
   qualifiedName: string;
 
+  /**
+   * Whether the server is accessed via URL (true) or runs locally via stdio (false).
+   * Null if unknown.
+   */
   remote: boolean | null;
 
+  /**
+   * URL-friendly short name within the namespace.
+   */
   slug: string | null;
 
+  /**
+   * Total number of times this server has been connected to.
+   */
   useCount: number;
 
+  /**
+   * Whether this server has been verified by Smithery.
+   */
   verified: boolean;
 }
 
@@ -262,6 +347,18 @@ export interface ServerDeleteResponse {
   qualifiedName: string;
 
   success: boolean;
+}
+
+export interface ServerCreateByNamespaceResponse {
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  namespace: string;
+
+  server: string;
 }
 
 export interface ServerGetResponse {
@@ -390,30 +487,98 @@ export namespace ServerGetByNamespaceResponse {
   }
 }
 
+export interface ServerCreateParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param
+   */
+  description?: string;
+
+  /**
+   * Body param
+   */
+  displayName?: string;
+}
+
 export interface ServerListParams extends SmitheryPageParams {
+  /**
+   * Comma-separated list of fields to include in response
+   */
+  fields?: string;
+
+  /**
+   * Filter by specific server IDs.
+   */
   ids?: Array<string>;
 
+  /**
+   * Filter by deployment status. Deployed servers are hosted on Smithery
+   * infrastructure.
+   */
   isDeployed?: '0' | '1' | 'true' | 'false';
 
+  /**
+   * Filter by the namespace that owns the server.
+   */
+  namespace?: string;
+
+  /**
+   * Filter by the server owner's user ID.
+   */
   ownerId?: string;
 
+  /**
+   * Search query for full-text and semantic search across server names and
+   * descriptions.
+   */
   q?: string;
 
+  /**
+   * Exact match on the server's qualified name (e.g. "smithery/hello-world").
+   * Deprecated: use GET /servers/:namespace/:server instead.
+   */
   qualifiedName?: string;
 
+  /**
+   * Filter by remote status. Remote servers are accessed via URL; non-remote servers
+   * run locally via stdio.
+   */
   remote?: '0' | '1' | 'true' | 'false';
 
+  /**
+   * Filter by connected GitHub repository name.
+   */
   repoName?: string;
 
+  /**
+   * Filter by connected GitHub repository owner.
+   */
   repoOwner?: string;
 
+  /**
+   * Maximum number of candidate results to consider from the search index before
+   * pagination.
+   */
   topK?: number;
 
+  /**
+   * Filter to only verified servers.
+   */
   verified?: '0' | '1' | 'true' | 'false';
 }
 
 export interface ServerDeleteParams {
   namespace: string;
+}
+
+export interface ServerCreateByNamespaceParams {
+  description?: string;
+
+  displayName?: string;
 }
 
 export interface ServerDownloadParams {
@@ -434,13 +599,17 @@ export declare namespace Servers {
     type BuildConfig as BuildConfig,
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
+    type ServerCreateResponse as ServerCreateResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
+    type ServerCreateByNamespaceResponse as ServerCreateByNamespaceResponse,
     type ServerGetResponse as ServerGetResponse,
     type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
+    type ServerCreateParams as ServerCreateParams,
     type ServerListParams as ServerListParams,
     type ServerDeleteParams as ServerDeleteParams,
+    type ServerCreateByNamespaceParams as ServerCreateByNamespaceParams,
     type ServerDownloadParams as ServerDownloadParams,
     type ServerGetParams as ServerGetParams,
   };

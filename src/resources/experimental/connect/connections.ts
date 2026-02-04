@@ -84,8 +84,10 @@ export class Connections extends APIResource {
   }
 
   /**
-   * Create a new MCP connection with the given ID. Returns 409 if connection already
-   * exists - delete it first to recreate. Requires API key and namespace ownership.
+   * Create or update an MCP connection with the given ID. If the connection exists
+   * and mcpUrl matches, updates name/metadata/headers. Returns 409 if mcpUrl
+   * differs - delete and recreate to change URL. Requires API key and namespace
+   * ownership.
    *
    * @example
    * ```ts
