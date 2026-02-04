@@ -7,8 +7,10 @@ import { path } from '../../../internal/utils/path';
 
 export class Mcp extends APIResource {
   /**
-   * Streamable HTTP MCP endpoint. Accepts JSON-RPC requests and notifications.
-   * Requires service token with mcp scope.
+   * Stateless MCP endpoint using Streamable HTTP transport. Accepts JSON-RPC
+   * requests and notifications. Session management is handled internally by
+   * Connect—clients should not send mcp-session-id headers. Requires service token
+   * with mcp scope.
    *
    * @example
    * ```ts
