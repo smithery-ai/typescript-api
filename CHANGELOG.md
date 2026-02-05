@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.38.0 (2026-02-05)
+
+Full Changelog: [v0.37.0...v0.38.0](https://github.com/smithery-ai/typescript-api/compare/v0.37.0...v0.38.0)
+
+### Features
+
+* **api:** api update ([6dc085b](https://github.com/smithery-ai/typescript-api/commit/6dc085b4c778b3c7543142b0c363f54404c9941c))
+
+
+### Chores
+
+* **client:** restructure abort controller binding ([31dfe60](https://github.com/smithery-ai/typescript-api/commit/31dfe601f2860c1a39dab9b8c55ad02a5f6203ee))
+
 ## 0.37.0 (2026-02-04)
 
 Full Changelog: [v0.36.0...v0.37.0](https://github.com/smithery-ai/typescript-api/compare/v0.36.0...v0.37.0)

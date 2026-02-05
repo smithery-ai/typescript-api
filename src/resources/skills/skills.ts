@@ -7,6 +7,7 @@ import {
   CreateReviewResponse,
   ReviewCreateParams,
   ReviewDeleteParams,
+  ReviewError,
   ReviewItem,
   ReviewItemsReviewsPage,
   ReviewListParams,
@@ -20,6 +21,7 @@ import {
 import * as VotesAPI from './votes';
 import {
   SkillVoteCounts,
+  SkillVoteError,
   SkillVoteRequest,
   SkillVoteResponse,
   VoteCreateParams,
@@ -101,6 +103,11 @@ export interface SkillListResponse {
   categories?: Array<string>;
 
   /**
+   * Number of downvotes for this skill.
+   */
+  downvotes?: number;
+
+  /**
    * GitHub fork count of the source repository, if applicable.
    */
   externalForks?: number;
@@ -116,6 +123,11 @@ export interface SkillListResponse {
   gitUrl?: string;
 
   /**
+   * Number of reviews for this skill.
+   */
+  reviewCount?: number;
+
+  /**
    * Qualified names of MCP servers this skill depends on.
    */
   servers?: Array<string>;
@@ -129,6 +141,11 @@ export interface SkillListResponse {
    * Number of distinct users who have activated this skill.
    */
   uniqueUsers?: number;
+
+  /**
+   * Number of upvotes for this skill.
+   */
+  upvotes?: number;
 }
 
 export interface SkillGetResponse {
@@ -141,6 +158,8 @@ export interface SkillGetResponse {
   description: string;
 
   displayName: string;
+
+  downvotes: number;
 
   externalForks: number;
 
@@ -156,6 +175,8 @@ export interface SkillGetResponse {
 
   qualityScore: number;
 
+  reviewCount: number;
+
   servers: Array<string>;
 
   slug: string;
@@ -163,6 +184,8 @@ export interface SkillGetResponse {
   totalActivations: number;
 
   uniqueUsers: number;
+
+  upvotes: number;
 }
 
 export interface SkillListParams extends SkillsPageParams {
@@ -224,6 +247,7 @@ export declare namespace Skills {
   export {
     Votes as Votes,
     type SkillVoteCounts as SkillVoteCounts,
+    type SkillVoteError as SkillVoteError,
     type SkillVoteRequest as SkillVoteRequest,
     type SkillVoteResponse as SkillVoteResponse,
     type VoteCreateParams as VoteCreateParams,
@@ -235,6 +259,7 @@ export declare namespace Skills {
     Reviews as Reviews,
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
+    type ReviewError as ReviewError,
     type ReviewItem as ReviewItem,
     type ReviewVoteRequest as ReviewVoteRequest,
     type ReviewVoteResponse as ReviewVoteResponse,

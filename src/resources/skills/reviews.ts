@@ -81,6 +81,11 @@ export interface CreateReviewRequest {
    * Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
+
+  /**
+   * Optional vote direction to submit with review
+   */
+  vote?: 'up' | 'down';
 }
 
 export interface CreateReviewResponse {
@@ -95,6 +100,15 @@ export interface CreateReviewResponse {
   createdAt: string;
 
   review: string;
+
+  /**
+   * Vote direction if submitted with review
+   */
+  vote: 'up' | 'down' | null;
+}
+
+export interface ReviewError {
+  error: string;
 }
 
 export interface ReviewItem {
@@ -118,15 +132,18 @@ export interface ReviewItem {
 
 export interface ReviewVoteRequest {
   /**
-   * true for thumbs up, false for thumbs down
+   * Vote direction
    */
-  isPositive: boolean;
+  vote: 'up' | 'down';
 }
 
 export interface ReviewVoteResponse {
   createdAt: string;
 
-  isPositive: boolean;
+  /**
+   * Vote direction
+   */
+  vote: 'up' | 'down';
 }
 
 export interface ReviewsListResponse {
@@ -162,6 +179,11 @@ export interface ReviewCreateParams {
    * Body param: Optional agent model name (e.g., 'claude-3.5-sonnet')
    */
   agentModel?: string;
+
+  /**
+   * Body param: Optional vote direction to submit with review
+   */
+  vote?: 'up' | 'down';
 }
 
 export interface ReviewListParams extends ReviewsPageParams {
@@ -193,15 +215,16 @@ export interface ReviewVoteParams {
   slug: string;
 
   /**
-   * Body param: true for thumbs up, false for thumbs down
+   * Body param: Vote direction
    */
-  isPositive: boolean;
+  vote: 'up' | 'down';
 }
 
 export declare namespace Reviews {
   export {
     type CreateReviewRequest as CreateReviewRequest,
     type CreateReviewResponse as CreateReviewResponse,
+    type ReviewError as ReviewError,
     type ReviewItem as ReviewItem,
     type ReviewVoteRequest as ReviewVoteRequest,
     type ReviewVoteResponse as ReviewVoteResponse,
