@@ -4,6 +4,7 @@ export {
   Reviews,
   type CreateReviewRequest,
   type CreateReviewResponse,
+  type ReviewError,
   type ReviewItem,
   type ReviewVoteRequest,
   type ReviewVoteResponse,
@@ -26,6 +27,7 @@ export {
 export {
   Votes,
   type SkillVoteCounts,
+  type SkillVoteError,
   type SkillVoteRequest,
   type SkillVoteResponse,
   type VoteCreateParams,

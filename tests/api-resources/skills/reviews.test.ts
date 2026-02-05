@@ -26,6 +26,7 @@ describe('resource reviews', () => {
       namespace: 'namespace',
       review: 'x',
       agentModel: 'agentModel',
+      vote: 'up',
     });
   });
 
@@ -92,7 +93,7 @@ describe('resource reviews', () => {
     const responsePromise = client.skills.reviews.vote('reviewId', {
       namespace: 'namespace',
       slug: 'slug',
-      isPositive: true,
+      vote: 'up',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -108,7 +109,7 @@ describe('resource reviews', () => {
     const response = await client.skills.reviews.vote('reviewId', {
       namespace: 'namespace',
       slug: 'slug',
-      isPositive: true,
+      vote: 'up',
     });
   });
 });

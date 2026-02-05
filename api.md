@@ -144,6 +144,7 @@ Methods:
 Types:
 
 - <code><a href="./src/resources/skills/votes.ts">SkillVoteCounts</a></code>
+- <code><a href="./src/resources/skills/votes.ts">SkillVoteError</a></code>
 - <code><a href="./src/resources/skills/votes.ts">SkillVoteRequest</a></code>
 - <code><a href="./src/resources/skills/votes.ts">SkillVoteResponse</a></code>
 
@@ -159,6 +160,7 @@ Types:
 
 - <code><a href="./src/resources/skills/reviews.ts">CreateReviewRequest</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">CreateReviewResponse</a></code>
+- <code><a href="./src/resources/skills/reviews.ts">ReviewError</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewItem</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewVoteRequest</a></code>
 - <code><a href="./src/resources/skills/reviews.ts">ReviewVoteResponse</a></code>
