@@ -50,6 +50,14 @@ export class Skills extends APIResource {
   }
 
   /**
+   * Delete a skill by namespace and slug. Requires ownership of the namespace.
+   */
+  delete(slug: string, params: SkillDeleteParams, options?: RequestOptions): APIPromise<SkillDeleteResponse> {
+    const { namespace } = params;
+    return this._client.delete(path`/skills/${namespace}/${slug}`, options);
+  }
+
+  /**
    * Get a single skill by its namespace and slug.
    */
   get(slug: string, params: SkillGetParams, options?: RequestOptions): APIPromise<SkillGetResponse> {
@@ -148,6 +156,12 @@ export interface SkillListResponse {
   upvotes?: number;
 }
 
+export interface SkillDeleteResponse {
+  qualifiedName: string;
+
+  success: boolean;
+}
+
 export interface SkillGetResponse {
   id: string;
 
@@ -170,6 +184,11 @@ export interface SkillGetResponse {
   listed: boolean;
 
   namespace: string;
+
+  /**
+   * User ID of the skill owner (from namespace)
+   */
+  owner: string | null;
 
   prompt: string;
 
@@ -228,6 +247,10 @@ export interface SkillListParams extends SkillsPageParams {
   topK?: number;
 }
 
+export interface SkillDeleteParams {
+  namespace: string;
+}
+
 export interface SkillGetParams {
   namespace: string;
 }
@@ -238,9 +261,11 @@ Skills.Reviews = Reviews;
 export declare namespace Skills {
   export {
     type SkillListResponse as SkillListResponse,
+    type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillListParams as SkillListParams,
+    type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
   };
 
