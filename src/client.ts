@@ -67,6 +67,8 @@ import {
   Servers,
 } from './resources/servers/servers';
 import {
+  SkillDeleteParams,
+  SkillDeleteResponse,
   SkillGetParams,
   SkillGetResponse,
   SkillListParams,
@@ -844,9 +846,11 @@ export declare namespace Smithery {
   export {
     Skills as Skills,
     type SkillListResponse as SkillListResponse,
+    type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillListParams as SkillListParams,
+    type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
   };
 

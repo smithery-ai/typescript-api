@@ -42,6 +42,23 @@ describe('resource skills', () => {
   });
 
   // Prism tests are disabled
+  test.skip('delete: only required params', async () => {
+    const responsePromise = client.skills.delete('slug', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('delete: required and optional params', async () => {
+    const response = await client.skills.delete('slug', { namespace: 'namespace' });
+  });
+
+  // Prism tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.skills.get('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
