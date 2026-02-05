@@ -43,20 +43,27 @@ export interface SkillVoteCounts {
   /**
    * Current user's vote, null if not voted
    */
-  userVote: boolean | null;
+  userVote: 'up' | 'down' | null;
+}
+
+export interface SkillVoteError {
+  error: string;
 }
 
 export interface SkillVoteRequest {
   /**
-   * true for thumbs up, false for thumbs down
+   * Vote direction
    */
-  isPositive: boolean;
+  vote: 'up' | 'down';
 }
 
 export interface SkillVoteResponse {
   createdAt: string;
 
-  isPositive: boolean;
+  /**
+   * Vote direction
+   */
+  vote: 'up' | 'down';
 }
 
 export interface VoteCreateParams {
@@ -66,9 +73,9 @@ export interface VoteCreateParams {
   namespace: string;
 
   /**
-   * Body param: true for thumbs up, false for thumbs down
+   * Body param: Vote direction
    */
-  isPositive: boolean;
+  vote: 'up' | 'down';
 }
 
 export interface VoteDeleteParams {
@@ -82,6 +89,7 @@ export interface VoteGetParams {
 export declare namespace Votes {
   export {
     type SkillVoteCounts as SkillVoteCounts,
+    type SkillVoteError as SkillVoteError,
     type SkillVoteRequest as SkillVoteRequest,
     type SkillVoteResponse as SkillVoteResponse,
     type VoteCreateParams as VoteCreateParams,
