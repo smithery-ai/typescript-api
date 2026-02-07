@@ -39,6 +39,13 @@ export class Skills extends APIResource {
   reviews: ReviewsAPI.Reviews = new ReviewsAPI.Reviews(this._client);
 
   /**
+   * Create a new skill by linking a GitHub repository containing a SKILL.md file.
+   */
+  create(body: SkillCreateParams, options?: RequestOptions): APIPromise<SkillCreateResponse> {
+    return this._client.post('/skills', { body, ...options });
+  }
+
+  /**
    * Search and browse reusable prompt-based skills. Supports full-text and semantic
    * search via the `q` parameter, and filtering by category, namespace, or slug.
    */
@@ -64,9 +71,35 @@ export class Skills extends APIResource {
     const { namespace } = params;
     return this._client.get(path`/skills/${namespace}/${slug}`, options);
   }
+
+  /**
+   * Refetch SKILL.md and repository stars from GitHub and update the skill record.
+   */
+  sync(slug: string, params: SkillSyncParams, options?: RequestOptions): APIPromise<SkillSyncResponse> {
+    const { namespace } = params;
+    return this._client.post(path`/skills/${namespace}/${slug}/sync`, options);
+  }
 }
 
 export type SkillListResponsesSkillsPage = SkillsPage<SkillListResponse>;
+
+export interface SkillCreateResponse {
+  id: string;
+
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  gitUrl: string;
+
+  listed: boolean;
+
+  namespace: string;
+
+  slug: string;
+}
 
 export interface SkillListResponse {
   id: string;
@@ -217,6 +250,41 @@ export interface SkillGetResponse {
   verified: boolean;
 }
 
+export interface SkillSyncResponse {
+  id: string;
+
+  description: string;
+
+  displayName: string;
+
+  externalStars: number;
+
+  gitUrl: string;
+
+  namespace: string;
+
+  slug: string;
+
+  updatedAt: string;
+}
+
+export interface SkillCreateParams {
+  /**
+   * GitHub URL pointing to a repository with SKILL.md
+   */
+  gitUrl: string;
+
+  /**
+   * The namespace to create the skill in.
+   */
+  namespace: string;
+
+  /**
+   * URL-friendly identifier for the skill.
+   */
+  slug: string;
+}
+
 export interface SkillListParams extends SkillsPageParams {
   /**
    * Filter by skill category (e.g. 'code', 'data', 'web').
@@ -270,18 +338,26 @@ export interface SkillGetParams {
   namespace: string;
 }
 
+export interface SkillSyncParams {
+  namespace: string;
+}
+
 Skills.Votes = Votes;
 Skills.Reviews = Reviews;
 
 export declare namespace Skills {
   export {
+    type SkillCreateResponse as SkillCreateResponse,
     type SkillListResponse as SkillListResponse,
     type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
+    type SkillSyncResponse as SkillSyncResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
+    type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
     type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
+    type SkillSyncParams as SkillSyncParams,
   };
 
   export {
