@@ -67,6 +67,8 @@ import {
   Servers,
 } from './resources/servers/servers';
 import {
+  SkillDeleteParams,
+  SkillDeleteResponse,
   SkillGetParams,
   SkillGetResponse,
   SkillListParams,
@@ -526,9 +528,14 @@ export class Smithery {
   getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
     path: string,
     Page: new (...args: any[]) => PageClass,
-    opts?: RequestOptions,
+    opts?: PromiseOrValue<RequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
-    return this.requestAPIList(Page, { method: 'get', path, ...opts });
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
   }
 
   requestAPIList<
@@ -536,7 +543,7 @@ export class Smithery {
     PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
   >(
     Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
-    options: FinalRequestOptions,
+    options: PromiseOrValue<FinalRequestOptions>,
   ): Pagination.PagePromise<PageClass, Item> {
     const request = this.makeRequest(options, null, undefined);
     return new Pagination.PagePromise<PageClass, Item>(this as any as Smithery, request, Page);
@@ -575,7 +582,6 @@ export class Smithery {
       return await this.fetch.call(undefined, url, fetchOptions);
     } finally {
       clearTimeout(timeout);
-      if (signal) signal.removeEventListener('abort', abort);
     }
   }
 
@@ -844,9 +850,11 @@ export declare namespace Smithery {
   export {
     Skills as Skills,
     type SkillListResponse as SkillListResponse,
+    type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillListParams as SkillListParams,
+    type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
   };
 
