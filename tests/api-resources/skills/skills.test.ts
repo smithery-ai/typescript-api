@@ -35,6 +35,7 @@ describe('resource skills', () => {
           q: 'q',
           slug: 'slug',
           topK: 10,
+          verified: true,
         },
         { path: '/_stainless_unknown_path' },
       ),
