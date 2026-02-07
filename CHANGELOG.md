@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.39.0 (2026-02-07)
+
+Full Changelog: [v0.38.0...v0.39.0](https://github.com/smithery-ai/typescript-api/compare/v0.38.0...v0.39.0)
+
+### Features
+
+* **api:** api update ([b4d5992](https://github.com/smithery-ai/typescript-api/commit/b4d5992ed30d58c62405f8e103f122e59aa2f1db))
+* **api:** api update ([a77c1ed](https://github.com/smithery-ai/typescript-api/commit/a77c1ed0f1f571344fac0f35c222d9d38ba804bc))
+
+
+### Bug Fixes
+
+* **client:** avoid removing abort listener too early ([8178cb2](https://github.com/smithery-ai/typescript-api/commit/8178cb23dc174df887ba353284d0b4058c20ff69))
+
+
+### Chores
+
+* **internal:** fix pagination internals not accepting option promises ([849272e](https://github.com/smithery-ai/typescript-api/commit/849272ea6b18af5896375b013a8a10c4639bbf7b))
+* **internal:** upgrade pnpm ([ae82e56](https://github.com/smithery-ai/typescript-api/commit/ae82e56a02331d306a22dca641c547e5a3958281))
+
 ## 0.38.0 (2026-02-05)
 
 Full Changelog: [v0.37.0...v0.38.0](https://github.com/smithery-ai/typescript-api/compare/v0.37.0...v0.38.0)
