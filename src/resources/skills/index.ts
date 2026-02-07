@@ -18,12 +18,16 @@ export {
 } from './reviews';
 export {
   Skills,
+  type SkillCreateResponse,
   type SkillListResponse,
   type SkillDeleteResponse,
   type SkillGetResponse,
+  type SkillSyncResponse,
+  type SkillCreateParams,
   type SkillListParams,
   type SkillDeleteParams,
   type SkillGetParams,
+  type SkillSyncParams,
   type SkillListResponsesSkillsPage,
 } from './skills';
 export {
