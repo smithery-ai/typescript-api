@@ -106,6 +106,11 @@ export interface SkillListResponse {
   slug: string;
 
   /**
+   * Whether this skill's namespace is verified.
+   */
+  verified: boolean;
+
+  /**
    * List of categories this skill belongs to.
    */
   categories?: Array<string>;
@@ -205,6 +210,11 @@ export interface SkillGetResponse {
   uniqueUsers: number;
 
   upvotes: number;
+
+  /**
+   * Whether this skill's namespace is verified.
+   */
+  verified: boolean;
 }
 
 export interface SkillListParams extends SkillsPageParams {
@@ -245,6 +255,11 @@ export interface SkillListParams extends SkillsPageParams {
    * pagination.
    */
   topK?: number;
+
+  /**
+   * Filter by whether the skill's namespace is verified.
+   */
+  verified?: boolean;
 }
 
 export interface SkillDeleteParams {
