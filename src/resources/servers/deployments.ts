@@ -260,6 +260,8 @@ export interface ExternalDeployPayload {
 }
 
 export interface HostedDeployPayload {
+  hasAuthAdapter: boolean;
+
   stateful: boolean;
 
   type: 'hosted';
@@ -468,6 +470,8 @@ export namespace ServerCard {
 }
 
 export interface StdioDeployPayload {
+  hasAuthAdapter: boolean;
+
   runtime: 'node';
 
   type: 'stdio';
