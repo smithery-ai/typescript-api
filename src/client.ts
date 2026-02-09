@@ -76,6 +76,8 @@ import {
   SkillListParams,
   SkillListResponse,
   SkillListResponsesSkillsPage,
+  SkillSetParams,
+  SkillSetResponse,
   SkillSyncParams,
   SkillSyncResponse,
   Skills,
@@ -857,12 +859,14 @@ export declare namespace Smithery {
     type SkillListResponse as SkillListResponse,
     type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
+    type SkillSetResponse as SkillSetResponse,
     type SkillSyncResponse as SkillSyncResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
     type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
+    type SkillSetParams as SkillSetParams,
     type SkillSyncParams as SkillSyncParams,
   };
 

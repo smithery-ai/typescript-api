@@ -102,6 +102,29 @@ describe('resource skills', () => {
   });
 
   // Prism tests are disabled
+  test.skip('set: only required params', async () => {
+    const responsePromise = client.skills.set('slug', {
+      namespace: 'namespace',
+      gitUrl: 'https://example.com',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Prism tests are disabled
+  test.skip('set: required and optional params', async () => {
+    const response = await client.skills.set('slug', {
+      namespace: 'namespace',
+      gitUrl: 'https://example.com',
+    });
+  });
+
+  // Prism tests are disabled
   test.skip('sync: only required params', async () => {
     const responsePromise = client.skills.sync('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
