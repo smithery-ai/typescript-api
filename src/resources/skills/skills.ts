@@ -39,6 +39,16 @@ export class Skills extends APIResource {
   reviews: ReviewsAPI.Reviews = new ReviewsAPI.Reviews(this._client);
 
   /**
+   * **Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Create a new skill
+   * by linking a GitHub repository containing a SKILL.md file.
+   *
+   * @deprecated
+   */
+  create(body: SkillCreateParams, options?: RequestOptions): APIPromise<SkillCreateResponse> {
+    return this._client.post('/skills', { body, ...options });
+  }
+
+  /**
    * Search and browse reusable prompt-based skills. Supports full-text and semantic
    * search via the `q` parameter, and filtering by category, namespace, or slug.
    */
@@ -64,9 +74,48 @@ export class Skills extends APIResource {
     const { namespace } = params;
     return this._client.get(path`/skills/${namespace}/${slug}`, options);
   }
+
+  /**
+   * Idempotent endpoint to create or sync a skill. If the skill does not exist,
+   * creates it. If it exists, updates displayName, description, and externalStars
+   * from GitHub.
+   */
+  set(slug: string, params: SkillSetParams, options?: RequestOptions): APIPromise<SkillSetResponse> {
+    const { namespace, ...body } = params;
+    return this._client.put(path`/skills/${namespace}/${slug}`, { body, ...options });
+  }
+
+  /**
+   * **Deprecated:** Use PUT /skills/{namespace}/{slug} instead. Refetch SKILL.md and
+   * repository stars from GitHub and update the skill record.
+   *
+   * @deprecated
+   */
+  sync(slug: string, params: SkillSyncParams, options?: RequestOptions): APIPromise<SkillSyncResponse> {
+    const { namespace } = params;
+    return this._client.post(path`/skills/${namespace}/${slug}/sync`, options);
+  }
 }
 
 export type SkillListResponsesSkillsPage = SkillsPage<SkillListResponse>;
+
+export interface SkillCreateResponse {
+  id: string;
+
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  gitUrl: string;
+
+  listed: boolean;
+
+  namespace: string;
+
+  slug: string;
+}
 
 export interface SkillListResponse {
   id: string;
@@ -217,6 +266,63 @@ export interface SkillGetResponse {
   verified: boolean;
 }
 
+export interface SkillSetResponse {
+  id: string;
+
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  externalStars: number;
+
+  gitUrl: string;
+
+  listed: boolean;
+
+  namespace: string;
+
+  slug: string;
+
+  updatedAt: string;
+}
+
+export interface SkillSyncResponse {
+  id: string;
+
+  description: string;
+
+  displayName: string;
+
+  externalStars: number;
+
+  gitUrl: string;
+
+  namespace: string;
+
+  slug: string;
+
+  updatedAt: string;
+}
+
+export interface SkillCreateParams {
+  /**
+   * GitHub URL pointing to a repository with SKILL.md
+   */
+  gitUrl: string;
+
+  /**
+   * The namespace to create the skill in.
+   */
+  namespace: string;
+
+  /**
+   * URL-friendly identifier for the skill.
+   */
+  slug: string;
+}
+
 export interface SkillListParams extends SkillsPageParams {
   /**
    * Filter by skill category (e.g. 'code', 'data', 'web').
@@ -270,18 +376,40 @@ export interface SkillGetParams {
   namespace: string;
 }
 
+export interface SkillSetParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param: GitHub URL pointing to a repository with SKILL.md
+   */
+  gitUrl: string;
+}
+
+export interface SkillSyncParams {
+  namespace: string;
+}
+
 Skills.Votes = Votes;
 Skills.Reviews = Reviews;
 
 export declare namespace Skills {
   export {
+    type SkillCreateResponse as SkillCreateResponse,
     type SkillListResponse as SkillListResponse,
     type SkillDeleteResponse as SkillDeleteResponse,
     type SkillGetResponse as SkillGetResponse,
+    type SkillSetResponse as SkillSetResponse,
+    type SkillSyncResponse as SkillSyncResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
+    type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
     type SkillDeleteParams as SkillDeleteParams,
     type SkillGetParams as SkillGetParams,
+    type SkillSetParams as SkillSetParams,
+    type SkillSyncParams as SkillSyncParams,
   };
 
   export {
