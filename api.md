@@ -135,6 +135,7 @@ Types:
 - <code><a href="./src/resources/skills/skills.ts">SkillListResponse</a></code>
 - <code><a href="./src/resources/skills/skills.ts">SkillDeleteResponse</a></code>
 - <code><a href="./src/resources/skills/skills.ts">SkillGetResponse</a></code>
+- <code><a href="./src/resources/skills/skills.ts">SkillSetResponse</a></code>
 - <code><a href="./src/resources/skills/skills.ts">SkillSyncResponse</a></code>
 
 Methods:
@@ -143,6 +144,7 @@ Methods:
 - <code title="get /skills">client.skills.<a href="./src/resources/skills/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>
 - <code title="delete /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">delete</a>(slug, { ...params }) -> SkillDeleteResponse</code>
 - <code title="get /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">get</a>(slug, { ...params }) -> SkillGetResponse</code>
+- <code title="put /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">set</a>(slug, { ...params }) -> SkillSetResponse</code>
 - <code title="post /skills/{namespace}/{slug}/sync">client.skills.<a href="./src/resources/skills/skills.ts">sync</a>(slug, { ...params }) -> SkillSyncResponse</code>
 
 ## Votes

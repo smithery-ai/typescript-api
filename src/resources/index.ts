@@ -35,11 +35,13 @@ export {
   type SkillListResponse,
   type SkillDeleteResponse,
   type SkillGetResponse,
+  type SkillSetResponse,
   type SkillSyncResponse,
   type SkillCreateParams,
   type SkillListParams,
   type SkillDeleteParams,
   type SkillGetParams,
+  type SkillSetParams,
   type SkillSyncParams,
   type SkillListResponsesSkillsPage,
 } from './skills/skills';
