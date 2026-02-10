@@ -328,6 +328,11 @@ export interface ServerListResponse {
   remote: boolean | null;
 
   /**
+   * RRF relevance score from search (null for browse requests).
+   */
+  score: number | null;
+
+  /**
    * URL-friendly short name within the namespace.
    */
   slug: string | null;
