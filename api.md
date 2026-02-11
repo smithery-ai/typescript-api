@@ -222,29 +222,7 @@ Methods:
 
 ## Agents
 
-Types:
-
-- <code><a href="./src/resources/experimental/agents/agents.ts">AssistantMessage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">CreateResponseRequest</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">ErrorResponse</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">FunctionCall</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">InputItem</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">InputTextContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">OutputItem</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">OutputTextContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">Response</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">ResponseStatus</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">StringContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">SystemMessage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">Usage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">UserMessage</a></code>
-
 ### Responses
-
-Methods:
-
-- <code title="post /agents/responses">client.experimental.agents.responses.<a href="./src/resources/experimental/agents/responses.ts">create</a>({ ...params }) -> Response</code>
-- <code title="get /agents/responses/{id}">client.experimental.agents.responses.<a href="./src/resources/experimental/agents/responses.ts">get</a>(id) -> Response</code>
 
 ## Connect
 
