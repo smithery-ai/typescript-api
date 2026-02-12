@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.43.0 (2026-02-12)
+
+Full Changelog: [v0.42.0...v0.43.0](https://github.com/smithery-ai/typescript-api/compare/v0.42.0...v0.43.0)
+
+### Features
+
+* **api:** api update ([8eaec57](https://github.com/smithery-ai/typescript-api/commit/8eaec57e0bed6b3c316aa4f76a7b678ba5ef30d0))
+* **api:** api update ([1744563](https://github.com/smithery-ai/typescript-api/commit/174456379ab1174f5dd11246aad7cdd061fe9571))
+* **api:** api update ([ab951a7](https://github.com/smithery-ai/typescript-api/commit/ab951a7f833b23e0908b42d33e430df936b2f048))
+
+
+### Chores
+
+* **internal:** avoid type checking errors with ts-reset ([7a47d97](https://github.com/smithery-ai/typescript-api/commit/7a47d97540449a7a921c7c90a0e328aac6313887))
+
 ## 0.42.0 (2026-02-10)
 
 Full Changelog: [v0.41.0...v0.42.0](https://github.com/smithery-ai/typescript-api/compare/v0.41.0...v0.42.0)
