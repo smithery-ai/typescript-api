@@ -349,7 +349,9 @@ export interface ServerListResponse {
 }
 
 export interface ServerDeleteResponse {
-  qualifiedName: string;
+  namespace: string;
+
+  server: string;
 
   success: boolean;
 }
