@@ -64,6 +64,10 @@ import {
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
+  ServerUpdateByNamespaceParams,
+  ServerUpdateByNamespaceResponse,
+  ServerUpdateParams,
+  ServerUpdateResponse,
   Servers,
 } from './resources/servers/servers';
 import {
@@ -837,18 +841,22 @@ export declare namespace Smithery {
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
     type ServerCreateResponse as ServerCreateResponse,
+    type ServerUpdateResponse as ServerUpdateResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
     type ServerCreateByNamespaceResponse as ServerCreateByNamespaceResponse,
     type ServerGetResponse as ServerGetResponse,
     type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
+    type ServerUpdateByNamespaceResponse as ServerUpdateByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerCreateParams as ServerCreateParams,
+    type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
     type ServerDeleteParams as ServerDeleteParams,
     type ServerCreateByNamespaceParams as ServerCreateByNamespaceParams,
     type ServerDownloadParams as ServerDownloadParams,
     type ServerGetParams as ServerGetParams,
+    type ServerUpdateByNamespaceParams as ServerUpdateByNamespaceParams,
   };
 
   export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
