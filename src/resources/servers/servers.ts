@@ -99,6 +99,25 @@ export class Servers extends APIResource {
   }
 
   /**
+   * Update metadata for a server by namespace and server name.
+   *
+   * @example
+   * ```ts
+   * const server = await client.servers.update('server', {
+   *   namespace: 'namespace',
+   * });
+   * ```
+   */
+  update(
+    server: string,
+    params: ServerUpdateParams,
+    options?: RequestOptions,
+  ): APIPromise<ServerUpdateResponse> {
+    const { namespace, ...body } = params;
+    return this._client.patch(path`/servers/${namespace}/${server}`, { body, ...options });
+  }
+
+  /**
    * Search and browse public MCP servers in the Smithery registry. Supports
    * full-text and semantic search via the `q` parameter, and filtering by deployment
    * status, verification, ownership, and more.
@@ -209,6 +228,25 @@ export class Servers extends APIResource {
   getByNamespace(namespace: string, options?: RequestOptions): APIPromise<ServerGetByNamespaceResponse> {
     return this._client.get(path`/servers/${namespace}`, options);
   }
+
+  /**
+   * Update metadata for a namespace-only server where the namespace is also the
+   * server identifier.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.updateByNamespace(
+   *   'namespace',
+   * );
+   * ```
+   */
+  updateByNamespace(
+    namespace: string,
+    body: ServerUpdateByNamespaceParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<ServerUpdateByNamespaceResponse> {
+    return this._client.patch(path`/servers/${namespace}`, { body, ...options });
+  }
 }
 
 export type ServerListResponsesSmitheryPage = SmitheryPage<ServerListResponse>;
@@ -282,6 +320,14 @@ export interface ServerCreateResponse {
   server: string;
 }
 
+export interface ServerUpdateResponse {
+  namespace: string;
+
+  server: string;
+
+  success: boolean;
+}
+
 export interface ServerListResponse {
   id: string;
 
@@ -349,7 +395,9 @@ export interface ServerListResponse {
 }
 
 export interface ServerDeleteResponse {
-  qualifiedName: string;
+  namespace: string;
+
+  server: string;
 
   success: boolean;
 }
@@ -492,6 +540,14 @@ export namespace ServerGetByNamespaceResponse {
   }
 }
 
+export interface ServerUpdateByNamespaceResponse {
+  namespace: string;
+
+  server: string;
+
+  success: boolean;
+}
+
 export interface ServerCreateParams {
   /**
    * Path param
@@ -507,6 +563,43 @@ export interface ServerCreateParams {
    * Body param
    */
   displayName?: string;
+}
+
+export interface ServerUpdateParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param
+   */
+  description?: string;
+
+  /**
+   * Body param
+   */
+  displayName?: string;
+
+  /**
+   * Body param
+   */
+  homepage?: string | null;
+
+  /**
+   * Body param
+   */
+  iconUrl?: string | null;
+
+  /**
+   * Body param
+   */
+  license?: string | null;
+
+  /**
+   * Body param
+   */
+  unlisted?: boolean;
 }
 
 export interface ServerListParams extends SmitheryPageParams {
@@ -594,6 +687,20 @@ export interface ServerGetParams {
   namespace: string;
 }
 
+export interface ServerUpdateByNamespaceParams {
+  description?: string;
+
+  displayName?: string;
+
+  homepage?: string | null;
+
+  iconUrl?: string | null;
+
+  license?: string | null;
+
+  unlisted?: boolean;
+}
+
 Servers.Deployments = Deployments;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
@@ -605,18 +712,22 @@ export declare namespace Servers {
     type DeploymentTarget as DeploymentTarget,
     type ProjectConfig as ProjectConfig,
     type ServerCreateResponse as ServerCreateResponse,
+    type ServerUpdateResponse as ServerUpdateResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
     type ServerCreateByNamespaceResponse as ServerCreateByNamespaceResponse,
     type ServerGetResponse as ServerGetResponse,
     type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
+    type ServerUpdateByNamespaceResponse as ServerUpdateByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerCreateParams as ServerCreateParams,
+    type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
     type ServerDeleteParams as ServerDeleteParams,
     type ServerCreateByNamespaceParams as ServerCreateByNamespaceParams,
     type ServerDownloadParams as ServerDownloadParams,
     type ServerGetParams as ServerGetParams,
+    type ServerUpdateByNamespaceParams as ServerUpdateByNamespaceParams,
   };
 
   export {

@@ -16,21 +16,25 @@ Types:
 - <code><a href="./src/resources/servers/servers.ts">DeploymentTarget</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ProjectConfig</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerCreateResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerUpdateResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerListResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerDeleteResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerCreateByNamespaceResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerGetResponse</a></code>
 - <code><a href="./src/resources/servers/servers.ts">ServerGetByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/servers.ts">ServerUpdateByNamespaceResponse</a></code>
 
 Methods:
 
 - <code title="put /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">create</a>(server, { ...params }) -> ServerCreateResponse</code>
+- <code title="patch /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">update</a>(server, { ...params }) -> ServerUpdateResponse</code>
 - <code title="get /servers">client.servers.<a href="./src/resources/servers/servers.ts">list</a>({ ...params }) -> ServerListResponsesSmitheryPage</code>
 - <code title="delete /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">delete</a>(server, { ...params }) -> ServerDeleteResponse</code>
 - <code title="put /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">createByNamespace</a>(namespace, { ...params }) -> ServerCreateByNamespaceResponse</code>
 - <code title="get /servers/{namespace}/{server}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(server, { ...params }) -> Response</code>
 - <code title="get /servers/{namespace}/{server}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(server, { ...params }) -> ServerGetResponse</code>
 - <code title="get /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">getByNamespace</a>(namespace) -> ServerGetByNamespaceResponse</code>
+- <code title="patch /servers/{namespace}">client.servers.<a href="./src/resources/servers/servers.ts">updateByNamespace</a>(namespace, { ...params }) -> ServerUpdateByNamespaceResponse</code>
 
 ## Deployments
 
@@ -222,29 +226,7 @@ Methods:
 
 ## Agents
 
-Types:
-
-- <code><a href="./src/resources/experimental/agents/agents.ts">AssistantMessage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">CreateResponseRequest</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">ErrorResponse</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">FunctionCall</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">InputItem</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">InputTextContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">OutputItem</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">OutputTextContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">Response</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">ResponseStatus</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">StringContent</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">SystemMessage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">Usage</a></code>
-- <code><a href="./src/resources/experimental/agents/agents.ts">UserMessage</a></code>
-
 ### Responses
-
-Methods:
-
-- <code title="post /agents/responses">client.experimental.agents.responses.<a href="./src/resources/experimental/agents/responses.ts">create</a>({ ...params }) -> Response</code>
-- <code title="get /agents/responses/{id}">client.experimental.agents.responses.<a href="./src/resources/experimental/agents/responses.ts">get</a>(id) -> Response</code>
 
 ## Connect
 
