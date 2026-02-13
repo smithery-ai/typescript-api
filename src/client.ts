@@ -41,6 +41,7 @@ import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import { Experimental } from './resources/experimental/experimental';
 import {
   NamespaceCreateResponse,
+  NamespaceDeleteResponse,
   NamespaceListParams,
   NamespaceListResponse,
   NamespaceListResponsesNamespacesPage,
@@ -882,6 +883,7 @@ export declare namespace Smithery {
     Namespaces as Namespaces,
     type NamespaceCreateResponse as NamespaceCreateResponse,
     type NamespaceListResponse as NamespaceListResponse,
+    type NamespaceDeleteResponse as NamespaceDeleteResponse,
     type NamespaceSetResponse as NamespaceSetResponse,
     type NamespaceListResponsesNamespacesPage as NamespaceListResponsesNamespacesPage,
     type NamespaceListParams as NamespaceListParams,

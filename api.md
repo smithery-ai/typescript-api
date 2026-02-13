@@ -192,12 +192,14 @@ Types:
 
 - <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceCreateResponse</a></code>
 - <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceListResponse</a></code>
+- <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceDeleteResponse</a></code>
 - <code><a href="./src/resources/namespaces/namespaces.ts">NamespaceSetResponse</a></code>
 
 Methods:
 
 - <code title="post /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">create</a>() -> NamespaceCreateResponse</code>
 - <code title="get /namespaces">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">list</a>({ ...params }) -> NamespaceListResponsesNamespacesPage</code>
+- <code title="delete /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">delete</a>(name) -> NamespaceDeleteResponse</code>
 - <code title="put /namespaces/{name}">client.namespaces.<a href="./src/resources/namespaces/namespaces.ts">set</a>(name) -> NamespaceSetResponse</code>
 
 ## Servers
@@ -223,10 +225,6 @@ Methods:
 - <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
 
 # Experimental
-
-## Agents
-
-### Responses
 
 ## Connect
 
