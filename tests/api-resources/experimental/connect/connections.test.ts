@@ -107,7 +107,6 @@ describe('resource connections', () => {
   test.skip('set: only required params', async () => {
     const responsePromise = client.experimental.connect.connections.set('connectionId', {
       namespace: 'namespace',
-      mcpUrl: 'https://mcp.example.com/sse',
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -122,8 +121,8 @@ describe('resource connections', () => {
   test.skip('set: required and optional params', async () => {
     const response = await client.experimental.connect.connections.set('connectionId', {
       namespace: 'namespace',
-      mcpUrl: 'https://mcp.example.com/sse',
       headers: { 'X-API-Key': 'secret-key' },
+      mcpUrl: 'https://mcp.example.com/sse',
       metadata: { userId: 'bar', team: 'bar' },
       name: 'My MCP Server',
     });
