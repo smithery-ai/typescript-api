@@ -84,20 +84,17 @@ export class Connections extends APIResource {
   }
 
   /**
-   * Create or update an MCP connection with the given ID. If the connection exists
-   * and mcpUrl matches, updates name/metadata/headers. Returns 409 if mcpUrl
-   * differs - delete and recreate to change URL. Requires API key and namespace
-   * ownership.
+   * Create or update an MCP connection with the given ID. mcpUrl is required when
+   * creating a new connection, but optional when updating (omit to keep the existing
+   * URL). Returns 409 if a different mcpUrl is provided - delete and recreate to
+   * change URL. Requires API key and namespace ownership.
    *
    * @example
    * ```ts
    * const connection =
    *   await client.experimental.connect.connections.set(
    *     'connectionId',
-   *     {
-   *       namespace: 'namespace',
-   *       mcpUrl: 'https://mcp.example.com/sse',
-   *     },
+   *     { namespace: 'namespace' },
    *   );
    * ```
    */
@@ -295,15 +292,16 @@ export interface ConnectionSetParams {
   namespace: string;
 
   /**
-   * Body param: URL of the MCP server
-   */
-  mcpUrl: string;
-
-  /**
    * Body param: Custom headers to send with MCP requests (stored securely, not
    * returned in responses)
    */
   headers?: { [key: string]: string };
+
+  /**
+   * Body param: URL of the MCP server. Required when creating a new connection.
+   * Optional when updating — omit to keep the existing URL.
+   */
+  mcpUrl?: string;
 
   /**
    * Body param: Custom metadata for filtering connections
