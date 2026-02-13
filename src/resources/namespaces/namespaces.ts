@@ -49,6 +49,20 @@ export class Namespaces extends APIResource {
   }
 
   /**
+   * Delete a namespace owned by the authenticated user. The namespace must not
+   * contain any servers. Skills and connections in the namespace will be deleted
+   * automatically.
+   *
+   * @example
+   * ```ts
+   * const namespace = await client.namespaces.delete('xxx');
+   * ```
+   */
+  delete(name: string, options?: RequestOptions): APIPromise<NamespaceDeleteResponse> {
+    return this._client.delete(path`/namespaces/${name}`, options);
+  }
+
+  /**
    * Create a new namespace owned by the authenticated user. This endpoint is
    * idempotent - if the namespace already exists and is owned by the user, returns
    * success.
@@ -73,6 +87,12 @@ export interface NamespaceCreateResponse {
 
 export interface NamespaceListResponse {
   name: string;
+}
+
+export interface NamespaceDeleteResponse {
+  name: string;
+
+  success: boolean;
 }
 
 export interface NamespaceSetResponse {
@@ -114,6 +134,7 @@ export declare namespace Namespaces {
   export {
     type NamespaceCreateResponse as NamespaceCreateResponse,
     type NamespaceListResponse as NamespaceListResponse,
+    type NamespaceDeleteResponse as NamespaceDeleteResponse,
     type NamespaceSetResponse as NamespaceSetResponse,
     type NamespaceListResponsesNamespacesPage as NamespaceListResponsesNamespacesPage,
     type NamespaceListParams as NamespaceListParams,

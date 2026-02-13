@@ -6,6 +6,7 @@ export {
   Namespaces,
   type NamespaceCreateResponse,
   type NamespaceListResponse,
+  type NamespaceDeleteResponse,
   type NamespaceSetResponse,
   type NamespaceListParams,
   type NamespaceListResponsesNamespacesPage,
