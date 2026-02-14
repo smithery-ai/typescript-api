@@ -224,34 +224,32 @@ Methods:
 
 - <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
 
-# Experimental
+# Connect
 
-## Connect
-
-### Connections
+## Connections
 
 Types:
 
-- <code><a href="./src/resources/experimental/connect/connections.ts">Connection</a></code>
-- <code><a href="./src/resources/experimental/connect/connections.ts">ConnectionsListResponse</a></code>
-- <code><a href="./src/resources/experimental/connect/connections.ts">CreateConnectionRequest</a></code>
-- <code><a href="./src/resources/experimental/connect/connections.ts">ConnectionDeleteResponse</a></code>
+- <code><a href="./src/resources/connect/connections.ts">Connection</a></code>
+- <code><a href="./src/resources/connect/connections.ts">ConnectionsListResponse</a></code>
+- <code><a href="./src/resources/connect/connections.ts">CreateConnectionRequest</a></code>
+- <code><a href="./src/resources/connect/connections.ts">ConnectionDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /connect/{namespace}">client.experimental.connect.connections.<a href="./src/resources/experimental/connect/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
-- <code title="get /connect/{namespace}">client.experimental.connect.connections.<a href="./src/resources/experimental/connect/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
-- <code title="delete /connect/{namespace}/{connectionId}">client.experimental.connect.connections.<a href="./src/resources/experimental/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
-- <code title="get /connect/{namespace}/{connectionId}">client.experimental.connect.connections.<a href="./src/resources/experimental/connect/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
-- <code title="put /connect/{namespace}/{connectionId}">client.experimental.connect.connections.<a href="./src/resources/experimental/connect/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="post /connect/{namespace}">client.connect.connections.<a href="./src/resources/connect/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
+- <code title="get /connect/{namespace}">client.connect.connections.<a href="./src/resources/connect/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
+- <code title="delete /connect/{namespace}/{connectionId}">client.connect.connections.<a href="./src/resources/connect/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="get /connect/{namespace}/{connectionId}">client.connect.connections.<a href="./src/resources/connect/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="put /connect/{namespace}/{connectionId}">client.connect.connections.<a href="./src/resources/connect/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
-### Mcp
+## Mcp
 
 Types:
 
-- <code><a href="./src/resources/experimental/connect/mcp.ts">JsonRpcRequest</a></code>
-- <code><a href="./src/resources/experimental/connect/mcp.ts">JsonRpcResponse</a></code>
+- <code><a href="./src/resources/connect/mcp.ts">JsonRpcRequest</a></code>
+- <code><a href="./src/resources/connect/mcp.ts">JsonRpcResponse</a></code>
 
 Methods:
 
-- <code title="post /connect/{namespace}/{connectionId}/mcp">client.experimental.connect.mcp.<a href="./src/resources/experimental/connect/mcp.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
+- <code title="post /connect/{namespace}/{connectionId}/mcp">client.connect.mcp.<a href="./src/resources/connect/mcp.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
