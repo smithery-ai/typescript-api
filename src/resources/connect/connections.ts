@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
-import { APIPromise } from '../../../core/api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Connections extends APIResource {
   /**
@@ -12,11 +12,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.create(
-   *     'namespace',
-   *     { mcpUrl: 'https://mcp.example.com/sse' },
-   *   );
+   * const connection = await client.connect.connections.create(
+   *   'namespace',
+   *   { mcpUrl: 'https://mcp.example.com/sse' },
+   * );
    * ```
    */
   create(namespace: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<Connection> {
@@ -30,9 +29,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connectionsListResponse =
-   *   await client.experimental.connect.connections.list(
-   *     'namespace',
-   *   );
+   *   await client.connect.connections.list('namespace');
    * ```
    */
   list(
@@ -49,11 +46,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.delete(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connect.connections.delete(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   delete(
@@ -71,11 +67,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.get(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connect.connections.get(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   get(connectionID: string, params: ConnectionGetParams, options?: RequestOptions): APIPromise<Connection> {
@@ -91,11 +86,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.set(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connect.connections.set(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
