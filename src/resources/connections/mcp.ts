@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
-import { APIPromise } from '../../../core/api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Mcp extends APIResource {
   /**
@@ -14,11 +14,10 @@ export class Mcp extends APIResource {
    *
    * @example
    * ```ts
-   * const jsonRpcResponse =
-   *   await client.experimental.connect.mcp.call(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const jsonRpcResponse = await client.connections.mcp.call(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   call(connectionID: string, params: McpCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {

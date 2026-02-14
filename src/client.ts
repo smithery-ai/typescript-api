@@ -38,7 +38,18 @@ import {
   Tokens,
 } from './resources/tokens';
 import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
-import { Experimental } from './resources/experimental/experimental';
+import {
+  Connection,
+  ConnectionCreateParams,
+  ConnectionDeleteParams,
+  ConnectionDeleteResponse,
+  ConnectionGetParams,
+  ConnectionListParams,
+  ConnectionSetParams,
+  Connections,
+  ConnectionsListResponse,
+  CreateConnectionRequest,
+} from './resources/connections/connections';
 import {
   NamespaceCreateResponse,
   NamespaceDeleteResponse,
@@ -805,7 +816,7 @@ export class Smithery {
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
   tokens: API.Tokens = new API.Tokens(this);
-  experimental: API.Experimental = new API.Experimental(this);
+  connections: API.Connections = new API.Connections(this);
 }
 
 Smithery.Health = Health;
@@ -814,7 +825,7 @@ Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
 Smithery.Tokens = Tokens;
-Smithery.Experimental = Experimental;
+Smithery.Connections = Connections;
 
 export declare namespace Smithery {
   export type RequestOptions = Opts.RequestOptions;
@@ -897,5 +908,16 @@ export declare namespace Smithery {
     type TokenCreateParams as TokenCreateParams,
   };
 
-  export { Experimental as Experimental };
+  export {
+    Connections as Connections,
+    type Connection as Connection,
+    type ConnectionsListResponse as ConnectionsListResponse,
+    type CreateConnectionRequest as CreateConnectionRequest,
+    type ConnectionDeleteResponse as ConnectionDeleteResponse,
+    type ConnectionCreateParams as ConnectionCreateParams,
+    type ConnectionListParams as ConnectionListParams,
+    type ConnectionDeleteParams as ConnectionDeleteParams,
+    type ConnectionGetParams as ConnectionGetParams,
+    type ConnectionSetParams as ConnectionSetParams,
+  };
 }

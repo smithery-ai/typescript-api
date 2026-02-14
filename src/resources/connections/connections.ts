@@ -1,22 +1,25 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../../../core/resource';
-import { APIPromise } from '../../../core/api-promise';
-import { RequestOptions } from '../../../internal/request-options';
-import { path } from '../../../internal/utils/path';
+import { APIResource } from '../../core/resource';
+import * as McpAPI from './mcp';
+import { JsonRpcRequest, JsonRpcResponse, Mcp, McpCallParams } from './mcp';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
 export class Connections extends APIResource {
+  mcp: McpAPI.Mcp = new McpAPI.Mcp(this._client);
+
   /**
    * Create a new MCP connection with an auto-generated ID. Requires API key and
    * namespace ownership.
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.create(
-   *     'namespace',
-   *     { mcpUrl: 'https://mcp.example.com/sse' },
-   *   );
+   * const connection = await client.connections.create(
+   *   'namespace',
+   *   { mcpUrl: 'https://mcp.example.com/sse' },
+   * );
    * ```
    */
   create(namespace: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<Connection> {
@@ -30,9 +33,7 @@ export class Connections extends APIResource {
    * @example
    * ```ts
    * const connectionsListResponse =
-   *   await client.experimental.connect.connections.list(
-   *     'namespace',
-   *   );
+   *   await client.connections.list('namespace');
    * ```
    */
   list(
@@ -49,11 +50,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.delete(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connections.delete(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   delete(
@@ -71,11 +71,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.get(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connections.get(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   get(connectionID: string, params: ConnectionGetParams, options?: RequestOptions): APIPromise<Connection> {
@@ -91,11 +90,10 @@ export class Connections extends APIResource {
    *
    * @example
    * ```ts
-   * const connection =
-   *   await client.experimental.connect.connections.set(
-   *     'connectionId',
-   *     { namespace: 'namespace' },
-   *   );
+   * const connection = await client.connections.set(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
    * ```
    */
   set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
@@ -314,6 +312,8 @@ export interface ConnectionSetParams {
   name?: string;
 }
 
+Connections.Mcp = Mcp;
+
 export declare namespace Connections {
   export {
     type Connection as Connection,
@@ -325,5 +325,12 @@ export declare namespace Connections {
     type ConnectionDeleteParams as ConnectionDeleteParams,
     type ConnectionGetParams as ConnectionGetParams,
     type ConnectionSetParams as ConnectionSetParams,
+  };
+
+  export {
+    Mcp as Mcp,
+    type JsonRpcRequest as JsonRpcRequest,
+    type JsonRpcResponse as JsonRpcResponse,
+    type McpCallParams as McpCallParams,
   };
 }

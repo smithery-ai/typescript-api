@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.46.0 (2026-02-14)
+
+Full Changelog: [v0.45.0...v0.46.0](https://github.com/smithery-ai/typescript-api/compare/v0.45.0...v0.46.0)
+
+### Features
+
+* **api:** api update ([17ed9c6](https://github.com/smithery-ai/typescript-api/commit/17ed9c67cbe714fab5c25f5ada0e56c5a5959c51))
+* **api:** api update ([8002d58](https://github.com/smithery-ai/typescript-api/commit/8002d58a38e8e751df6a1bf94830986336a3f25e))
+
+
+### Bug Fixes
+
+* remove experimental namespace from mcp-transport  [SMI-1478] ([#70](https://github.com/smithery-ai/typescript-api/issues/70)) ([1673b12](https://github.com/smithery-ai/typescript-api/commit/1673b1210106ca599193f167fc06dc2f788512d3))
+
 ## 0.45.0 (2026-02-13)
 
 Full Changelog: [v0.44.0...v0.45.0](https://github.com/smithery-ai/typescript-api/compare/v0.44.0...v0.45.0)

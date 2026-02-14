@@ -1,6 +1,17 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Experimental } from './experimental/experimental';
+export {
+  Connections,
+  type Connection,
+  type ConnectionsListResponse,
+  type CreateConnectionRequest,
+  type ConnectionDeleteResponse,
+  type ConnectionCreateParams,
+  type ConnectionListParams,
+  type ConnectionDeleteParams,
+  type ConnectionGetParams,
+  type ConnectionSetParams,
+} from './connections/connections';
 export { Health, type HealthCheckResponse } from './health';
 export {
   Namespaces,
