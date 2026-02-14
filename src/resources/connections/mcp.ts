@@ -14,7 +14,7 @@ export class Mcp extends APIResource {
    *
    * @example
    * ```ts
-   * const jsonRpcResponse = await client.connect.mcp.call(
+   * const jsonRpcResponse = await client.connections.mcp.call(
    *   'connectionId',
    *   { namespace: 'namespace' },
    * );

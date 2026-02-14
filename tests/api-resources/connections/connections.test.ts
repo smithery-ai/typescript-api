@@ -10,9 +10,7 @@ const client = new Smithery({
 describe('resource connections', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.connect.connections.create('namespace', {
-      mcpUrl: 'https://mcp.example.com/sse',
-    });
+    const responsePromise = client.connections.create('namespace', { mcpUrl: 'https://mcp.example.com/sse' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -24,7 +22,7 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.connect.connections.create('namespace', {
+    const response = await client.connections.create('namespace', {
       mcpUrl: 'https://mcp.example.com/sse',
       headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
@@ -34,7 +32,7 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('list', async () => {
-    const responsePromise = client.connect.connections.list('namespace');
+    const responsePromise = client.connections.list('namespace');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,7 +46,7 @@ describe('resource connections', () => {
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.connect.connections.list(
+      client.connections.list(
         'namespace',
         {
           cursor: 'cursor',
@@ -63,7 +61,7 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.connect.connections.delete('connectionId', { namespace: 'namespace' });
+    const responsePromise = client.connections.delete('connectionId', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -75,12 +73,12 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.connect.connections.delete('connectionId', { namespace: 'namespace' });
+    const response = await client.connections.delete('connectionId', { namespace: 'namespace' });
   });
 
   // Prism tests are disabled
   test.skip('get: only required params', async () => {
-    const responsePromise = client.connect.connections.get('connectionId', { namespace: 'namespace' });
+    const responsePromise = client.connections.get('connectionId', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,12 +90,12 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('get: required and optional params', async () => {
-    const response = await client.connect.connections.get('connectionId', { namespace: 'namespace' });
+    const response = await client.connections.get('connectionId', { namespace: 'namespace' });
   });
 
   // Prism tests are disabled
   test.skip('set: only required params', async () => {
-    const responsePromise = client.connect.connections.set('connectionId', { namespace: 'namespace' });
+    const responsePromise = client.connections.set('connectionId', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -109,7 +107,7 @@ describe('resource connections', () => {
 
   // Prism tests are disabled
   test.skip('set: required and optional params', async () => {
-    const response = await client.connect.connections.set('connectionId', {
+    const response = await client.connections.set('connectionId', {
       namespace: 'namespace',
       headers: { 'X-API-Key': 'secret-key' },
       mcpUrl: 'https://mcp.example.com/sse',
