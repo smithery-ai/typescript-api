@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource secrets', () => {
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.servers.secrets.list('server', { namespace: 'namespace' });
+  test.skip('list', async () => {
+    const responsePromise = client.servers.secrets.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,16 +21,8 @@ describe('resource secrets', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.servers.secrets.list('server', { namespace: 'namespace' });
-  });
-
-  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.servers.secrets.delete('secretName', {
-      namespace: 'namespace',
-      server: 'server',
-    });
+    const responsePromise = client.servers.secrets.delete('secretName', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,50 +34,12 @@ describe('resource secrets', () => {
 
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.servers.secrets.delete('secretName', {
-      namespace: 'namespace',
-      server: 'server',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('deleteByNamespace: only required params', async () => {
-    const responsePromise = client.servers.secrets.deleteByNamespace('secretName', {
-      namespace: 'namespace',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('deleteByNamespace: required and optional params', async () => {
-    const response = await client.servers.secrets.deleteByNamespace('secretName', { namespace: 'namespace' });
-  });
-
-  // Prism tests are disabled
-  test.skip('listByNamespace', async () => {
-    const responsePromise = client.servers.secrets.listByNamespace('namespace');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
+    const response = await client.servers.secrets.delete('secretName', { qualifiedName: 'qualifiedName' });
   });
 
   // Prism tests are disabled
   test.skip('set: only required params', async () => {
-    const responsePromise = client.servers.secrets.set('server', {
-      namespace: 'namespace',
-      name: 'x',
-      value: 'x',
-    });
+    const responsePromise = client.servers.secrets.set('qualifiedName', { name: 'x', value: 'x' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -97,27 +51,6 @@ describe('resource secrets', () => {
 
   // Prism tests are disabled
   test.skip('set: required and optional params', async () => {
-    const response = await client.servers.secrets.set('server', {
-      namespace: 'namespace',
-      name: 'x',
-      value: 'x',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('setByNamespace: only required params', async () => {
-    const responsePromise = client.servers.secrets.setByNamespace('namespace', { name: 'x', value: 'x' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('setByNamespace: required and optional params', async () => {
-    const response = await client.servers.secrets.setByNamespace('namespace', { name: 'x', value: 'x' });
+    const response = await client.servers.secrets.set('qualifiedName', { name: 'x', value: 'x' });
   });
 });

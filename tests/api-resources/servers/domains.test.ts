@@ -10,8 +10,7 @@ const client = new Smithery({
 describe('resource domains', () => {
   // Prism tests are disabled
   test.skip('create: only required params', async () => {
-    const responsePromise = client.servers.domains.create('server', {
-      namespace: 'namespace',
+    const responsePromise = client.servers.domains.create('qualifiedName', {
       subdomain: 'subdomain',
       type: 'managed',
     });
@@ -26,8 +25,7 @@ describe('resource domains', () => {
 
   // Prism tests are disabled
   test.skip('create: required and optional params', async () => {
-    const response = await client.servers.domains.create('server', {
-      namespace: 'namespace',
+    const response = await client.servers.domains.create('qualifiedName', {
       subdomain: 'subdomain',
       type: 'managed',
     });
@@ -35,10 +33,7 @@ describe('resource domains', () => {
 
   // Prism tests are disabled
   test.skip('update: only required params', async () => {
-    const responsePromise = client.servers.domains.update('domainId', {
-      namespace: 'namespace',
-      server: 'server',
-    });
+    const responsePromise = client.servers.domains.update('domainId', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,8 +46,7 @@ describe('resource domains', () => {
   // Prism tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.servers.domains.update('domainId', {
-      namespace: 'namespace',
-      server: 'server',
+      qualifiedName: 'qualifiedName',
       allowUnauthenticated: true,
       requiresConfig: true,
       subdomain: 'subdomain',
@@ -60,8 +54,8 @@ describe('resource domains', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.servers.domains.list('server', { namespace: 'namespace' });
+  test.skip('list', async () => {
+    const responsePromise = client.servers.domains.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -72,16 +66,8 @@ describe('resource domains', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.servers.domains.list('server', { namespace: 'namespace' });
-  });
-
-  // Prism tests are disabled
   test.skip('delete: only required params', async () => {
-    const responsePromise = client.servers.domains.delete('domainId', {
-      namespace: 'namespace',
-      server: 'server',
-    });
+    const responsePromise = client.servers.domains.delete('domainId', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -93,83 +79,6 @@ describe('resource domains', () => {
 
   // Prism tests are disabled
   test.skip('delete: required and optional params', async () => {
-    const response = await client.servers.domains.delete('domainId', {
-      namespace: 'namespace',
-      server: 'server',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('createByNamespace: only required params', async () => {
-    const responsePromise = client.servers.domains.createByNamespace('namespace', {
-      subdomain: 'subdomain',
-      type: 'managed',
-    });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('createByNamespace: required and optional params', async () => {
-    const response = await client.servers.domains.createByNamespace('namespace', {
-      subdomain: 'subdomain',
-      type: 'managed',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('deleteByNamespace: only required params', async () => {
-    const responsePromise = client.servers.domains.deleteByNamespace('domainId', { namespace: 'namespace' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('deleteByNamespace: required and optional params', async () => {
-    const response = await client.servers.domains.deleteByNamespace('domainId', { namespace: 'namespace' });
-  });
-
-  // Prism tests are disabled
-  test.skip('listByNamespace', async () => {
-    const responsePromise = client.servers.domains.listByNamespace('namespace');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('updateByNamespace: only required params', async () => {
-    const responsePromise = client.servers.domains.updateByNamespace('domainId', { namespace: 'namespace' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('updateByNamespace: required and optional params', async () => {
-    const response = await client.servers.domains.updateByNamespace('domainId', {
-      namespace: 'namespace',
-      allowUnauthenticated: true,
-      requiresConfig: true,
-      subdomain: 'subdomain',
-    });
+    const response = await client.servers.domains.delete('domainId', { qualifiedName: 'qualifiedName' });
   });
 });

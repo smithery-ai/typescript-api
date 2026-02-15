@@ -11,141 +11,69 @@ import { path } from '../../internal/utils/path';
 
 export class Deployments extends APIResource {
   /**
-   * List all deployments for a server, ordered by most recent first. Does not
-   * include deployment logs — fetch a specific deployment to see logs.
+   * List releases ordered by most recent first. Logs are omitted — fetch a specific
+   * release to see logs.
    *
    * @example
    * ```ts
    * const deployments = await client.servers.deployments.list(
-   *   'server',
-   *   { namespace: 'namespace' },
+   *   'qualifiedName',
    * );
    * ```
    */
-  list(
-    server: string,
-    params: DeploymentListParams,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentListResponse> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/${server}/deployments`, options);
+  list(qualifiedName: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
+    return this._client.get(path`/servers/${qualifiedName}/deployments`, options);
   }
 
   /**
-   * Deploy an MCP server via multipart form. Supports hosted deployments (upload a
-   * JS module), external deployments (register a URL), stdio deployments (upload an
-   * MCPB bundle), and repo deployments (build from a connected GitHub repository).
+   * Submit a release via multipart form. Supports hosted (JS module upload),
+   * external (URL), stdio (MCPB bundle), and repo (GitHub build) release types.
    *
    * @example
    * ```ts
    * const response = await client.servers.deployments.deploy(
-   *   'server',
-   *   { namespace: 'namespace', payload: 'payload' },
+   *   'qualifiedName',
+   *   { payload: 'payload' },
    * );
    * ```
    */
   deploy(
-    server: string,
-    params: DeploymentDeployParams,
+    qualifiedName: string,
+    body: DeploymentDeployParams,
     options?: RequestOptions,
   ): APIPromise<DeploymentDeployResponse> {
-    const { namespace, ...body } = params;
     return this._client.put(
-      path`/servers/${namespace}/${server}/deployments`,
+      path`/servers/${qualifiedName}/deployments`,
       multipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
 
   /**
-   * Deploy an MCP server via multipart form. Supports hosted deployments (upload a
-   * JS module), external deployments (register a URL), stdio deployments (upload an
-   * MCPB bundle), and repo deployments (build from a connected GitHub repository).
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.servers.deployments.deployByNamespace(
-   *     'namespace',
-   *     { payload: 'payload' },
-   *   );
-   * ```
-   */
-  deployByNamespace(
-    namespace: string,
-    body: DeploymentDeployByNamespaceParams,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentDeployByNamespaceResponse> {
-    return this._client.put(
-      path`/servers/${namespace}/deployments`,
-      multipartFormRequestOptions({ body, ...options }, this._client),
-    );
-  }
-
-  /**
-   * Get full details for a specific deployment, including status, type, git
-   * metadata, pipeline logs, and MCP endpoint URL.
+   * Retrieve release details including status, git metadata, pipeline logs, and MCP
+   * endpoint URL.
    *
    * @example
    * ```ts
    * const deployment = await client.servers.deployments.get(
    *   'id',
-   *   { namespace: 'namespace', server: 'server' },
+   *   { qualifiedName: 'qualifiedName' },
    * );
    * ```
    */
   get(id: string, params: DeploymentGetParams, options?: RequestOptions): APIPromise<DeploymentGetResponse> {
-    const { namespace, server } = params;
-    return this._client.get(path`/servers/${namespace}/${server}/deployments/${id}`, options);
+    const { qualifiedName } = params;
+    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
   }
 
   /**
-   * Get full details for a specific deployment, including status, type, git
-   * metadata, pipeline logs, and MCP endpoint URL.
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.servers.deployments.getByNamespace('id', {
-   *     namespace: 'namespace',
-   *   });
-   * ```
-   */
-  getByNamespace(
-    id: string,
-    params: DeploymentGetByNamespaceParams,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentGetByNamespaceResponse> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/deployments/${id}`, options);
-  }
-
-  /**
-   * List all deployments for a server, ordered by most recent first. Does not
-   * include deployment logs — fetch a specific deployment to see logs.
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.servers.deployments.listByNamespace(
-   *     'namespace',
-   *   );
-   * ```
-   */
-  listByNamespace(
-    namespace: string,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentListByNamespaceResponse> {
-    return this._client.get(path`/servers/${namespace}/deployments`, options);
-  }
-
-  /**
-   * Use id='latest' to resume the most recent deployment
+   * Resume a paused release (e.g. after OAuth authorization). Use id='latest' to
+   * resume the most recent one.
    *
    * @example
    * ```ts
    * const response = await client.servers.deployments.resume(
    *   'id',
-   *   { namespace: 'namespace', server: 'server' },
+   *   { qualifiedName: 'qualifiedName' },
    * );
    * ```
    */
@@ -154,39 +82,18 @@ export class Deployments extends APIResource {
     params: DeploymentResumeParams,
     options?: RequestOptions,
   ): APIPromise<DeploymentResumeResponse> {
-    const { namespace, server } = params;
-    return this._client.post(path`/servers/${namespace}/${server}/deployments/${id}/resume`, options);
+    const { qualifiedName } = params;
+    return this._client.post(path`/servers/${qualifiedName}/deployments/${id}/resume`, options);
   }
 
   /**
-   * Use id='latest' to resume the most recent deployment
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.servers.deployments.resumeByNamespace('id', {
-   *     namespace: 'namespace',
-   *   });
-   * ```
-   */
-  resumeByNamespace(
-    id: string,
-    params: DeploymentResumeByNamespaceParams,
-    options?: RequestOptions,
-  ): APIPromise<DeploymentResumeByNamespaceResponse> {
-    const { namespace } = params;
-    return this._client.post(path`/servers/${namespace}/deployments/${id}/resume`, options);
-  }
-
-  /**
-   * Returns a real-time SSE stream of deployment logs and status updates. Connect to
-   * this endpoint to receive live updates as the deployment progresses.
+   * Real-time SSE stream of release logs and status updates.
    *
    * @example
    * ```ts
    * const response = await client.servers.deployments.stream(
    *   'id',
-   *   { namespace: 'namespace', server: 'server' },
+   *   { qualifiedName: 'qualifiedName' },
    * );
    * ```
    */
@@ -195,37 +102,12 @@ export class Deployments extends APIResource {
     params: DeploymentStreamParams,
     options?: RequestOptions,
   ): APIPromise<Stream<DeploymentStreamResponse>> {
-    const { namespace, server } = params;
-    return this._client.get(path`/servers/${namespace}/${server}/deployments/${id}/stream`, {
+    const { qualifiedName } = params;
+    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}/stream`, {
       ...options,
       headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
       stream: true,
     }) as APIPromise<Stream<DeploymentStreamResponse>>;
-  }
-
-  /**
-   * Returns a real-time SSE stream of deployment logs and status updates. Connect to
-   * this endpoint to receive live updates as the deployment progresses.
-   *
-   * @example
-   * ```ts
-   * const response =
-   *   await client.servers.deployments.streamByNamespace('id', {
-   *     namespace: 'namespace',
-   *   });
-   * ```
-   */
-  streamByNamespace(
-    id: string,
-    params: DeploymentStreamByNamespaceParams,
-    options?: RequestOptions,
-  ): APIPromise<Stream<DeploymentStreamByNamespaceResponse>> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/deployments/${id}/stream`, {
-      ...options,
-      headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
-      stream: true,
-    }) as APIPromise<Stream<DeploymentStreamByNamespaceResponse>>;
   }
 }
 
@@ -498,19 +380,19 @@ export namespace DeploymentListResponse {
     id: string;
 
     /**
-     * ISO 8601 timestamp of when the deployment was created.
+     * ISO 8601 timestamp of when the release was created.
      */
     createdAt: string;
 
     /**
-     * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
-     * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+     * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
+     * CANCELLED, or INTERNAL_ERROR.
      */
     status: string;
 
     /**
-     * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
-     * or stdio (local binary).
+     * Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or
+     * stdio (local binary).
      */
     type: string;
 
@@ -520,18 +402,17 @@ export namespace DeploymentListResponse {
     updatedAt: string;
 
     /**
-     * Git branch this deployment was built from.
+     * Git branch this release was built from.
      */
     branch?: string | null;
 
     /**
-     * Git commit SHA that triggered this deployment. Present for repo and
-     * source-tracked deployments.
+     * Git commit SHA that triggered this release.
      */
     commit?: string | null;
 
     /**
-     * Git commit message associated with this deployment.
+     * Git commit message associated with this release.
      */
     commitMessage?: string | null;
 
@@ -541,7 +422,7 @@ export namespace DeploymentListResponse {
     mcpUrl?: string;
 
     /**
-     * Upstream MCP server URL. Present only for external deployments.
+     * Upstream MCP server URL. Present only for external releases.
      */
     upstreamUrl?: string | null;
   }
@@ -549,44 +430,22 @@ export namespace DeploymentListResponse {
 
 export interface DeploymentDeployResponse {
   /**
-   * Unique identifier for this deployment.
+   * Unique identifier for this release.
    */
   deploymentId: string;
 
   /**
-   * The MCP endpoint URL for connecting to this server once deployed.
+   * The MCP endpoint URL for connecting to this server once published.
    */
   mcpUrl: string;
 
   /**
-   * Initial deployment status. Will be WORKING while the deployment is in progress.
+   * Initial status. Will be WORKING while the release is in progress.
    */
   status: string;
 
   /**
-   * Non-fatal warnings encountered during deployment submission.
-   */
-  warnings?: Array<string>;
-}
-
-export interface DeploymentDeployByNamespaceResponse {
-  /**
-   * Unique identifier for this deployment.
-   */
-  deploymentId: string;
-
-  /**
-   * The MCP endpoint URL for connecting to this server once deployed.
-   */
-  mcpUrl: string;
-
-  /**
-   * Initial deployment status. Will be WORKING while the deployment is in progress.
-   */
-  status: string;
-
-  /**
-   * Non-fatal warnings encountered during deployment submission.
+   * Non-fatal warnings encountered during submission.
    */
   warnings?: Array<string>;
 }
@@ -595,19 +454,19 @@ export interface DeploymentGetResponse {
   id: string;
 
   /**
-   * ISO 8601 timestamp of when the deployment was created.
+   * ISO 8601 timestamp of when the release was created.
    */
   createdAt: string;
 
   /**
-   * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
-   * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
+   * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
+   * CANCELLED, or INTERNAL_ERROR.
    */
   status: string;
 
   /**
-   * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
-   * or stdio (local binary).
+   * Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or
+   * stdio (local binary).
    */
   type: string;
 
@@ -617,24 +476,22 @@ export interface DeploymentGetResponse {
   updatedAt: string;
 
   /**
-   * Git branch this deployment was built from.
+   * Git branch this release was built from.
    */
   branch?: string | null;
 
   /**
-   * Git commit SHA that triggered this deployment. Present for repo and
-   * source-tracked deployments.
+   * Git commit SHA that triggered this release.
    */
   commit?: string | null;
 
   /**
-   * Git commit message associated with this deployment.
+   * Git commit message associated with this release.
    */
   commitMessage?: string | null;
 
   /**
-   * Deployment pipeline log entries. Only included when fetching a single
-   * deployment.
+   * Pipeline log entries. Only included when fetching a single release.
    */
   logs?: Array<DeploymentGetResponse.Log>;
 
@@ -644,7 +501,7 @@ export interface DeploymentGetResponse {
   mcpUrl?: string;
 
   /**
-   * Upstream MCP server URL. Present only for external deployments.
+   * Upstream MCP server URL. Present only for external releases.
    */
   upstreamUrl?: string | null;
 }
@@ -662,8 +519,8 @@ export namespace DeploymentGetResponse {
     message: string;
 
     /**
-     * Deployment pipeline stage: deploy (bundle upload), scan (security/OAuth check),
-     * metadata (tool discovery), publish (making the server live).
+     * Pipeline stage: deploy (bundle upload), scan (security/OAuth check), metadata
+     * (tool discovery), publish (making the server live).
      */
     stage: 'deploy' | 'scan' | 'metadata' | 'publish';
 
@@ -685,170 +542,10 @@ export namespace DeploymentGetResponse {
     export interface Error {
       message?: string;
     }
-  }
-}
-
-export interface DeploymentGetByNamespaceResponse {
-  id: string;
-
-  /**
-   * ISO 8601 timestamp of when the deployment was created.
-   */
-  createdAt: string;
-
-  /**
-   * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
-   * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
-   */
-  status: string;
-
-  /**
-   * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
-   * or stdio (local binary).
-   */
-  type: string;
-
-  /**
-   * ISO 8601 timestamp of the last status change.
-   */
-  updatedAt: string;
-
-  /**
-   * Git branch this deployment was built from.
-   */
-  branch?: string | null;
-
-  /**
-   * Git commit SHA that triggered this deployment. Present for repo and
-   * source-tracked deployments.
-   */
-  commit?: string | null;
-
-  /**
-   * Git commit message associated with this deployment.
-   */
-  commitMessage?: string | null;
-
-  /**
-   * Deployment pipeline log entries. Only included when fetching a single
-   * deployment.
-   */
-  logs?: Array<DeploymentGetByNamespaceResponse.Log>;
-
-  /**
-   * The MCP endpoint URL for connecting to this server.
-   */
-  mcpUrl?: string;
-
-  /**
-   * Upstream MCP server URL. Present only for external deployments.
-   */
-  upstreamUrl?: string | null;
-}
-
-export namespace DeploymentGetByNamespaceResponse {
-  export interface Log {
-    /**
-     * Log level: 'start', 'end', 'info', 'success', or 'failure'.
-     */
-    level: string;
-
-    /**
-     * Human-readable log message.
-     */
-    message: string;
-
-    /**
-     * Deployment pipeline stage: deploy (bundle upload), scan (security/OAuth check),
-     * metadata (tool discovery), publish (making the server live).
-     */
-    stage: 'deploy' | 'scan' | 'metadata' | 'publish';
-
-    /**
-     * ISO 8601 timestamp of the log entry.
-     */
-    timestamp: string;
-
-    /**
-     * Error details, present only when the stage failed.
-     */
-    error?: Log.Error;
-  }
-
-  export namespace Log {
-    /**
-     * Error details, present only when the stage failed.
-     */
-    export interface Error {
-      message?: string;
-    }
-  }
-}
-
-export type DeploymentListByNamespaceResponse =
-  Array<DeploymentListByNamespaceResponse.DeploymentListByNamespaceResponseItem>;
-
-export namespace DeploymentListByNamespaceResponse {
-  export interface DeploymentListByNamespaceResponseItem {
-    id: string;
-
-    /**
-     * ISO 8601 timestamp of when the deployment was created.
-     */
-    createdAt: string;
-
-    /**
-     * Current deployment status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN,
-     * AUTH_REQUIRED, CANCELLED, or INTERNAL_ERROR.
-     */
-    status: string;
-
-    /**
-     * Deployment type: hosted_shttp (Smithery-hosted), external_shttp (external URL),
-     * or stdio (local binary).
-     */
-    type: string;
-
-    /**
-     * ISO 8601 timestamp of the last status change.
-     */
-    updatedAt: string;
-
-    /**
-     * Git branch this deployment was built from.
-     */
-    branch?: string | null;
-
-    /**
-     * Git commit SHA that triggered this deployment. Present for repo and
-     * source-tracked deployments.
-     */
-    commit?: string | null;
-
-    /**
-     * Git commit message associated with this deployment.
-     */
-    commitMessage?: string | null;
-
-    /**
-     * The MCP endpoint URL for connecting to this server.
-     */
-    mcpUrl?: string;
-
-    /**
-     * Upstream MCP server URL. Present only for external deployments.
-     */
-    upstreamUrl?: string | null;
   }
 }
 
 export interface DeploymentResumeResponse {
-  deploymentId: string;
-
-  status: string;
-}
-
-export interface DeploymentResumeByNamespaceResponse {
   deploymentId: string;
 
   status: string;
@@ -859,93 +556,50 @@ export interface DeploymentResumeByNamespaceResponse {
  */
 export type DeploymentStreamResponse = string;
 
-/**
- * SSE events: init (with buffered logs), log, status, complete
- */
-export type DeploymentStreamByNamespaceResponse = string;
-
-export interface DeploymentListParams {
-  namespace: string;
-}
-
 export interface DeploymentDeployParams {
   /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Body param: JSON-encoded deployment payload. See DeployPayload schema for
-   * structure.
+   * JSON-encoded release payload. See DeployPayload schema for structure.
    */
   payload: string;
 
   /**
-   * Body param: MCPB bundle file (for stdio deployments)
+   * MCPB bundle file (for stdio releases)
    */
   bundle?: Uploadable;
 
   /**
-   * Body param: JavaScript module file (for hosted deployments)
+   * JavaScript module file (for hosted releases)
    */
   module?: Uploadable;
 
   /**
-   * Body param: Source map file (for hosted deployments)
-   */
-  sourcemap?: Uploadable;
-}
-
-export interface DeploymentDeployByNamespaceParams {
-  /**
-   * JSON-encoded deployment payload. See DeployPayload schema for structure.
-   */
-  payload: string;
-
-  /**
-   * MCPB bundle file (for stdio deployments)
-   */
-  bundle?: Uploadable;
-
-  /**
-   * JavaScript module file (for hosted deployments)
-   */
-  module?: Uploadable;
-
-  /**
-   * Source map file (for hosted deployments)
+   * Source map file (for hosted releases)
    */
   sourcemap?: Uploadable;
 }
 
 export interface DeploymentGetParams {
-  namespace: string;
-
-  server: string;
-}
-
-export interface DeploymentGetByNamespaceParams {
-  namespace: string;
+  /**
+   * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
+   * namespace-only servers). Use %2F to encode the slash.
+   */
+  qualifiedName: string;
 }
 
 export interface DeploymentResumeParams {
-  namespace: string;
-
-  server: string;
-}
-
-export interface DeploymentResumeByNamespaceParams {
-  namespace: string;
+  /**
+   * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
+   * namespace-only servers). Use %2F to encode the slash.
+   */
+  qualifiedName: string;
 }
 
 export interface DeploymentStreamParams {
-  namespace: string;
-
-  server: string;
-}
-
-export interface DeploymentStreamByNamespaceParams {
-  namespace: string;
+  /**
+   * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
+   * namespace-only servers). Use %2F to encode the slash.
+   */
+  qualifiedName: string;
 }
 
 export declare namespace Deployments {
@@ -957,22 +611,12 @@ export declare namespace Deployments {
     type StdioDeployPayload as StdioDeployPayload,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
-    type DeploymentDeployByNamespaceResponse as DeploymentDeployByNamespaceResponse,
     type DeploymentGetResponse as DeploymentGetResponse,
-    type DeploymentGetByNamespaceResponse as DeploymentGetByNamespaceResponse,
-    type DeploymentListByNamespaceResponse as DeploymentListByNamespaceResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentResumeByNamespaceResponse as DeploymentResumeByNamespaceResponse,
     type DeploymentStreamResponse as DeploymentStreamResponse,
-    type DeploymentStreamByNamespaceResponse as DeploymentStreamByNamespaceResponse,
-    type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
-    type DeploymentDeployByNamespaceParams as DeploymentDeployByNamespaceParams,
     type DeploymentGetParams as DeploymentGetParams,
-    type DeploymentGetByNamespaceParams as DeploymentGetByNamespaceParams,
     type DeploymentResumeParams as DeploymentResumeParams,
-    type DeploymentResumeByNamespaceParams as DeploymentResumeByNamespaceParams,
     type DeploymentStreamParams as DeploymentStreamParams,
-    type DeploymentStreamByNamespaceParams as DeploymentStreamByNamespaceParams,
   };
 }
