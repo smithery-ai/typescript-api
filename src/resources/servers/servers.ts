@@ -4,23 +4,13 @@ import { APIResource } from '../../core/resource';
 import * as DeploymentsAPI from './deployments';
 import {
   DeployPayload,
-  DeploymentDeployByNamespaceParams,
-  DeploymentDeployByNamespaceResponse,
   DeploymentDeployParams,
   DeploymentDeployResponse,
-  DeploymentGetByNamespaceParams,
-  DeploymentGetByNamespaceResponse,
   DeploymentGetParams,
   DeploymentGetResponse,
-  DeploymentListByNamespaceResponse,
-  DeploymentListParams,
   DeploymentListResponse,
-  DeploymentResumeByNamespaceParams,
-  DeploymentResumeByNamespaceResponse,
   DeploymentResumeParams,
   DeploymentResumeResponse,
-  DeploymentStreamByNamespaceParams,
-  DeploymentStreamByNamespaceResponse,
   DeploymentStreamParams,
   DeploymentStreamResponse,
   Deployments,
@@ -31,56 +21,24 @@ import {
 } from './deployments';
 import * as DomainsAPI from './domains';
 import {
-  DomainCreateByNamespaceParams,
-  DomainCreateByNamespaceResponse,
   DomainCreateParams,
   DomainCreateResponse,
-  DomainDeleteByNamespaceParams,
-  DomainDeleteByNamespaceResponse,
   DomainDeleteParams,
   DomainDeleteResponse,
-  DomainListByNamespaceResponse,
-  DomainListParams,
   DomainListResponse,
-  DomainUpdateByNamespaceParams,
-  DomainUpdateByNamespaceResponse,
   DomainUpdateParams,
   DomainUpdateResponse,
   Domains,
 } from './domains';
 import * as LogsAPI from './logs';
-import {
-  LogListByNamespaceParams,
-  LogListByNamespaceResponse,
-  LogListParams,
-  LogListResponse,
-  Logs,
-} from './logs';
+import { LogListParams, LogListResponse, Logs } from './logs';
 import * as RepoAPI from './repo';
-import {
-  Repo,
-  RepoDeleteByNamespaceResponse,
-  RepoDeleteParams,
-  RepoDeleteResponse,
-  RepoGetByNamespaceResponse,
-  RepoGetParams,
-  RepoGetResponse,
-  RepoSetByNamespaceParams,
-  RepoSetByNamespaceResponse,
-  RepoSetParams,
-  RepoSetResponse,
-} from './repo';
+import { Repo, RepoDeleteResponse, RepoGetResponse, RepoSetParams, RepoSetResponse } from './repo';
 import * as SecretsAPI from './secrets';
 import {
-  SecretDeleteByNamespaceParams,
-  SecretDeleteByNamespaceResponse,
   SecretDeleteParams,
   SecretDeleteResponse,
-  SecretListByNamespaceResponse,
-  SecretListParams,
   SecretListResponse,
-  SecretSetByNamespaceParams,
-  SecretSetByNamespaceResponse,
   SecretSetParams,
   SecretSetResponse,
   Secrets,
@@ -99,42 +57,36 @@ export class Servers extends APIResource {
   domains: DomainsAPI.Domains = new DomainsAPI.Domains(this._client);
 
   /**
-   * Create a new server under the specified namespace. This endpoint is idempotent -
-   * if the server already exists and is owned by the user, returns success.
+   * Create a new server. Idempotent — returns success if the server already exists
+   * and is owned by the caller.
    *
    * @example
    * ```ts
-   * const server = await client.servers.create('server', {
-   *   namespace: 'namespace',
-   * });
+   * const server = await client.servers.create('qualifiedName');
    * ```
    */
   create(
-    server: string,
-    params: ServerCreateParams,
+    qualifiedName: string,
+    body: ServerCreateParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ServerCreateResponse> {
-    const { namespace, ...body } = params;
-    return this._client.put(path`/servers/${namespace}/${server}`, { body, ...options });
+    return this._client.put(path`/servers/${qualifiedName}`, { body, ...options });
   }
 
   /**
-   * Update metadata for a server by namespace and server name.
+   * Update server metadata such as display name, description, icon, or visibility.
    *
    * @example
    * ```ts
-   * const server = await client.servers.update('server', {
-   *   namespace: 'namespace',
-   * });
+   * const server = await client.servers.update('qualifiedName');
    * ```
    */
   update(
-    server: string,
-    params: ServerUpdateParams,
+    qualifiedName: string,
+    body: ServerUpdateParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ServerUpdateResponse> {
-    const { namespace, ...body } = params;
-    return this._client.patch(path`/servers/${namespace}/${server}`, { body, ...options });
+    return this._client.patch(path`/servers/${qualifiedName}`, { body, ...options });
   }
 
   /**
@@ -158,60 +110,32 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Delete a server by namespace and server name.
+   * Permanently delete a server, its releases, and associated resources.
    *
    * @example
    * ```ts
-   * const server = await client.servers.delete('server', {
-   *   namespace: 'namespace',
-   * });
+   * const server = await client.servers.delete('qualifiedName');
    * ```
    */
-  delete(
-    server: string,
-    params: ServerDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<ServerDeleteResponse> {
-    const { namespace } = params;
-    return this._client.delete(path`/servers/${namespace}/${server}`, options);
+  delete(qualifiedName: string, options?: RequestOptions): APIPromise<ServerDeleteResponse> {
+    return this._client.delete(path`/servers/${qualifiedName}`, options);
   }
 
   /**
-   * Create a namespace-only server where the namespace is also the server
-   * identifier. This endpoint is idempotent - if the server already exists and is
-   * owned by the user, returns success.
+   * Download the MCPB bundle for the latest successful stdio release.
    *
    * @example
    * ```ts
-   * const response = await client.servers.createByNamespace(
-   *   'namespace',
+   * const response = await client.servers.download(
+   *   'qualifiedName',
    * );
-   * ```
-   */
-  createByNamespace(
-    namespace: string,
-    body: ServerCreateByNamespaceParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ServerCreateByNamespaceResponse> {
-    return this._client.put(path`/servers/${namespace}`, { body, ...options });
-  }
-
-  /**
-   * Download the MCPB bundle for the latest successful stdio deployment
-   *
-   * @example
-   * ```ts
-   * const response = await client.servers.download('server', {
-   *   namespace: 'namespace',
-   * });
    *
    * const content = await response.blob();
    * console.log(content);
    * ```
    */
-  download(server: string, params: ServerDownloadParams, options?: RequestOptions): APIPromise<Response> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/${server}/download`, {
+  download(qualifiedName: string, options?: RequestOptions): APIPromise<Response> {
+    return this._client.get(path`/servers/${qualifiedName}/download`, {
       ...options,
       headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
       __binaryResponse: true,
@@ -219,53 +143,15 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Get a single server by its namespace and server name.
+   * Retrieve server details including connections, tools, and security status.
    *
    * @example
    * ```ts
-   * const server = await client.servers.get('server', {
-   *   namespace: 'namespace',
-   * });
+   * const server = await client.servers.get('qualifiedName');
    * ```
    */
-  get(server: string, params: ServerGetParams, options?: RequestOptions): APIPromise<ServerGetResponse> {
-    const { namespace } = params;
-    return this._client.get(path`/servers/${namespace}/${server}`, options);
-  }
-
-  /**
-   * Get a server by namespace name. Used for namespace-only servers where the
-   * namespace name is also the server name. Also handles deprecated encoded
-   * patterns.
-   *
-   * @example
-   * ```ts
-   * const response = await client.servers.getByNamespace(
-   *   'namespace',
-   * );
-   * ```
-   */
-  getByNamespace(namespace: string, options?: RequestOptions): APIPromise<ServerGetByNamespaceResponse> {
-    return this._client.get(path`/servers/${namespace}`, options);
-  }
-
-  /**
-   * Update metadata for a namespace-only server where the namespace is also the
-   * server identifier.
-   *
-   * @example
-   * ```ts
-   * const response = await client.servers.updateByNamespace(
-   *   'namespace',
-   * );
-   * ```
-   */
-  updateByNamespace(
-    namespace: string,
-    body: ServerUpdateByNamespaceParams | null | undefined = {},
-    options?: RequestOptions,
-  ): APIPromise<ServerUpdateByNamespaceResponse> {
-    return this._client.patch(path`/servers/${namespace}`, { body, ...options });
+  get(qualifiedName: string, options?: RequestOptions): APIPromise<ServerGetResponse> {
+    return this._client.get(path`/servers/${qualifiedName}`, options);
   }
 }
 
@@ -422,18 +308,6 @@ export interface ServerDeleteResponse {
   success: boolean;
 }
 
-export interface ServerCreateByNamespaceResponse {
-  createdAt: string;
-
-  description: string;
-
-  displayName: string;
-
-  namespace: string;
-
-  server: string;
-}
-
 export interface ServerGetResponse {
   connections: Array<ServerGetResponse.StdioConnection | ServerGetResponse.HTTPConnection>;
 
@@ -496,129 +370,23 @@ export namespace ServerGetResponse {
   }
 }
 
-export interface ServerGetByNamespaceResponse {
-  connections: Array<
-    ServerGetByNamespaceResponse.StdioConnection | ServerGetByNamespaceResponse.HTTPConnection
-  >;
-
-  deploymentUrl: string | null;
-
-  description: string;
-
-  displayName: string;
-
-  iconUrl: string | null;
-
-  qualifiedName: string;
-
-  remote: boolean;
-
-  security: ServerGetByNamespaceResponse.Security | null;
-
-  tools: Array<ServerGetByNamespaceResponse.Tool> | null;
-}
-
-export namespace ServerGetByNamespaceResponse {
-  export interface StdioConnection {
-    configSchema: { [key: string]: unknown };
-
-    type: 'stdio';
-
-    bundleUrl?: string;
-
-    runtime?: string;
-
-    stdioFunction?: string;
-  }
-
-  export interface HTTPConnection {
-    configSchema: { [key: string]: unknown };
-
-    deploymentUrl: string;
-
-    type: 'http';
-  }
-
-  export interface Security {
-    scanPassed: boolean;
-  }
-
-  export interface Tool {
-    description: string | null;
-
-    inputSchema: Tool.InputSchema;
-
-    name: string;
-  }
-
-  export namespace Tool {
-    export interface InputSchema {
-      type: 'object';
-
-      properties?: { [key: string]: unknown };
-    }
-  }
-}
-
-export interface ServerUpdateByNamespaceResponse {
-  namespace: string;
-
-  server: string;
-
-  success: boolean;
-}
-
 export interface ServerCreateParams {
-  /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Body param
-   */
   description?: string;
 
-  /**
-   * Body param
-   */
   displayName?: string;
 }
 
 export interface ServerUpdateParams {
-  /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Body param
-   */
   description?: string;
 
-  /**
-   * Body param
-   */
   displayName?: string;
 
-  /**
-   * Body param
-   */
   homepage?: string | null;
 
-  /**
-   * Body param
-   */
   iconUrl?: string | null;
 
-  /**
-   * Body param
-   */
   license?: string | null;
 
-  /**
-   * Body param
-   */
   unlisted?: boolean;
 }
 
@@ -689,38 +457,6 @@ export interface ServerListParams extends SmitheryPageParams {
   verified?: '0' | '1' | 'true' | 'false';
 }
 
-export interface ServerDeleteParams {
-  namespace: string;
-}
-
-export interface ServerCreateByNamespaceParams {
-  description?: string;
-
-  displayName?: string;
-}
-
-export interface ServerDownloadParams {
-  namespace: string;
-}
-
-export interface ServerGetParams {
-  namespace: string;
-}
-
-export interface ServerUpdateByNamespaceParams {
-  description?: string;
-
-  displayName?: string;
-
-  homepage?: string | null;
-
-  iconUrl?: string | null;
-
-  license?: string | null;
-
-  unlisted?: boolean;
-}
-
 Servers.Deployments = Deployments;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
@@ -736,19 +472,11 @@ export declare namespace Servers {
     type ServerUpdateResponse as ServerUpdateResponse,
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
-    type ServerCreateByNamespaceResponse as ServerCreateByNamespaceResponse,
     type ServerGetResponse as ServerGetResponse,
-    type ServerGetByNamespaceResponse as ServerGetByNamespaceResponse,
-    type ServerUpdateByNamespaceResponse as ServerUpdateByNamespaceResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerCreateParams as ServerCreateParams,
     type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
-    type ServerDeleteParams as ServerDeleteParams,
-    type ServerCreateByNamespaceParams as ServerCreateByNamespaceParams,
-    type ServerDownloadParams as ServerDownloadParams,
-    type ServerGetParams as ServerGetParams,
-    type ServerUpdateByNamespaceParams as ServerUpdateByNamespaceParams,
   };
 
   export {
@@ -760,60 +488,32 @@ export declare namespace Servers {
     type StdioDeployPayload as StdioDeployPayload,
     type DeploymentListResponse as DeploymentListResponse,
     type DeploymentDeployResponse as DeploymentDeployResponse,
-    type DeploymentDeployByNamespaceResponse as DeploymentDeployByNamespaceResponse,
     type DeploymentGetResponse as DeploymentGetResponse,
-    type DeploymentGetByNamespaceResponse as DeploymentGetByNamespaceResponse,
-    type DeploymentListByNamespaceResponse as DeploymentListByNamespaceResponse,
     type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentResumeByNamespaceResponse as DeploymentResumeByNamespaceResponse,
     type DeploymentStreamResponse as DeploymentStreamResponse,
-    type DeploymentStreamByNamespaceResponse as DeploymentStreamByNamespaceResponse,
-    type DeploymentListParams as DeploymentListParams,
     type DeploymentDeployParams as DeploymentDeployParams,
-    type DeploymentDeployByNamespaceParams as DeploymentDeployByNamespaceParams,
     type DeploymentGetParams as DeploymentGetParams,
-    type DeploymentGetByNamespaceParams as DeploymentGetByNamespaceParams,
     type DeploymentResumeParams as DeploymentResumeParams,
-    type DeploymentResumeByNamespaceParams as DeploymentResumeByNamespaceParams,
     type DeploymentStreamParams as DeploymentStreamParams,
-    type DeploymentStreamByNamespaceParams as DeploymentStreamByNamespaceParams,
   };
 
-  export {
-    Logs as Logs,
-    type LogListResponse as LogListResponse,
-    type LogListByNamespaceResponse as LogListByNamespaceResponse,
-    type LogListParams as LogListParams,
-    type LogListByNamespaceParams as LogListByNamespaceParams,
-  };
+  export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
 
   export {
     Secrets as Secrets,
     type SecretListResponse as SecretListResponse,
     type SecretDeleteResponse as SecretDeleteResponse,
-    type SecretDeleteByNamespaceResponse as SecretDeleteByNamespaceResponse,
-    type SecretListByNamespaceResponse as SecretListByNamespaceResponse,
     type SecretSetResponse as SecretSetResponse,
-    type SecretSetByNamespaceResponse as SecretSetByNamespaceResponse,
-    type SecretListParams as SecretListParams,
     type SecretDeleteParams as SecretDeleteParams,
-    type SecretDeleteByNamespaceParams as SecretDeleteByNamespaceParams,
     type SecretSetParams as SecretSetParams,
-    type SecretSetByNamespaceParams as SecretSetByNamespaceParams,
   };
 
   export {
     Repo as Repo,
     type RepoDeleteResponse as RepoDeleteResponse,
-    type RepoDeleteByNamespaceResponse as RepoDeleteByNamespaceResponse,
     type RepoGetResponse as RepoGetResponse,
-    type RepoGetByNamespaceResponse as RepoGetByNamespaceResponse,
     type RepoSetResponse as RepoSetResponse,
-    type RepoSetByNamespaceResponse as RepoSetByNamespaceResponse,
-    type RepoDeleteParams as RepoDeleteParams,
-    type RepoGetParams as RepoGetParams,
     type RepoSetParams as RepoSetParams,
-    type RepoSetByNamespaceParams as RepoSetByNamespaceParams,
   };
 
   export {
@@ -822,16 +522,8 @@ export declare namespace Servers {
     type DomainUpdateResponse as DomainUpdateResponse,
     type DomainListResponse as DomainListResponse,
     type DomainDeleteResponse as DomainDeleteResponse,
-    type DomainCreateByNamespaceResponse as DomainCreateByNamespaceResponse,
-    type DomainDeleteByNamespaceResponse as DomainDeleteByNamespaceResponse,
-    type DomainListByNamespaceResponse as DomainListByNamespaceResponse,
-    type DomainUpdateByNamespaceResponse as DomainUpdateByNamespaceResponse,
     type DomainCreateParams as DomainCreateParams,
     type DomainUpdateParams as DomainUpdateParams,
-    type DomainListParams as DomainListParams,
     type DomainDeleteParams as DomainDeleteParams,
-    type DomainCreateByNamespaceParams as DomainCreateByNamespaceParams,
-    type DomainDeleteByNamespaceParams as DomainDeleteByNamespaceParams,
-    type DomainUpdateByNamespaceParams as DomainUpdateByNamespaceParams,
   };
 }
