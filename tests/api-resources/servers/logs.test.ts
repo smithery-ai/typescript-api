@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource logs', () => {
   // Prism tests are disabled
-  test.skip('list: only required params', async () => {
-    const responsePromise = client.servers.logs.list('server', { namespace: 'namespace' });
+  test.skip('list', async () => {
+    const responsePromise = client.servers.logs.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,33 +21,11 @@ describe('resource logs', () => {
   });
 
   // Prism tests are disabled
-  test.skip('list: required and optional params', async () => {
-    const response = await client.servers.logs.list('server', {
-      namespace: 'namespace',
-      from: '2026-01-01T00:00:00Z',
-      limit: 50,
-      to: '2026-01-01T01:00:00Z',
-    });
-  });
-
-  // Prism tests are disabled
-  test.skip('listByNamespace', async () => {
-    const responsePromise = client.servers.logs.listByNamespace('namespace');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Prism tests are disabled
-  test.skip('listByNamespace: request options and params are passed correctly', async () => {
+  test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.servers.logs.listByNamespace(
-        'namespace',
+      client.servers.logs.list(
+        'qualifiedName',
         {
           from: '2026-01-01T00:00:00Z',
           limit: 50,

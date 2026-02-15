@@ -7,38 +7,21 @@ import { path } from '../../internal/utils/path';
 
 export class Logs extends APIResource {
   /**
-   * Fetch recent runtime logs for the server's deployed Worker, grouped by
-   * invocation (requires ownership).
+   * Fetch recent runtime logs grouped by invocation.
    *
    * @example
    * ```ts
-   * const logs = await client.servers.logs.list('server', {
-   *   namespace: 'namespace',
-   * });
-   * ```
-   */
-  list(server: string, params: LogListParams, options?: RequestOptions): APIPromise<LogListResponse> {
-    const { namespace, ...query } = params;
-    return this._client.get(path`/servers/${namespace}/${server}/logs`, { query, ...options });
-  }
-
-  /**
-   * Fetch recent runtime logs for the server's deployed Worker, grouped by
-   * invocation (requires ownership).
-   *
-   * @example
-   * ```ts
-   * const response = await client.servers.logs.listByNamespace(
-   *   'namespace',
+   * const logs = await client.servers.logs.list(
+   *   'qualifiedName',
    * );
    * ```
    */
-  listByNamespace(
-    namespace: string,
-    query: LogListByNamespaceParams | null | undefined = {},
+  list(
+    qualifiedName: string,
+    query: LogListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<LogListByNamespaceResponse> {
-    return this._client.get(path`/servers/${namespace}/logs`, { query, ...options });
+  ): APIPromise<LogListResponse> {
+    return this._client.get(path`/servers/${qualifiedName}/logs`, { query, ...options });
   }
 }
 
@@ -107,94 +90,7 @@ export namespace LogListResponse {
   }
 }
 
-export interface LogListByNamespaceResponse {
-  invocations: Array<LogListByNamespaceResponse.Invocation>;
-
-  /**
-   * Total invocations matching query
-   */
-  total: number;
-}
-
-export namespace LogListByNamespaceResponse {
-  export interface Invocation {
-    id: string;
-
-    duration: Invocation.Duration;
-
-    exceptions: Array<Invocation.Exception>;
-
-    logs: Array<Invocation.Log>;
-
-    request: Invocation.Request;
-
-    response: Invocation.Response;
-
-    timestamp: string;
-  }
-
-  export namespace Invocation {
-    export interface Duration {
-      cpuMs: number;
-
-      wallMs: number;
-    }
-
-    export interface Exception {
-      message: string;
-
-      name: string;
-
-      timestamp: string;
-
-      stack?: string;
-    }
-
-    export interface Log {
-      level: string;
-
-      message: string;
-
-      timestamp: string;
-    }
-
-    export interface Request {
-      method: string;
-
-      url: string;
-    }
-
-    export interface Response {
-      outcome: string;
-
-      status: number;
-    }
-  }
-}
-
 export interface LogListParams {
-  /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Query param: Start of time range (ISO 8601).
-   */
-  from?: string;
-
-  /**
-   * Query param: Max invocations to return. Defaults to 50.
-   */
-  limit?: number;
-
-  /**
-   * Query param: End of time range (ISO 8601).
-   */
-  to?: string;
-}
-
-export interface LogListByNamespaceParams {
   /**
    * Start of time range (ISO 8601).
    */
@@ -212,10 +108,5 @@ export interface LogListByNamespaceParams {
 }
 
 export declare namespace Logs {
-  export {
-    type LogListResponse as LogListResponse,
-    type LogListByNamespaceResponse as LogListByNamespaceResponse,
-    type LogListParams as LogListParams,
-    type LogListByNamespaceParams as LogListByNamespaceParams,
-  };
+  export { type LogListResponse as LogListResponse, type LogListParams as LogListParams };
 }

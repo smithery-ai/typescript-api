@@ -31,18 +31,10 @@ export {
   type ServerUpdateResponse,
   type ServerListResponse,
   type ServerDeleteResponse,
-  type ServerCreateByNamespaceResponse,
   type ServerGetResponse,
-  type ServerGetByNamespaceResponse,
-  type ServerUpdateByNamespaceResponse,
   type ServerCreateParams,
   type ServerUpdateParams,
   type ServerListParams,
-  type ServerDeleteParams,
-  type ServerCreateByNamespaceParams,
-  type ServerDownloadParams,
-  type ServerGetParams,
-  type ServerUpdateByNamespaceParams,
   type ServerListResponsesSmitheryPage,
 } from './servers/servers';
 export {
