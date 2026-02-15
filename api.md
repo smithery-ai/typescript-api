@@ -121,6 +121,30 @@ Methods:
 - <code title="put /servers/{namespace}/{server}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">set</a>(server, { ...params }) -> RepoSetResponse</code>
 - <code title="put /servers/{namespace}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">setByNamespace</a>(namespace, { ...params }) -> RepoSetByNamespaceResponse</code>
 
+## Domains
+
+Types:
+
+- <code><a href="./src/resources/servers/domains.ts">DomainCreateResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainUpdateResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainListResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainDeleteResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainCreateByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainDeleteByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainListByNamespaceResponse</a></code>
+- <code><a href="./src/resources/servers/domains.ts">DomainUpdateByNamespaceResponse</a></code>
+
+Methods:
+
+- <code title="post /servers/{namespace}/{server}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">create</a>(server, { ...params }) -> DomainCreateResponse</code>
+- <code title="patch /servers/{namespace}/{server}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">update</a>(domainID, { ...params }) -> DomainUpdateResponse</code>
+- <code title="get /servers/{namespace}/{server}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">list</a>(server, { ...params }) -> DomainListResponse</code>
+- <code title="delete /servers/{namespace}/{server}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">delete</a>(domainID, { ...params }) -> DomainDeleteResponse</code>
+- <code title="post /servers/{namespace}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">createByNamespace</a>(namespace, { ...params }) -> DomainCreateByNamespaceResponse</code>
+- <code title="delete /servers/{namespace}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">deleteByNamespace</a>(domainID, { ...params }) -> DomainDeleteByNamespaceResponse</code>
+- <code title="get /servers/{namespace}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">listByNamespace</a>(namespace) -> DomainListByNamespaceResponse</code>
+- <code title="patch /servers/{namespace}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">updateByNamespace</a>(domainID, { ...params }) -> DomainUpdateByNamespaceResponse</code>
+
 # Uplink
 
 Types:

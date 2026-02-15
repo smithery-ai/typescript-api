@@ -29,6 +29,25 @@ import {
   ServerCard,
   StdioDeployPayload,
 } from './deployments';
+import * as DomainsAPI from './domains';
+import {
+  DomainCreateByNamespaceParams,
+  DomainCreateByNamespaceResponse,
+  DomainCreateParams,
+  DomainCreateResponse,
+  DomainDeleteByNamespaceParams,
+  DomainDeleteByNamespaceResponse,
+  DomainDeleteParams,
+  DomainDeleteResponse,
+  DomainListByNamespaceResponse,
+  DomainListParams,
+  DomainListResponse,
+  DomainUpdateByNamespaceParams,
+  DomainUpdateByNamespaceResponse,
+  DomainUpdateParams,
+  DomainUpdateResponse,
+  Domains,
+} from './domains';
 import * as LogsAPI from './logs';
 import {
   LogListByNamespaceParams,
@@ -77,6 +96,7 @@ export class Servers extends APIResource {
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
   secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
   repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
+  domains: DomainsAPI.Domains = new DomainsAPI.Domains(this._client);
 
   /**
    * Create a new server under the specified namespace. This endpoint is idempotent -
@@ -705,6 +725,7 @@ Servers.Deployments = Deployments;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
 Servers.Repo = Repo;
+Servers.Domains = Domains;
 
 export declare namespace Servers {
   export {
@@ -793,5 +814,24 @@ export declare namespace Servers {
     type RepoGetParams as RepoGetParams,
     type RepoSetParams as RepoSetParams,
     type RepoSetByNamespaceParams as RepoSetByNamespaceParams,
+  };
+
+  export {
+    Domains as Domains,
+    type DomainCreateResponse as DomainCreateResponse,
+    type DomainUpdateResponse as DomainUpdateResponse,
+    type DomainListResponse as DomainListResponse,
+    type DomainDeleteResponse as DomainDeleteResponse,
+    type DomainCreateByNamespaceResponse as DomainCreateByNamespaceResponse,
+    type DomainDeleteByNamespaceResponse as DomainDeleteByNamespaceResponse,
+    type DomainListByNamespaceResponse as DomainListByNamespaceResponse,
+    type DomainUpdateByNamespaceResponse as DomainUpdateByNamespaceResponse,
+    type DomainCreateParams as DomainCreateParams,
+    type DomainUpdateParams as DomainUpdateParams,
+    type DomainListParams as DomainListParams,
+    type DomainDeleteParams as DomainDeleteParams,
+    type DomainCreateByNamespaceParams as DomainCreateByNamespaceParams,
+    type DomainDeleteByNamespaceParams as DomainDeleteByNamespaceParams,
+    type DomainUpdateByNamespaceParams as DomainUpdateByNamespaceParams,
   };
 }

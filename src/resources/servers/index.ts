@@ -28,6 +28,24 @@ export {
   type DeploymentStreamByNamespaceParams,
 } from './deployments';
 export {
+  Domains,
+  type DomainCreateResponse,
+  type DomainUpdateResponse,
+  type DomainListResponse,
+  type DomainDeleteResponse,
+  type DomainCreateByNamespaceResponse,
+  type DomainDeleteByNamespaceResponse,
+  type DomainListByNamespaceResponse,
+  type DomainUpdateByNamespaceResponse,
+  type DomainCreateParams,
+  type DomainUpdateParams,
+  type DomainListParams,
+  type DomainDeleteParams,
+  type DomainCreateByNamespaceParams,
+  type DomainDeleteByNamespaceParams,
+  type DomainUpdateByNamespaceParams,
+} from './domains';
+export {
   Logs,
   type LogListResponse,
   type LogListByNamespaceResponse,
