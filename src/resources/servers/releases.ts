@@ -9,20 +9,20 @@ import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
-export class Deployments extends APIResource {
+export class Releases extends APIResource {
   /**
    * List releases ordered by most recent first. Logs are omitted — fetch a specific
    * release to see logs.
    *
    * @example
    * ```ts
-   * const deployments = await client.servers.deployments.list(
+   * const releases = await client.servers.releases.list(
    *   'qualifiedName',
    * );
    * ```
    */
-  list(qualifiedName: string, options?: RequestOptions): APIPromise<DeploymentListResponse> {
-    return this._client.get(path`/servers/${qualifiedName}/deployments`, options);
+  list(qualifiedName: string, options?: RequestOptions): APIPromise<ReleaseListResponse> {
+    return this._client.get(path`/servers/${qualifiedName}/releases`, options);
   }
 
   /**
@@ -31,7 +31,7 @@ export class Deployments extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.servers.deployments.deploy(
+   * const response = await client.servers.releases.deploy(
    *   'qualifiedName',
    *   { payload: 'payload' },
    * );
@@ -39,11 +39,11 @@ export class Deployments extends APIResource {
    */
   deploy(
     qualifiedName: string,
-    body: DeploymentDeployParams,
+    body: ReleaseDeployParams,
     options?: RequestOptions,
-  ): APIPromise<DeploymentDeployResponse> {
+  ): APIPromise<ReleaseDeployResponse> {
     return this._client.put(
-      path`/servers/${qualifiedName}/deployments`,
+      path`/servers/${qualifiedName}/releases`,
       multipartFormRequestOptions({ body, ...options }, this._client),
     );
   }
@@ -54,15 +54,14 @@ export class Deployments extends APIResource {
    *
    * @example
    * ```ts
-   * const deployment = await client.servers.deployments.get(
-   *   'id',
-   *   { qualifiedName: 'qualifiedName' },
-   * );
+   * const release = await client.servers.releases.get('id', {
+   *   qualifiedName: 'qualifiedName',
+   * });
    * ```
    */
-  get(id: string, params: DeploymentGetParams, options?: RequestOptions): APIPromise<DeploymentGetResponse> {
+  get(id: string, params: ReleaseGetParams, options?: RequestOptions): APIPromise<ReleaseGetResponse> {
     const { qualifiedName } = params;
-    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}`, options);
+    return this._client.get(path`/servers/${qualifiedName}/releases/${id}`, options);
   }
 
   /**
@@ -71,7 +70,7 @@ export class Deployments extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.servers.deployments.resume(
+   * const response = await client.servers.releases.resume(
    *   'id',
    *   { qualifiedName: 'qualifiedName' },
    * );
@@ -79,11 +78,11 @@ export class Deployments extends APIResource {
    */
   resume(
     id: string,
-    params: DeploymentResumeParams,
+    params: ReleaseResumeParams,
     options?: RequestOptions,
-  ): APIPromise<DeploymentResumeResponse> {
+  ): APIPromise<ReleaseResumeResponse> {
     const { qualifiedName } = params;
-    return this._client.post(path`/servers/${qualifiedName}/deployments/${id}/resume`, options);
+    return this._client.post(path`/servers/${qualifiedName}/releases/${id}/resume`, options);
   }
 
   /**
@@ -91,7 +90,7 @@ export class Deployments extends APIResource {
    *
    * @example
    * ```ts
-   * const response = await client.servers.deployments.stream(
+   * const response = await client.servers.releases.stream(
    *   'id',
    *   { qualifiedName: 'qualifiedName' },
    * );
@@ -99,15 +98,15 @@ export class Deployments extends APIResource {
    */
   stream(
     id: string,
-    params: DeploymentStreamParams,
+    params: ReleaseStreamParams,
     options?: RequestOptions,
-  ): APIPromise<Stream<DeploymentStreamResponse>> {
+  ): APIPromise<Stream<ReleaseStreamResponse>> {
     const { qualifiedName } = params;
-    return this._client.get(path`/servers/${qualifiedName}/deployments/${id}/stream`, {
+    return this._client.get(path`/servers/${qualifiedName}/releases/${id}/stream`, {
       ...options,
       headers: buildHeaders([{ Accept: 'text/event-stream' }, options?.headers]),
       stream: true,
-    }) as APIPromise<Stream<DeploymentStreamResponse>>;
+    }) as APIPromise<Stream<ReleaseStreamResponse>>;
   }
 }
 
@@ -373,10 +372,10 @@ export namespace StdioDeployPayload {
   }
 }
 
-export type DeploymentListResponse = Array<DeploymentListResponse.DeploymentListResponseItem>;
+export type ReleaseListResponse = Array<ReleaseListResponse.ReleaseListResponseItem>;
 
-export namespace DeploymentListResponse {
-  export interface DeploymentListResponseItem {
+export namespace ReleaseListResponse {
+  export interface ReleaseListResponseItem {
     id: string;
 
     /**
@@ -428,7 +427,7 @@ export namespace DeploymentListResponse {
   }
 }
 
-export interface DeploymentDeployResponse {
+export interface ReleaseDeployResponse {
   /**
    * Unique identifier for this release.
    */
@@ -450,7 +449,7 @@ export interface DeploymentDeployResponse {
   warnings?: Array<string>;
 }
 
-export interface DeploymentGetResponse {
+export interface ReleaseGetResponse {
   id: string;
 
   /**
@@ -493,7 +492,7 @@ export interface DeploymentGetResponse {
   /**
    * Pipeline log entries. Only included when fetching a single release.
    */
-  logs?: Array<DeploymentGetResponse.Log>;
+  logs?: Array<ReleaseGetResponse.Log>;
 
   /**
    * The MCP endpoint URL for connecting to this server.
@@ -506,7 +505,7 @@ export interface DeploymentGetResponse {
   upstreamUrl?: string | null;
 }
 
-export namespace DeploymentGetResponse {
+export namespace ReleaseGetResponse {
   export interface Log {
     /**
      * Log level: 'start', 'end', 'info', 'success', or 'failure'.
@@ -545,7 +544,7 @@ export namespace DeploymentGetResponse {
   }
 }
 
-export interface DeploymentResumeResponse {
+export interface ReleaseResumeResponse {
   deploymentId: string;
 
   status: string;
@@ -554,9 +553,9 @@ export interface DeploymentResumeResponse {
 /**
  * SSE events: init (with buffered logs), log, status, complete
  */
-export type DeploymentStreamResponse = string;
+export type ReleaseStreamResponse = string;
 
-export interface DeploymentDeployParams {
+export interface ReleaseDeployParams {
   /**
    * JSON-encoded release payload. See DeployPayload schema for structure.
    */
@@ -578,7 +577,7 @@ export interface DeploymentDeployParams {
   sourcemap?: Uploadable;
 }
 
-export interface DeploymentGetParams {
+export interface ReleaseGetParams {
   /**
    * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
    * namespace-only servers). Use %2F to encode the slash.
@@ -586,7 +585,7 @@ export interface DeploymentGetParams {
   qualifiedName: string;
 }
 
-export interface DeploymentResumeParams {
+export interface ReleaseResumeParams {
   /**
    * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
    * namespace-only servers). Use %2F to encode the slash.
@@ -594,7 +593,7 @@ export interface DeploymentResumeParams {
   qualifiedName: string;
 }
 
-export interface DeploymentStreamParams {
+export interface ReleaseStreamParams {
   /**
    * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
    * namespace-only servers). Use %2F to encode the slash.
@@ -602,21 +601,21 @@ export interface DeploymentStreamParams {
   qualifiedName: string;
 }
 
-export declare namespace Deployments {
+export declare namespace Releases {
   export {
     type DeployPayload as DeployPayload,
     type ExternalDeployPayload as ExternalDeployPayload,
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
     type StdioDeployPayload as StdioDeployPayload,
-    type DeploymentListResponse as DeploymentListResponse,
-    type DeploymentDeployResponse as DeploymentDeployResponse,
-    type DeploymentGetResponse as DeploymentGetResponse,
-    type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentStreamResponse as DeploymentStreamResponse,
-    type DeploymentDeployParams as DeploymentDeployParams,
-    type DeploymentGetParams as DeploymentGetParams,
-    type DeploymentResumeParams as DeploymentResumeParams,
-    type DeploymentStreamParams as DeploymentStreamParams,
+    type ReleaseListResponse as ReleaseListResponse,
+    type ReleaseDeployResponse as ReleaseDeployResponse,
+    type ReleaseGetResponse as ReleaseGetResponse,
+    type ReleaseResumeResponse as ReleaseResumeResponse,
+    type ReleaseStreamResponse as ReleaseStreamResponse,
+    type ReleaseDeployParams as ReleaseDeployParams,
+    type ReleaseGetParams as ReleaseGetParams,
+    type ReleaseResumeParams as ReleaseResumeParams,
+    type ReleaseStreamParams as ReleaseStreamParams,
   };
 }

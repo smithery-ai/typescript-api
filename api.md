@@ -30,28 +30,28 @@ Methods:
 - <code title="get /servers/{qualifiedName}/download">client.servers.<a href="./src/resources/servers/servers.ts">download</a>(qualifiedName) -> Response</code>
 - <code title="get /servers/{qualifiedName}">client.servers.<a href="./src/resources/servers/servers.ts">get</a>(qualifiedName) -> ServerGetResponse</code>
 
-## Deployments
+## Releases
 
 Types:
 
-- <code><a href="./src/resources/servers/deployments.ts">DeployPayload</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">ExternalDeployPayload</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">HostedDeployPayload</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">ServerCard</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">StdioDeployPayload</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentListResponse</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentDeployResponse</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentGetResponse</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentResumeResponse</a></code>
-- <code><a href="./src/resources/servers/deployments.ts">DeploymentStreamResponse</a></code>
+- <code><a href="./src/resources/servers/releases.ts">DeployPayload</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ExternalDeployPayload</a></code>
+- <code><a href="./src/resources/servers/releases.ts">HostedDeployPayload</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ServerCard</a></code>
+- <code><a href="./src/resources/servers/releases.ts">StdioDeployPayload</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ReleaseListResponse</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ReleaseDeployResponse</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ReleaseGetResponse</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ReleaseResumeResponse</a></code>
+- <code><a href="./src/resources/servers/releases.ts">ReleaseStreamResponse</a></code>
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">list</a>(qualifiedName) -> DeploymentListResponse</code>
-- <code title="put /servers/{qualifiedName}/deployments">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">deploy</a>(qualifiedName, { ...params }) -> DeploymentDeployResponse</code>
-- <code title="get /servers/{qualifiedName}/deployments/{id}">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">get</a>(id, { ...params }) -> DeploymentGetResponse</code>
-- <code title="post /servers/{qualifiedName}/deployments/{id}/resume">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">resume</a>(id, { ...params }) -> DeploymentResumeResponse</code>
-- <code title="get /servers/{qualifiedName}/deployments/{id}/stream">client.servers.deployments.<a href="./src/resources/servers/deployments.ts">stream</a>(id, { ...params }) -> string</code>
+- <code title="get /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">list</a>(qualifiedName) -> ReleaseListResponse</code>
+- <code title="put /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">deploy</a>(qualifiedName, { ...params }) -> ReleaseDeployResponse</code>
+- <code title="get /servers/{qualifiedName}/releases/{id}">client.servers.releases.<a href="./src/resources/servers/releases.ts">get</a>(id, { ...params }) -> ReleaseGetResponse</code>
+- <code title="post /servers/{qualifiedName}/releases/{id}/resume">client.servers.releases.<a href="./src/resources/servers/releases.ts">resume</a>(id, { ...params }) -> ReleaseResumeResponse</code>
+- <code title="get /servers/{qualifiedName}/releases/{id}/stream">client.servers.releases.<a href="./src/resources/servers/releases.ts">stream</a>(id, { ...params }) -> string</code>
 
 ## Logs
 
