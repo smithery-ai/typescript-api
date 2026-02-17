@@ -1,23 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 export {
-  Deployments,
-  type DeployPayload,
-  type ExternalDeployPayload,
-  type HostedDeployPayload,
-  type ServerCard,
-  type StdioDeployPayload,
-  type DeploymentListResponse,
-  type DeploymentDeployResponse,
-  type DeploymentGetResponse,
-  type DeploymentResumeResponse,
-  type DeploymentStreamResponse,
-  type DeploymentDeployParams,
-  type DeploymentGetParams,
-  type DeploymentResumeParams,
-  type DeploymentStreamParams,
-} from './deployments';
-export {
   Domains,
   type DomainCreateResponse,
   type DomainUpdateResponse,
@@ -28,6 +11,23 @@ export {
   type DomainDeleteParams,
 } from './domains';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
+export {
+  Releases,
+  type DeployPayload,
+  type ExternalDeployPayload,
+  type HostedDeployPayload,
+  type ServerCard,
+  type StdioDeployPayload,
+  type ReleaseListResponse,
+  type ReleaseDeployResponse,
+  type ReleaseGetResponse,
+  type ReleaseResumeResponse,
+  type ReleaseStreamResponse,
+  type ReleaseDeployParams,
+  type ReleaseGetParams,
+  type ReleaseResumeParams,
+  type ReleaseStreamParams,
+} from './releases';
 export {
   Repo,
   type RepoDeleteResponse,
