@@ -1,24 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as DeploymentsAPI from './deployments';
-import {
-  DeployPayload,
-  DeploymentDeployParams,
-  DeploymentDeployResponse,
-  DeploymentGetParams,
-  DeploymentGetResponse,
-  DeploymentListResponse,
-  DeploymentResumeParams,
-  DeploymentResumeResponse,
-  DeploymentStreamParams,
-  DeploymentStreamResponse,
-  Deployments,
-  ExternalDeployPayload,
-  HostedDeployPayload,
-  ServerCard,
-  StdioDeployPayload,
-} from './deployments';
 import * as DomainsAPI from './domains';
 import {
   DomainCreateParams,
@@ -32,6 +14,24 @@ import {
 } from './domains';
 import * as LogsAPI from './logs';
 import { LogListParams, LogListResponse, Logs } from './logs';
+import * as ReleasesAPI from './releases';
+import {
+  DeployPayload,
+  ExternalDeployPayload,
+  HostedDeployPayload,
+  ReleaseDeployParams,
+  ReleaseDeployResponse,
+  ReleaseGetParams,
+  ReleaseGetResponse,
+  ReleaseListResponse,
+  ReleaseResumeParams,
+  ReleaseResumeResponse,
+  ReleaseStreamParams,
+  ReleaseStreamResponse,
+  Releases,
+  ServerCard,
+  StdioDeployPayload,
+} from './releases';
 import * as RepoAPI from './repo';
 import { Repo, RepoDeleteResponse, RepoGetResponse, RepoSetParams, RepoSetResponse } from './repo';
 import * as SecretsAPI from './secrets';
@@ -50,7 +50,7 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Servers extends APIResource {
-  deployments: DeploymentsAPI.Deployments = new DeploymentsAPI.Deployments(this._client);
+  releases: ReleasesAPI.Releases = new ReleasesAPI.Releases(this._client);
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
   secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
   repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
@@ -457,7 +457,7 @@ export interface ServerListParams extends SmitheryPageParams {
   verified?: '0' | '1' | 'true' | 'false';
 }
 
-Servers.Deployments = Deployments;
+Servers.Releases = Releases;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
 Servers.Repo = Repo;
@@ -480,21 +480,21 @@ export declare namespace Servers {
   };
 
   export {
-    Deployments as Deployments,
+    Releases as Releases,
     type DeployPayload as DeployPayload,
     type ExternalDeployPayload as ExternalDeployPayload,
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
     type StdioDeployPayload as StdioDeployPayload,
-    type DeploymentListResponse as DeploymentListResponse,
-    type DeploymentDeployResponse as DeploymentDeployResponse,
-    type DeploymentGetResponse as DeploymentGetResponse,
-    type DeploymentResumeResponse as DeploymentResumeResponse,
-    type DeploymentStreamResponse as DeploymentStreamResponse,
-    type DeploymentDeployParams as DeploymentDeployParams,
-    type DeploymentGetParams as DeploymentGetParams,
-    type DeploymentResumeParams as DeploymentResumeParams,
-    type DeploymentStreamParams as DeploymentStreamParams,
+    type ReleaseListResponse as ReleaseListResponse,
+    type ReleaseDeployResponse as ReleaseDeployResponse,
+    type ReleaseGetResponse as ReleaseGetResponse,
+    type ReleaseResumeResponse as ReleaseResumeResponse,
+    type ReleaseStreamResponse as ReleaseStreamResponse,
+    type ReleaseDeployParams as ReleaseDeployParams,
+    type ReleaseGetParams as ReleaseGetParams,
+    type ReleaseResumeParams as ReleaseResumeParams,
+    type ReleaseStreamParams as ReleaseStreamParams,
   };
 
   export { Logs as Logs, type LogListResponse as LogListResponse, type LogListParams as LogListParams };
