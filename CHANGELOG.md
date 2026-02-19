@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.49.0 (2026-02-19)
+
+Full Changelog: [v0.48.0...v0.49.0](https://github.com/smithery-ai/typescript-api/compare/v0.48.0...v0.49.0)
+
+### Features
+
+* **api:** api update ([e64e662](https://github.com/smithery-ai/typescript-api/commit/e64e6622b2f88d6b7ea27ba36dc88756b4151b14))
+
+
+### Chores
+
+* **internal/client:** fix form-urlencoded requests ([b640360](https://github.com/smithery-ai/typescript-api/commit/b64036080213e0e958f320554b294ce5ba79144e))
+
 ## 0.48.0 (2026-02-17)
 
 Full Changelog: [v0.47.0...v0.48.0](https://github.com/smithery-ai/typescript-api/compare/v0.47.0...v0.48.0)
