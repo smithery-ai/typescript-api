@@ -224,6 +224,13 @@ export interface CreateConnectionRequest {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Webhook callback URL for server-to-client messages (HTTPS). When set, the MCP
+   * server will POST notifications and requests to this URL instead of using SSE.
+   * This field is unstable and may change before GA.
+   */
+  unstableCallbackUrl?: string;
 }
 
 export interface ConnectionDeleteResponse {
@@ -251,6 +258,13 @@ export interface ConnectionCreateParams {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Webhook callback URL for server-to-client messages (HTTPS). When set, the MCP
+   * server will POST notifications and requests to this URL instead of using SSE.
+   * This field is unstable and may change before GA.
+   */
+  unstableCallbackUrl?: string;
 }
 
 export interface ConnectionListParams {
@@ -310,6 +324,13 @@ export interface ConnectionSetParams {
    * Body param: Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Body param: Webhook callback URL for server-to-client messages (HTTPS). When
+   * set, the MCP server will POST notifications and requests to this URL instead of
+   * using SSE. This field is unstable and may change before GA.
+   */
+  unstableCallbackUrl?: string;
 }
 
 Connections.Mcp = Mcp;
