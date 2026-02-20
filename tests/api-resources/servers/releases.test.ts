@@ -76,7 +76,7 @@ describe('resource releases', () => {
     const response = await client.servers.releases.resume('id', { qualifiedName: 'qualifiedName' });
   });
 
-  // Mock server doesn't support text/event-stream responses
+  // Mock server tests are disabled
   test.skip('stream: only required params', async () => {
     const responsePromise = client.servers.releases.stream('id', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +88,7 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server doesn't support text/event-stream responses
+  // Mock server tests are disabled
   test.skip('stream: required and optional params', async () => {
     const response = await client.servers.releases.stream('id', { qualifiedName: 'qualifiedName' });
   });
