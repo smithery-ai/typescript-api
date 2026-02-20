@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource votes', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.skills.votes.create('slug', { namespace: 'namespace', vote: 'up' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,12 +20,12 @@ describe('resource votes', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.skills.votes.create('slug', { namespace: 'namespace', vote: 'up' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.skills.votes.delete('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -37,12 +37,12 @@ describe('resource votes', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.skills.votes.delete('slug', { namespace: 'namespace' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.skills.votes.get('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -54,7 +54,7 @@ describe('resource votes', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.skills.votes.get('slug', { namespace: 'namespace' });
   });

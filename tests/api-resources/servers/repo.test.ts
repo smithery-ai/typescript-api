@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource repo', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.servers.repo.delete('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource repo', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.servers.repo.get('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource repo', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: only required params', async () => {
     const responsePromise = client.servers.repo.set('qualifiedName', { repoName: 'x', repoOwner: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource repo', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: required and optional params', async () => {
     const response = await client.servers.repo.set('qualifiedName', {
       repoName: 'x',

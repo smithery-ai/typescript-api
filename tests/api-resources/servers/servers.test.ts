@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource servers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create', async () => {
     const responsePromise = client.servers.create('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource servers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -32,7 +32,7 @@ describe('resource servers', () => {
     ).rejects.toThrow(Smithery.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update', async () => {
     const responsePromise = client.servers.update('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -44,7 +44,7 @@ describe('resource servers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -63,7 +63,7 @@ describe('resource servers', () => {
     ).rejects.toThrow(Smithery.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.list();
     const rawResponse = await responsePromise.asResponse();
@@ -75,7 +75,7 @@ describe('resource servers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -101,7 +101,7 @@ describe('resource servers', () => {
     ).rejects.toThrow(Smithery.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete', async () => {
     const responsePromise = client.servers.delete('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -113,7 +113,7 @@ describe('resource servers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get', async () => {
     const responsePromise = client.servers.get('qualifiedName');
     const rawResponse = await responsePromise.asResponse();

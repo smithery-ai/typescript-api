@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource reviews', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.skills.reviews.create('slug', { namespace: 'namespace', review: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource reviews', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.skills.reviews.create('slug', {
       namespace: 'namespace',
@@ -30,7 +30,7 @@ describe('resource reviews', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: only required params', async () => {
     const responsePromise = client.skills.reviews.list('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -42,7 +42,7 @@ describe('resource reviews', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: required and optional params', async () => {
     const response = await client.skills.reviews.list('slug', {
       namespace: 'namespace',
@@ -51,7 +51,7 @@ describe('resource reviews', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.skills.reviews.delete('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -63,12 +63,12 @@ describe('resource reviews', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.skills.reviews.delete('slug', { namespace: 'namespace' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unvote: only required params', async () => {
     const responsePromise = client.skills.reviews.unvote('reviewId', {
       namespace: 'namespace',
@@ -83,12 +83,12 @@ describe('resource reviews', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('unvote: required and optional params', async () => {
     const response = await client.skills.reviews.unvote('reviewId', { namespace: 'namespace', slug: 'slug' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('vote: only required params', async () => {
     const responsePromise = client.skills.reviews.vote('reviewId', {
       namespace: 'namespace',
@@ -104,7 +104,7 @@ describe('resource reviews', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('vote: required and optional params', async () => {
     const response = await client.skills.reviews.vote('reviewId', {
       namespace: 'namespace',

@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource uplink', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('createToken', async () => {
     const responsePromise = client.uplink.createToken();
     const rawResponse = await responsePromise.asResponse();
