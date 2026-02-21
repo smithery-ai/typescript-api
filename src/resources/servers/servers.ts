@@ -12,6 +12,8 @@ import {
   DomainUpdateResponse,
   Domains,
 } from './domains';
+import * as IconAPI from './icon';
+import { Icon, IconDeleteResponse, IconUploadResponse } from './icon';
 import * as LogsAPI from './logs';
 import { LogListParams, LogListResponse, Logs } from './logs';
 import * as ReleasesAPI from './releases';
@@ -33,7 +35,15 @@ import {
   StdioDeployPayload,
 } from './releases';
 import * as RepoAPI from './repo';
-import { Repo, RepoDeleteResponse, RepoGetResponse, RepoSetParams, RepoSetResponse } from './repo';
+import {
+  Repo,
+  RepoDeleteResponse,
+  RepoGetResponse,
+  RepoSetParams,
+  RepoSetResponse,
+  RepoUpdateParams,
+  RepoUpdateResponse,
+} from './repo';
 import * as SecretsAPI from './secrets';
 import {
   SecretDeleteParams,
@@ -54,6 +64,7 @@ export class Servers extends APIResource {
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
   secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
   repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
+  icon: IconAPI.Icon = new IconAPI.Icon(this._client);
   domains: DomainsAPI.Domains = new DomainsAPI.Domains(this._client);
 
   /**
@@ -461,6 +472,7 @@ Servers.Releases = Releases;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
 Servers.Repo = Repo;
+Servers.Icon = Icon;
 Servers.Domains = Domains;
 
 export declare namespace Servers {
@@ -510,10 +522,18 @@ export declare namespace Servers {
 
   export {
     Repo as Repo,
+    type RepoUpdateResponse as RepoUpdateResponse,
     type RepoDeleteResponse as RepoDeleteResponse,
     type RepoGetResponse as RepoGetResponse,
     type RepoSetResponse as RepoSetResponse,
+    type RepoUpdateParams as RepoUpdateParams,
     type RepoSetParams as RepoSetParams,
+  };
+
+  export {
+    Icon as Icon,
+    type IconDeleteResponse as IconDeleteResponse,
+    type IconUploadResponse as IconUploadResponse,
   };
 
   export {
