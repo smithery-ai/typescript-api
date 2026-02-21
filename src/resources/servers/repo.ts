@@ -7,6 +7,25 @@ import { path } from '../../internal/utils/path';
 
 export class Repo extends APIResource {
   /**
+   * Partially update the GitHub repository connection settings. Only provided fields
+   * are updated.
+   *
+   * @example
+   * ```ts
+   * const repo = await client.servers.repo.update(
+   *   'qualifiedName',
+   * );
+   * ```
+   */
+  update(
+    qualifiedName: string,
+    body: RepoUpdateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<RepoUpdateResponse> {
+    return this._client.patch(path`/servers/${qualifiedName}/repo`, { body, ...options });
+  }
+
+  /**
    * Remove the GitHub repository connection.
    *
    * @example
@@ -49,6 +68,22 @@ export class Repo extends APIResource {
   }
 }
 
+export interface RepoUpdateResponse {
+  autoDeploy: boolean | null;
+
+  baseDirectory: string;
+
+  branch: string | null;
+
+  isPrivate: boolean;
+
+  repoName: string;
+
+  repoOwner: string;
+
+  type: 'github';
+}
+
 export interface RepoDeleteResponse {
   success: boolean;
 }
@@ -85,6 +120,14 @@ export interface RepoSetResponse {
   type: 'github';
 }
 
+export interface RepoUpdateParams {
+  autoDeploy?: boolean;
+
+  baseDirectory?: string;
+
+  branch?: string | null;
+}
+
 export interface RepoSetParams {
   repoName: string;
 
@@ -99,9 +142,11 @@ export interface RepoSetParams {
 
 export declare namespace Repo {
   export {
+    type RepoUpdateResponse as RepoUpdateResponse,
     type RepoDeleteResponse as RepoDeleteResponse,
     type RepoGetResponse as RepoGetResponse,
     type RepoSetResponse as RepoSetResponse,
+    type RepoUpdateParams as RepoUpdateParams,
     type RepoSetParams as RepoSetParams,
   };
 }

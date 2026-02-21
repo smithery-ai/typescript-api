@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource servers', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.namespaces.servers.create('xxx', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource servers', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.namespaces.servers.create('xxx', {
       namespace: 'namespace',

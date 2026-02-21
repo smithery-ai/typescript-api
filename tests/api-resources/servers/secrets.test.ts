@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource secrets', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.secrets.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource secrets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.servers.secrets.delete('secretName', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,12 +32,12 @@ describe('resource secrets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.servers.secrets.delete('secretName', { qualifiedName: 'qualifiedName' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: only required params', async () => {
     const responsePromise = client.servers.secrets.set('qualifiedName', { name: 'x', value: 'x' });
     const rawResponse = await responsePromise.asResponse();
@@ -49,7 +49,7 @@ describe('resource secrets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: required and optional params', async () => {
     const response = await client.servers.secrets.set('qualifiedName', { name: 'x', value: 'x' });
   });

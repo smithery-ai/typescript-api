@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource domains', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.servers.domains.create('qualifiedName', {
       subdomain: 'subdomain',
@@ -23,7 +23,7 @@ describe('resource domains', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.servers.domains.create('qualifiedName', {
       subdomain: 'subdomain',
@@ -31,7 +31,7 @@ describe('resource domains', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: only required params', async () => {
     const responsePromise = client.servers.domains.update('domainId', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -43,7 +43,7 @@ describe('resource domains', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('update: required and optional params', async () => {
     const response = await client.servers.domains.update('domainId', {
       qualifiedName: 'qualifiedName',
@@ -53,7 +53,7 @@ describe('resource domains', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.domains.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -65,7 +65,7 @@ describe('resource domains', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.servers.domains.delete('domainId', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -77,7 +77,7 @@ describe('resource domains', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.servers.domains.delete('domainId', { qualifiedName: 'qualifiedName' });
   });

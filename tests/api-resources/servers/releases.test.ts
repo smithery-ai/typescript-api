@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource releases', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.servers.releases.list('qualifiedName');
     const rawResponse = await responsePromise.asResponse();
@@ -20,7 +20,7 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deploy: only required params', async () => {
     const responsePromise = client.servers.releases.deploy('qualifiedName', { payload: 'payload' });
     const rawResponse = await responsePromise.asResponse();
@@ -32,7 +32,7 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('deploy: required and optional params', async () => {
     const response = await client.servers.releases.deploy('qualifiedName', {
       payload: 'payload',
@@ -42,7 +42,7 @@ describe('resource releases', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.servers.releases.get('id', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -54,12 +54,12 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.servers.releases.get('id', { qualifiedName: 'qualifiedName' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('resume: only required params', async () => {
     const responsePromise = client.servers.releases.resume('id', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -71,12 +71,12 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('resume: required and optional params', async () => {
     const response = await client.servers.releases.resume('id', { qualifiedName: 'qualifiedName' });
   });
 
-  // Prism doesn't support text/event-stream responses
+  // Mock server tests are disabled
   test.skip('stream: only required params', async () => {
     const responsePromise = client.servers.releases.stream('id', { qualifiedName: 'qualifiedName' });
     const rawResponse = await responsePromise.asResponse();
@@ -88,7 +88,7 @@ describe('resource releases', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism doesn't support text/event-stream responses
+  // Mock server tests are disabled
   test.skip('stream: required and optional params', async () => {
     const response = await client.servers.releases.stream('id', { qualifiedName: 'qualifiedName' });
   });

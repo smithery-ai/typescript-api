@@ -8,7 +8,7 @@ const client = new Smithery({
 });
 
 describe('resource skills', () => {
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.skills.create({
       gitUrl: 'https://example.com',
@@ -24,7 +24,7 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.skills.create({
       gitUrl: 'https://example.com',
@@ -33,7 +33,7 @@ describe('resource skills', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list', async () => {
     const responsePromise = client.skills.list();
     const rawResponse = await responsePromise.asResponse();
@@ -45,7 +45,7 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
@@ -67,7 +67,7 @@ describe('resource skills', () => {
     ).rejects.toThrow(Smithery.NotFoundError);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: only required params', async () => {
     const responsePromise = client.skills.delete('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -79,12 +79,12 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('delete: required and optional params', async () => {
     const response = await client.skills.delete('slug', { namespace: 'namespace' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.skills.get('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -96,12 +96,12 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('get: required and optional params', async () => {
     const response = await client.skills.get('slug', { namespace: 'namespace' });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: only required params', async () => {
     const responsePromise = client.skills.set('slug', {
       namespace: 'namespace',
@@ -116,7 +116,7 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('set: required and optional params', async () => {
     const response = await client.skills.set('slug', {
       namespace: 'namespace',
@@ -124,7 +124,7 @@ describe('resource skills', () => {
     });
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('sync: only required params', async () => {
     const responsePromise = client.skills.sync('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
@@ -136,7 +136,7 @@ describe('resource skills', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Prism tests are disabled
+  // Mock server tests are disabled
   test.skip('sync: required and optional params', async () => {
     const response = await client.skills.sync('slug', { namespace: 'namespace' });
   });
