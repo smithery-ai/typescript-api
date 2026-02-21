@@ -10,6 +10,7 @@ export {
   type DomainUpdateParams,
   type DomainDeleteParams,
 } from './domains';
+export { Icon, type IconDeleteResponse, type IconUploadResponse } from './icon';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
 export {
   Releases,
@@ -30,9 +31,11 @@ export {
 } from './releases';
 export {
   Repo,
+  type RepoUpdateResponse,
   type RepoDeleteResponse,
   type RepoGetResponse,
   type RepoSetResponse,
+  type RepoUpdateParams,
   type RepoSetParams,
 } from './repo';
 export {
