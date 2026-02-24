@@ -28,7 +28,8 @@ describe('resource logs', () => {
         'qualifiedName',
         {
           from: '2026-01-01T00:00:00Z',
-          limit: 50,
+          limit: 20,
+          search: 'error',
           to: '2026-01-01T01:00:00Z',
         },
         { path: '/_stainless_unknown_path' },

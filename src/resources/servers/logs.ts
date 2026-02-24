@@ -95,9 +95,14 @@ export interface LogListParams {
   from?: string;
 
   /**
-   * Max invocations to return. Defaults to 50.
+   * Max invocations to return. Defaults to 20.
    */
   limit?: number;
+
+  /**
+   * Text search across log messages.
+   */
+  search?: string;
 
   /**
    * End of time range (ISO 8601).
