@@ -167,6 +167,8 @@ export interface ServerCard {
 
   authentication?: ServerCard.Authentication;
 
+  eventTopics?: Array<ServerCard.EventTopic>;
+
   prompts?: Array<ServerCard.Prompt>;
 
   resources?: Array<ServerCard.Resource>;
@@ -207,6 +209,18 @@ export namespace ServerCard {
     required: boolean;
 
     schemes: Array<string>;
+  }
+
+  export interface EventTopic {
+    name: string;
+
+    topic: string;
+
+    description?: string;
+
+    eventSchema?: { [key: string]: unknown };
+
+    inputSchema?: { [key: string]: unknown };
   }
 
   export interface Prompt {
