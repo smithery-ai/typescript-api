@@ -64,8 +64,6 @@ export namespace LogListResponse {
       name: string;
 
       timestamp: string;
-
-      stack?: string;
     }
 
     export interface Log {
