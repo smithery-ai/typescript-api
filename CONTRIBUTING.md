@@ -60,7 +60,7 @@ $ yarn link @smithery/api
 # With pnpm
 $ pnpm link --global
 $ cd ../my-package
-$ pnpm link -—global @smithery/api
+$ pnpm link --global @smithery/api
 ```
 
 ## Running tests
