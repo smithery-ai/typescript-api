@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.51.0 (2026-02-24)
+
+Full Changelog: [v0.50.0...v0.51.0](https://github.com/smithery-ai/typescript-api/compare/v0.50.0...v0.51.0)
+
+### Features
+
+* **api:** api update ([e2bd9eb](https://github.com/smithery-ai/typescript-api/commit/e2bd9eb4711cab148fb045ba7d56fbc3af89549a))
+
+
+### Bug Fixes
+
+* **docs/contributing:** correct pnpm link command ([f1596b4](https://github.com/smithery-ai/typescript-api/commit/f1596b4f8d38928b05177d42aa8e881e5d92a95b))
+
+
+### Chores
+
+* **internal:** upgrade pnpm version ([a44455d](https://github.com/smithery-ai/typescript-api/commit/a44455d1f4f673eada07a37c5b79e4e717f44516))
+
 ## 0.50.0 (2026-02-21)
 
 Full Changelog: [v0.49.0...v0.50.0](https://github.com/smithery-ai/typescript-api/compare/v0.49.0...v0.50.0)
