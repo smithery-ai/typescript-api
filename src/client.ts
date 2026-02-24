@@ -341,7 +341,16 @@ export class Smithery {
   protected async prepareRequest(
     request: RequestInit,
     { url, options }: { url: string; options: FinalRequestOptions },
-  ): Promise<void> {}
+  ): Promise<void> {
+    // Inject W3C traceparent header for distributed tracing.
+    // Each request gets a unique trace ID and span ID so downstream
+    // services can correlate requests into end-to-end traces.
+    if (request.headers instanceof Headers && !request.headers.has('traceparent')) {
+      const traceId = uuid4().replace(/-/g, '');
+      const spanId = traceId.slice(0, 16);
+      request.headers.set('traceparent', `00-${traceId}-${spanId}-01`);
+    }
+  }
 
   get<Rsp>(path: string, opts?: PromiseOrValue<RequestOptions>): APIPromise<Rsp> {
     return this.methodRequest('get', path, opts);
