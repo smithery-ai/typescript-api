@@ -328,11 +328,17 @@ export interface ServerGetResponse {
 
   displayName: string;
 
+  eventTopics: Array<ServerGetResponse.EventTopic> | null;
+
   iconUrl: string | null;
+
+  prompts: Array<ServerGetResponse.Prompt> | null;
 
   qualifiedName: string;
 
   remote: boolean;
+
+  resources: Array<ServerGetResponse.Resource> | null;
 
   security: ServerGetResponse.Security | null;
 
@@ -358,6 +364,46 @@ export namespace ServerGetResponse {
     deploymentUrl: string;
 
     type: 'http';
+  }
+
+  export interface EventTopic {
+    name: string;
+
+    topic: string;
+
+    description?: string;
+
+    eventSchema?: { [key: string]: unknown };
+
+    inputSchema?: { [key: string]: unknown };
+  }
+
+  export interface Prompt {
+    name: string;
+
+    arguments?: Array<Prompt.Argument>;
+
+    description?: string;
+  }
+
+  export namespace Prompt {
+    export interface Argument {
+      name: string;
+
+      description?: string;
+
+      required?: boolean;
+    }
+  }
+
+  export interface Resource {
+    name: string;
+
+    uri: string;
+
+    description?: string;
+
+    mimeType?: string;
   }
 
   export interface Security {
