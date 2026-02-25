@@ -227,8 +227,8 @@ export interface CreateConnectionRequest {
 
   /**
    * Webhook callback URL for server-to-client messages (HTTPS). When set, the MCP
-   * server will POST notifications and requests to this URL instead of using SSE.
-   * This field is unstable and may change before GA.
+   * server will POST notifications and requests to this URL instead of Connect's
+   * built-in event polling. This field is unstable and may change before GA.
    */
   unstableCallbackUrl?: string;
 }
@@ -261,8 +261,8 @@ export interface ConnectionCreateParams {
 
   /**
    * Webhook callback URL for server-to-client messages (HTTPS). When set, the MCP
-   * server will POST notifications and requests to this URL instead of using SSE.
-   * This field is unstable and may change before GA.
+   * server will POST notifications and requests to this URL instead of Connect's
+   * built-in event polling. This field is unstable and may change before GA.
    */
   unstableCallbackUrl?: string;
 }
@@ -328,7 +328,8 @@ export interface ConnectionSetParams {
   /**
    * Body param: Webhook callback URL for server-to-client messages (HTTPS). When
    * set, the MCP server will POST notifications and requests to this URL instead of
-   * using SSE. This field is unstable and may change before GA.
+   * Connect's built-in event polling. This field is unstable and may change before
+   * GA.
    */
   unstableCallbackUrl?: string;
 }
