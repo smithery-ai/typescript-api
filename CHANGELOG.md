@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.52.0 (2026-02-25)
+
+Full Changelog: [v0.51.0...v0.52.0](https://github.com/smithery-ai/typescript-api/compare/v0.51.0...v0.52.0)
+
+### Features
+
+* **SMI-1187:** add search param and lower default limit for logs ([#1591](https://github.com/smithery-ai/typescript-api/issues/1591)) ([d541d08](https://github.com/smithery-ai/typescript-api/commit/d541d0866cd6d06959e7057df625cdeff0c0d235))
+* **SMI-1187:** replace mcp-tail with CF Observability API ([#1585](https://github.com/smithery-ai/typescript-api/issues/1585)) ([9925ee0](https://github.com/smithery-ai/typescript-api/commit/9925ee0c410da4c6493314e674e4c8e10d5469f6))
+* **SMI-1540:** add eventTopics, resources, prompts to server API response ([#1587](https://github.com/smithery-ai/typescript-api/issues/1587)) ([8b74e92](https://github.com/smithery-ai/typescript-api/commit/8b74e92d4f526fca9e0e770edfd925109f346014))
+* **SMI-1552:** support events polling in Connect API ([#1602](https://github.com/smithery-ai/typescript-api/issues/1602)) ([f4379cf](https://github.com/smithery-ai/typescript-api/commit/f4379cf1b2d15748a9c580985f3de349928d11c7))
+
 ## 0.51.0 (2026-02-24)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/smithery-ai/typescript-api/compare/v0.50.0...v0.51.0)
