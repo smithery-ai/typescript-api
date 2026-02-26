@@ -165,8 +165,6 @@ export namespace HostedDeployPayload {
 export interface ServerCard {
   serverInfo: ServerCard.ServerInfo;
 
-  authentication?: ServerCard.Authentication;
-
   eventTopics?: Array<ServerCard.EventTopic>;
 
   prompts?: Array<ServerCard.Prompt>;
@@ -203,12 +201,6 @@ export namespace ServerCard {
 
       theme?: 'light' | 'dark';
     }
-  }
-
-  export interface Authentication {
-    required: boolean;
-
-    schemes: Array<string>;
   }
 
   export interface EventTopic {
