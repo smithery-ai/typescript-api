@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.53.0 (2026-02-26)
+
+Full Changelog: [v0.52.0...v0.53.0](https://github.com/smithery-ai/typescript-api/compare/v0.52.0...v0.53.0)
+
+### Features
+
+* **SMI-1462:** MCP-level request matching (Phase 1) ([#1612](https://github.com/smithery-ai/typescript-api/issues/1612)) ([ee531f2](https://github.com/smithery-ai/typescript-api/commit/ee531f2a7f268b28d591d553a6d2dd7f924ea9a0))
+
+
+### Chores
+
+* **SMI-1462:** Export Constraint schema for Stainless SDK generation ([#1621](https://github.com/smithery-ai/typescript-api/issues/1621)) ([dcc3579](https://github.com/smithery-ai/typescript-api/commit/dcc357964db6ea3404dbe29530696bdc49237335))
+
 ## 0.52.0 (2026-02-25)
 
 Full Changelog: [v0.51.0...v0.52.0](https://github.com/smithery-ai/typescript-api/compare/v0.51.0...v0.52.0)
