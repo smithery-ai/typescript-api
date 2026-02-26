@@ -48,6 +48,14 @@ export interface Constraint {
     | Array<'connections' | 'servers' | 'namespaces' | 'skills'>;
 
   /**
+   * MCP request field matching. Keys are dot-paths into the JSON-RPC body (e.g.
+   * "params.name", "method"). Values are regex patterns matched against the field
+   * value as a regex pattern. All entries within a single rpcReqMatch must match
+   * (AND).
+   */
+  rpcReqMatch?: { [key: string]: string };
+
+  /**
    * TTL as seconds or duration string ("1h", "30m", "20s").
    */
   ttl?: string | number;
