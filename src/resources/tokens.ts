@@ -17,28 +17,33 @@ export class Tokens extends APIResource {
   }
 }
 
+/**
+ * A policy constraint that restricts a token's scope. All specified fields within
+ * a single constraint are AND'd together. When multiple constraints are passed in
+ * the policy array, each is applied as an independent attenuation block.
+ */
 export interface Constraint {
   /**
-   * Metadata key-value pairs for fine-grained access control. When an array is
-   * provided, each object is evaluated as an OR condition (any must match). Within a
-   * single object, all key-value pairs must match (AND). For example, [{"userId":
-   * "alice"}, {"team": "backend"}] allows access if userId is alice OR team is
-   * backend.
+   * Key-value metadata for fine-grained filtering. A single object requires all
+   * pairs to match (AND). An array of objects requires any one to match (OR-of-AND),
+   * e.g. [{"userId":"alice"},{"team":"backend"}] grants access when either condition
+   * is met.
    */
   metadata?: { [key: string]: string } | Array<{ [key: string]: string }>;
 
   /**
-   * Restrict token to specific namespaces.
+   * Namespace(s) the token is scoped to. Accepts a single slug or an array.
    */
   namespaces?: string | Array<string>;
 
   /**
-   * Restrict token to specific operations.
+   * Operation(s) the token may perform: read, write, or execute.
    */
   operations?: 'read' | 'write' | 'execute' | Array<'read' | 'write' | 'execute'>;
 
   /**
-   * Restrict token to specific resource types.
+   * Resource type(s) the token may access: connections, servers, namespaces, or
+   * skills.
    */
   resources?:
     | 'connections'
@@ -48,7 +53,15 @@ export interface Constraint {
     | Array<'connections' | 'servers' | 'namespaces' | 'skills'>;
 
   /**
-   * TTL as seconds or duration string ("1h", "30m", "20s").
+   * MCP JSON-RPC request matching rules. Keys are dot-paths into the request body
+   * (e.g. "params.name", "method"). Values are regex patterns. All entries must
+   * match (AND).
+   */
+  rpcReqMatch?: { [key: string]: string };
+
+  /**
+   * Time-to-live for the constraint. Accepts seconds (number) or a duration string
+   * such as "1h", "30m", or "20s".
    */
   ttl?: string | number;
 }
