@@ -32,6 +32,7 @@ describe('resource tokens', () => {
               namespaces: ['my-app'],
               operations: ['read'],
               resources: ['connections'],
+              rpcReqMatch: { 'params.name': '^(create_issue|search_issues)$' },
               ttl: '1h',
             },
           ],
