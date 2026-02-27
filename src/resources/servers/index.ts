@@ -24,10 +24,12 @@ export {
   type ReleaseGetResponse,
   type ReleaseResumeResponse,
   type ReleaseStreamResponse,
+  type ReleaseListParams,
   type ReleaseDeployParams,
   type ReleaseGetParams,
   type ReleaseResumeParams,
   type ReleaseStreamParams,
+  type ReleaseListResponsesReleasesPage,
 } from './releases';
 export {
   Repo,

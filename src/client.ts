@@ -19,6 +19,8 @@ import {
   AbstractPage,
   type NamespacesPageParams,
   NamespacesPageResponse,
+  type ReleasesPageParams,
+  ReleasesPageResponse,
   type ReviewsPageParams,
   ReviewsPageResponse,
   type SkillsPageParams,
@@ -844,6 +846,9 @@ export declare namespace Smithery {
 
   export import ReviewsPage = Pagination.ReviewsPage;
   export { type ReviewsPageParams as ReviewsPageParams, type ReviewsPageResponse as ReviewsPageResponse };
+
+  export import ReleasesPage = Pagination.ReleasesPage;
+  export { type ReleasesPageParams as ReleasesPageParams, type ReleasesPageResponse as ReleasesPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
