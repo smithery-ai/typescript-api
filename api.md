@@ -47,7 +47,7 @@ Types:
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">list</a>(qualifiedName) -> ReleaseListResponse</code>
+- <code title="get /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">list</a>(qualifiedName, { ...params }) -> ReleaseListResponsesReleasesPage</code>
 - <code title="put /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">deploy</a>(qualifiedName, { ...params }) -> ReleaseDeployResponse</code>
 - <code title="get /servers/{qualifiedName}/releases/{id}">client.servers.releases.<a href="./src/resources/servers/releases.ts">get</a>(id, { ...params }) -> ReleaseGetResponse</code>
 - <code title="post /servers/{qualifiedName}/releases/{id}/resume">client.servers.releases.<a href="./src/resources/servers/releases.ts">resume</a>(id, { ...params }) -> ReleaseResumeResponse</code>

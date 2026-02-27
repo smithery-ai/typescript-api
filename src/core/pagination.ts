@@ -342,3 +342,62 @@ export class ReviewsPage<Item> extends AbstractPage<Item> implements ReviewsPage
     };
   }
 }
+
+export interface ReleasesPageResponse<Item> {
+  releases: Array<Item>;
+
+  pagination: ReleasesPageResponse.Pagination;
+}
+
+export namespace ReleasesPageResponse {
+  export interface Pagination {
+    currentPage?: number;
+
+    pageSize?: number;
+
+    totalCount?: number;
+
+    totalPages?: number;
+  }
+}
+
+export interface ReleasesPageParams {
+  page?: number;
+
+  pageSize?: number;
+}
+
+export class ReleasesPage<Item> extends AbstractPage<Item> implements ReleasesPageResponse<Item> {
+  releases: Array<Item>;
+
+  pagination: ReleasesPageResponse.Pagination;
+
+  constructor(
+    client: Smithery,
+    response: Response,
+    body: ReleasesPageResponse<Item>,
+    options: FinalRequestOptions,
+  ) {
+    super(client, response, body, options);
+
+    this.releases = body.releases || [];
+    this.pagination = body.pagination || {};
+  }
+
+  getPaginatedItems(): Item[] {
+    return this.releases ?? [];
+  }
+
+  nextPageRequestOptions(): PageRequestOptions | null {
+    const query = this.options.query as ReleasesPageParams;
+    const currentPage = query?.page ?? 1;
+
+    return {
+      ...this.options,
+      query: {
+        ...maybeObj(this.options.query),
+        page: currentPage + 1,
+      },
+    };
+  }
+}

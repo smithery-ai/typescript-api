@@ -2,6 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import { APIPromise } from '../../core/api-promise';
+import { PagePromise, ReleasesPage, type ReleasesPageParams } from '../../core/pagination';
 import { Stream } from '../../core/streaming';
 import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
@@ -16,13 +17,24 @@ export class Releases extends APIResource {
    *
    * @example
    * ```ts
-   * const releases = await client.servers.releases.list(
+   * // Automatically fetches more pages as needed.
+   * for await (const releaseListResponse of client.servers.releases.list(
    *   'qualifiedName',
-   * );
+   * )) {
+   *   // ...
+   * }
    * ```
    */
-  list(qualifiedName: string, options?: RequestOptions): APIPromise<ReleaseListResponse> {
-    return this._client.get(path`/servers/${qualifiedName}/releases`, options);
+  list(
+    qualifiedName: string,
+    query: ReleaseListParams | null | undefined = {},
+    options?: RequestOptions,
+  ): PagePromise<ReleaseListResponsesReleasesPage, ReleaseListResponse> {
+    return this._client.getAPIList(
+      path`/servers/${qualifiedName}/releases`,
+      ReleasesPage<ReleaseListResponse>,
+      { query, ...options },
+    );
   }
 
   /**
@@ -109,6 +121,8 @@ export class Releases extends APIResource {
     }) as APIPromise<Stream<ReleaseStreamResponse>>;
   }
 }
+
+export type ReleaseListResponsesReleasesPage = ReleasesPage<ReleaseListResponse>;
 
 export type DeployPayload =
   | HostedDeployPayload
@@ -378,59 +392,55 @@ export namespace StdioDeployPayload {
   }
 }
 
-export type ReleaseListResponse = Array<ReleaseListResponse.ReleaseListResponseItem>;
+export interface ReleaseListResponse {
+  id: string;
 
-export namespace ReleaseListResponse {
-  export interface ReleaseListResponseItem {
-    id: string;
+  /**
+   * ISO 8601 timestamp of when the release was created.
+   */
+  createdAt: string;
 
-    /**
-     * ISO 8601 timestamp of when the release was created.
-     */
-    createdAt: string;
+  /**
+   * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
+   * CANCELLED, or INTERNAL_ERROR.
+   */
+  status: string;
 
-    /**
-     * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
-     * CANCELLED, or INTERNAL_ERROR.
-     */
-    status: string;
+  /**
+   * Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or
+   * stdio (local binary).
+   */
+  type: string;
 
-    /**
-     * Release type: hosted_shttp (Smithery-hosted), external_shttp (external URL), or
-     * stdio (local binary).
-     */
-    type: string;
+  /**
+   * ISO 8601 timestamp of the last status change.
+   */
+  updatedAt: string;
 
-    /**
-     * ISO 8601 timestamp of the last status change.
-     */
-    updatedAt: string;
+  /**
+   * Git branch this release was built from.
+   */
+  branch?: string | null;
 
-    /**
-     * Git branch this release was built from.
-     */
-    branch?: string | null;
+  /**
+   * Git commit SHA that triggered this release.
+   */
+  commit?: string | null;
 
-    /**
-     * Git commit SHA that triggered this release.
-     */
-    commit?: string | null;
+  /**
+   * Git commit message associated with this release.
+   */
+  commitMessage?: string | null;
 
-    /**
-     * Git commit message associated with this release.
-     */
-    commitMessage?: string | null;
+  /**
+   * The MCP endpoint URL for connecting to this server.
+   */
+  mcpUrl?: string;
 
-    /**
-     * The MCP endpoint URL for connecting to this server.
-     */
-    mcpUrl?: string;
-
-    /**
-     * Upstream MCP server URL. Present only for external releases.
-     */
-    upstreamUrl?: string | null;
-  }
+  /**
+   * Upstream MCP server URL. Present only for external releases.
+   */
+  upstreamUrl?: string | null;
 }
 
 export interface ReleaseDeployResponse {
@@ -561,6 +571,8 @@ export interface ReleaseResumeResponse {
  */
 export type ReleaseStreamResponse = string;
 
+export interface ReleaseListParams extends ReleasesPageParams {}
+
 export interface ReleaseDeployParams {
   /**
    * JSON-encoded release payload. See DeployPayload schema for structure.
@@ -619,6 +631,8 @@ export declare namespace Releases {
     type ReleaseGetResponse as ReleaseGetResponse,
     type ReleaseResumeResponse as ReleaseResumeResponse,
     type ReleaseStreamResponse as ReleaseStreamResponse,
+    type ReleaseListResponsesReleasesPage as ReleaseListResponsesReleasesPage,
+    type ReleaseListParams as ReleaseListParams,
     type ReleaseDeployParams as ReleaseDeployParams,
     type ReleaseGetParams as ReleaseGetParams,
     type ReleaseResumeParams as ReleaseResumeParams,
