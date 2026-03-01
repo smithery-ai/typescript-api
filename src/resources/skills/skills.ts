@@ -31,6 +31,7 @@ import {
 } from './votes';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkillsPage, type SkillsPageParams } from '../../core/pagination';
+import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
@@ -65,6 +66,19 @@ export class Skills extends APIResource {
   delete(slug: string, params: SkillDeleteParams, options?: RequestOptions): APIPromise<SkillDeleteResponse> {
     const { namespace } = params;
     return this._client.delete(path`/skills/${namespace}/${slug}`, options);
+  }
+
+  /**
+   * Download a ZIP bundle containing all skill files, fetched via well-known
+   * endpoints.
+   */
+  download(slug: string, params: SkillDownloadParams, options?: RequestOptions): APIPromise<Response> {
+    const { namespace } = params;
+    return this._client.get(path`/skills/${namespace}/${slug}/download`, {
+      ...options,
+      headers: buildHeaders([{ Accept: 'application/zip' }, options?.headers]),
+      __binaryResponse: true,
+    });
   }
 
   /**
@@ -372,6 +386,10 @@ export interface SkillDeleteParams {
   namespace: string;
 }
 
+export interface SkillDownloadParams {
+  namespace: string;
+}
+
 export interface SkillGetParams {
   namespace: string;
 }
@@ -407,6 +425,7 @@ export declare namespace Skills {
     type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
     type SkillDeleteParams as SkillDeleteParams,
+    type SkillDownloadParams as SkillDownloadParams,
     type SkillGetParams as SkillGetParams,
     type SkillSetParams as SkillSetParams,
     type SkillSyncParams as SkillSyncParams,

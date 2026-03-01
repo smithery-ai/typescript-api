@@ -27,6 +27,7 @@ export {
   type SkillCreateParams,
   type SkillListParams,
   type SkillDeleteParams,
+  type SkillDownloadParams,
   type SkillGetParams,
   type SkillSetParams,
   type SkillSyncParams,
