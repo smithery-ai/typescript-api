@@ -85,6 +85,11 @@ describe('resource skills', () => {
   });
 
   // Mock server tests are disabled
+  test.skip('download: required and optional params', async () => {
+    const response = await client.skills.download('slug', { namespace: 'namespace' });
+  });
+
+  // Mock server tests are disabled
   test.skip('get: only required params', async () => {
     const responsePromise = client.skills.get('slug', { namespace: 'namespace' });
     const rawResponse = await responsePromise.asResponse();
