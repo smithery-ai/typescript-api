@@ -814,8 +814,17 @@ export class Smithery {
   static toFile = Uploads.toFile;
 
   health: API.Health = new API.Health(this);
+  /**
+   * Browse the MCP server registry, manage server configuration, and handle deployments
+   */
   servers: API.Servers = new API.Servers(this);
+  /**
+   * Manage uplink tokens for connecting locally-running MCP servers to Smithery
+   */
   uplink: API.Uplink = new API.Uplink(this);
+  /**
+   * Discover and search reusable prompt-based skills for MCP servers
+   */
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
   tokens: API.Tokens = new API.Tokens(this);

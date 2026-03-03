@@ -35,6 +35,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Discover and search reusable prompt-based skills for MCP servers
+ */
 export class Skills extends APIResource {
   votes: VotesAPI.Votes = new VotesAPI.Votes(this._client);
   reviews: ReviewsAPI.Reviews = new ReviewsAPI.Reviews(this._client);

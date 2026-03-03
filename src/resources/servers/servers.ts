@@ -61,6 +61,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Browse the MCP server registry, manage server configuration, and handle deployments
+ */
 export class Servers extends APIResource {
   releases: ReleasesAPI.Releases = new ReleasesAPI.Releases(this._client);
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);

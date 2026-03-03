@@ -10,6 +10,9 @@ import { RequestOptions } from '../../internal/request-options';
 import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Browse the MCP server registry, manage server configuration, and handle deployments
+ */
 export class Releases extends APIResource {
   /**
    * List releases ordered by most recent first. Logs are omitted — fetch a specific
