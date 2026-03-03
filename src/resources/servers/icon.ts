@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Browse the MCP server registry, manage server configuration, and handle deployments
+ */
 export class Icon extends APIResource {
   /**
    * Remove the server's icon.

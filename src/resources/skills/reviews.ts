@@ -7,6 +7,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Discover and search reusable prompt-based skills for MCP servers
+ */
 export class Reviews extends APIResource {
   /**
    * Submit a review for a skill. Updates existing review if one already exists.

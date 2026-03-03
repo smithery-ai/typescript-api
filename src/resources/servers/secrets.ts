@@ -5,6 +5,9 @@ import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Browse the MCP server registry, manage server configuration, and handle deployments
+ */
 export class Secrets extends APIResource {
   /**
    * List secret names. Values are not returned.
