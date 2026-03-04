@@ -47,7 +47,7 @@ Types:
 
 Methods:
 
-- <code title="get /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">list</a>(qualifiedName) -> ReleaseListResponse</code>
+- <code title="get /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">list</a>(qualifiedName, { ...params }) -> ReleaseListResponsesReleasesPage</code>
 - <code title="put /servers/{qualifiedName}/releases">client.servers.releases.<a href="./src/resources/servers/releases.ts">deploy</a>(qualifiedName, { ...params }) -> ReleaseDeployResponse</code>
 - <code title="get /servers/{qualifiedName}/releases/{id}">client.servers.releases.<a href="./src/resources/servers/releases.ts">get</a>(id, { ...params }) -> ReleaseGetResponse</code>
 - <code title="post /servers/{qualifiedName}/releases/{id}/resume">client.servers.releases.<a href="./src/resources/servers/releases.ts">resume</a>(id, { ...params }) -> ReleaseResumeResponse</code>
@@ -148,6 +148,7 @@ Methods:
 - <code title="post /skills">client.skills.<a href="./src/resources/skills/skills.ts">create</a>({ ...params }) -> SkillCreateResponse</code>
 - <code title="get /skills">client.skills.<a href="./src/resources/skills/skills.ts">list</a>({ ...params }) -> SkillListResponsesSkillsPage</code>
 - <code title="delete /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">delete</a>(slug, { ...params }) -> SkillDeleteResponse</code>
+- <code title="get /skills/{namespace}/{slug}/download">client.skills.<a href="./src/resources/skills/skills.ts">download</a>(slug, { ...params }) -> Response</code>
 - <code title="get /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">get</a>(slug, { ...params }) -> SkillGetResponse</code>
 - <code title="put /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">set</a>(slug, { ...params }) -> SkillSetResponse</code>
 - <code title="post /skills/{namespace}/{slug}/sync">client.skills.<a href="./src/resources/skills/skills.ts">sync</a>(slug, { ...params }) -> SkillSyncResponse</code>

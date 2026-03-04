@@ -11,7 +11,7 @@ import type { APIResponseProps } from './internal/parse';
 import { getPlatformHeaders } from './internal/detect-platform';
 import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
-import * as qs from './internal/qs';
+import { stringifyQuery } from './internal/utils/query';
 import { VERSION } from './version';
 import * as Errors from './core/error';
 import * as Pagination from './core/pagination';
@@ -19,6 +19,8 @@ import {
   AbstractPage,
   type NamespacesPageParams,
   NamespacesPageResponse,
+  type ReleasesPageParams,
+  ReleasesPageResponse,
   type ReviewsPageParams,
   ReviewsPageResponse,
   type SkillsPageParams,
@@ -79,6 +81,7 @@ import {
   SkillCreateResponse,
   SkillDeleteParams,
   SkillDeleteResponse,
+  SkillDownloadParams,
   SkillGetParams,
   SkillGetResponse,
   SkillListParams,
@@ -283,8 +286,8 @@ export class Smithery {
     return buildHeaders([{ Authorization: `Bearer ${this.apiKey}` }]);
   }
 
-  protected stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected stringifyQuery(query: object | Record<string, unknown>): string {
+    return stringifyQuery(query);
   }
 
   private getUserAgent(): string {
@@ -321,7 +324,7 @@ export class Smithery {
     }
 
     if (typeof query === 'object' && query && !Array.isArray(query)) {
-      url.search = this.stringifyQuery(query as Record<string, unknown>);
+      url.search = this.stringifyQuery(query);
     }
 
     return url.toString();
@@ -784,7 +787,7 @@ export class Smithery {
     ) {
       return {
         bodyHeaders: { 'content-type': 'application/x-www-form-urlencoded' },
-        body: this.stringifyQuery(body as Record<string, unknown>),
+        body: this.stringifyQuery(body),
       };
     } else {
       return this.#encoder({ body, headers });
@@ -811,8 +814,17 @@ export class Smithery {
   static toFile = Uploads.toFile;
 
   health: API.Health = new API.Health(this);
+  /**
+   * Browse the MCP server registry, manage server configuration, and handle deployments
+   */
   servers: API.Servers = new API.Servers(this);
+  /**
+   * Manage uplink tokens for connecting locally-running MCP servers to Smithery
+   */
   uplink: API.Uplink = new API.Uplink(this);
+  /**
+   * Discover and search reusable prompt-based skills for MCP servers
+   */
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
   tokens: API.Tokens = new API.Tokens(this);
@@ -844,6 +856,9 @@ export declare namespace Smithery {
 
   export import ReviewsPage = Pagination.ReviewsPage;
   export { type ReviewsPageParams as ReviewsPageParams, type ReviewsPageResponse as ReviewsPageResponse };
+
+  export import ReleasesPage = Pagination.ReleasesPage;
+  export { type ReleasesPageParams as ReleasesPageParams, type ReleasesPageResponse as ReleasesPageResponse };
 
   export { Health as Health, type HealthCheckResponse as HealthCheckResponse };
 
@@ -877,6 +892,7 @@ export declare namespace Smithery {
     type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
     type SkillDeleteParams as SkillDeleteParams,
+    type SkillDownloadParams as SkillDownloadParams,
     type SkillGetParams as SkillGetParams,
     type SkillSetParams as SkillSetParams,
     type SkillSyncParams as SkillSyncParams,

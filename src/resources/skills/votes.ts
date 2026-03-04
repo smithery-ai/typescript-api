@@ -6,6 +6,9 @@ import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
+/**
+ * Discover and search reusable prompt-based skills for MCP servers
+ */
 export class Votes extends APIResource {
   /**
    * Upvote or downvote a skill. Updates existing vote if one exists.

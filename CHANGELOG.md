@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.54.0 (2026-03-03)
+
+Full Changelog: [v0.53.0...v0.54.0](https://github.com/smithery-ai/typescript-api/compare/v0.53.0...v0.54.0)
+
+### Features
+
+* Add skill download endpoint to Stainless config ([#1676](https://github.com/smithery-ai/typescript-api/issues/1676)) ([2dd2241](https://github.com/smithery-ai/typescript-api/commit/2dd2241ac04c80d8c36d8e0ea3dab87dc5adf433))
+* architecture specs and server page cleanup ([#1623](https://github.com/smithery-ai/typescript-api/issues/1623)) ([a979f87](https://github.com/smithery-ai/typescript-api/commit/a979f8711ca1c80d26f0aff37dc5edfaf59505f6))
+
+
+### Chores
+
+* **internal:** codegen related update ([95ebd12](https://github.com/smithery-ai/typescript-api/commit/95ebd12e866195635a3a7f6d5a5264dd67d6a176))
+* **internal:** move stringifyQuery implementation to internal function ([4c09d67](https://github.com/smithery-ai/typescript-api/commit/4c09d678318af319842615e349086b59d28719f9))
+* Remove unused authentication field from server cards ([#1625](https://github.com/smithery-ai/typescript-api/issues/1625)) ([d1a6ad1](https://github.com/smithery-ai/typescript-api/commit/d1a6ad105f5e8bb73d5e689b872f2e6ea41adfab))
+
 ## 0.53.0 (2026-02-26)
 
 Full Changelog: [v0.52.0...v0.53.0](https://github.com/smithery-ai/typescript-api/compare/v0.52.0...v0.53.0)

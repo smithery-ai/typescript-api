@@ -4,6 +4,9 @@ import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
 import { RequestOptions } from '../internal/request-options';
 
+/**
+ * Manage uplink tokens for connecting locally-running MCP servers to Smithery
+ */
 export class Uplink extends APIResource {
   /**
    * Create or retrieve an authtoken for uplink connections
