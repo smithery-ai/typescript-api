@@ -48,9 +48,9 @@ describe('resource releases', () => {
   test.skip('deploy: required and optional params', async () => {
     const response = await client.servers.releases.deploy('qualifiedName', {
       payload: 'payload',
-      bundle: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      module: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      sourcemap: await toFile(Buffer.from('# my file contents'), 'README.md'),
+      bundle: await toFile(Buffer.from('Example data'), 'README.md'),
+      module: await toFile(Buffer.from('Example data'), 'README.md'),
+      sourcemap: await toFile(Buffer.from('Example data'), 'README.md'),
     });
   });
 
