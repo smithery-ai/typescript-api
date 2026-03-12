@@ -36,7 +36,6 @@ describe('resource tokens', () => {
               ttl: '1h',
             },
           ],
-          profileSlug: 'profileSlug',
         },
         { path: '/_stainless_unknown_path' },
       ),
