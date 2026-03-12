@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.55.0 (2026-03-12)
+
+Full Changelog: [v0.54.0...v0.55.0](https://github.com/smithery-ai/typescript-api/compare/v0.54.0...v0.55.0)
+
+### Features
+
+* sunset Smithery Chat/Playground (SMI-1579) ([4ff43f1](https://github.com/smithery-ai/typescript-api/commit/4ff43f15e02811fcce12acc1b893d4d8adc79eeb))
+
+
+### Bug Fixes
+
+* **api:** add seed param for duplicate-free browse pagination ([#1780](https://github.com/smithery-ai/typescript-api/issues/1780)) ([a3ce849](https://github.com/smithery-ai/typescript-api/commit/a3ce849c4a98f5cc197c8af5ea8019d1f050bced))
+* **client:** preserve URL params already embedded in path ([b4bd0cf](https://github.com/smithery-ai/typescript-api/commit/b4bd0cf8c1a80846e9b90266c72ac367dddbfec3))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([0da884d](https://github.com/smithery-ai/typescript-api/commit/0da884d71a8735a1d7dc837e7617a0fc2f3a0f64))
+* **internal:** codegen related update ([61589d3](https://github.com/smithery-ai/typescript-api/commit/61589d3e4268f14272015c71f4475cb7c59006fa))
+* **internal:** update dependencies to address dependabot vulnerabilities ([5713407](https://github.com/smithery-ai/typescript-api/commit/57134075dc3f9b8a5d76c80fe5892abf86a07c9f))
+* update placeholder string ([30712cf](https://github.com/smithery-ai/typescript-api/commit/30712cfa14cfa3fda5117d6915866f5148ef2e45))
+
 ## 0.54.0 (2026-03-03)
 
 Full Changelog: [v0.53.0...v0.54.0](https://github.com/smithery-ai/typescript-api/compare/v0.53.0...v0.54.0)
