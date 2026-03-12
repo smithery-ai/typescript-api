@@ -68,16 +68,10 @@ export interface Constraint {
 
 export interface CreateTokenRequest {
   /**
-   * Constraint objects to restrict the token. Cannot be combined with profileSlug.
-   * Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour.
-   * Maximum is 24 hours.
+   * Constraint objects to restrict the token. Each constraint may include a `ttl`
+   * field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
    */
   policy?: Array<Constraint>;
-
-  /**
-   * Profile slug for legacy token minting. Cannot be combined with policy.
-   */
-  profileSlug?: string;
 }
 
 export interface CreateTokenResponse {
@@ -94,16 +88,10 @@ export interface CreateTokenResponse {
 
 export interface TokenCreateParams {
   /**
-   * Constraint objects to restrict the token. Cannot be combined with profileSlug.
-   * Each constraint may include a `ttl` field (max 24 hours). Default TTL is 1 hour.
-   * Maximum is 24 hours.
+   * Constraint objects to restrict the token. Each constraint may include a `ttl`
+   * field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
    */
   policy?: Array<Constraint>;
-
-  /**
-   * Profile slug for legacy token minting. Cannot be combined with policy.
-   */
-  profileSlug?: string;
 }
 
 export declare namespace Tokens {
