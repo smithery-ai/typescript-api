@@ -93,6 +93,7 @@ describe('resource servers', () => {
           remote: '0',
           repoName: 'repoName',
           repoOwner: 'repoOwner',
+          seed: -9007199254740991,
           topK: 10,
           verified: '0',
         },
