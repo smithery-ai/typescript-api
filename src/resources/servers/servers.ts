@@ -508,6 +508,12 @@ export interface ServerListParams extends SmitheryPageParams {
   repoOwner?: string;
 
   /**
+   * Random seed for deterministic pagination. When provided, results use a stable
+   * sort order that is consistent across pages for the same seed value.
+   */
+  seed?: number;
+
+  /**
    * Maximum number of candidate results to consider from the search index before
    * pagination.
    */
