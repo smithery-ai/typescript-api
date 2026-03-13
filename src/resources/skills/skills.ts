@@ -31,8 +31,10 @@ import {
 } from './votes';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, SkillsPage, type SkillsPageParams } from '../../core/pagination';
+import { type Uploadable } from '../../core/uploads';
 import { buildHeaders } from '../../internal/headers';
 import { RequestOptions } from '../../internal/request-options';
+import { multipartFormRequestOptions } from '../../internal/uploads';
 import { path } from '../../internal/utils/path';
 
 /**
@@ -72,8 +74,7 @@ export class Skills extends APIResource {
   }
 
   /**
-   * Download a ZIP bundle containing all skill files, fetched via well-known
-   * endpoints.
+   * Download a ZIP bundle containing all skill files.
    */
   download(slug: string, params: SkillDownloadParams, options?: RequestOptions): APIPromise<Response> {
     const { namespace } = params;
@@ -93,13 +94,12 @@ export class Skills extends APIResource {
   }
 
   /**
-   * Idempotent endpoint to create or sync a skill. If the skill does not exist,
-   * creates it. If it exists, updates displayName, description, and externalStars
-   * from GitHub.
+   * Idempotent endpoint to create or update a GitHub-backed skill. Send
+   * application/json with `gitUrl`.
    */
   set(slug: string, params: SkillSetParams, options?: RequestOptions): APIPromise<SkillSetResponse> {
-    const { namespace, ...body } = params;
-    return this._client.put(path`/skills/${namespace}/${slug}`, { body, ...options });
+    const { namespace, body } = params;
+    return this._client.put(path`/skills/${namespace}/${slug}`, { body: body, ...options });
   }
 
   /**
@@ -111,6 +111,17 @@ export class Skills extends APIResource {
   sync(slug: string, params: SkillSyncParams, options?: RequestOptions): APIPromise<SkillSyncResponse> {
     const { namespace } = params;
     return this._client.post(path`/skills/${namespace}/${slug}/sync`, options);
+  }
+
+  /**
+   * Upload or replace a skill bundle via multipart/form-data with an `archive` file.
+   */
+  upload(slug: string, params: SkillUploadParams, options?: RequestOptions): APIPromise<SkillUploadResponse> {
+    const { namespace, ...body } = params;
+    return this._client.put(
+      path`/skills/${namespace}/${slug}/upload`,
+      multipartFormRequestOptions({ body, ...options }, this._client),
+    );
   }
 }
 
@@ -199,7 +210,7 @@ export interface SkillListResponse {
   /**
    * URL to the skill's source repository.
    */
-  gitUrl?: string;
+  gitUrl?: string | null;
 
   /**
    * Number of reviews for this skill.
@@ -250,7 +261,7 @@ export interface SkillGetResponse {
 
   externalStars: number;
 
-  gitUrl: string;
+  gitUrl: string | null;
 
   listed: boolean;
 
@@ -294,7 +305,7 @@ export interface SkillSetResponse {
 
   externalStars: number;
 
-  gitUrl: string;
+  gitUrl: string | null;
 
   listed: boolean;
 
@@ -315,6 +326,28 @@ export interface SkillSyncResponse {
   externalStars: number;
 
   gitUrl: string;
+
+  namespace: string;
+
+  slug: string;
+
+  updatedAt: string;
+}
+
+export interface SkillUploadResponse {
+  id: string;
+
+  createdAt: string;
+
+  description: string;
+
+  displayName: string;
+
+  externalStars: number;
+
+  gitUrl: string | null;
+
+  listed: boolean;
 
   namespace: string;
 
@@ -404,13 +437,26 @@ export interface SkillSetParams {
   namespace: string;
 
   /**
-   * Body param: GitHub URL pointing to a repository with SKILL.md
+   * Body param
    */
-  gitUrl: string;
+  body: unknown;
 }
 
 export interface SkillSyncParams {
   namespace: string;
+}
+
+export interface SkillUploadParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Body param: ZIP file upload containing a skill folder with SKILL.md and any
+   * scripts, references, or assets.
+   */
+  archive: Uploadable;
 }
 
 Skills.Votes = Votes;
@@ -424,6 +470,7 @@ export declare namespace Skills {
     type SkillGetResponse as SkillGetResponse,
     type SkillSetResponse as SkillSetResponse,
     type SkillSyncResponse as SkillSyncResponse,
+    type SkillUploadResponse as SkillUploadResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
@@ -432,6 +479,7 @@ export declare namespace Skills {
     type SkillGetParams as SkillGetParams,
     type SkillSetParams as SkillSetParams,
     type SkillSyncParams as SkillSyncParams,
+    type SkillUploadParams as SkillUploadParams,
   };
 
   export {

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.56.0 (2026-03-13)
+
+Full Changelog: [v0.55.0...v0.56.0](https://github.com/smithery-ai/typescript-api/compare/v0.55.0...v0.56.0)
+
+### Features
+
+* **SMI-1461:** support uploaded skill bundles ([#1786](https://github.com/smithery-ai/typescript-api/issues/1786)) ([3e01756](https://github.com/smithery-ai/typescript-api/commit/3e0175627acf6e10f161f812cdf0ed4eed7a74d5))
+
 ## 0.55.0 (2026-03-12)
 
 Full Changelog: [v0.54.0...v0.55.0](https://github.com/smithery-ai/typescript-api/compare/v0.54.0...v0.55.0)

@@ -91,6 +91,8 @@ import {
   SkillSetResponse,
   SkillSyncParams,
   SkillSyncResponse,
+  SkillUploadParams,
+  SkillUploadResponse,
   Skills,
 } from './resources/skills/skills';
 import { type Fetch } from './internal/builtin-types';
@@ -889,6 +891,7 @@ export declare namespace Smithery {
     type SkillGetResponse as SkillGetResponse,
     type SkillSetResponse as SkillSetResponse,
     type SkillSyncResponse as SkillSyncResponse,
+    type SkillUploadResponse as SkillUploadResponse,
     type SkillListResponsesSkillsPage as SkillListResponsesSkillsPage,
     type SkillCreateParams as SkillCreateParams,
     type SkillListParams as SkillListParams,
@@ -897,6 +900,7 @@ export declare namespace Smithery {
     type SkillGetParams as SkillGetParams,
     type SkillSetParams as SkillSetParams,
     type SkillSyncParams as SkillSyncParams,
+    type SkillUploadParams as SkillUploadParams,
   };
 
   export {
