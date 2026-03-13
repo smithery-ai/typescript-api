@@ -142,6 +142,7 @@ Types:
 - <code><a href="./src/resources/skills/skills.ts">SkillGetResponse</a></code>
 - <code><a href="./src/resources/skills/skills.ts">SkillSetResponse</a></code>
 - <code><a href="./src/resources/skills/skills.ts">SkillSyncResponse</a></code>
+- <code><a href="./src/resources/skills/skills.ts">SkillUploadResponse</a></code>
 
 Methods:
 
@@ -152,6 +153,7 @@ Methods:
 - <code title="get /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">get</a>(slug, { ...params }) -> SkillGetResponse</code>
 - <code title="put /skills/{namespace}/{slug}">client.skills.<a href="./src/resources/skills/skills.ts">set</a>(slug, { ...params }) -> SkillSetResponse</code>
 - <code title="post /skills/{namespace}/{slug}/sync">client.skills.<a href="./src/resources/skills/skills.ts">sync</a>(slug, { ...params }) -> SkillSyncResponse</code>
+- <code title="put /skills/{namespace}/{slug}/upload">client.skills.<a href="./src/resources/skills/skills.ts">upload</a>(slug, { ...params }) -> SkillUploadResponse</code>
 
 ## Votes
 
