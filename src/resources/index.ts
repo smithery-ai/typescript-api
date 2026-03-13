@@ -45,6 +45,7 @@ export {
   type SkillGetResponse,
   type SkillSetResponse,
   type SkillSyncResponse,
+  type SkillUploadResponse,
   type SkillCreateParams,
   type SkillListParams,
   type SkillDeleteParams,
@@ -52,6 +53,7 @@ export {
   type SkillGetParams,
   type SkillSetParams,
   type SkillSyncParams,
+  type SkillUploadParams,
   type SkillListResponsesSkillsPage,
 } from './skills/skills';
 export {

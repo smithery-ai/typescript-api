@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import Smithery from '@smithery/api';
+import Smithery, { toFile } from '@smithery/api';
 
 const client = new Smithery({
   apiKey: 'My API Key',
@@ -110,7 +110,7 @@ describe('resource skills', () => {
   test.skip('set: only required params', async () => {
     const responsePromise = client.skills.set('slug', {
       namespace: 'namespace',
-      gitUrl: 'https://example.com',
+      body: {},
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -125,7 +125,7 @@ describe('resource skills', () => {
   test.skip('set: required and optional params', async () => {
     const response = await client.skills.set('slug', {
       namespace: 'namespace',
-      gitUrl: 'https://example.com',
+      body: {},
     });
   });
 
@@ -144,5 +144,28 @@ describe('resource skills', () => {
   // Mock server tests are disabled
   test.skip('sync: required and optional params', async () => {
     const response = await client.skills.sync('slug', { namespace: 'namespace' });
+  });
+
+  // Mock server tests are disabled
+  test.skip('upload: only required params', async () => {
+    const responsePromise = client.skills.upload('slug', {
+      namespace: 'namespace',
+      archive: await toFile(Buffer.from('Example data'), 'README.md'),
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('upload: required and optional params', async () => {
+    const response = await client.skills.upload('slug', {
+      namespace: 'namespace',
+      archive: await toFile(Buffer.from('Example data'), 'README.md'),
+    });
   });
 });
