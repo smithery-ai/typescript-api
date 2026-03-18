@@ -12,7 +12,10 @@ import { path } from '../../internal/utils/path';
  */
 export class Reviews extends APIResource {
   /**
-   * Submit a review for a skill. Updates existing review if one already exists.
+   * Deprecated (SMI-1505). Submit a review for a skill. Updates existing review if
+   * one already exists.
+   *
+   * @deprecated
    */
   create(
     slug: string,
@@ -24,7 +27,9 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Get paginated list of reviews with vote counts
+   * Deprecated (SMI-1505). Get paginated list of reviews with vote counts.
+   *
+   * @deprecated
    */
   list(
     slug: string,
@@ -39,7 +44,9 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Delete your review
+   * [Deprecated] Delete your review
+   *
+   * @deprecated
    */
   delete(slug: string, params: ReviewDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { namespace } = params;
@@ -50,7 +57,9 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Remove vote from a review
+   * [Deprecated] Remove vote from a review
+   *
+   * @deprecated
    */
   unvote(reviewID: string, params: ReviewUnvoteParams, options?: RequestOptions): APIPromise<void> {
     const { namespace, slug } = params;
@@ -61,7 +70,10 @@ export class Reviews extends APIResource {
   }
 
   /**
-   * Upvote or downvote a review. Updates existing vote if one exists.
+   * Deprecated (SMI-1505). Upvote or downvote a review. Updates existing vote if one
+   * exists.
+   *
+   * @deprecated
    */
   vote(reviewID: string, params: ReviewVoteParams, options?: RequestOptions): APIPromise<ReviewVoteResponse> {
     const { namespace, slug, ...body } = params;
