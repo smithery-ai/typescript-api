@@ -38,7 +38,6 @@ Types:
 - <code><a href="./src/resources/servers/releases.ts">ExternalDeployPayload</a></code>
 - <code><a href="./src/resources/servers/releases.ts">HostedDeployPayload</a></code>
 - <code><a href="./src/resources/servers/releases.ts">ServerCard</a></code>
-- <code><a href="./src/resources/servers/releases.ts">StdioDeployPayload</a></code>
 - <code><a href="./src/resources/servers/releases.ts">ReleaseListResponse</a></code>
 - <code><a href="./src/resources/servers/releases.ts">ReleaseDeployResponse</a></code>
 - <code><a href="./src/resources/servers/releases.ts">ReleaseGetResponse</a></code>

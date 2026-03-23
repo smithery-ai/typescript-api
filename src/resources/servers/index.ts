@@ -18,7 +18,6 @@ export {
   type ExternalDeployPayload,
   type HostedDeployPayload,
   type ServerCard,
-  type StdioDeployPayload,
   type ReleaseListResponse,
   type ReleaseDeployResponse,
   type ReleaseGetResponse,

@@ -34,7 +34,6 @@ import {
   ReleaseStreamResponse,
   Releases,
   ServerCard,
-  StdioDeployPayload,
 } from './releases';
 import * as RepoAPI from './repo';
 import {
@@ -554,7 +553,6 @@ export declare namespace Servers {
     type ExternalDeployPayload as ExternalDeployPayload,
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
-    type StdioDeployPayload as StdioDeployPayload,
     type ReleaseListResponse as ReleaseListResponse,
     type ReleaseDeployResponse as ReleaseDeployResponse,
     type ReleaseGetResponse as ReleaseGetResponse,

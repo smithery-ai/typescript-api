@@ -127,11 +127,7 @@ export class Releases extends APIResource {
 
 export type ReleaseListResponsesReleasesPage = ReleasesPage<ReleaseListResponse>;
 
-export type DeployPayload =
-  | HostedDeployPayload
-  | ExternalDeployPayload
-  | StdioDeployPayload
-  | DeployPayload.RepoDeployPayload;
+export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | DeployPayload.RepoDeployPayload;
 
 export namespace DeployPayload {
   export interface RepoDeployPayload {
@@ -373,28 +369,6 @@ export namespace ServerCard {
   }
 }
 
-export interface StdioDeployPayload {
-  hasAuthAdapter: boolean;
-
-  runtime: 'node';
-
-  type: 'stdio';
-
-  configSchema?: { [key: string]: unknown };
-
-  serverCard?: ServerCard;
-
-  source?: StdioDeployPayload.Source;
-}
-
-export namespace StdioDeployPayload {
-  export interface Source {
-    branch?: string;
-
-    commit?: string;
-  }
-}
-
 export interface ReleaseListResponse {
   id: string;
 
@@ -628,7 +602,6 @@ export declare namespace Releases {
     type ExternalDeployPayload as ExternalDeployPayload,
     type HostedDeployPayload as HostedDeployPayload,
     type ServerCard as ServerCard,
-    type StdioDeployPayload as StdioDeployPayload,
     type ReleaseListResponse as ReleaseListResponse,
     type ReleaseDeployResponse as ReleaseDeployResponse,
     type ReleaseGetResponse as ReleaseGetResponse,
