@@ -2,13 +2,9 @@
 
 export {
   Domains,
-  type DomainCreateResponse,
   type DomainUpdateResponse,
   type DomainListResponse,
-  type DomainDeleteResponse,
-  type DomainCreateParams,
   type DomainUpdateParams,
-  type DomainDeleteParams,
 } from './domains';
 export { Icon, type IconDeleteResponse, type IconUploadResponse } from './icon';
 export { Logs, type LogListResponse, type LogListParams } from './logs';
