@@ -2,16 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as DomainsAPI from './domains';
-import {
-  DomainCreateParams,
-  DomainCreateResponse,
-  DomainDeleteParams,
-  DomainDeleteResponse,
-  DomainListResponse,
-  DomainUpdateParams,
-  DomainUpdateResponse,
-  Domains,
-} from './domains';
+import { DomainListResponse, DomainUpdateParams, DomainUpdateResponse, Domains } from './domains';
 import * as IconAPI from './icon';
 import { Icon, IconDeleteResponse, IconUploadResponse } from './icon';
 import * as LogsAPI from './logs';
@@ -595,12 +586,8 @@ export declare namespace Servers {
 
   export {
     Domains as Domains,
-    type DomainCreateResponse as DomainCreateResponse,
     type DomainUpdateResponse as DomainUpdateResponse,
     type DomainListResponse as DomainListResponse,
-    type DomainDeleteResponse as DomainDeleteResponse,
-    type DomainCreateParams as DomainCreateParams,
     type DomainUpdateParams as DomainUpdateParams,
-    type DomainDeleteParams as DomainDeleteParams,
   };
 }

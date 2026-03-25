@@ -7,32 +7,16 @@ import { path } from '../../internal/utils/path';
 
 export class Domains extends APIResource {
   /**
-   * Add a managed run.tools or custom domain.
-   *
-   * @example
-   * ```ts
-   * const domain = await client.servers.domains.create(
-   *   'qualifiedName',
-   *   { subdomain: 'subdomain', type: 'managed' },
-   * );
-   * ```
-   */
-  create(
-    qualifiedName: string,
-    body: DomainCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<DomainCreateResponse> {
-    return this._client.post(path`/servers/${qualifiedName}/domains`, { body, ...options });
-  }
-
-  /**
-   * Update domain settings such as subdomain slug or authentication requirements.
+   * Update the managed run.tools slug for a server.
    *
    * @example
    * ```ts
    * const domain = await client.servers.domains.update(
    *   'domainId',
-   *   { qualifiedName: 'qualifiedName' },
+   *   {
+   *     qualifiedName: 'qualifiedName',
+   *     subdomain: 'subdomain',
+   *   },
    * );
    * ```
    */
@@ -46,7 +30,7 @@ export class Domains extends APIResource {
   }
 
   /**
-   * List all domains, including managed run.tools and custom domains.
+   * List the domains for a server.
    *
    * @example
    * ```ts
@@ -58,106 +42,20 @@ export class Domains extends APIResource {
   list(qualifiedName: string, options?: RequestOptions): APIPromise<DomainListResponse> {
     return this._client.get(path`/servers/${qualifiedName}/domains`, options);
   }
-
-  /**
-   * Remove a domain and clean up associated DNS records.
-   *
-   * @example
-   * ```ts
-   * const domain = await client.servers.domains.delete(
-   *   'domainId',
-   *   { qualifiedName: 'qualifiedName' },
-   * );
-   * ```
-   */
-  delete(
-    domainID: string,
-    params: DomainDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<DomainDeleteResponse> {
-    const { qualifiedName } = params;
-    return this._client.delete(path`/servers/${qualifiedName}/domains/${domainID}`, options);
-  }
-}
-
-export interface DomainCreateResponse {
-  id: string;
-
-  allowUnauthenticated: boolean;
-
-  cnameTarget: string | null;
-
-  createdAt: string;
-
-  hostname: string;
-
-  requiresConfig: boolean;
-
-  status: 'pending_validation' | 'pending' | 'active' | 'failed' | null;
-
-  subdomain: string | null;
-
-  type: 'managed' | 'custom';
-
-  updatedAt: string;
-
-  validation: DomainCreateResponse.Validation | null;
-}
-
-export namespace DomainCreateResponse {
-  export interface Validation {
-    records: Array<Validation.Record>;
-
-    type: string;
-  }
-
-  export namespace Validation {
-    export interface Record {
-      name: string;
-
-      value: string;
-    }
-  }
 }
 
 export interface DomainUpdateResponse {
-  id: string;
-
-  allowUnauthenticated: boolean;
-
-  cnameTarget: string | null;
+  id: 'managed';
 
   createdAt: string;
 
   hostname: string;
 
-  requiresConfig: boolean;
+  subdomain: string;
 
-  status: 'pending_validation' | 'pending' | 'active' | 'failed' | null;
-
-  subdomain: string | null;
-
-  type: 'managed' | 'custom';
+  type: 'managed';
 
   updatedAt: string;
-
-  validation: DomainUpdateResponse.Validation | null;
-}
-
-export namespace DomainUpdateResponse {
-  export interface Validation {
-    records: Array<Validation.Record>;
-
-    type: string;
-  }
-
-  export namespace Validation {
-    export interface Record {
-      name: string;
-
-      value: string;
-    }
-  }
 }
 
 export interface DomainListResponse {
@@ -166,63 +64,17 @@ export interface DomainListResponse {
 
 export namespace DomainListResponse {
   export interface Domain {
-    id: string;
-
-    allowUnauthenticated: boolean;
-
-    cnameTarget: string | null;
+    id: 'managed';
 
     createdAt: string;
 
     hostname: string;
 
-    requiresConfig: boolean;
-
-    status: 'pending_validation' | 'pending' | 'active' | 'failed' | null;
-
-    subdomain: string | null;
-
-    type: 'managed' | 'custom';
-
-    updatedAt: string;
-
-    validation: Domain.Validation | null;
-  }
-
-  export namespace Domain {
-    export interface Validation {
-      records: Array<Validation.Record>;
-
-      type: string;
-    }
-
-    export namespace Validation {
-      export interface Record {
-        name: string;
-
-        value: string;
-      }
-    }
-  }
-}
-
-export interface DomainDeleteResponse {
-  success: boolean;
-}
-
-export type DomainCreateParams = DomainCreateParams.Variant0 | DomainCreateParams.Variant1;
-
-export declare namespace DomainCreateParams {
-  export interface Variant0 {
     subdomain: string;
 
     type: 'managed';
-  }
 
-  export interface Variant1 {
-    hostname: string;
-
-    type: 'custom';
+    updatedAt: string;
   }
 }
 
@@ -236,35 +88,13 @@ export interface DomainUpdateParams {
   /**
    * Body param
    */
-  allowUnauthenticated?: boolean;
-
-  /**
-   * Body param
-   */
-  requiresConfig?: boolean;
-
-  /**
-   * Body param
-   */
-  subdomain?: string;
-}
-
-export interface DomainDeleteParams {
-  /**
-   * The server's qualified name (e.g. 'namespace/server' or 'namespace' for
-   * namespace-only servers). Use %2F to encode the slash.
-   */
-  qualifiedName: string;
+  subdomain: string;
 }
 
 export declare namespace Domains {
   export {
-    type DomainCreateResponse as DomainCreateResponse,
     type DomainUpdateResponse as DomainUpdateResponse,
     type DomainListResponse as DomainListResponse,
-    type DomainDeleteResponse as DomainDeleteResponse,
-    type DomainCreateParams as DomainCreateParams,
     type DomainUpdateParams as DomainUpdateParams,
-    type DomainDeleteParams as DomainDeleteParams,
   };
 }
