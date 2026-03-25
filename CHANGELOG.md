@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.56.2 (2026-03-25)
+
+Full Changelog: [v0.56.1...v0.56.2](https://github.com/smithery-ai/typescript-api/compare/v0.56.1...v0.56.2)
+
+### Refactors
+
+* **SMI-1697:** disable custom domain management ([#1879](https://github.com/smithery-ai/typescript-api/issues/1879)) ([80a7360](https://github.com/smithery-ai/typescript-api/commit/80a7360b666640b40c021df11f7b8127c1d372b7))
+
 ## 0.56.1 (2026-03-25)
 
 Full Changelog: [v0.56.0...v0.56.1](https://github.com/smithery-ai/typescript-api/compare/v0.56.0...v0.56.1)
