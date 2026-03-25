@@ -109,17 +109,13 @@ Methods:
 
 Types:
 
-- <code><a href="./src/resources/servers/domains.ts">DomainCreateResponse</a></code>
 - <code><a href="./src/resources/servers/domains.ts">DomainUpdateResponse</a></code>
 - <code><a href="./src/resources/servers/domains.ts">DomainListResponse</a></code>
-- <code><a href="./src/resources/servers/domains.ts">DomainDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /servers/{qualifiedName}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">create</a>(qualifiedName, { ...params }) -> DomainCreateResponse</code>
 - <code title="patch /servers/{qualifiedName}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">update</a>(domainID, { ...params }) -> DomainUpdateResponse</code>
 - <code title="get /servers/{qualifiedName}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">list</a>(qualifiedName) -> DomainListResponse</code>
-- <code title="delete /servers/{qualifiedName}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">delete</a>(domainID, { ...params }) -> DomainDeleteResponse</code>
 
 # Uplink
 
