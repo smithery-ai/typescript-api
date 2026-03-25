@@ -11,7 +11,10 @@ import { path } from '../../internal/utils/path';
  */
 export class Votes extends APIResource {
   /**
-   * Upvote or downvote a skill. Updates existing vote if one exists.
+   * Deprecated (SMI-1505). Upvote or downvote a skill. Updates existing vote if one
+   * exists.
+   *
+   * @deprecated
    */
   create(slug: string, params: VoteCreateParams, options?: RequestOptions): APIPromise<SkillVoteResponse> {
     const { namespace, ...body } = params;
@@ -19,7 +22,9 @@ export class Votes extends APIResource {
   }
 
   /**
-   * Remove vote from a skill
+   * [Deprecated] Remove vote from a skill
+   *
+   * @deprecated
    */
   delete(slug: string, params: VoteDeleteParams, options?: RequestOptions): APIPromise<void> {
     const { namespace } = params;
@@ -30,7 +35,10 @@ export class Votes extends APIResource {
   }
 
   /**
-   * Get upvote/downvote counts and current user's vote (if authenticated)
+   * Deprecated (SMI-1505). Get upvote/downvote counts and current user's vote (if
+   * authenticated).
+   *
+   * @deprecated
    */
   get(slug: string, params: VoteGetParams, options?: RequestOptions): APIPromise<SkillVoteCounts> {
     const { namespace } = params;

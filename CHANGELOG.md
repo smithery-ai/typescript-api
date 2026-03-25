@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.56.1 (2026-03-25)
+
+Full Changelog: [v0.56.0...v0.56.1](https://github.com/smithery-ai/typescript-api/compare/v0.56.0...v0.56.1)
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([829520b](https://github.com/smithery-ai/typescript-api/commit/829520b6f7905be8e8d7d01ece1afcd3a56d9b71))
+* **internal:** tweak CI branches ([e5307bc](https://github.com/smithery-ai/typescript-api/commit/e5307bcf1aee11fc21251525ce530333e0a8dbdd))
+* **internal:** update gitignore ([d35f546](https://github.com/smithery-ai/typescript-api/commit/d35f54655cd6fe22eecf427a67755195c0ab516d))
+* strip stdio deployment code (SMI-1610) ([#1871](https://github.com/smithery-ai/typescript-api/issues/1871)) ([3b6e9a3](https://github.com/smithery-ai/typescript-api/commit/3b6e9a3f18bc13cafcca07f4b4daa07206282f3c))
+* sunset reviews — deprecate API, remove UI (SMI-1505) ([#1843](https://github.com/smithery-ai/typescript-api/issues/1843)) ([98fe690](https://github.com/smithery-ai/typescript-api/commit/98fe6908ff4ea6fd9494464caeca1c7c94c31192))
+
 ## 0.56.0 (2026-03-13)
 
 Full Changelog: [v0.55.0...v0.56.0](https://github.com/smithery-ai/typescript-api/compare/v0.55.0...v0.56.0)
