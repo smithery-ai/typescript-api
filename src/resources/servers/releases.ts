@@ -178,8 +178,6 @@ export namespace HostedDeployPayload {
 export interface ServerCard {
   serverInfo: ServerCard.ServerInfo;
 
-  eventTopics?: Array<ServerCard.EventTopic>;
-
   prompts?: Array<ServerCard.Prompt>;
 
   resources?: Array<ServerCard.Resource>;
@@ -214,18 +212,6 @@ export namespace ServerCard {
 
       theme?: 'light' | 'dark';
     }
-  }
-
-  export interface EventTopic {
-    name: string;
-
-    topic: string;
-
-    description?: string;
-
-    eventSchema?: { [key: string]: unknown };
-
-    inputSchema?: { [key: string]: unknown };
   }
 
   export interface Prompt {

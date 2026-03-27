@@ -323,8 +323,6 @@ export interface ServerGetResponse {
 
   displayName: string;
 
-  eventTopics: Array<ServerGetResponse.EventTopic> | null;
-
   iconUrl: string | null;
 
   prompts: Array<ServerGetResponse.Prompt> | null;
@@ -359,18 +357,6 @@ export namespace ServerGetResponse {
     deploymentUrl: string;
 
     type: 'http';
-  }
-
-  export interface EventTopic {
-    name: string;
-
-    topic: string;
-
-    description?: string;
-
-    eventSchema?: { [key: string]: unknown };
-
-    inputSchema?: { [key: string]: unknown };
   }
 
   export interface Prompt {
