@@ -211,6 +211,22 @@ Methods:
 
 - <code title="put /namespaces/{namespace}/servers/{server}">client.namespaces.servers.<a href="./src/resources/namespaces/servers.ts">create</a>(server, { ...params }) -> ServerCreateResponse</code>
 
+# Organizations
+
+## APIKeys
+
+Types:
+
+- <code><a href="./src/resources/organizations/api-keys.ts">APIKeyCreateResponse</a></code>
+- <code><a href="./src/resources/organizations/api-keys.ts">APIKeyListResponse</a></code>
+- <code><a href="./src/resources/organizations/api-keys.ts">APIKeyDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /organizations/{orgId}/api-keys">client.organizations.apiKeys.<a href="./src/resources/organizations/api-keys.ts">create</a>(orgID, { ...params }) -> APIKeyCreateResponse</code>
+- <code title="get /organizations/{orgId}/api-keys">client.organizations.apiKeys.<a href="./src/resources/organizations/api-keys.ts">list</a>(orgID) -> APIKeyListResponse</code>
+- <code title="delete /organizations/{orgId}/api-keys/{keyId}">client.organizations.apiKeys.<a href="./src/resources/organizations/api-keys.ts">delete</a>(keyID, { ...params }) -> APIKeyDeleteResponse</code>
+
 # Tokens
 
 Types:
