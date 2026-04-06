@@ -26,6 +26,7 @@ describe('resource tokens', () => {
     await expect(
       client.tokens.create(
         {
+          organizationId: 'org_01H1234567890',
           policy: [
             {
               metadata: [{ userId: 'alice' }],

@@ -61,6 +61,7 @@ import {
   NamespaceSetResponse,
   Namespaces,
 } from './resources/namespaces/namespaces';
+import { Organizations } from './resources/organizations/organizations';
 import {
   BuildConfig,
   DeploymentTarget,
@@ -830,6 +831,7 @@ export class Smithery {
    */
   skills: API.Skills = new API.Skills(this);
   namespaces: API.Namespaces = new API.Namespaces(this);
+  organizations: API.Organizations = new API.Organizations(this);
   tokens: API.Tokens = new API.Tokens(this);
   connections: API.Connections = new API.Connections(this);
 }
@@ -839,6 +841,7 @@ Smithery.Servers = Servers;
 Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
+Smithery.Organizations = Organizations;
 Smithery.Tokens = Tokens;
 Smithery.Connections = Connections;
 
@@ -912,6 +915,8 @@ export declare namespace Smithery {
     type NamespaceListResponsesNamespacesPage as NamespaceListResponsesNamespacesPage,
     type NamespaceListParams as NamespaceListParams,
   };
+
+  export { Organizations as Organizations };
 
   export {
     Tokens as Tokens,

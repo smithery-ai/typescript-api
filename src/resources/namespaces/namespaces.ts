@@ -63,9 +63,10 @@ export class Namespaces extends APIResource {
   }
 
   /**
-   * Create a new namespace owned by the authenticated user. This endpoint is
-   * idempotent - if the namespace already exists and is owned by the user, returns
-   * success.
+   * Create a new namespace owned by the authenticated user or an organization. This
+   * endpoint is idempotent - if the namespace already exists and is owned by the
+   * user/org, returns success. Pass organizationId in the request body to create an
+   * org-owned namespace.
    *
    * @example
    * ```ts

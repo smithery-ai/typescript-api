@@ -268,7 +268,7 @@ export interface SkillGetResponse {
   namespace: string;
 
   /**
-   * User ID of the skill owner (from namespace)
+   * Organization ID of the skill owner (from namespace)
    */
   owner: string | null;
 
@@ -390,7 +390,7 @@ export interface SkillListParams extends SkillsPageParams {
   namespace?: string;
 
   /**
-   * Filter by the skill owner's user ID.
+   * Filter by the skill owner's organization ID.
    */
   ownerId?: string;
 

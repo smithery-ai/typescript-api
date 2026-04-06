@@ -22,6 +22,7 @@ export {
   type NamespaceListParams,
   type NamespaceListResponsesNamespacesPage,
 } from './namespaces/namespaces';
+export { Organizations } from './organizations/organizations';
 export {
   Servers,
   type BuildConfig,

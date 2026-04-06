@@ -8,6 +8,11 @@ export class Tokens extends APIResource {
   /**
    * Create a service token for machine-to-machine authentication. Accepts API key or
    * bearer token. Optionally apply restrictions.
+   *
+   * @example
+   * ```ts
+   * const createTokenResponse = await client.tokens.create();
+   * ```
    */
   create(
     body: TokenCreateParams | null | undefined = {},
@@ -68,6 +73,13 @@ export interface Constraint {
 
 export interface CreateTokenRequest {
   /**
+   * Optional organization ID to scope the token to. When provided, the token is
+   * minted with org context. The authenticated user must be an admin or owner of the
+   * organization.
+   */
+  organizationId?: string;
+
+  /**
    * Constraint objects to restrict the token. Each constraint may include a `ttl`
    * field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
    */
@@ -87,6 +99,13 @@ export interface CreateTokenResponse {
 }
 
 export interface TokenCreateParams {
+  /**
+   * Optional organization ID to scope the token to. When provided, the token is
+   * minted with org context. The authenticated user must be an admin or owner of the
+   * organization.
+   */
+  organizationId?: string;
+
   /**
    * Constraint objects to restrict the token. Each constraint may include a `ttl`
    * field (max 24 hours). Default TTL is 1 hour. Maximum is 24 hours.
