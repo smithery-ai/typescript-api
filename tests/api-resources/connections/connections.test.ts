@@ -27,7 +27,6 @@ describe('resource connections', () => {
       headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
       name: 'My MCP Server',
-      unstableCallbackUrl: 'https://example.com/mcp/callback',
     });
   });
 
@@ -114,7 +113,6 @@ describe('resource connections', () => {
       mcpUrl: 'https://mcp.example.com/sse',
       metadata: { userId: 'bar', team: 'bar' },
       name: 'My MCP Server',
-      unstableCallbackUrl: 'https://example.com/mcp/callback',
     });
   });
 });
