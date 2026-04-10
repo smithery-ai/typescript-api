@@ -56,7 +56,7 @@ export {
   type SkillSyncParams,
   type SkillUploadParams,
   type SkillListResponsesSkillsPage,
-} from './skills/skills';
+} from './skills';
 export {
   Tokens,
   type Constraint,
