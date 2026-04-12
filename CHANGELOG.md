@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.58.0 (2026-04-12)
+
+Full Changelog: [v0.57.0...v0.58.0](https://github.com/smithery-ai/typescript-api/compare/v0.57.0...v0.58.0)
+
+### Features
+
+* **SMI-1688:** model literal HTTP inputs ([#1975](https://github.com/smithery-ai/typescript-api/issues/1975)) ([aafc73f](https://github.com/smithery-ai/typescript-api/commit/aafc73f79eb916880b4486c4a16050653063559f))
+
+
+### Bug Fixes
+
+* return real server homepage in registry api ([#1969](https://github.com/smithery-ai/typescript-api/issues/1969)) ([0db85d5](https://github.com/smithery-ai/typescript-api/commit/0db85d50907185206ed4306f4d2bd802202b9a7f))
+
+
+### Chores
+
+* drop reviews/votes tables ([#1965](https://github.com/smithery-ai/typescript-api/issues/1965)) ([f3b8742](https://github.com/smithery-ai/typescript-api/commit/f3b874286ff204fd1253e022652c3c21a75af5a4))
+* **internal:** codegen related update ([c702989](https://github.com/smithery-ai/typescript-api/commit/c70298927281f4d14fd0eef28f3f164b8595444e))
+
 ## 0.57.0 (2026-04-06)
 
 Full Changelog: [v0.56.2...v0.57.0](https://github.com/smithery-ai/typescript-api/compare/v0.56.2...v0.57.0)
