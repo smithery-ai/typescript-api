@@ -85,8 +85,9 @@ export class Connections extends APIResource {
   /**
    * Create or update an MCP connection with the given ID. mcpUrl is required when
    * creating a new connection, but optional when updating (omit to keep the existing
-   * URL). Returns 409 if a different mcpUrl is provided - delete and recreate to
-   * change URL. Requires API key and namespace ownership.
+   * URL). Returns 409 if a different mcpUrl is provided, except while the connection
+   * is input_required and the new URL keeps the same host and path. Requires API key
+   * and namespace ownership.
    *
    * @example
    * ```ts
@@ -138,6 +139,7 @@ export interface Connection {
   status?:
     | Connection.ConnectionStatusConnected
     | Connection.ConnectionStatusAuthRequired
+    | Connection.ConnectionStatusInputRequired
     | Connection.ConnectionStatusError;
 }
 
@@ -182,6 +184,46 @@ export namespace Connection {
      * URL to redirect user for OAuth authorization
      */
     authorizationUrl?: string;
+  }
+
+  export interface ConnectionStatusInputRequired {
+    http: ConnectionStatusInputRequired.HTTP;
+
+    missing: ConnectionStatusInputRequired.Missing;
+
+    state: 'input_required';
+  }
+
+  export namespace ConnectionStatusInputRequired {
+    export interface HTTP {
+      headers?: { [key: string]: HTTP.Headers };
+
+      query?: { [key: string]: HTTP.Query };
+    }
+
+    export namespace HTTP {
+      export interface Headers {
+        label: string;
+
+        description?: string;
+
+        required?: boolean;
+      }
+
+      export interface Query {
+        label: string;
+
+        description?: string;
+
+        required?: boolean;
+      }
+    }
+
+    export interface Missing {
+      headers: Array<string>;
+
+      query: Array<string>;
+    }
   }
 
   export interface ConnectionStatusError {

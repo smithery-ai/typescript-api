@@ -253,7 +253,8 @@ export interface ServerListResponse {
   displayName: string;
 
   /**
-   * URL to the server's page on smithery.ai.
+   * The server owner's homepage URL, or the server's Smithery page as a fallback.
+   * Will become nullable in a future release.
    */
   homepage: string;
 

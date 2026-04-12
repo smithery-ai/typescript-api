@@ -21,8 +21,6 @@ import {
   NamespacesPageResponse,
   type ReleasesPageParams,
   ReleasesPageResponse,
-  type ReviewsPageParams,
-  ReviewsPageResponse,
   type SkillsPageParams,
   SkillsPageResponse,
   type SmitheryPageParams,
@@ -32,6 +30,25 @@ import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import { Health, HealthCheckResponse } from './resources/health';
+import {
+  SkillCreateParams,
+  SkillCreateResponse,
+  SkillDeleteParams,
+  SkillDeleteResponse,
+  SkillDownloadParams,
+  SkillGetParams,
+  SkillGetResponse,
+  SkillListParams,
+  SkillListResponse,
+  SkillListResponsesSkillsPage,
+  SkillSetParams,
+  SkillSetResponse,
+  SkillSyncParams,
+  SkillSyncResponse,
+  SkillUploadParams,
+  SkillUploadResponse,
+  Skills,
+} from './resources/skills';
 import {
   Constraint,
   CreateTokenRequest,
@@ -77,25 +94,6 @@ import {
   ServerUpdateResponse,
   Servers,
 } from './resources/servers/servers';
-import {
-  SkillCreateParams,
-  SkillCreateResponse,
-  SkillDeleteParams,
-  SkillDeleteResponse,
-  SkillDownloadParams,
-  SkillGetParams,
-  SkillGetResponse,
-  SkillListParams,
-  SkillListResponse,
-  SkillListResponsesSkillsPage,
-  SkillSetParams,
-  SkillSetResponse,
-  SkillSyncParams,
-  SkillSyncResponse,
-  SkillUploadParams,
-  SkillUploadResponse,
-  Skills,
-} from './resources/skills/skills';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -859,9 +857,6 @@ export declare namespace Smithery {
     type NamespacesPageParams as NamespacesPageParams,
     type NamespacesPageResponse as NamespacesPageResponse,
   };
-
-  export import ReviewsPage = Pagination.ReviewsPage;
-  export { type ReviewsPageParams as ReviewsPageParams, type ReviewsPageResponse as ReviewsPageResponse };
 
   export import ReleasesPage = Pagination.ReleasesPage;
   export { type ReleasesPageParams as ReleasesPageParams, type ReleasesPageResponse as ReleasesPageResponse };
