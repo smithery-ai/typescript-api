@@ -5,11 +5,5 @@ export {
   type Connection,
   type ConnectionsListResponse,
   type CreateConnectionRequest,
-  type ConnectionDeleteResponse,
-  type ConnectionCreateParams,
-  type ConnectionListParams,
-  type ConnectionDeleteParams,
-  type ConnectionGetParams,
-  type ConnectionSetParams,
 } from './connections';
-export { Mcp, type JsonRpcRequest, type JsonRpcResponse, type McpCallParams } from './mcp';
+export { Mcp, type JsonRpcRequest, type JsonRpcResponse } from './mcp';
