@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.59.0 (2026-04-16)
+
+Full Changelog: [v0.58.0...v0.59.0](https://github.com/smithery-ai/typescript-api/compare/v0.58.0...v0.59.0)
+
+### Features
+
+* REST surface + getPath host routing (SMI-1763) ([#1988](https://github.com/smithery-ai/typescript-api/issues/1988)) ([81883c0](https://github.com/smithery-ai/typescript-api/commit/81883c0203ca6350601a952368f52ef00e361b3c))
+* **SMI-1774:** unify connect setup flow for input_required ([#1997](https://github.com/smithery-ai/typescript-api/issues/1997)) ([f5fc52b](https://github.com/smithery-ai/typescript-api/commit/f5fc52b9a8246e611892033fdc67dfe57359d09b))
+
 ## 0.58.0 (2026-04-12)
 
 Full Changelog: [v0.57.0...v0.58.0](https://github.com/smithery-ai/typescript-api/compare/v0.57.0...v0.58.0)
