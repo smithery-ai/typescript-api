@@ -28,7 +28,7 @@ export class Connections extends APIResource {
 
   /**
    * List all connections in a namespace. Supports filtering by metadata using
-   * `metadata.{key}={value}` query params (e.g., `metadata.userId=alice`).
+   * `metadata.{key}={value}` query params.
    *
    * @example
    * ```ts
@@ -84,10 +84,9 @@ export class Connections extends APIResource {
 
   /**
    * Create or update an MCP connection with the given ID. mcpUrl is required when
-   * creating a new connection, but optional when updating (omit to keep the existing
-   * URL). Returns 409 if a different mcpUrl is provided, except while the connection
-   * is input_required and the new URL keeps the same host and path. Requires API key
-   * and namespace ownership.
+   * creating a new connection, but optional when updating. Returns 409 if a
+   * different mcpUrl is provided, except while the connection is input_required and
+   * the new URL keeps the same host and path.
    *
    * @example
    * ```ts
@@ -181,9 +180,14 @@ export namespace Connection {
     state: 'auth_required';
 
     /**
-     * URL to redirect user for OAuth authorization
+     * @deprecated Deprecated compatibility alias for setupUrl
      */
     authorizationUrl?: string;
+
+    /**
+     * Hosted Smithery URL for completing setup and OAuth
+     */
+    setupUrl?: string;
   }
 
   export interface ConnectionStatusInputRequired {
@@ -192,6 +196,11 @@ export namespace Connection {
     missing: ConnectionStatusInputRequired.Missing;
 
     state: 'input_required';
+
+    /**
+     * Hosted Smithery URL for completing setup in the browser
+     */
+    setupUrl?: string;
   }
 
   export namespace ConnectionStatusInputRequired {
