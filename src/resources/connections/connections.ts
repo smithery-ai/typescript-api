@@ -86,9 +86,14 @@ export namespace Connection {
     state: 'auth_required';
 
     /**
-     * URL to redirect user for OAuth authorization
+     * @deprecated Deprecated compatibility alias for setupUrl
      */
     authorizationUrl?: string;
+
+    /**
+     * Hosted Smithery URL for completing setup and OAuth
+     */
+    setupUrl?: string;
   }
 
   export interface ConnectionStatusInputRequired {
@@ -97,6 +102,11 @@ export namespace Connection {
     missing: ConnectionStatusInputRequired.Missing;
 
     state: 'input_required';
+
+    /**
+     * Hosted Smithery URL for completing setup in the browser
+     */
+    setupUrl?: string;
   }
 
   export namespace ConnectionStatusInputRequired {
