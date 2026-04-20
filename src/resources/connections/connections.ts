@@ -128,6 +128,11 @@ export interface Connection {
   iconUrl?: string | null;
 
   /**
+   * True if the connection is in mock mode (LLM-simulated tool calls).
+   */
+  mock?: boolean;
+
+  /**
    * Server information from MCP initialization (name, version)
    */
   serverInfo?: Connection.ServerInfo;
@@ -272,6 +277,13 @@ export interface CreateConnectionRequest {
   metadata?: { [key: string]: unknown };
 
   /**
+   * Run this connection in mock mode. Tool calls are LLM-simulated against the
+   * registry's scanned schemas and never reach the upstream server. Registry servers
+   * only; frozen at creation (cannot be toggled via PUT).
+   */
+  mock?: boolean;
+
+  /**
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
@@ -297,6 +309,13 @@ export interface ConnectionCreateParams {
    * Custom metadata for filtering connections
    */
   metadata?: { [key: string]: unknown };
+
+  /**
+   * Run this connection in mock mode. Tool calls are LLM-simulated against the
+   * registry's scanned schemas and never reach the upstream server. Registry servers
+   * only; frozen at creation (cannot be toggled via PUT).
+   */
+  mock?: boolean;
 
   /**
    * Human-readable name (optional, defaults to connection ID)
@@ -356,6 +375,12 @@ export interface ConnectionSetParams {
    * Body param: Custom metadata for filtering connections
    */
   metadata?: { [key: string]: unknown };
+
+  /**
+   * Body param: Run this connection in mock mode. Only honored on first creation;
+   * ignored on updates to an existing connection.
+   */
+  mock?: boolean;
 
   /**
    * Body param: Human-readable name (optional, defaults to connection ID)
