@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.60.0 (2026-04-20)
+
+Full Changelog: [v0.59.0...v0.60.0](https://github.com/smithery-ai/typescript-api/compare/v0.59.0...v0.60.0)
+
+### Features
+
+* **connect:** add LLM-simulated mock mode ([#2010](https://github.com/smithery-ai/typescript-api/issues/2010)) ([421730e](https://github.com/smithery-ai/typescript-api/commit/421730efb615dd3671dd82fde56256a908cf5ed1))
+
 ## 0.59.0 (2026-04-16)
 
 Full Changelog: [v0.58.0...v0.59.0](https://github.com/smithery-ai/typescript-api/compare/v0.58.0...v0.59.0)
