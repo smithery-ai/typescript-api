@@ -26,6 +26,7 @@ describe('resource connections', () => {
       mcpUrl: 'https://mcp.example.com/sse',
       headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
+      mock: true,
       name: 'My MCP Server',
     });
   });
@@ -112,6 +113,7 @@ describe('resource connections', () => {
       headers: { 'X-API-Key': 'secret-key' },
       mcpUrl: 'https://mcp.example.com/sse',
       metadata: { userId: 'bar', team: 'bar' },
+      mock: true,
       name: 'My MCP Server',
     });
   });
