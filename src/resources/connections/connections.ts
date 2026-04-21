@@ -128,9 +128,10 @@ export interface Connection {
   iconUrl?: string | null;
 
   /**
-   * True if the connection is in mock mode (LLM-simulated tool calls).
+   * Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent
+   * otherwise.
    */
-  mock?: boolean;
+  mock?: Connection.Mock;
 
   /**
    * Server information from MCP initialization (name, version)
@@ -148,6 +149,23 @@ export interface Connection {
 }
 
 export namespace Connection {
+  /**
+   * Mock-mode config: `{enabled: true, scenario?}` when LLM-simulated, absent
+   * otherwise.
+   */
+  export interface Mock {
+    /**
+     * Turn mock mode on for this connection.
+     */
+    enabled: boolean;
+
+    /**
+     * Natural-language starting-state for the simulator (threaded into the LLM system
+     * prompt so generated data is consistent with the scenario across calls).
+     */
+    scenario?: string;
+  }
+
   /**
    * Server information from MCP initialization (name, version)
    */
@@ -278,15 +296,37 @@ export interface CreateConnectionRequest {
 
   /**
    * Run this connection in mock mode. Tool calls are LLM-simulated against the
-   * registry's scanned schemas and never reach the upstream server. Registry servers
-   * only; frozen at creation (cannot be toggled via PUT).
+   * registry's scanned schemas and never reach the upstream server. Provide an
+   * optional `scenario` to seed the simulator with a starting-state description.
+   * Registry servers only; frozen at creation (cannot be toggled via PUT).
    */
-  mock?: boolean;
+  mock?: CreateConnectionRequest.Mock;
 
   /**
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+}
+
+export namespace CreateConnectionRequest {
+  /**
+   * Run this connection in mock mode. Tool calls are LLM-simulated against the
+   * registry's scanned schemas and never reach the upstream server. Provide an
+   * optional `scenario` to seed the simulator with a starting-state description.
+   * Registry servers only; frozen at creation (cannot be toggled via PUT).
+   */
+  export interface Mock {
+    /**
+     * Turn mock mode on for this connection.
+     */
+    enabled: boolean;
+
+    /**
+     * Natural-language starting-state for the simulator (threaded into the LLM system
+     * prompt so generated data is consistent with the scenario across calls).
+     */
+    scenario?: string;
+  }
 }
 
 export interface ConnectionDeleteResponse {
@@ -312,15 +352,37 @@ export interface ConnectionCreateParams {
 
   /**
    * Run this connection in mock mode. Tool calls are LLM-simulated against the
-   * registry's scanned schemas and never reach the upstream server. Registry servers
-   * only; frozen at creation (cannot be toggled via PUT).
+   * registry's scanned schemas and never reach the upstream server. Provide an
+   * optional `scenario` to seed the simulator with a starting-state description.
+   * Registry servers only; frozen at creation (cannot be toggled via PUT).
    */
-  mock?: boolean;
+  mock?: ConnectionCreateParams.Mock;
 
   /**
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+}
+
+export namespace ConnectionCreateParams {
+  /**
+   * Run this connection in mock mode. Tool calls are LLM-simulated against the
+   * registry's scanned schemas and never reach the upstream server. Provide an
+   * optional `scenario` to seed the simulator with a starting-state description.
+   * Registry servers only; frozen at creation (cannot be toggled via PUT).
+   */
+  export interface Mock {
+    /**
+     * Turn mock mode on for this connection.
+     */
+    enabled: boolean;
+
+    /**
+     * Natural-language starting-state for the simulator (threaded into the LLM system
+     * prompt so generated data is consistent with the scenario across calls).
+     */
+    scenario?: string;
+  }
 }
 
 export interface ConnectionListParams {
@@ -380,12 +442,31 @@ export interface ConnectionSetParams {
    * Body param: Run this connection in mock mode. Only honored on first creation;
    * ignored on updates to an existing connection.
    */
-  mock?: boolean;
+  mock?: ConnectionSetParams.Mock;
 
   /**
    * Body param: Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+}
+
+export namespace ConnectionSetParams {
+  /**
+   * Run this connection in mock mode. Only honored on first creation; ignored on
+   * updates to an existing connection.
+   */
+  export interface Mock {
+    /**
+     * Turn mock mode on for this connection.
+     */
+    enabled: boolean;
+
+    /**
+     * Natural-language starting-state for the simulator (threaded into the LLM system
+     * prompt so generated data is consistent with the scenario across calls).
+     */
+    scenario?: string;
+  }
 }
 
 Connections.Mcp = Mcp;
