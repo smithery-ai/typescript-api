@@ -26,7 +26,7 @@ describe('resource connections', () => {
       mcpUrl: 'https://mcp.example.com/sse',
       headers: { 'X-API-Key': 'secret-key' },
       metadata: { userId: 'bar', team: 'bar' },
-      mock: true,
+      mock: { enabled: true, scenario: 'A developer inbox with 3 unread Q4 planning threads.' },
       name: 'My MCP Server',
     });
   });
@@ -113,7 +113,11 @@ describe('resource connections', () => {
       headers: { 'X-API-Key': 'secret-key' },
       mcpUrl: 'https://mcp.example.com/sse',
       metadata: { userId: 'bar', team: 'bar' },
-      mock: true,
+      mock: {
+        enabled: true,
+        scenario:
+          'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.',
+      },
       name: 'My MCP Server',
     });
   });
