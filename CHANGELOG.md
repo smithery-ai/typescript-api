@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.60.1 (2026-04-21)
+
+Full Changelog: [v0.60.0...v0.60.1](https://github.com/smithery-ai/typescript-api/compare/v0.60.0...v0.60.1)
+
+### Bug Fixes
+
+* **SMI-1801:** mock mode — transparent stateless + scenario seeding ([#2017](https://github.com/smithery-ai/typescript-api/issues/2017)) ([e564a9f](https://github.com/smithery-ai/typescript-api/commit/e564a9f46fcd39e0beb91845b5482fbe1263af60))
+
 ## 0.60.0 (2026-04-20)
 
 Full Changelog: [v0.59.0...v0.60.0](https://github.com/smithery-ai/typescript-api/compare/v0.59.0...v0.60.0)
