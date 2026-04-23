@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.61.0 (2026-04-23)
+
+Full Changelog: [v0.60.1...v0.61.0](https://github.com/smithery-ai/typescript-api/compare/v0.60.1...v0.61.0)
+
+### Features
+
+* **SMI-1826:** uplink transport for local MCP servers ([#2031](https://github.com/smithery-ai/typescript-api/issues/2031)) ([92b8fe1](https://github.com/smithery-ai/typescript-api/commit/92b8fe1b330c9211b210e72a8f72210f3b54d1eb))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([06f6547](https://github.com/smithery-ai/typescript-api/commit/06f654762489a8e027e4663de1655b3edb8e8627))
+
 ## 0.60.1 (2026-04-21)
 
 Full Changelog: [v0.60.0...v0.60.1](https://github.com/smithery-ai/typescript-api/compare/v0.60.0...v0.60.1)
