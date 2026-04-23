@@ -56,7 +56,6 @@ import {
   TokenCreateParams,
   Tokens,
 } from './resources/tokens';
-import { Uplink, UplinkCreateTokenResponse } from './resources/uplink';
 import {
   Connection,
   ConnectionCreateParams,
@@ -821,10 +820,6 @@ export class Smithery {
    */
   servers: API.Servers = new API.Servers(this);
   /**
-   * Manage uplink tokens for connecting locally-running MCP servers to Smithery
-   */
-  uplink: API.Uplink = new API.Uplink(this);
-  /**
    * Discover and search reusable prompt-based skills for MCP servers
    */
   skills: API.Skills = new API.Skills(this);
@@ -836,7 +831,6 @@ export class Smithery {
 
 Smithery.Health = Health;
 Smithery.Servers = Servers;
-Smithery.Uplink = Uplink;
 Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
 Smithery.Organizations = Organizations;
@@ -878,8 +872,6 @@ export declare namespace Smithery {
     type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
   };
-
-  export { Uplink as Uplink, type UplinkCreateTokenResponse as UplinkCreateTokenResponse };
 
   export {
     Skills as Skills,

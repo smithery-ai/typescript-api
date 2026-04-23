@@ -18,11 +18,14 @@ export class Connections extends APIResource {
    * ```ts
    * const connection = await client.connections.create(
    *   'namespace',
-   *   { mcpUrl: 'https://mcp.example.com/sse' },
    * );
    * ```
    */
-  create(namespace: string, body: ConnectionCreateParams, options?: RequestOptions): APIPromise<Connection> {
+  create(
+    namespace: string,
+    body: ConnectionCreateParams | null | undefined = {},
+    options?: RequestOptions,
+  ): APIPromise<Connection> {
     return this._client.post(path`/connect/${namespace}`, { body, ...options });
   }
 
@@ -109,9 +112,9 @@ export interface Connection {
   connectionId: string;
 
   /**
-   * MCP server URL
+   * MCP server URL. Null for uplink connections.
    */
-  mcpUrl: string;
+  mcpUrl: string | null;
 
   metadata: { [key: string]: unknown } | null;
 
@@ -143,9 +146,15 @@ export interface Connection {
    */
   status?:
     | Connection.ConnectionStatusConnected
+    | Connection.ConnectionStatusDisconnected
     | Connection.ConnectionStatusAuthRequired
     | Connection.ConnectionStatusInputRequired
     | Connection.ConnectionStatusError;
+
+  /**
+   * Connection transport
+   */
+  transport?: 'http' | 'uplink';
 }
 
 export namespace Connection {
@@ -197,6 +206,10 @@ export namespace Connection {
 
   export interface ConnectionStatusConnected {
     state: 'connected';
+  }
+
+  export interface ConnectionStatusDisconnected {
+    state: 'disconnected';
   }
 
   export interface ConnectionStatusAuthRequired {
@@ -279,15 +292,16 @@ export interface ConnectionsListResponse {
 
 export interface CreateConnectionRequest {
   /**
-   * URL of the MCP server
-   */
-  mcpUrl: string;
-
-  /**
    * Custom headers to send with MCP requests (stored securely, not returned in
    * responses)
    */
   headers?: { [key: string]: string };
+
+  /**
+   * URL of the MCP server. Required for HTTP connections. Omit for uplink
+   * connections.
+   */
+  mcpUrl?: string;
 
   /**
    * Custom metadata for filtering connections
@@ -306,6 +320,11 @@ export interface CreateConnectionRequest {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
+   */
+  transport?: 'http' | 'uplink';
 }
 
 export namespace CreateConnectionRequest {
@@ -335,15 +354,16 @@ export interface ConnectionDeleteResponse {
 
 export interface ConnectionCreateParams {
   /**
-   * URL of the MCP server
-   */
-  mcpUrl: string;
-
-  /**
    * Custom headers to send with MCP requests (stored securely, not returned in
    * responses)
    */
   headers?: { [key: string]: string };
+
+  /**
+   * URL of the MCP server. Required for HTTP connections. Omit for uplink
+   * connections.
+   */
+  mcpUrl?: string;
 
   /**
    * Custom metadata for filtering connections
@@ -362,6 +382,11 @@ export interface ConnectionCreateParams {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
+   */
+  transport?: 'http' | 'uplink';
 }
 
 export namespace ConnectionCreateParams {
@@ -448,6 +473,12 @@ export interface ConnectionSetParams {
    * Body param: Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Body param: Connection transport. Defaults to the existing connection transport
+   * when updating.
+   */
+  transport?: 'http' | 'uplink';
 }
 
 export namespace ConnectionSetParams {
