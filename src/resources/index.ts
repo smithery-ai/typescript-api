@@ -64,4 +64,3 @@ export {
   type CreateTokenResponse,
   type TokenCreateParams,
 } from './tokens';
-export { Uplink, type UplinkCreateTokenResponse } from './uplink';

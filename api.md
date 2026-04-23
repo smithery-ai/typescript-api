@@ -117,16 +117,6 @@ Methods:
 - <code title="patch /servers/{qualifiedName}/domains/{domainId}">client.servers.domains.<a href="./src/resources/servers/domains.ts">update</a>(domainID, { ...params }) -> DomainUpdateResponse</code>
 - <code title="get /servers/{qualifiedName}/domains">client.servers.domains.<a href="./src/resources/servers/domains.ts">list</a>(qualifiedName) -> DomainListResponse</code>
 
-# Uplink
-
-Types:
-
-- <code><a href="./src/resources/uplink.ts">UplinkCreateTokenResponse</a></code>
-
-Methods:
-
-- <code title="post /uplink/token">client.uplink.<a href="./src/resources/uplink.ts">createToken</a>() -> UplinkCreateTokenResponse</code>
-
 # Skills
 
 Types:
