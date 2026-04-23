@@ -9,8 +9,8 @@ const client = new Smithery({
 
 describe('resource connections', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.connections.create('namespace', { mcpUrl: 'https://mcp.example.com/sse' });
+  test.skip('create', async () => {
+    const responsePromise = client.connections.create('namespace');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -21,14 +21,22 @@ describe('resource connections', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.connections.create('namespace', {
-      mcpUrl: 'https://mcp.example.com/sse',
-      headers: { 'X-API-Key': 'secret-key' },
-      metadata: { userId: 'bar', team: 'bar' },
-      mock: { enabled: true, scenario: 'A developer inbox with 3 unread Q4 planning threads.' },
-      name: 'My MCP Server',
-    });
+  test.skip('create: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.connections.create(
+        'namespace',
+        {
+          headers: { 'X-API-Key': 'secret-key' },
+          mcpUrl: 'https://mcp.example.com/sse',
+          metadata: { userId: 'bar', team: 'bar' },
+          mock: { enabled: true, scenario: 'A developer inbox with 3 unread Q4 planning threads.' },
+          name: 'My MCP Server',
+          transport: 'http',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(Smithery.NotFoundError);
   });
 
   // Mock server tests are disabled
@@ -119,6 +127,7 @@ describe('resource connections', () => {
           'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.',
       },
       name: 'My MCP Server',
+      transport: 'http',
     });
   });
 });
