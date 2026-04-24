@@ -59,11 +59,7 @@ import {
 import {
   Connection,
   ConnectionCreateParams,
-  ConnectionDeleteParams,
-  ConnectionDeleteResponse,
-  ConnectionGetParams,
   ConnectionListParams,
-  ConnectionSetParams,
   Connections,
   ConnectionsListResponse,
   CreateConnectionRequest,
@@ -918,11 +914,7 @@ export declare namespace Smithery {
     type Connection as Connection,
     type ConnectionsListResponse as ConnectionsListResponse,
     type CreateConnectionRequest as CreateConnectionRequest,
-    type ConnectionDeleteResponse as ConnectionDeleteResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionListParams as ConnectionListParams,
-    type ConnectionDeleteParams as ConnectionDeleteParams,
-    type ConnectionGetParams as ConnectionGetParams,
-    type ConnectionSetParams as ConnectionSetParams,
   };
 }
