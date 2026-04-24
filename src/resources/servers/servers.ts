@@ -341,15 +341,13 @@ export interface ServerGetResponse {
 
 export namespace ServerGetResponse {
   export interface StdioConnection {
+    bundleUrl: string;
+
     configSchema: { [key: string]: unknown };
 
+    runtime: 'node' | 'binary' | 'python' | 'bun';
+
     type: 'stdio';
-
-    bundleUrl?: string;
-
-    runtime?: string;
-
-    stdioFunction?: string;
   }
 
   export interface HTTPConnection {
