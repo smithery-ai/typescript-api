@@ -1,8 +1,30 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import { APIPromise } from '../../core/api-promise';
+import { RequestOptions } from '../../internal/request-options';
+import { path } from '../../internal/utils/path';
 
-export class Mcp extends APIResource {}
+export class Mcp extends APIResource {
+  /**
+   * Stateless MCP endpoint using Streamable HTTP transport. Accepts JSON-RPC
+   * requests and notifications. Session management is handled internally by
+   * Connect—clients should not send mcp-session-id headers. Requires service token
+   * with mcp scope.
+   *
+   * @example
+   * ```ts
+   * const jsonRpcResponse = await client.connections.mcp.call(
+   *   'connectionId',
+   *   { namespace: 'namespace' },
+   * );
+   * ```
+   */
+  call(connectionID: string, params: McpCallParams, options?: RequestOptions): APIPromise<JsonRpcResponse> {
+    const { namespace } = params;
+    return this._client.post(path`/connect/${namespace}/${connectionID}/mcp`, options);
+  }
+}
 
 export interface JsonRpcRequest {
   jsonrpc: '2.0';
@@ -28,6 +50,14 @@ export interface JsonRpcResponse {
   result?: unknown;
 }
 
+export interface McpCallParams {
+  namespace: string;
+}
+
 export declare namespace Mcp {
-  export { type JsonRpcRequest as JsonRpcRequest, type JsonRpcResponse as JsonRpcResponse };
+  export {
+    type JsonRpcRequest as JsonRpcRequest,
+    type JsonRpcResponse as JsonRpcResponse,
+    type McpCallParams as McpCallParams,
+  };
 }

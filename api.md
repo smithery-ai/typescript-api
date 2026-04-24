@@ -201,11 +201,15 @@ Types:
 - <code><a href="./src/resources/connections/connections.ts">Connection</a></code>
 - <code><a href="./src/resources/connections/connections.ts">ConnectionsListResponse</a></code>
 - <code><a href="./src/resources/connections/connections.ts">CreateConnectionRequest</a></code>
+- <code><a href="./src/resources/connections/connections.ts">ConnectionDeleteResponse</a></code>
 
 Methods:
 
 - <code title="post /connect/{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
 - <code title="get /connect/{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
+- <code title="delete /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="get /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="put /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
 ## Mcp
 
@@ -213,3 +217,7 @@ Types:
 
 - <code><a href="./src/resources/connections/mcp.ts">JsonRpcRequest</a></code>
 - <code><a href="./src/resources/connections/mcp.ts">JsonRpcResponse</a></code>
+
+Methods:
+
+- <code title="post /connect/{namespace}/{connectionId}/mcp">client.connections.mcp.<a href="./src/resources/connections/mcp.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
