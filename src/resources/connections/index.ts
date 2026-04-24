@@ -12,4 +12,23 @@ export {
   type ConnectionGetParams,
   type ConnectionSetParams,
 } from './connections';
-export { Mcp, type JsonRpcRequest, type JsonRpcResponse, type McpCallParams } from './mcp';
+export {
+  Subscriptions,
+  type SubscriptionDeleteResponse,
+  type SubscriptionCreateParams,
+  type SubscriptionListParams,
+  type SubscriptionDeleteParams,
+} from './subscriptions';
+export {
+  Triggers,
+  type CreateTriggerRequest,
+  type TriggerDefinition,
+  type TriggerDefinitionList,
+  type TriggerInstance,
+  type TriggerDeleteResponse,
+  type TriggerCreateParams,
+  type TriggerListParams,
+  type TriggerDeleteParams,
+  type TriggerGetParams,
+  type TriggerGetInstanceParams,
+} from './triggers';

@@ -194,6 +194,22 @@ Methods:
 
 - <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
 
+# Subscriptions
+
+Types:
+
+- <code><a href="./src/resources/subscriptions.ts">CreateSubscriptionRequest</a></code>
+- <code><a href="./src/resources/subscriptions.ts">CreateSubscriptionResponse</a></code>
+- <code><a href="./src/resources/subscriptions.ts">Subscription</a></code>
+- <code><a href="./src/resources/subscriptions.ts">SubscriptionList</a></code>
+- <code><a href="./src/resources/subscriptions.ts">SubscriptionDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace) -> CreateSubscriptionResponse</code>
+- <code title="get /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">list</a>(namespace) -> SubscriptionList</code>
+- <code title="delete /{namespace}/.subscriptions/{subscriptionId}">client.subscriptions.<a href="./src/resources/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
+
 # Connections
 
 Types:
@@ -205,19 +221,38 @@ Types:
 
 Methods:
 
-- <code title="post /connect/{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
-- <code title="get /connect/{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
-- <code title="delete /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
-- <code title="get /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
-- <code title="put /connect/{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="post /{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">create</a>(namespace, { ...params }) -> Connection</code>
+- <code title="get /{namespace}">client.connections.<a href="./src/resources/connections/connections.ts">list</a>(namespace, { ...params }) -> ConnectionsListResponse</code>
+- <code title="delete /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
+- <code title="get /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
+- <code title="put /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
 
-## Mcp
+## Subscriptions
 
 Types:
 
-- <code><a href="./src/resources/connections/mcp.ts">JsonRpcRequest</a></code>
-- <code><a href="./src/resources/connections/mcp.ts">JsonRpcResponse</a></code>
+- <code><a href="./src/resources/connections/subscriptions.ts">SubscriptionDeleteResponse</a></code>
 
 Methods:
 
-- <code title="post /connect/{namespace}/{connectionId}/mcp">client.connections.mcp.<a href="./src/resources/connections/mcp.ts">call</a>(connectionID, { ...params }) -> JsonRpcResponse</code>
+- <code title="post /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">create</a>(connectionID, { ...params }) -> CreateSubscriptionResponse</code>
+- <code title="get /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">list</a>(connectionID, { ...params }) -> SubscriptionList</code>
+- <code title="delete /{namespace}/{connectionId}/.subscriptions/{subscriptionId}">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
+
+## Triggers
+
+Types:
+
+- <code><a href="./src/resources/connections/triggers.ts">CreateTriggerRequest</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerDefinition</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerDefinitionList</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerInstance</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerDeleteResponse</a></code>
+
+Methods:
+
+- <code title="post /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">create</a>(triggerName, { ...params }) -> TriggerInstance</code>
+- <code title="get /{namespace}/{connectionId}/.triggers">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">list</a>(connectionID, { ...params }) -> TriggerDefinitionList</code>
+- <code title="delete /{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">delete</a>(triggerID, { ...params }) -> TriggerDeleteResponse</code>
+- <code title="get /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">get</a>(triggerName, { ...params }) -> TriggerDefinition</code>
+- <code title="get /{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">getInstance</a>(triggerID, { ...params }) -> TriggerInstance</code>

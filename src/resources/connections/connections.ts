@@ -1,14 +1,35 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as McpAPI from './mcp';
-import { JsonRpcRequest, JsonRpcResponse, Mcp, McpCallParams } from './mcp';
+import * as SubscriptionsAPI from './subscriptions';
+import {
+  SubscriptionCreateParams,
+  SubscriptionDeleteParams,
+  SubscriptionDeleteResponse,
+  SubscriptionListParams,
+  Subscriptions,
+} from './subscriptions';
+import * as TriggersAPI from './triggers';
+import {
+  CreateTriggerRequest,
+  TriggerCreateParams,
+  TriggerDefinition,
+  TriggerDefinitionList,
+  TriggerDeleteParams,
+  TriggerDeleteResponse,
+  TriggerGetInstanceParams,
+  TriggerGetParams,
+  TriggerInstance,
+  TriggerListParams,
+  Triggers,
+} from './triggers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Connections extends APIResource {
-  mcp: McpAPI.Mcp = new McpAPI.Mcp(this._client);
+  subscriptions: SubscriptionsAPI.Subscriptions = new SubscriptionsAPI.Subscriptions(this._client);
+  triggers: TriggersAPI.Triggers = new TriggersAPI.Triggers(this._client);
 
   /**
    * Create a new MCP connection with an auto-generated ID. Requires API key and
@@ -26,7 +47,11 @@ export class Connections extends APIResource {
     body: ConnectionCreateParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<Connection> {
-    return this._client.post(path`/connect/${namespace}`, { body, ...options });
+    return this._client.post(path`/${namespace}`, {
+      body,
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
   }
 
   /**
@@ -44,7 +69,11 @@ export class Connections extends APIResource {
     query: ConnectionListParams | null | undefined = {},
     options?: RequestOptions,
   ): APIPromise<ConnectionsListResponse> {
-    return this._client.get(path`/connect/${namespace}`, { query, ...options });
+    return this._client.get(path`/${namespace}`, {
+      query,
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
   }
 
   /**
@@ -65,7 +94,10 @@ export class Connections extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ConnectionDeleteResponse> {
     const { namespace } = params;
-    return this._client.delete(path`/connect/${namespace}/${connectionID}`, options);
+    return this._client.delete(path`/${namespace}/${connectionID}`, {
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
   }
 
   /**
@@ -82,7 +114,10 @@ export class Connections extends APIResource {
    */
   get(connectionID: string, params: ConnectionGetParams, options?: RequestOptions): APIPromise<Connection> {
     const { namespace } = params;
-    return this._client.get(path`/connect/${namespace}/${connectionID}`, options);
+    return this._client.get(path`/${namespace}/${connectionID}`, {
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
   }
 
   /**
@@ -101,7 +136,11 @@ export class Connections extends APIResource {
    */
   set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
     const { namespace, ...body } = params;
-    return this._client.put(path`/connect/${namespace}/${connectionID}`, { body, ...options });
+    return this._client.put(path`/${namespace}/${connectionID}`, {
+      body,
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
   }
 }
 
@@ -500,7 +539,8 @@ export namespace ConnectionSetParams {
   }
 }
 
-Connections.Mcp = Mcp;
+Connections.Subscriptions = Subscriptions;
+Connections.Triggers = Triggers;
 
 export declare namespace Connections {
   export {
@@ -516,9 +556,24 @@ export declare namespace Connections {
   };
 
   export {
-    Mcp as Mcp,
-    type JsonRpcRequest as JsonRpcRequest,
-    type JsonRpcResponse as JsonRpcResponse,
-    type McpCallParams as McpCallParams,
+    Subscriptions as Subscriptions,
+    type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
+    type SubscriptionCreateParams as SubscriptionCreateParams,
+    type SubscriptionListParams as SubscriptionListParams,
+    type SubscriptionDeleteParams as SubscriptionDeleteParams,
+  };
+
+  export {
+    Triggers as Triggers,
+    type CreateTriggerRequest as CreateTriggerRequest,
+    type TriggerDefinition as TriggerDefinition,
+    type TriggerDefinitionList as TriggerDefinitionList,
+    type TriggerInstance as TriggerInstance,
+    type TriggerDeleteResponse as TriggerDeleteResponse,
+    type TriggerCreateParams as TriggerCreateParams,
+    type TriggerListParams as TriggerListParams,
+    type TriggerDeleteParams as TriggerDeleteParams,
+    type TriggerGetParams as TriggerGetParams,
+    type TriggerGetInstanceParams as TriggerGetInstanceParams,
   };
 }
