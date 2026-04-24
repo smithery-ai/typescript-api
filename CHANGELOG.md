@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.62.0 (2026-04-24)
+
+Full Changelog: [v0.61.0...v0.62.0](https://github.com/smithery-ai/typescript-api/compare/v0.61.0...v0.62.0)
+
+### Features
+
+* **connect:** v3 REST surface on smithery.tools; deprecate api.smithery.ai/connect ([#2032](https://github.com/smithery-ai/typescript-api/issues/2032)) ([95cb84d](https://github.com/smithery-ai/typescript-api/commit/95cb84d522d07e0273742348c88a57adbc55df60))
+
+
+### Bug Fixes
+
+* **api:** keep connect MCP out of stainless sdk ([#2055](https://github.com/smithery-ai/typescript-api/issues/2055)) ([4ac7d45](https://github.com/smithery-ai/typescript-api/commit/4ac7d455a7c5010d6f38e4f3da7bc71a0ae445a0))
+* **connect:** restore connectionId in published OpenAPI ([#2042](https://github.com/smithery-ai/typescript-api/issues/2042)) ([3adfb97](https://github.com/smithery-ai/typescript-api/commit/3adfb97c928eb99bea36d92c3d20789ae9a3a866))
+
+
+### Refactors
+
+* **SMI-1825:** drop legacy stdioFunction support ([#2057](https://github.com/smithery-ai/typescript-api/issues/2057)) ([4c486b6](https://github.com/smithery-ai/typescript-api/commit/4c486b6860838e18795e8073d2af033347f9f733))
+
 ## 0.61.0 (2026-04-23)
 
 Full Changelog: [v0.60.1...v0.61.0](https://github.com/smithery-ai/typescript-api/compare/v0.60.1...v0.61.0)
