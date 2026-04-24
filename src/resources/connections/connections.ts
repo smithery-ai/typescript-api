@@ -2,7 +2,7 @@
 
 import { APIResource } from '../../core/resource';
 import * as McpAPI from './mcp';
-import { JsonRpcRequest, JsonRpcResponse, Mcp, McpCallParams } from './mcp';
+import { JsonRpcRequest, JsonRpcResponse, Mcp } from './mcp';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
@@ -45,63 +45,6 @@ export class Connections extends APIResource {
     options?: RequestOptions,
   ): APIPromise<ConnectionsListResponse> {
     return this._client.get(path`/connect/${namespace}`, { query, ...options });
-  }
-
-  /**
-   * Delete a connection and terminate its MCP session. Requires API key and
-   * namespace ownership.
-   *
-   * @example
-   * ```ts
-   * const connection = await client.connections.delete(
-   *   'connectionId',
-   *   { namespace: 'namespace' },
-   * );
-   * ```
-   */
-  delete(
-    connectionID: string,
-    params: ConnectionDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<ConnectionDeleteResponse> {
-    const { namespace } = params;
-    return this._client.delete(path`/connect/${namespace}/${connectionID}`, options);
-  }
-
-  /**
-   * Get details for a specific connection. Requires service token with
-   * connections:read scope.
-   *
-   * @example
-   * ```ts
-   * const connection = await client.connections.get(
-   *   'connectionId',
-   *   { namespace: 'namespace' },
-   * );
-   * ```
-   */
-  get(connectionID: string, params: ConnectionGetParams, options?: RequestOptions): APIPromise<Connection> {
-    const { namespace } = params;
-    return this._client.get(path`/connect/${namespace}/${connectionID}`, options);
-  }
-
-  /**
-   * Create or update an MCP connection with the given ID. mcpUrl is required when
-   * creating a new connection, but optional when updating. Returns 409 if a
-   * different mcpUrl is provided, except while the connection is input_required and
-   * the new URL keeps the same host and path.
-   *
-   * @example
-   * ```ts
-   * const connection = await client.connections.set(
-   *   'connectionId',
-   *   { namespace: 'namespace' },
-   * );
-   * ```
-   */
-  set(connectionID: string, params: ConnectionSetParams, options?: RequestOptions): APIPromise<Connection> {
-    const { namespace, ...body } = params;
-    return this._client.put(path`/connect/${namespace}/${connectionID}`, { body, ...options });
   }
 }
 
@@ -348,10 +291,6 @@ export namespace CreateConnectionRequest {
   }
 }
 
-export interface ConnectionDeleteResponse {
-  success: true;
-}
-
 export interface ConnectionCreateParams {
   /**
    * Custom headers to send with MCP requests (stored securely, not returned in
@@ -432,74 +371,6 @@ export interface ConnectionListParams {
   name?: string;
 }
 
-export interface ConnectionDeleteParams {
-  namespace: string;
-}
-
-export interface ConnectionGetParams {
-  namespace: string;
-}
-
-export interface ConnectionSetParams {
-  /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Body param: Custom headers to send with MCP requests (stored securely, not
-   * returned in responses)
-   */
-  headers?: { [key: string]: string };
-
-  /**
-   * Body param: URL of the MCP server. Required when creating a new connection.
-   * Optional when updating — omit to keep the existing URL.
-   */
-  mcpUrl?: string;
-
-  /**
-   * Body param: Custom metadata for filtering connections
-   */
-  metadata?: { [key: string]: unknown };
-
-  /**
-   * Body param: Run this connection in mock mode. Only honored on first creation;
-   * ignored on updates to an existing connection.
-   */
-  mock?: ConnectionSetParams.Mock;
-
-  /**
-   * Body param: Human-readable name (optional, defaults to connection ID)
-   */
-  name?: string;
-
-  /**
-   * Body param: Connection transport. Defaults to the existing connection transport
-   * when updating.
-   */
-  transport?: 'http' | 'uplink';
-}
-
-export namespace ConnectionSetParams {
-  /**
-   * Run this connection in mock mode. Only honored on first creation; ignored on
-   * updates to an existing connection.
-   */
-  export interface Mock {
-    /**
-     * Turn mock mode on for this connection.
-     */
-    enabled: boolean;
-
-    /**
-     * Natural-language starting-state for the simulator (threaded into the LLM system
-     * prompt so generated data is consistent with the scenario across calls).
-     */
-    scenario?: string;
-  }
-}
-
 Connections.Mcp = Mcp;
 
 export declare namespace Connections {
@@ -507,18 +378,9 @@ export declare namespace Connections {
     type Connection as Connection,
     type ConnectionsListResponse as ConnectionsListResponse,
     type CreateConnectionRequest as CreateConnectionRequest,
-    type ConnectionDeleteResponse as ConnectionDeleteResponse,
     type ConnectionCreateParams as ConnectionCreateParams,
     type ConnectionListParams as ConnectionListParams,
-    type ConnectionDeleteParams as ConnectionDeleteParams,
-    type ConnectionGetParams as ConnectionGetParams,
-    type ConnectionSetParams as ConnectionSetParams,
   };
 
-  export {
-    Mcp as Mcp,
-    type JsonRpcRequest as JsonRpcRequest,
-    type JsonRpcResponse as JsonRpcResponse,
-    type McpCallParams as McpCallParams,
-  };
+  export { Mcp as Mcp, type JsonRpcRequest as JsonRpcRequest, type JsonRpcResponse as JsonRpcResponse };
 }
