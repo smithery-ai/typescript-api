@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ReleasesAPI from './releases';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, ReleasesPage, type ReleasesPageParams } from '../../core/pagination';
 import { Stream } from '../../core/streaming';
@@ -127,7 +128,11 @@ export class Releases extends APIResource {
 
 export type ReleaseListResponsesReleasesPage = ReleasesPage<ReleaseListResponse>;
 
-export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | DeployPayload.RepoDeployPayload;
+export type DeployPayload =
+  | HostedDeployPayload
+  | ExternalDeployPayload
+  | DeployPayload.RepoDeployPayload
+  | DeployPayload.StdioDeployPayload;
 
 export namespace DeployPayload {
   export interface RepoDeployPayload {
@@ -140,6 +145,16 @@ export namespace DeployPayload {
     repoName?: string;
 
     repoOwner?: string;
+  }
+
+  export interface StdioDeployPayload {
+    runtime: 'node' | 'binary' | 'python' | 'bun';
+
+    type: 'stdio';
+
+    configSchema?: { [key: string]: unknown };
+
+    serverCard?: ReleasesAPI.ServerCard;
   }
 }
 
