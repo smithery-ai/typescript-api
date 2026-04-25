@@ -43,7 +43,7 @@ export class Releases extends APIResource {
 
   /**
    * Submit a release via multipart form. Supports hosted (JS module upload),
-   * external (URL), stdio (MCPB bundle), and repo (GitHub build) release types.
+   * external (URL), and stdio (MCPB bundle) release types.
    *
    * @example
    * ```ts
@@ -128,25 +128,9 @@ export class Releases extends APIResource {
 
 export type ReleaseListResponsesReleasesPage = ReleasesPage<ReleaseListResponse>;
 
-export type DeployPayload =
-  | HostedDeployPayload
-  | ExternalDeployPayload
-  | DeployPayload.RepoDeployPayload
-  | DeployPayload.StdioDeployPayload;
+export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | DeployPayload.StdioDeployPayload;
 
 export namespace DeployPayload {
-  export interface RepoDeployPayload {
-    type: 'repo';
-
-    baseDirectory?: string;
-
-    branch?: string;
-
-    repoName?: string;
-
-    repoOwner?: string;
-  }
-
   export interface StdioDeployPayload {
     runtime: 'node' | 'binary' | 'python' | 'bun';
 
