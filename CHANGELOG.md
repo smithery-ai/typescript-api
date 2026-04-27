@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.63.0 (2026-04-27)
+
+Full Changelog: [v0.62.0...v0.63.0](https://github.com/smithery-ai/typescript-api/compare/v0.62.0...v0.63.0)
+
+### Features
+
+* **api:** accept stdio .mcpb bundle uploads on publish ([#2058](https://github.com/smithery-ai/typescript-api/issues/2058)) ([ef9a503](https://github.com/smithery-ai/typescript-api/commit/ef9a503d872884144173077980296a85750212d5))
+
+
+### Chores
+
+* **SMI-1568:** remove GitHub deployments, keep repo links ([#2065](https://github.com/smithery-ai/typescript-api/issues/2065)) ([7ac6112](https://github.com/smithery-ai/typescript-api/commit/7ac6112d5d19f520e85121858b04fcba866d4de4))
+
+
+### Refactors
+
+* drop repo deploy payload and GitHub auto-deploy path ([#2060](https://github.com/smithery-ai/typescript-api/issues/2060)) ([d18fb9f](https://github.com/smithery-ai/typescript-api/commit/d18fb9fc172cc2aa0672455cd8121171f71d4df8))
+
 ## 0.62.0 (2026-04-24)
 
 Full Changelog: [v0.61.0...v0.62.0](https://github.com/smithery-ai/typescript-api/compare/v0.61.0...v0.62.0)

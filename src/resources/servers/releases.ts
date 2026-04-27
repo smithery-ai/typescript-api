@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
+import * as ReleasesAPI from './releases';
 import { APIPromise } from '../../core/api-promise';
 import { PagePromise, ReleasesPage, type ReleasesPageParams } from '../../core/pagination';
 import { Stream } from '../../core/streaming';
@@ -42,7 +43,7 @@ export class Releases extends APIResource {
 
   /**
    * Submit a release via multipart form. Supports hosted (JS module upload),
-   * external (URL), stdio (MCPB bundle), and repo (GitHub build) release types.
+   * external (URL), and stdio (MCPB bundle) release types.
    *
    * @example
    * ```ts
@@ -127,19 +128,17 @@ export class Releases extends APIResource {
 
 export type ReleaseListResponsesReleasesPage = ReleasesPage<ReleaseListResponse>;
 
-export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | DeployPayload.RepoDeployPayload;
+export type DeployPayload = HostedDeployPayload | ExternalDeployPayload | DeployPayload.StdioDeployPayload;
 
 export namespace DeployPayload {
-  export interface RepoDeployPayload {
-    type: 'repo';
+  export interface StdioDeployPayload {
+    runtime: 'node' | 'binary' | 'python' | 'bun';
 
-    baseDirectory?: string;
+    type: 'stdio';
 
-    branch?: string;
+    configSchema?: { [key: string]: unknown };
 
-    repoName?: string;
-
-    repoOwner?: string;
+    serverCard?: ReleasesAPI.ServerCard;
   }
 }
 

@@ -27,15 +27,6 @@ export {
   type ReleaseListResponsesReleasesPage,
 } from './releases';
 export {
-  Repo,
-  type RepoUpdateResponse,
-  type RepoDeleteResponse,
-  type RepoGetResponse,
-  type RepoSetResponse,
-  type RepoUpdateParams,
-  type RepoSetParams,
-} from './repo';
-export {
   Secrets,
   type SecretListResponse,
   type SecretDeleteResponse,
