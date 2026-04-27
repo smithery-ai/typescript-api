@@ -56,6 +56,7 @@ describe('resource servers', () => {
           homepage: 'homepage',
           iconUrl: 'iconUrl',
           license: 'license',
+          repositoryUrl: 'repositoryUrl',
           unlisted: true,
         },
         { path: '/_stainless_unknown_path' },
