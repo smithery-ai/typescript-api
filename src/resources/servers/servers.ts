@@ -234,6 +234,12 @@ export interface ServerListResponse {
   id: string;
 
   /**
+   * Whether this server is maintained by Smithery (i.e. owned by the Smithery
+   * organization).
+   */
+  bySmithery: boolean;
+
+  /**
    * ISO 8601 timestamp of when the server was registered.
    */
   createdAt: string;
