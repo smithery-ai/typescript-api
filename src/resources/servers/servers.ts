@@ -26,16 +26,6 @@ import {
   Releases,
   ServerCard,
 } from './releases';
-import * as RepoAPI from './repo';
-import {
-  Repo,
-  RepoDeleteResponse,
-  RepoGetResponse,
-  RepoSetParams,
-  RepoSetResponse,
-  RepoUpdateParams,
-  RepoUpdateResponse,
-} from './repo';
 import * as SecretsAPI from './secrets';
 import {
   SecretDeleteParams,
@@ -58,7 +48,6 @@ export class Servers extends APIResource {
   releases: ReleasesAPI.Releases = new ReleasesAPI.Releases(this._client);
   logs: LogsAPI.Logs = new LogsAPI.Logs(this._client);
   secrets: SecretsAPI.Secrets = new SecretsAPI.Secrets(this._client);
-  repo: RepoAPI.Repo = new RepoAPI.Repo(this._client);
   icon: IconAPI.Icon = new IconAPI.Icon(this._client);
   domains: DomainsAPI.Domains = new DomainsAPI.Domains(this._client);
 
@@ -80,7 +69,8 @@ export class Servers extends APIResource {
   }
 
   /**
-   * Update server metadata such as display name, description, icon, or visibility.
+   * Update server metadata such as display name, description, repository, icon, or
+   * visibility.
    *
    * @example
    * ```ts
@@ -424,6 +414,8 @@ export interface ServerUpdateParams {
 
   license?: string | null;
 
+  repositoryUrl?: string | null;
+
   unlisted?: boolean;
 }
 
@@ -473,12 +465,12 @@ export interface ServerListParams extends SmitheryPageParams {
   remote?: '0' | '1' | 'true' | 'false';
 
   /**
-   * Filter by connected GitHub repository name.
+   * Filter by GitHub repository name from repository_url.
    */
   repoName?: string;
 
   /**
-   * Filter by connected GitHub repository owner.
+   * Filter by GitHub repository owner from repository_url.
    */
   repoOwner?: string;
 
@@ -503,7 +495,6 @@ export interface ServerListParams extends SmitheryPageParams {
 Servers.Releases = Releases;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
-Servers.Repo = Repo;
 Servers.Icon = Icon;
 Servers.Domains = Domains;
 
@@ -551,16 +542,6 @@ export declare namespace Servers {
     type SecretSetResponse as SecretSetResponse,
     type SecretDeleteParams as SecretDeleteParams,
     type SecretSetParams as SecretSetParams,
-  };
-
-  export {
-    Repo as Repo,
-    type RepoUpdateResponse as RepoUpdateResponse,
-    type RepoDeleteResponse as RepoDeleteResponse,
-    type RepoGetResponse as RepoGetResponse,
-    type RepoSetResponse as RepoSetResponse,
-    type RepoUpdateParams as RepoUpdateParams,
-    type RepoSetParams as RepoSetParams,
   };
 
   export {

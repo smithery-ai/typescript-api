@@ -76,22 +76,6 @@ Methods:
 - <code title="delete /servers/{qualifiedName}/secrets/{secretName}">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">delete</a>(secretName, { ...params }) -> SecretDeleteResponse</code>
 - <code title="put /servers/{qualifiedName}/secrets">client.servers.secrets.<a href="./src/resources/servers/secrets.ts">set</a>(qualifiedName, { ...params }) -> SecretSetResponse</code>
 
-## Repo
-
-Types:
-
-- <code><a href="./src/resources/servers/repo.ts">RepoUpdateResponse</a></code>
-- <code><a href="./src/resources/servers/repo.ts">RepoDeleteResponse</a></code>
-- <code><a href="./src/resources/servers/repo.ts">RepoGetResponse</a></code>
-- <code><a href="./src/resources/servers/repo.ts">RepoSetResponse</a></code>
-
-Methods:
-
-- <code title="patch /servers/{qualifiedName}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">update</a>(qualifiedName, { ...params }) -> RepoUpdateResponse</code>
-- <code title="delete /servers/{qualifiedName}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">delete</a>(qualifiedName) -> RepoDeleteResponse</code>
-- <code title="get /servers/{qualifiedName}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">get</a>(qualifiedName) -> RepoGetResponse</code>
-- <code title="put /servers/{qualifiedName}/repo">client.servers.repo.<a href="./src/resources/servers/repo.ts">set</a>(qualifiedName, { ...params }) -> RepoSetResponse</code>
-
 ## Icon
 
 Types:
