@@ -410,6 +410,8 @@ export interface ServerCreateParams {
 }
 
 export interface ServerUpdateParams {
+  backlinkUrl?: string | null;
+
   description?: string;
 
   displayName?: string;
