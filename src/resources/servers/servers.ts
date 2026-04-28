@@ -392,6 +392,8 @@ export namespace ServerGetResponse {
     inputSchema: Tool.InputSchema;
 
     name: string;
+
+    outputSchema?: Tool.OutputSchema;
   }
 
   export namespace Tool {
@@ -399,6 +401,14 @@ export namespace ServerGetResponse {
       type: 'object';
 
       properties?: { [key: string]: unknown };
+    }
+
+    export interface OutputSchema {
+      type: 'object';
+
+      properties?: { [key: string]: unknown };
+
+      required?: Array<string>;
     }
   }
 }

@@ -161,6 +161,8 @@ export interface HostedDeployPayload {
 
   configSchema?: { [key: string]: unknown };
 
+  secretNames?: Array<string>;
+
   serverCard?: ServerCard;
 
   source?: HostedDeployPayload.Source;
