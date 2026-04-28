@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.63.1 (2026-04-28)
+
+Full Changelog: [v0.63.0...v0.63.1](https://github.com/smithery-ai/typescript-api/compare/v0.63.0...v0.63.1)
+
+### Bug Fixes
+
+* use org id for Smithery badge ([#2102](https://github.com/smithery-ai/typescript-api/issues/2102)) ([f3f5695](https://github.com/smithery-ai/typescript-api/commit/f3f5695a2e466168b71e30a58794d31c927447d8))
+
+
+### Chores
+
+* consolidate server verification state into dedicated table ([#2111](https://github.com/smithery-ai/typescript-api/issues/2111)) ([abd51cf](https://github.com/smithery-ai/typescript-api/commit/abd51cf8b199cf0b543950c568209e9281a9461a))
+
 ## 0.63.0 (2026-04-27)
 
 Full Changelog: [v0.62.0...v0.63.0](https://github.com/smithery-ai/typescript-api/compare/v0.62.0...v0.63.0)
