@@ -51,6 +51,7 @@ describe('resource servers', () => {
       client.servers.update(
         'qualifiedName',
         {
+          backlinkUrl: 'backlinkUrl',
           description: 'description',
           displayName: 'displayName',
           homepage: 'homepage',
