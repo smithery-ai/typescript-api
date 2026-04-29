@@ -64,6 +64,7 @@ export {
   type Subscription,
   type SubscriptionList,
   type SubscriptionDeleteResponse,
+  type SubscriptionCreateParams,
   type SubscriptionDeleteParams,
 } from './subscriptions';
 export {

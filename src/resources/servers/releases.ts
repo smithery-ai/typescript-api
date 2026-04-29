@@ -161,6 +161,8 @@ export interface HostedDeployPayload {
 
   configSchema?: { [key: string]: unknown };
 
+  secretNames?: Array<string>;
+
   serverCard?: ServerCard;
 
   source?: HostedDeployPayload.Source;
@@ -497,7 +499,7 @@ export namespace ReleaseGetResponse {
 
     /**
      * Pipeline stage: deploy (bundle upload), scan (security/OAuth check), metadata
-     * (tool discovery), publish (making the server live).
+     * (tool discovery), publish (generated artifacts).
      */
     stage: 'deploy' | 'scan' | 'metadata' | 'publish';
 

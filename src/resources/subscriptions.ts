@@ -9,9 +9,22 @@ export class Subscriptions extends APIResource {
   /**
    * Create a namespace-scoped subscription that receives events from every
    * connection in the namespace.
+   *
+   * @example
+   * ```ts
+   * const createSubscriptionResponse =
+   *   await client.subscriptions.create('namespace', {
+   *     url: 'https://my-app.example.com/events',
+   *   });
+   * ```
    */
-  create(namespace: string, options?: RequestOptions): APIPromise<CreateSubscriptionResponse> {
+  create(
+    namespace: string,
+    body: SubscriptionCreateParams,
+    options?: RequestOptions,
+  ): APIPromise<CreateSubscriptionResponse> {
     return this._client.post(path`/${namespace}/.subscriptions`, {
+      body,
       defaultBaseURL: 'https://smithery.run',
       ...options,
     });
@@ -20,6 +33,13 @@ export class Subscriptions extends APIResource {
   /**
    * List namespace-scoped trigger subscriptions for all connections in the
    * namespace.
+   *
+   * @example
+   * ```ts
+   * const subscriptionList = await client.subscriptions.list(
+   *   'namespace',
+   * );
+   * ```
    */
   list(namespace: string, options?: RequestOptions): APIPromise<SubscriptionList> {
     return this._client.get(path`/${namespace}/.subscriptions`, {
@@ -30,6 +50,14 @@ export class Subscriptions extends APIResource {
 
   /**
    * Delete a namespace-scoped trigger subscription.
+   *
+   * @example
+   * ```ts
+   * const subscription = await client.subscriptions.delete(
+   *   'subscriptionId',
+   *   { namespace: 'namespace' },
+   * );
+   * ```
    */
   delete(
     subscriptionID: string,
@@ -106,6 +134,13 @@ export interface SubscriptionDeleteResponse {
   success: true;
 }
 
+export interface SubscriptionCreateParams {
+  /**
+   * HTTPS webhook destination
+   */
+  url: string;
+}
+
 export interface SubscriptionDeleteParams {
   namespace: string;
 }
@@ -117,6 +152,7 @@ export declare namespace Subscriptions {
     type Subscription as Subscription,
     type SubscriptionList as SubscriptionList,
     type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
+    type SubscriptionCreateParams as SubscriptionCreateParams,
     type SubscriptionDeleteParams as SubscriptionDeleteParams,
   };
 }

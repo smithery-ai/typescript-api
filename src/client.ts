@@ -53,6 +53,7 @@ import {
   CreateSubscriptionRequest,
   CreateSubscriptionResponse,
   Subscription,
+  SubscriptionCreateParams,
   SubscriptionDeleteParams,
   SubscriptionDeleteResponse,
   SubscriptionList,
@@ -251,6 +252,18 @@ export class Smithery {
     this.maxRetries = options.maxRetries ?? 2;
     this.fetch = options.fetch ?? Shims.getDefaultFetch();
     this.#encoder = Opts.FallbackEncoder;
+
+    const customHeadersEnv = readEnv('SMITHERY_CUSTOM_HEADERS');
+    if (customHeadersEnv) {
+      const parsed: Record<string, string> = {};
+      for (const line of customHeadersEnv.split('\n')) {
+        const colon = line.indexOf(':');
+        if (colon >= 0) {
+          parsed[line.substring(0, colon).trim()] = line.substring(colon + 1).trim();
+        }
+      }
+      options.defaultHeaders = { ...parsed, ...options.defaultHeaders };
+    }
 
     this._options = options;
 
@@ -931,6 +944,7 @@ export declare namespace Smithery {
     type Subscription as Subscription,
     type SubscriptionList as SubscriptionList,
     type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
+    type SubscriptionCreateParams as SubscriptionCreateParams,
     type SubscriptionDeleteParams as SubscriptionDeleteParams,
   };
 

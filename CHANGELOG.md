@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.64.0 (2026-04-29)
+
+Full Changelog: [v0.63.1...v0.64.0](https://github.com/smithery-ai/typescript-api/compare/v0.63.1...v0.64.0)
+
+### Features
+
+* **SMI-1852:** publish generated TypeScript SDKs ([#2155](https://github.com/smithery-ai/typescript-api/issues/2155)) ([fcac7c8](https://github.com/smithery-ai/typescript-api/commit/fcac7c8c725ee667dc80815bd5b118655d4986c7))
+* support setting headers via env ([96a0c4c](https://github.com/smithery-ai/typescript-api/commit/96a0c4c3e8d2868679f52cefd1bb9f82e89db7bd))
+
+
+### Bug Fixes
+
+* document Connect tools in SDK ([#2154](https://github.com/smithery-ai/typescript-api/issues/2154)) ([5fd3eee](https://github.com/smithery-ai/typescript-api/commit/5fd3eee77fa2e49661f33395f53039074d17f57f))
+* normalize verification score checks ([#2153](https://github.com/smithery-ai/typescript-api/issues/2153)) ([f5223f0](https://github.com/smithery-ai/typescript-api/commit/f5223f06aafde2eb452d8c74a61f3a81be02b4bd))
+
+
+### Chores
+
+* **format:** run eslint and prettier separately ([7c537a8](https://github.com/smithery-ai/typescript-api/commit/7c537a82dded80c16e5a6b5190c1b2e135798f84))
+* **internal:** codegen related update ([abe2faf](https://github.com/smithery-ai/typescript-api/commit/abe2faf1a9933516b9fe60d1ce6429f1bfda6a95))
+
 ## 0.63.1 (2026-04-28)
 
 Full Changelog: [v0.63.0...v0.63.1](https://github.com/smithery-ai/typescript-api/compare/v0.63.0...v0.63.1)

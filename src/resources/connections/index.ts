@@ -20,6 +20,16 @@ export {
   type SubscriptionDeleteParams,
 } from './subscriptions';
 export {
+  Tools,
+  type Tool,
+  type ToolList,
+  type ToolResponse,
+  type ToolCallResponse,
+  type ToolListParams,
+  type ToolCallParams,
+  type ToolGetParams,
+} from './tools';
+export {
   Triggers,
   type CreateTriggerRequest,
   type TriggerDefinition,

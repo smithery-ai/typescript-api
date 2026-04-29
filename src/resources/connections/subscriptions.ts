@@ -16,7 +16,10 @@ export class Subscriptions extends APIResource {
    * const createSubscriptionResponse =
    *   await client.connections.subscriptions.create(
    *     'connectionId',
-   *     { namespace: 'namespace' },
+   *     {
+   *       namespace: 'namespace',
+   *       url: 'https://my-app.example.com/events',
+   *     },
    *   );
    * ```
    */
@@ -25,8 +28,9 @@ export class Subscriptions extends APIResource {
     params: SubscriptionCreateParams,
     options?: RequestOptions,
   ): APIPromise<SubscriptionsAPI.CreateSubscriptionResponse> {
-    const { namespace } = params;
+    const { namespace, ...body } = params;
     return this._client.post(path`/${namespace}/${connectionID}/.subscriptions`, {
+      body,
       defaultBaseURL: 'https://smithery.run',
       ...options,
     });
@@ -89,7 +93,15 @@ export interface SubscriptionDeleteResponse {
 }
 
 export interface SubscriptionCreateParams {
+  /**
+   * Path param
+   */
   namespace: string;
+
+  /**
+   * Body param: HTTPS webhook destination
+   */
+  url: string;
 }
 
 export interface SubscriptionListParams {
