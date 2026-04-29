@@ -13,6 +13,7 @@ describe('resource triggers', () => {
     const responsePromise = client.connections.triggers.create('triggerName', {
       namespace: 'namespace',
       connectionId: 'connectionId',
+      params: { foo: 'bar' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -28,6 +29,7 @@ describe('resource triggers', () => {
     const response = await client.connections.triggers.create('triggerName', {
       namespace: 'namespace',
       connectionId: 'connectionId',
+      params: { foo: 'bar' },
     });
   });
 

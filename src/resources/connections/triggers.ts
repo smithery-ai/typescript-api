@@ -15,6 +15,7 @@ export class Triggers extends APIResource {
    *   await client.connections.triggers.create('triggerName', {
    *     namespace: 'namespace',
    *     connectionId: 'connectionId',
+   *     params: { foo: 'bar' },
    *   });
    * ```
    */
@@ -23,8 +24,9 @@ export class Triggers extends APIResource {
     params: TriggerCreateParams,
     options?: RequestOptions,
   ): APIPromise<TriggerInstance> {
-    const { namespace, connectionId } = params;
+    const { namespace, connectionId, ...body } = params;
     return this._client.post(path`/${namespace}/${connectionId}/.triggers/${triggerName}`, {
+      body,
       defaultBaseURL: 'https://smithery.run',
       ...options,
     });
@@ -198,9 +200,20 @@ export interface TriggerDeleteResponse {
 }
 
 export interface TriggerCreateParams {
+  /**
+   * Path param
+   */
   namespace: string;
 
+  /**
+   * Path param
+   */
   connectionId: string;
+
+  /**
+   * Body param: Trigger-specific parameters defined by the trigger inputSchema
+   */
+  params: { [key: string]: unknown };
 }
 
 export interface TriggerListParams {

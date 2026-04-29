@@ -7,11 +7,30 @@ const client = new Smithery({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource subscriptions', () => {
+describe('resource tools', () => {
   // Mock server tests are disabled
-  test.skip('create: only required params', async () => {
-    const responsePromise = client.subscriptions.create('namespace', {
-      url: 'https://my-app.example.com/events',
+  test.skip('list: only required params', async () => {
+    const responsePromise = client.connections.tools.list('connectionId', { namespace: 'namespace' });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('list: required and optional params', async () => {
+    const response = await client.connections.tools.list('connectionId', { namespace: 'namespace' });
+  });
+
+  // Mock server tests are disabled
+  test.skip('call: only required params', async () => {
+    const responsePromise = client.connections.tools.call('toolPath', {
+      namespace: 'namespace',
+      connectionId: 'connectionId',
+      body: { foo: 'bar' },
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -23,15 +42,20 @@ describe('resource subscriptions', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('create: required and optional params', async () => {
-    const response = await client.subscriptions.create('namespace', {
-      url: 'https://my-app.example.com/events',
+  test.skip('call: required and optional params', async () => {
+    const response = await client.connections.tools.call('toolPath', {
+      namespace: 'namespace',
+      connectionId: 'connectionId',
+      body: { foo: 'bar' },
     });
   });
 
   // Mock server tests are disabled
-  test.skip('list', async () => {
-    const responsePromise = client.subscriptions.list('namespace');
+  test.skip('get: only required params', async () => {
+    const responsePromise = client.connections.tools.get('toolPath', {
+      namespace: 'namespace',
+      connectionId: 'connectionId',
+    });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -42,19 +66,10 @@ describe('resource subscriptions', () => {
   });
 
   // Mock server tests are disabled
-  test.skip('delete: only required params', async () => {
-    const responsePromise = client.subscriptions.delete('subscriptionId', { namespace: 'namespace' });
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  // Mock server tests are disabled
-  test.skip('delete: required and optional params', async () => {
-    const response = await client.subscriptions.delete('subscriptionId', { namespace: 'namespace' });
+  test.skip('get: required and optional params', async () => {
+    const response = await client.connections.tools.get('toolPath', {
+      namespace: 'namespace',
+      connectionId: 'connectionId',
+    });
   });
 });

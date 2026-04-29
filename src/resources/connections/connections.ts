@@ -9,6 +9,17 @@ import {
   SubscriptionListParams,
   Subscriptions,
 } from './subscriptions';
+import * as ToolsAPI from './tools';
+import {
+  Tool,
+  ToolCallParams,
+  ToolCallResponse,
+  ToolGetParams,
+  ToolList,
+  ToolListParams,
+  ToolResponse,
+  Tools,
+} from './tools';
 import * as TriggersAPI from './triggers';
 import {
   CreateTriggerRequest,
@@ -28,6 +39,7 @@ import { RequestOptions } from '../../internal/request-options';
 import { path } from '../../internal/utils/path';
 
 export class Connections extends APIResource {
+  tools: ToolsAPI.Tools = new ToolsAPI.Tools(this._client);
   subscriptions: SubscriptionsAPI.Subscriptions = new SubscriptionsAPI.Subscriptions(this._client);
   triggers: TriggersAPI.Triggers = new TriggersAPI.Triggers(this._client);
 
@@ -539,6 +551,7 @@ export namespace ConnectionSetParams {
   }
 }
 
+Connections.Tools = Tools;
 Connections.Subscriptions = Subscriptions;
 Connections.Triggers = Triggers;
 
@@ -553,6 +566,17 @@ export declare namespace Connections {
     type ConnectionDeleteParams as ConnectionDeleteParams,
     type ConnectionGetParams as ConnectionGetParams,
     type ConnectionSetParams as ConnectionSetParams,
+  };
+
+  export {
+    Tools as Tools,
+    type Tool as Tool,
+    type ToolList as ToolList,
+    type ToolResponse as ToolResponse,
+    type ToolCallResponse as ToolCallResponse,
+    type ToolListParams as ToolListParams,
+    type ToolCallParams as ToolCallParams,
+    type ToolGetParams as ToolGetParams,
   };
 
   export {
