@@ -190,7 +190,7 @@ Types:
 
 Methods:
 
-- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace) -> CreateSubscriptionResponse</code>
+- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace, { ...params }) -> CreateSubscriptionResponse</code>
 - <code title="get /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">list</a>(namespace) -> SubscriptionList</code>
 - <code title="delete /{namespace}/.subscriptions/{subscriptionId}">client.subscriptions.<a href="./src/resources/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
 
@@ -210,6 +210,21 @@ Methods:
 - <code title="delete /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">delete</a>(connectionID, { ...params }) -> ConnectionDeleteResponse</code>
 - <code title="get /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">get</a>(connectionID, { ...params }) -> Connection</code>
 - <code title="put /{namespace}/{connectionId}">client.connections.<a href="./src/resources/connections/connections.ts">set</a>(connectionID, { ...params }) -> Connection</code>
+
+## Tools
+
+Types:
+
+- <code><a href="./src/resources/connections/tools.ts">Tool</a></code>
+- <code><a href="./src/resources/connections/tools.ts">ToolList</a></code>
+- <code><a href="./src/resources/connections/tools.ts">ToolResponse</a></code>
+- <code><a href="./src/resources/connections/tools.ts">ToolCallResponse</a></code>
+
+Methods:
+
+- <code title="get /{namespace}/{connectionId}/.tools">client.connections.tools.<a href="./src/resources/connections/tools.ts">list</a>(connectionID, { ...params }) -> ToolList</code>
+- <code title="post /{namespace}/{connectionId}/.tools/{toolPath}">client.connections.tools.<a href="./src/resources/connections/tools.ts">call</a>(toolPath, { ...params }) -> ToolCallResponse</code>
+- <code title="get /{namespace}/{connectionId}/.tools/{toolPath}">client.connections.tools.<a href="./src/resources/connections/tools.ts">get</a>(toolPath, { ...params }) -> ToolResponse</code>
 
 ## Subscriptions
 

@@ -53,6 +53,7 @@ import {
   CreateSubscriptionRequest,
   CreateSubscriptionResponse,
   Subscription,
+  SubscriptionCreateParams,
   SubscriptionDeleteParams,
   SubscriptionDeleteResponse,
   SubscriptionList,
@@ -943,6 +944,7 @@ export declare namespace Smithery {
     type Subscription as Subscription,
     type SubscriptionList as SubscriptionList,
     type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
+    type SubscriptionCreateParams as SubscriptionCreateParams,
     type SubscriptionDeleteParams as SubscriptionDeleteParams,
   };
 
