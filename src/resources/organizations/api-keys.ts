@@ -49,7 +49,17 @@ export interface APIKeyCreateResponse {
 }
 
 export interface APIKeyListResponse {
-  apiKeys: Array<unknown>;
+  apiKeys: Array<APIKeyListResponse.APIKey>;
+}
+
+export namespace APIKeyListResponse {
+  export interface APIKey {
+    id: string;
+
+    createdAt: string;
+
+    name: string;
+  }
 }
 
 export interface APIKeyDeleteResponse {
