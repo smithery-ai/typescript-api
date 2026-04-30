@@ -11,6 +11,7 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('create: only required params', async () => {
     const responsePromise = client.subscriptions.create('namespace', {
+      secret: 'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
       url: 'https://my-app.example.com/events',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -25,6 +26,7 @@ describe('resource subscriptions', () => {
   // Mock server tests are disabled
   test.skip('create: required and optional params', async () => {
     const response = await client.subscriptions.create('namespace', {
+      secret: 'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
       url: 'https://my-app.example.com/events',
     });
   });

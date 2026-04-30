@@ -12,17 +12,21 @@ export class Subscriptions extends APIResource {
    *
    * @example
    * ```ts
-   * const createSubscriptionResponse =
-   *   await client.subscriptions.create('namespace', {
+   * const subscription = await client.subscriptions.create(
+   *   'namespace',
+   *   {
+   *     secret:
+   *       'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
    *     url: 'https://my-app.example.com/events',
-   *   });
+   *   },
+   * );
    * ```
    */
   create(
     namespace: string,
     body: SubscriptionCreateParams,
     options?: RequestOptions,
-  ): APIPromise<CreateSubscriptionResponse> {
+  ): APIPromise<Subscription> {
     return this._client.post(path`/${namespace}/.subscriptions`, {
       body,
       defaultBaseURL: 'https://smithery.run',
@@ -74,6 +78,11 @@ export class Subscriptions extends APIResource {
 
 export interface CreateSubscriptionRequest {
   /**
+   * Standard Webhooks signing secret generated and stored by the receiver
+   */
+  secret: string;
+
+  /**
    * HTTPS webhook destination
    */
   url: string;
@@ -94,11 +103,6 @@ export interface CreateSubscriptionResponse {
    * ISO 8601 timestamp
    */
   created_at: string;
-
-  /**
-   * Webhook signing secret. Returned only once at creation time.
-   */
-  secret: string;
 
   /**
    * Destination URL for webhook deliveries
@@ -135,6 +139,11 @@ export interface SubscriptionDeleteResponse {
 }
 
 export interface SubscriptionCreateParams {
+  /**
+   * Standard Webhooks signing secret generated and stored by the receiver
+   */
+  secret: string;
+
   /**
    * HTTPS webhook destination
    */

@@ -12,6 +12,7 @@ describe('resource subscriptions', () => {
   test.skip('create: only required params', async () => {
     const responsePromise = client.connections.subscriptions.create('connectionId', {
       namespace: 'namespace',
+      secret: 'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
       url: 'https://my-app.example.com/events',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -27,6 +28,7 @@ describe('resource subscriptions', () => {
   test.skip('create: required and optional params', async () => {
     const response = await client.connections.subscriptions.create('connectionId', {
       namespace: 'namespace',
+      secret: 'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
       url: 'https://my-app.example.com/events',
     });
   });
