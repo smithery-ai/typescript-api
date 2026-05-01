@@ -190,7 +190,7 @@ Types:
 
 Methods:
 
-- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace, { ...params }) -> CreateSubscriptionResponse</code>
+- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace, { ...params }) -> Subscription</code>
 - <code title="get /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">list</a>(namespace) -> SubscriptionList</code>
 - <code title="delete /{namespace}/.subscriptions/{subscriptionId}">client.subscriptions.<a href="./src/resources/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
 
@@ -234,7 +234,7 @@ Types:
 
 Methods:
 
-- <code title="post /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">create</a>(connectionID, { ...params }) -> CreateSubscriptionResponse</code>
+- <code title="post /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">create</a>(connectionID, { ...params }) -> Subscription</code>
 - <code title="get /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">list</a>(connectionID, { ...params }) -> SubscriptionList</code>
 - <code title="delete /{namespace}/{connectionId}/.subscriptions/{subscriptionId}">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
 

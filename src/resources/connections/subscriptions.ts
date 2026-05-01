@@ -13,11 +13,13 @@ export class Subscriptions extends APIResource {
    *
    * @example
    * ```ts
-   * const createSubscriptionResponse =
+   * const subscription =
    *   await client.connections.subscriptions.create(
    *     'connectionId',
    *     {
    *       namespace: 'namespace',
+   *       secret:
+   *         'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
    *       url: 'https://my-app.example.com/events',
    *     },
    *   );
@@ -27,7 +29,7 @@ export class Subscriptions extends APIResource {
     connectionID: string,
     params: SubscriptionCreateParams,
     options?: RequestOptions,
-  ): APIPromise<SubscriptionsAPI.CreateSubscriptionResponse> {
+  ): APIPromise<SubscriptionsAPI.Subscription> {
     const { namespace, ...body } = params;
     return this._client.post(path`/${namespace}/${connectionID}/.subscriptions`, {
       body,
@@ -97,6 +99,12 @@ export interface SubscriptionCreateParams {
    * Path param
    */
   namespace: string;
+
+  /**
+   * Body param: Standard Webhooks signing secret generated and stored by the
+   * receiver
+   */
+  secret: string;
 
   /**
    * Body param: HTTPS webhook destination
