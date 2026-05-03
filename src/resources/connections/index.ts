@@ -13,13 +13,6 @@ export {
   type ConnectionSetParams,
 } from './connections';
 export {
-  Subscriptions,
-  type SubscriptionDeleteResponse,
-  type SubscriptionCreateParams,
-  type SubscriptionListParams,
-  type SubscriptionDeleteParams,
-} from './subscriptions';
-export {
   Tools,
   type Tool,
   type ToolList,
@@ -32,13 +25,15 @@ export {
 export {
   Triggers,
   type CreateTriggerRequest,
+  type DeleteTriggerRequest,
   type TriggerDefinition,
   type TriggerDefinitionList,
-  type TriggerInstance,
-  type TriggerDeleteResponse,
-  type TriggerCreateParams,
+  type TriggerDelivery,
+  type TriggerSubscription,
+  type UnsubscribeDelivery,
+  type TriggerUnsubscribeResponse,
   type TriggerListParams,
-  type TriggerDeleteParams,
   type TriggerGetParams,
-  type TriggerGetInstanceParams,
+  type TriggerSubscribeParams,
+  type TriggerUnsubscribeParams,
 } from './triggers';
