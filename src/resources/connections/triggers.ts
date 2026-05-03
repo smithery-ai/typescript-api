@@ -7,32 +7,6 @@ import { path } from '../../internal/utils/path';
 
 export class Triggers extends APIResource {
   /**
-   * Create a trigger instance for a connection using the trigger's declared params.
-   *
-   * @example
-   * ```ts
-   * const triggerInstance =
-   *   await client.connections.triggers.create('triggerName', {
-   *     namespace: 'namespace',
-   *     connectionId: 'connectionId',
-   *     params: { foo: 'bar' },
-   *   });
-   * ```
-   */
-  create(
-    triggerName: string,
-    params: TriggerCreateParams,
-    options?: RequestOptions,
-  ): APIPromise<TriggerInstance> {
-    const { namespace, connectionId, ...body } = params;
-    return this._client.post(path`/${namespace}/${connectionId}/.triggers/${triggerName}`, {
-      body,
-      defaultBaseURL: 'https://smithery.run',
-      ...options,
-    });
-  }
-
-  /**
    * List trigger types exposed by a connection.
    *
    * @example
@@ -50,33 +24,6 @@ export class Triggers extends APIResource {
   ): APIPromise<TriggerDefinitionList> {
     const { namespace } = params;
     return this._client.get(path`/${namespace}/${connectionID}/.triggers`, {
-      defaultBaseURL: 'https://smithery.run',
-      ...options,
-    });
-  }
-
-  /**
-   * Delete a trigger instance and deregister its upstream webhook.
-   *
-   * @example
-   * ```ts
-   * const trigger = await client.connections.triggers.delete(
-   *   'triggerId',
-   *   {
-   *     namespace: 'namespace',
-   *     connectionId: 'connectionId',
-   *     triggerName: 'triggerName',
-   *   },
-   * );
-   * ```
-   */
-  delete(
-    triggerID: string,
-    params: TriggerDeleteParams,
-    options?: RequestOptions,
-  ): APIPromise<TriggerDeleteResponse> {
-    const { namespace, connectionId, triggerName } = params;
-    return this._client.delete(path`/${namespace}/${connectionId}/.triggers/${triggerName}/${triggerID}`, {
       defaultBaseURL: 'https://smithery.run',
       ...options,
     });
@@ -107,28 +54,68 @@ export class Triggers extends APIResource {
   }
 
   /**
-   * Get a specific trigger instance for a connection.
+   * Subscribe to (or refresh) a trigger. Supplying the same (params, delivery.url)
+   * refreshes the TTL and may rotate the secret.
    *
    * @example
    * ```ts
-   * const triggerInstance =
-   *   await client.connections.triggers.getInstance(
-   *     'triggerId',
+   * const triggerSubscription =
+   *   await client.connections.triggers.subscribe(
+   *     'triggerName',
    *     {
    *       namespace: 'namespace',
    *       connectionId: 'connectionId',
-   *       triggerName: 'triggerName',
+   *       delivery: {
+   *         secret:
+   *           'whsec_dGVzdF9zZWNyZXRfMjRfYnl0ZXNfbWluaW11bSE=',
+   *         url: 'https://my-app.example.com/events',
+   *       },
+   *       params: { foo: 'bar' },
    *     },
    *   );
    * ```
    */
-  getInstance(
-    triggerID: string,
-    params: TriggerGetInstanceParams,
+  subscribe(
+    triggerName: string,
+    params: TriggerSubscribeParams,
     options?: RequestOptions,
-  ): APIPromise<TriggerInstance> {
-    const { namespace, connectionId, triggerName } = params;
-    return this._client.get(path`/${namespace}/${connectionId}/.triggers/${triggerName}/${triggerID}`, {
+  ): APIPromise<TriggerSubscription> {
+    const { namespace, connectionId, ...body } = params;
+    return this._client.post(path`/${namespace}/${connectionId}/.triggers/${triggerName}`, {
+      body,
+      defaultBaseURL: 'https://smithery.run',
+      ...options,
+    });
+  }
+
+  /**
+   * Unsubscribe by subscription key (params + delivery.url). Eager teardown —
+   * subscriptions also expire naturally on TTL.
+   *
+   * @example
+   * ```ts
+   * const response =
+   *   await client.connections.triggers.unsubscribe(
+   *     'triggerName',
+   *     {
+   *       namespace: 'namespace',
+   *       connectionId: 'connectionId',
+   *       delivery: {
+   *         url: 'https://my-app.example.com/events',
+   *       },
+   *       params: { foo: 'bar' },
+   *     },
+   *   );
+   * ```
+   */
+  unsubscribe(
+    triggerName: string,
+    params: TriggerUnsubscribeParams,
+    options?: RequestOptions,
+  ): APIPromise<TriggerUnsubscribeResponse> {
+    const { namespace, connectionId, ...body } = params;
+    return this._client.delete(path`/${namespace}/${connectionId}/.triggers/${triggerName}`, {
+      body,
       defaultBaseURL: 'https://smithery.run',
       ...options,
     });
@@ -136,8 +123,19 @@ export class Triggers extends APIResource {
 }
 
 export interface CreateTriggerRequest {
+  delivery: TriggerDelivery;
+
   /**
    * Trigger-specific parameters defined by the trigger inputSchema
+   */
+  params: { [key: string]: unknown };
+}
+
+export interface DeleteTriggerRequest {
+  delivery: UnsubscribeDelivery;
+
+  /**
+   * The same params used at subscribe time. Forms part of the subscription key.
    */
   params: { [key: string]: unknown };
 }
@@ -168,64 +166,46 @@ export interface TriggerDefinition {
 
 export type TriggerDefinitionList = Array<TriggerDefinition>;
 
-export interface TriggerInstance {
+export interface TriggerDelivery {
   /**
-   * Stable trigger instance id generated by Smithery
+   * Standard Webhooks signing secret (whsec\_<base64 of 24-64 random bytes>). The
+   * upstream MCP server signs each delivery with this.
+   */
+  secret: string;
+
+  /**
+   * HTTPS webhook destination where the upstream MCP server delivers events.
+   */
+  url: string;
+}
+
+export interface TriggerSubscription {
+  /**
+   * Stable subscription id derived from (namespace, connection, name, params,
+   * delivery.url). Used by the receiver to route via X-MCP-Subscription-Id.
    */
   id: string;
 
   /**
-   * Connection id the trigger belongs to
+   * ISO 8601 timestamp at which the subscription expires unless refreshed.
    */
-  connection_id: string;
-
-  /**
-   * ISO 8601 timestamp
-   */
-  created_at: string;
-
-  /**
-   * Trigger name
-   */
-  name: string;
-
-  /**
-   * Trigger instance parameters
-   */
-  params: { [key: string]: unknown };
+  refreshBefore: string;
 }
 
-export interface TriggerDeleteResponse {
+export interface UnsubscribeDelivery {
+  /**
+   * The delivery URL of the subscription to remove. Together with name+params it
+   * forms the subscription key.
+   */
+  url: string;
+}
+
+export interface TriggerUnsubscribeResponse {
   success: true;
-}
-
-export interface TriggerCreateParams {
-  /**
-   * Path param
-   */
-  namespace: string;
-
-  /**
-   * Path param
-   */
-  connectionId: string;
-
-  /**
-   * Body param: Trigger-specific parameters defined by the trigger inputSchema
-   */
-  params: { [key: string]: unknown };
 }
 
 export interface TriggerListParams {
   namespace: string;
-}
-
-export interface TriggerDeleteParams {
-  namespace: string;
-
-  connectionId: string;
-
-  triggerName: string;
 }
 
 export interface TriggerGetParams {
@@ -234,25 +214,64 @@ export interface TriggerGetParams {
   connectionId: string;
 }
 
-export interface TriggerGetInstanceParams {
+export interface TriggerSubscribeParams {
+  /**
+   * Path param
+   */
   namespace: string;
 
+  /**
+   * Path param
+   */
   connectionId: string;
 
-  triggerName: string;
+  /**
+   * Body param
+   */
+  delivery: TriggerDelivery;
+
+  /**
+   * Body param: Trigger-specific parameters defined by the trigger inputSchema
+   */
+  params: { [key: string]: unknown };
+}
+
+export interface TriggerUnsubscribeParams {
+  /**
+   * Path param
+   */
+  namespace: string;
+
+  /**
+   * Path param
+   */
+  connectionId: string;
+
+  /**
+   * Body param
+   */
+  delivery: UnsubscribeDelivery;
+
+  /**
+   * Body param: The same params used at subscribe time. Forms part of the
+   * subscription key.
+   */
+  params: { [key: string]: unknown };
 }
 
 export declare namespace Triggers {
   export {
     type CreateTriggerRequest as CreateTriggerRequest,
+    type DeleteTriggerRequest as DeleteTriggerRequest,
     type TriggerDefinition as TriggerDefinition,
     type TriggerDefinitionList as TriggerDefinitionList,
-    type TriggerInstance as TriggerInstance,
-    type TriggerDeleteResponse as TriggerDeleteResponse,
-    type TriggerCreateParams as TriggerCreateParams,
+    type TriggerDelivery as TriggerDelivery,
+    type TriggerSubscription as TriggerSubscription,
+    type UnsubscribeDelivery as UnsubscribeDelivery,
+    type TriggerUnsubscribeResponse as TriggerUnsubscribeResponse,
     type TriggerListParams as TriggerListParams,
-    type TriggerDeleteParams as TriggerDeleteParams,
     type TriggerGetParams as TriggerGetParams,
-    type TriggerGetInstanceParams as TriggerGetInstanceParams,
+    type TriggerSubscribeParams as TriggerSubscribeParams,
+    type TriggerUnsubscribeParams as TriggerUnsubscribeParams,
   };
 }
