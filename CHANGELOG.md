@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.64.2 (2026-05-03)
+
+Full Changelog: [v0.64.1...v0.64.2](https://github.com/smithery-ai/typescript-api/compare/v0.64.1...v0.64.2)
+
+### Refactors
+
+* **triggers:** align with the MCP Events spec proposal (breaking) ([#2201](https://github.com/smithery-ai/typescript-api/issues/2201)) ([ae9b669](https://github.com/smithery-ai/typescript-api/commit/ae9b669a64fddf136e4809818a576c12f85e2ee6))
+
 ## 0.64.1 (2026-04-30)
 
 Full Changelog: [v0.64.0...v0.64.1](https://github.com/smithery-ai/typescript-api/compare/v0.64.0...v0.64.1)
