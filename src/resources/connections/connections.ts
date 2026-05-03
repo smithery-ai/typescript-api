@@ -1,14 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../../core/resource';
-import * as SubscriptionsAPI from './subscriptions';
-import {
-  SubscriptionCreateParams,
-  SubscriptionDeleteParams,
-  SubscriptionDeleteResponse,
-  SubscriptionListParams,
-  Subscriptions,
-} from './subscriptions';
 import * as ToolsAPI from './tools';
 import {
   Tool,
@@ -23,16 +15,18 @@ import {
 import * as TriggersAPI from './triggers';
 import {
   CreateTriggerRequest,
-  TriggerCreateParams,
+  DeleteTriggerRequest,
   TriggerDefinition,
   TriggerDefinitionList,
-  TriggerDeleteParams,
-  TriggerDeleteResponse,
-  TriggerGetInstanceParams,
+  TriggerDelivery,
   TriggerGetParams,
-  TriggerInstance,
   TriggerListParams,
+  TriggerSubscribeParams,
+  TriggerSubscription,
+  TriggerUnsubscribeParams,
+  TriggerUnsubscribeResponse,
   Triggers,
+  UnsubscribeDelivery,
 } from './triggers';
 import { APIPromise } from '../../core/api-promise';
 import { RequestOptions } from '../../internal/request-options';
@@ -40,7 +34,6 @@ import { path } from '../../internal/utils/path';
 
 export class Connections extends APIResource {
   tools: ToolsAPI.Tools = new ToolsAPI.Tools(this._client);
-  subscriptions: SubscriptionsAPI.Subscriptions = new SubscriptionsAPI.Subscriptions(this._client);
   triggers: TriggersAPI.Triggers = new TriggersAPI.Triggers(this._client);
 
   /**
@@ -552,7 +545,6 @@ export namespace ConnectionSetParams {
 }
 
 Connections.Tools = Tools;
-Connections.Subscriptions = Subscriptions;
 Connections.Triggers = Triggers;
 
 export declare namespace Connections {
@@ -580,24 +572,18 @@ export declare namespace Connections {
   };
 
   export {
-    Subscriptions as Subscriptions,
-    type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
-    type SubscriptionCreateParams as SubscriptionCreateParams,
-    type SubscriptionListParams as SubscriptionListParams,
-    type SubscriptionDeleteParams as SubscriptionDeleteParams,
-  };
-
-  export {
     Triggers as Triggers,
     type CreateTriggerRequest as CreateTriggerRequest,
+    type DeleteTriggerRequest as DeleteTriggerRequest,
     type TriggerDefinition as TriggerDefinition,
     type TriggerDefinitionList as TriggerDefinitionList,
-    type TriggerInstance as TriggerInstance,
-    type TriggerDeleteResponse as TriggerDeleteResponse,
-    type TriggerCreateParams as TriggerCreateParams,
+    type TriggerDelivery as TriggerDelivery,
+    type TriggerSubscription as TriggerSubscription,
+    type UnsubscribeDelivery as UnsubscribeDelivery,
+    type TriggerUnsubscribeResponse as TriggerUnsubscribeResponse,
     type TriggerListParams as TriggerListParams,
-    type TriggerDeleteParams as TriggerDeleteParams,
     type TriggerGetParams as TriggerGetParams,
-    type TriggerGetInstanceParams as TriggerGetInstanceParams,
+    type TriggerSubscribeParams as TriggerSubscribeParams,
+    type TriggerUnsubscribeParams as TriggerUnsubscribeParams,
   };
 }

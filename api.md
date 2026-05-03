@@ -178,22 +178,6 @@ Methods:
 
 - <code title="post /tokens">client.tokens.<a href="./src/resources/tokens.ts">create</a>({ ...params }) -> CreateTokenResponse</code>
 
-# Subscriptions
-
-Types:
-
-- <code><a href="./src/resources/subscriptions.ts">CreateSubscriptionRequest</a></code>
-- <code><a href="./src/resources/subscriptions.ts">CreateSubscriptionResponse</a></code>
-- <code><a href="./src/resources/subscriptions.ts">Subscription</a></code>
-- <code><a href="./src/resources/subscriptions.ts">SubscriptionList</a></code>
-- <code><a href="./src/resources/subscriptions.ts">SubscriptionDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">create</a>(namespace, { ...params }) -> Subscription</code>
-- <code title="get /{namespace}/.subscriptions">client.subscriptions.<a href="./src/resources/subscriptions.ts">list</a>(namespace) -> SubscriptionList</code>
-- <code title="delete /{namespace}/.subscriptions/{subscriptionId}">client.subscriptions.<a href="./src/resources/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
-
 # Connections
 
 Types:
@@ -226,32 +210,22 @@ Methods:
 - <code title="post /{namespace}/{connectionId}/.tools/{toolPath}">client.connections.tools.<a href="./src/resources/connections/tools.ts">call</a>(toolPath, { ...params }) -> ToolCallResponse</code>
 - <code title="get /{namespace}/{connectionId}/.tools/{toolPath}">client.connections.tools.<a href="./src/resources/connections/tools.ts">get</a>(toolPath, { ...params }) -> ToolResponse</code>
 
-## Subscriptions
-
-Types:
-
-- <code><a href="./src/resources/connections/subscriptions.ts">SubscriptionDeleteResponse</a></code>
-
-Methods:
-
-- <code title="post /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">create</a>(connectionID, { ...params }) -> Subscription</code>
-- <code title="get /{namespace}/{connectionId}/.subscriptions">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">list</a>(connectionID, { ...params }) -> SubscriptionList</code>
-- <code title="delete /{namespace}/{connectionId}/.subscriptions/{subscriptionId}">client.connections.subscriptions.<a href="./src/resources/connections/subscriptions.ts">delete</a>(subscriptionID, { ...params }) -> SubscriptionDeleteResponse</code>
-
 ## Triggers
 
 Types:
 
 - <code><a href="./src/resources/connections/triggers.ts">CreateTriggerRequest</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">DeleteTriggerRequest</a></code>
 - <code><a href="./src/resources/connections/triggers.ts">TriggerDefinition</a></code>
 - <code><a href="./src/resources/connections/triggers.ts">TriggerDefinitionList</a></code>
-- <code><a href="./src/resources/connections/triggers.ts">TriggerInstance</a></code>
-- <code><a href="./src/resources/connections/triggers.ts">TriggerDeleteResponse</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerDelivery</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerSubscription</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">UnsubscribeDelivery</a></code>
+- <code><a href="./src/resources/connections/triggers.ts">TriggerUnsubscribeResponse</a></code>
 
 Methods:
 
-- <code title="post /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">create</a>(triggerName, { ...params }) -> TriggerInstance</code>
 - <code title="get /{namespace}/{connectionId}/.triggers">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">list</a>(connectionID, { ...params }) -> TriggerDefinitionList</code>
-- <code title="delete /{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">delete</a>(triggerID, { ...params }) -> TriggerDeleteResponse</code>
 - <code title="get /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">get</a>(triggerName, { ...params }) -> TriggerDefinition</code>
-- <code title="get /{namespace}/{connectionId}/.triggers/{triggerName}/{triggerId}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">getInstance</a>(triggerID, { ...params }) -> TriggerInstance</code>
+- <code title="post /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">subscribe</a>(triggerName, { ...params }) -> TriggerSubscription</code>
+- <code title="delete /{namespace}/{connectionId}/.triggers/{triggerName}">client.connections.triggers.<a href="./src/resources/connections/triggers.ts">unsubscribe</a>(triggerName, { ...params }) -> TriggerUnsubscribeResponse</code>

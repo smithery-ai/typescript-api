@@ -50,16 +50,6 @@ import {
   Skills,
 } from './resources/skills';
 import {
-  CreateSubscriptionRequest,
-  CreateSubscriptionResponse,
-  Subscription,
-  SubscriptionCreateParams,
-  SubscriptionDeleteParams,
-  SubscriptionDeleteResponse,
-  SubscriptionList,
-  Subscriptions,
-} from './resources/subscriptions';
-import {
   Constraint,
   CreateTokenRequest,
   CreateTokenResponse,
@@ -848,7 +838,6 @@ export class Smithery {
   namespaces: API.Namespaces = new API.Namespaces(this);
   organizations: API.Organizations = new API.Organizations(this);
   tokens: API.Tokens = new API.Tokens(this);
-  subscriptions: API.Subscriptions = new API.Subscriptions(this);
   connections: API.Connections = new API.Connections(this);
 }
 
@@ -858,7 +847,6 @@ Smithery.Skills = Skills;
 Smithery.Namespaces = Namespaces;
 Smithery.Organizations = Organizations;
 Smithery.Tokens = Tokens;
-Smithery.Subscriptions = Subscriptions;
 Smithery.Connections = Connections;
 
 export declare namespace Smithery {
@@ -935,17 +923,6 @@ export declare namespace Smithery {
     type CreateTokenRequest as CreateTokenRequest,
     type CreateTokenResponse as CreateTokenResponse,
     type TokenCreateParams as TokenCreateParams,
-  };
-
-  export {
-    Subscriptions as Subscriptions,
-    type CreateSubscriptionRequest as CreateSubscriptionRequest,
-    type CreateSubscriptionResponse as CreateSubscriptionResponse,
-    type Subscription as Subscription,
-    type SubscriptionList as SubscriptionList,
-    type SubscriptionDeleteResponse as SubscriptionDeleteResponse,
-    type SubscriptionCreateParams as SubscriptionCreateParams,
-    type SubscriptionDeleteParams as SubscriptionDeleteParams,
   };
 
   export {
