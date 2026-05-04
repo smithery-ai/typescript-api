@@ -500,7 +500,8 @@ export interface ServerListParams extends SmitheryPageParams {
 
   /**
    * Maximum number of candidate results to consider from the search index before
-   * pagination.
+   * pagination. The server applies a hard cap of 500 to keep the rerank window
+   * bounded; pass `seed` for stable deep pagination.
    */
   topK?: number;
 
