@@ -349,6 +349,12 @@ export interface SkillListParams extends SkillsPageParams {
   q?: string;
 
   /**
+   * Random seed for deterministic pagination. When provided, results use a stable
+   * sort order that is consistent across pages for the same seed value.
+   */
+  seed?: number;
+
+  /**
    * Filter by exact skill slug within a namespace. Deprecated: use GET
    * /skills/:namespace/:slug instead.
    */
@@ -356,7 +362,8 @@ export interface SkillListParams extends SkillsPageParams {
 
   /**
    * Maximum number of candidate results to consider from the search index before
-   * pagination.
+   * pagination. The server applies a hard cap of 500 to keep the rerank window
+   * bounded; pass `seed` for stable deep pagination.
    */
   topK?: number;
 
