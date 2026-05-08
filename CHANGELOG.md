@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.64.3 (2026-05-08)
+
+Full Changelog: [v0.64.2...v0.64.3](https://github.com/smithery-ai/typescript-api/compare/v0.64.2...v0.64.3)
+
+### Bug Fixes
+
+* **api:** cap legacy browse pagination LIMIT to bound PlanetScale egress ([#2203](https://github.com/smithery-ai/typescript-api/issues/2203)) ([ecf4b9b](https://github.com/smithery-ai/typescript-api/commit/ecf4b9b7fd9364ef0202b1cc58c9358f55c2ed80))
+
+
+### Chores
+
+* redact api-key headers in debug logs ([6dab2c8](https://github.com/smithery-ai/typescript-api/commit/6dab2c87cd90ae22c5501f9eac34f2e1adde14f4))
+
 ## 0.64.2 (2026-05-03)
 
 Full Changelog: [v0.64.1...v0.64.2](https://github.com/smithery-ai/typescript-api/compare/v0.64.1...v0.64.2)
