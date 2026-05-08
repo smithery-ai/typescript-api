@@ -58,6 +58,7 @@ describe('resource skills', () => {
           page: 1,
           pageSize: 1,
           q: 'q',
+          seed: -9007199254740991,
           slug: 'slug',
           topK: 10,
           verified: true,
