@@ -366,7 +366,7 @@ export interface ReleaseListResponse {
 
   /**
    * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
-   * CANCELLED, or INTERNAL_ERROR.
+   * AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.
    */
   status: string;
 
@@ -439,7 +439,7 @@ export interface ReleaseGetResponse {
 
   /**
    * Current status: QUEUED, WORKING, SUCCESS, FAILURE, FAILURE_SCAN, AUTH_REQUIRED,
-   * CANCELLED, or INTERNAL_ERROR.
+   * AUTH_TIMEOUT, CANCELLED, or INTERNAL_ERROR.
    */
   status: string;
 
