@@ -96,6 +96,7 @@ describe('resource servers', () => {
           repoName: 'repoName',
           repoOwner: 'repoOwner',
           seed: -9007199254740991,
+          smitheryManaged: '0',
           topK: 10,
           verified: '0',
         },
