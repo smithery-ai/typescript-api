@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.65.0 (2026-05-16)
+
+Full Changelog: [v0.64.3...v0.65.0](https://github.com/smithery-ai/typescript-api/compare/v0.64.3...v0.65.0)
+
+### Features
+
+* smithery managed filter ([#2433](https://github.com/smithery-ai/typescript-api/issues/2433)) ([8333593](https://github.com/smithery-ai/typescript-api/commit/83335935df51ea841c1b60438b324219975ac9e8))
+
+
+### Bug Fixes
+
+* **api:** classify OAuth abandonment as AUTH_TIMEOUT ([#2324](https://github.com/smithery-ai/typescript-api/issues/2324)) ([ef42845](https://github.com/smithery-ai/typescript-api/commit/ef42845948536e899e436f7e963e5790e8b66331))
+
 ## 0.64.3 (2026-05-08)
 
 Full Changelog: [v0.64.2...v0.64.3](https://github.com/smithery-ai/typescript-api/compare/v0.64.2...v0.64.3)

@@ -499,6 +499,11 @@ export interface ServerListParams extends SmitheryPageParams {
   seed?: number;
 
   /**
+   * Filter to servers whose namespace is owned by the Smithery org.
+   */
+  smitheryManaged?: '0' | '1' | 'true' | 'false';
+
+  /**
    * Maximum number of candidate results to consider from the search index before
    * pagination. The server applies a hard cap of 500 to keep the rerank window
    * bounded; pass `seed` for stable deep pagination.
