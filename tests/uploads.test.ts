@@ -1,7 +1,6 @@
 import fs from 'fs';
 import type { ResponseLike } from '@smithery/api/internal/to-file';
 import { toFile } from '@smithery/api/core/uploads';
-import { File } from 'node:buffer';
 
 class MyClass {
   name: string = 'foo';
