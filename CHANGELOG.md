@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.65.1 (2026-05-19)
+
+Full Changelog: [v0.65.0...v0.65.1](https://github.com/smithery-ai/typescript-api/compare/v0.65.0...v0.65.1)
+
+### Bug Fixes
+
+* **typescript:** upgrade tsc-multi so that it works with Node 26 ([03a4195](https://github.com/smithery-ai/typescript-api/commit/03a41957a2b6aff2f45b730e3365c6381684af72))
+
+
+### Chores
+
+* **tests:** remove redundant File import ([2b6cd5e](https://github.com/smithery-ai/typescript-api/commit/2b6cd5ef4cc3faf26b24b2484ce2f0ca3249b097))
+
 ## 0.65.0 (2026-05-16)
 
 Full Changelog: [v0.64.3...v0.65.0](https://github.com/smithery-ai/typescript-api/compare/v0.64.3...v0.65.0)
