@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.65.2 (2026-05-22)
+
+Full Changelog: [v0.65.1...v0.65.2](https://github.com/smithery-ai/typescript-api/compare/v0.65.1...v0.65.2)
+
+### Bug Fixes
+
+* support connect base url override ([c98acfc](https://github.com/smithery-ai/typescript-api/commit/c98acfcbcf0f1e882b1695c2c8de4b991ce28a0a))
+
 ## 0.65.1 (2026-05-19)
 
 Full Changelog: [v0.65.0...v0.65.1](https://github.com/smithery-ai/typescript-api/compare/v0.65.0...v0.65.1)
