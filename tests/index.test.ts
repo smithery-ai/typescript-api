@@ -306,6 +306,7 @@ describe('instantiate client', () => {
 
     afterEach(() => {
       process.env['SMITHERY_BASE_URL'] = undefined;
+      process.env['SMITHERY_CONNECT_BASE_URL'] = undefined;
     });
 
     test('explicit option', () => {
@@ -350,6 +351,30 @@ describe('instantiate client', () => {
       const client = new Smithery({ apiKey: 'My API Key' });
       expect(client.buildURL('/foo', null, 'http://localhost:5000/option')).toEqual(
         'http://localhost:5000/env/foo',
+      );
+    });
+
+    test('connect base URL overrides Smithery Connect REST methods when API base URL is overridden', () => {
+      const client = new Smithery({
+        apiKey: 'My API Key',
+        baseURL: 'http://localhost:5000/api',
+        connectBaseURL: 'http://localhost:5000/connect',
+      });
+
+      expect(client.buildURL('/namespace/connection', null, 'https://smithery.run')).toEqual(
+        'http://localhost:5000/connect/namespace/connection',
+      );
+    });
+
+    test('connect base URL can be read from the environment', () => {
+      process.env['SMITHERY_CONNECT_BASE_URL'] = 'http://localhost:5000/connect-env';
+      const client = new Smithery({
+        apiKey: 'My API Key',
+        baseURL: 'http://localhost:5000/api',
+      });
+
+      expect(client.buildURL('/namespace/connection', null, 'https://smithery.run')).toEqual(
+        'http://localhost:5000/connect-env/namespace/connection',
       );
     });
   });

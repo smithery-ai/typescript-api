@@ -113,6 +113,11 @@ export interface ClientOptions {
   apiKey?: string | undefined;
 
   /**
+   * Base URL for Smithery Connect REST methods.
+   */
+  connectBaseURL?: string | null | undefined;
+
+  /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
    * Defaults to process.env['SMITHERY_BASE_URL'].
@@ -186,6 +191,7 @@ export interface ClientOptions {
  */
 export class Smithery {
   apiKey: string;
+  connectBaseURL: string | null;
 
   baseURL: string;
   maxRetries: number;
@@ -203,6 +209,7 @@ export class Smithery {
    * API Client for interfacing with the Smithery API.
    *
    * @param {string | undefined} [opts.apiKey=process.env['SMITHERY_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.connectBaseURL=process.env['SMITHERY_CONNECT_BASE_URL'] ?? https://smithery.run]
    * @param {string} [opts.baseURL=process.env['SMITHERY_BASE_URL'] ?? https://api.smithery.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
@@ -214,6 +221,7 @@ export class Smithery {
   constructor({
     baseURL = readEnv('SMITHERY_BASE_URL'),
     apiKey = readEnv('SMITHERY_API_KEY'),
+    connectBaseURL = readEnv('SMITHERY_CONNECT_BASE_URL') ?? 'https://smithery.run',
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
@@ -224,6 +232,7 @@ export class Smithery {
 
     const options: ClientOptions = {
       apiKey,
+      connectBaseURL,
       ...opts,
       baseURL: baseURL || `https://api.smithery.ai`,
     };
@@ -258,6 +267,7 @@ export class Smithery {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.connectBaseURL = connectBaseURL;
   }
 
   /**
@@ -274,6 +284,7 @@ export class Smithery {
       fetch: this.fetch,
       fetchOptions: this.fetchOptions,
       apiKey: this.apiKey,
+      connectBaseURL: this.connectBaseURL,
       ...options,
     });
     return client;
@@ -324,7 +335,12 @@ export class Smithery {
     query: Record<string, unknown> | null | undefined,
     defaultBaseURL?: string | undefined,
   ): string {
-    const baseURL = (!this.#baseURLOverridden() && defaultBaseURL) || this.baseURL;
+    const resolvedDefaultBaseURL =
+      defaultBaseURL === 'https://smithery.run' ? this.connectBaseURL || defaultBaseURL : defaultBaseURL;
+    const baseURL =
+      (defaultBaseURL === 'https://smithery.run' && resolvedDefaultBaseURL) ||
+      (!this.#baseURLOverridden() && resolvedDefaultBaseURL) ||
+      this.baseURL;
     const url =
       isAbsoluteURL(path) ?
         new URL(path)
