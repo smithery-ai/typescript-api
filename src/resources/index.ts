@@ -33,9 +33,11 @@ export {
   type ServerListResponse,
   type ServerDeleteResponse,
   type ServerGetResponse,
+  type ServerTransferResponse,
   type ServerCreateParams,
   type ServerUpdateParams,
   type ServerListParams,
+  type ServerTransferParams,
   type ServerListResponsesSmitheryPage,
 } from './servers/servers';
 export {

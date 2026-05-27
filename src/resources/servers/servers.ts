@@ -149,6 +149,29 @@ export class Servers extends APIResource {
   get(qualifiedName: string, options?: RequestOptions): APIPromise<ServerGetResponse> {
     return this._client.get(path`/servers/${qualifiedName}`, options);
   }
+
+  /**
+   * Move a server to another namespace. The caller must have server write access to
+   * both the source namespace and the destination namespace.
+   *
+   * @example
+   * ```ts
+   * const response = await client.servers.transfer(
+   *   'qualifiedName',
+   *   {
+   *     targetNamespace: 'my-team',
+   *     targetOrganizationId: 'org_01H1234567890',
+   *   },
+   * );
+   * ```
+   */
+  transfer(
+    qualifiedName: string,
+    body: ServerTransferParams,
+    options?: RequestOptions,
+  ): APIPromise<ServerTransferResponse> {
+    return this._client.post(path`/servers/${qualifiedName}/transfer`, { body, ...options });
+  }
 }
 
 export type ServerListResponsesSmitheryPage = SmitheryPage<ServerListResponse>;
@@ -413,6 +436,16 @@ export namespace ServerGetResponse {
   }
 }
 
+export interface ServerTransferResponse {
+  namespace: string;
+
+  qualifiedName: string;
+
+  server: string;
+
+  success: boolean;
+}
+
 export interface ServerCreateParams {
   description?: string;
 
@@ -516,6 +549,12 @@ export interface ServerListParams extends SmitheryPageParams {
   verified?: '0' | '1' | 'true' | 'false';
 }
 
+export interface ServerTransferParams {
+  targetNamespace: string;
+
+  targetOrganizationId: string;
+}
+
 Servers.Releases = Releases;
 Servers.Logs = Logs;
 Servers.Secrets = Secrets;
@@ -532,10 +571,12 @@ export declare namespace Servers {
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
     type ServerGetResponse as ServerGetResponse,
+    type ServerTransferResponse as ServerTransferResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerCreateParams as ServerCreateParams,
     type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
+    type ServerTransferParams as ServerTransferParams,
   };
 
   export {
