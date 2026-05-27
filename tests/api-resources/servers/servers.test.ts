@@ -128,4 +128,27 @@ describe('resource servers', () => {
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
   });
+
+  // Mock server tests are disabled
+  test.skip('transfer: only required params', async () => {
+    const responsePromise = client.servers.transfer('qualifiedName', {
+      targetNamespace: 'my-team',
+      targetOrganizationId: 'org_01H1234567890',
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // Mock server tests are disabled
+  test.skip('transfer: required and optional params', async () => {
+    const response = await client.servers.transfer('qualifiedName', {
+      targetNamespace: 'my-team',
+      targetOrganizationId: 'org_01H1234567890',
+    });
+  });
 });

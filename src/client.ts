@@ -89,6 +89,8 @@ import {
   ServerListParams,
   ServerListResponse,
   ServerListResponsesSmitheryPage,
+  ServerTransferParams,
+  ServerTransferResponse,
   ServerUpdateParams,
   ServerUpdateResponse,
   Servers,
@@ -895,10 +897,12 @@ export declare namespace Smithery {
     type ServerListResponse as ServerListResponse,
     type ServerDeleteResponse as ServerDeleteResponse,
     type ServerGetResponse as ServerGetResponse,
+    type ServerTransferResponse as ServerTransferResponse,
     type ServerListResponsesSmitheryPage as ServerListResponsesSmitheryPage,
     type ServerCreateParams as ServerCreateParams,
     type ServerUpdateParams as ServerUpdateParams,
     type ServerListParams as ServerListParams,
+    type ServerTransferParams as ServerTransferParams,
   };
 
   export {
