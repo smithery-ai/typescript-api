@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.66.0 (2026-05-28)
+
+Full Changelog: [v0.65.2...v0.66.0](https://github.com/smithery-ai/typescript-api/compare/v0.65.2...v0.66.0)
+
+### Features
+
+* allow slug changes during server transfer ([#2508](https://github.com/smithery-ai/typescript-api/issues/2508)) ([7ddfc38](https://github.com/smithery-ai/typescript-api/commit/7ddfc38ee3f3c038a5325234c14f6d4f86aea243))
+* **connect:** accept registry server shorthand ([#2514](https://github.com/smithery-ai/typescript-api/issues/2514)) ([35e4e9c](https://github.com/smithery-ai/typescript-api/commit/35e4e9c884abc6b69b96c70cc28fdb3ce196e329))
+* **SMI-2031:** add server transfer endpoint ([#2490](https://github.com/smithery-ai/typescript-api/issues/2490)) ([c27c726](https://github.com/smithery-ai/typescript-api/commit/c27c7268416b23718b1dd39fea225409e5726a55))
+
+
+### Bug Fixes
+
+* **SMI-2024:** prompt toolbox install setup requirements ([#2479](https://github.com/smithery-ai/typescript-api/issues/2479)) ([dc7ca80](https://github.com/smithery-ai/typescript-api/commit/dc7ca80e2b93ec4f9621a2f603a785cc98f91527))
+
 ## 0.65.2 (2026-05-22)
 
 Full Changelog: [v0.65.1...v0.65.2](https://github.com/smithery-ai/typescript-api/compare/v0.65.1...v0.65.2)
