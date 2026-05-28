@@ -553,6 +553,8 @@ export interface ServerTransferParams {
   targetNamespace: string;
 
   targetOrganizationId: string;
+
+  targetSlug?: string;
 }
 
 Servers.Releases = Releases;
