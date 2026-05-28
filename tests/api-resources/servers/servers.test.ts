@@ -149,6 +149,7 @@ describe('resource servers', () => {
     const response = await client.servers.transfer('qualifiedName', {
       targetNamespace: 'my-team',
       targetOrganizationId: 'org_01H1234567890',
+      targetSlug: 'weather',
     });
   });
 });
