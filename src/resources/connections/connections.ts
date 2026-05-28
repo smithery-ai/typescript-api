@@ -126,10 +126,11 @@ export class Connections extends APIResource {
   }
 
   /**
-   * Create or update an MCP connection with the given ID. mcpUrl is required when
-   * creating a new connection, but optional when updating. Returns 409 if a
-   * different mcpUrl is provided, except while the connection is input_required and
-   * the new URL keeps the same host and path.
+   * Create or update an MCP connection with the given ID. `server` is the Smithery
+   * registry qualified name; `mcpUrl` is for custom MCP URLs. One of them is
+   * required when creating a new HTTP connection, but optional when updating.
+   * Returns 409 if a different target URL is provided, except while the connection
+   * is input_required and the new URL keeps the same host and path.
    *
    * @example
    * ```ts
@@ -342,8 +343,7 @@ export interface CreateConnectionRequest {
   headers?: { [key: string]: string };
 
   /**
-   * URL of the MCP server. Required for HTTP connections. Omit for uplink
-   * connections.
+   * URL of a custom MCP server. For Smithery registry servers, prefer `server`.
    */
   mcpUrl?: string;
 
@@ -364,6 +364,12 @@ export interface CreateConnectionRequest {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Smithery registry server qualified name. Use this instead of mcpUrl for registry
+   * servers.
+   */
+  server?: string;
 
   /**
    * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
@@ -404,8 +410,7 @@ export interface ConnectionCreateParams {
   headers?: { [key: string]: string };
 
   /**
-   * URL of the MCP server. Required for HTTP connections. Omit for uplink
-   * connections.
+   * URL of a custom MCP server. For Smithery registry servers, prefer `server`.
    */
   mcpUrl?: string;
 
@@ -426,6 +431,12 @@ export interface ConnectionCreateParams {
    * Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Smithery registry server qualified name. Use this instead of mcpUrl for registry
+   * servers.
+   */
+  server?: string;
 
   /**
    * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
@@ -497,8 +508,9 @@ export interface ConnectionSetParams {
   headers?: { [key: string]: string };
 
   /**
-   * Body param: URL of the MCP server. Required when creating a new connection.
-   * Optional when updating — omit to keep the existing URL.
+   * Body param: URL of a custom MCP server. For Smithery registry servers, prefer
+   * `server`. Required with `server` omitted when creating a new HTTP connection;
+   * optional when updating.
    */
   mcpUrl?: string;
 
@@ -517,6 +529,12 @@ export interface ConnectionSetParams {
    * Body param: Human-readable name (optional, defaults to connection ID)
    */
   name?: string;
+
+  /**
+   * Body param: Smithery registry server qualified name. Use this instead of mcpUrl
+   * for registry servers.
+   */
+  server?: string;
 
   /**
    * Body param: Connection transport. Defaults to the existing connection transport
