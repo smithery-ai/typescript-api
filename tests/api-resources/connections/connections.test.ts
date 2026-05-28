@@ -32,6 +32,7 @@ describe('resource connections', () => {
           metadata: { userId: 'bar', team: 'bar' },
           mock: { enabled: true, scenario: 'A developer inbox with 3 unread Q4 planning threads.' },
           name: 'My MCP Server',
+          server: 'upstash/context7-mcp',
           transport: 'http',
         },
         { path: '/_stainless_unknown_path' },
@@ -127,6 +128,7 @@ describe('resource connections', () => {
           'Slack workspace with an active #community-ops channel containing recent event-planning messages, plus 50 Airtable candidate records with mixed tenure and interests.',
       },
       name: 'My MCP Server',
+      server: 'upstash/context7-mcp',
       transport: 'http',
     });
   });
