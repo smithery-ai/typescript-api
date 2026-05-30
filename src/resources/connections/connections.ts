@@ -371,6 +371,8 @@ export interface CreateConnectionRequest {
    */
   server?: string;
 
+  source?: CreateConnectionRequest.Source;
+
   /**
    * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
    */
@@ -395,6 +397,22 @@ export namespace CreateConnectionRequest {
      * prompt so generated data is consistent with the scenario across calls).
      */
     scenario?: string;
+  }
+
+  export interface Source {
+    entrypoint: string;
+
+    kind: 'module';
+
+    sourceFiles: Array<Source.SourceFile>;
+  }
+
+  export namespace Source {
+    export interface SourceFile {
+      contents: string;
+
+      path: string;
+    }
   }
 }
 
@@ -438,6 +456,8 @@ export interface ConnectionCreateParams {
    */
   server?: string;
 
+  source?: ConnectionCreateParams.Source;
+
   /**
    * Connection transport. Use `uplink` for a local server paired over Smithery CLI.
    */
@@ -462,6 +482,22 @@ export namespace ConnectionCreateParams {
      * prompt so generated data is consistent with the scenario across calls).
      */
     scenario?: string;
+  }
+
+  export interface Source {
+    entrypoint: string;
+
+    kind: 'module';
+
+    sourceFiles: Array<Source.SourceFile>;
+  }
+
+  export namespace Source {
+    export interface SourceFile {
+      contents: string;
+
+      path: string;
+    }
   }
 }
 
@@ -537,6 +573,11 @@ export interface ConnectionSetParams {
   server?: string;
 
   /**
+   * Body param
+   */
+  source?: ConnectionSetParams.Source;
+
+  /**
    * Body param: Connection transport. Defaults to the existing connection transport
    * when updating.
    */
@@ -559,6 +600,22 @@ export namespace ConnectionSetParams {
      * prompt so generated data is consistent with the scenario across calls).
      */
     scenario?: string;
+  }
+
+  export interface Source {
+    entrypoint: string;
+
+    kind: 'module';
+
+    sourceFiles: Array<Source.SourceFile>;
+  }
+
+  export namespace Source {
+    export interface SourceFile {
+      contents: string;
+
+      path: string;
+    }
   }
 }
 

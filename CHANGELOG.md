@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.67.0 (2026-05-30)
+
+Full Changelog: [v0.66.0...v0.67.0](https://github.com/smithery-ai/typescript-api/compare/v0.66.0...v0.67.0)
+
+### Features
+
+* **SMI-1814:** add dynamic MCP source connections ([#2518](https://github.com/smithery-ai/typescript-api/issues/2518)) ([a81cf8f](https://github.com/smithery-ai/typescript-api/commit/a81cf8f4b675cb872baa5b0710a67975a5e2c0e5))
+
 ## 0.66.0 (2026-05-28)
 
 Full Changelog: [v0.65.2...v0.66.0](https://github.com/smithery-ai/typescript-api/compare/v0.65.2...v0.66.0)
