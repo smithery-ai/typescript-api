@@ -33,6 +33,11 @@ describe('resource connections', () => {
           mock: { enabled: true, scenario: 'A developer inbox with 3 unread Q4 planning threads.' },
           name: 'My MCP Server',
           server: 'upstash/context7-mcp',
+          source: {
+            entrypoint: 'x',
+            kind: 'module',
+            sourceFiles: [{ contents: 'contents', path: 'x' }],
+          },
           transport: 'http',
         },
         { path: '/_stainless_unknown_path' },
@@ -129,6 +134,11 @@ describe('resource connections', () => {
       },
       name: 'My MCP Server',
       server: 'upstash/context7-mcp',
+      source: {
+        entrypoint: 'x',
+        kind: 'module',
+        sourceFiles: [{ contents: 'contents', path: 'x' }],
+      },
       transport: 'http',
     });
   });
