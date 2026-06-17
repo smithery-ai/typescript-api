@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.67.1 (2026-06-17)
+
+Full Changelog: [v0.67.0...v0.67.1](https://github.com/smithery-ai/typescript-api/compare/v0.67.0...v0.67.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([50edf0a](https://github.com/smithery-ai/typescript-api/commit/50edf0ad77b4a1d2fce4757102521c009110a0d0))
+
 ## 0.67.0 (2026-05-30)
 
 Full Changelog: [v0.66.0...v0.67.0](https://github.com/smithery-ai/typescript-api/compare/v0.66.0...v0.67.0)
