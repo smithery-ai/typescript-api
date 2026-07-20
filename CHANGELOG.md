@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.68.0 (2026-07-18)
+
+Full Changelog: [v0.67.1...v0.68.0](https://github.com/smithery-ai/typescript-api/compare/v0.67.1...v0.68.0)
+
+### Features
+
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([23be32b](https://github.com/smithery-ai/typescript-api/commit/23be32ba3b4af3dac6c7bbfd0d452e81b5445112))
+
+
+### Bug Fixes
+
+* **ci:** bump @arethetypeswrong/cli to ^0.18.0 and run CI workflows on Node 24 ([b7796ae](https://github.com/smithery-ai/typescript-api/commit/b7796ae9297aadc0565a9389de4082bd2f3caeff))
+
 ## 0.67.1 (2026-06-17)
 
 Full Changelog: [v0.67.0...v0.67.1](https://github.com/smithery-ai/typescript-api/compare/v0.67.0...v0.67.1)
